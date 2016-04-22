@@ -1,0 +1,254 @@
+//*************************************
+// Entities
+//*************************************
+entity Employees {
+}
+
+entity StaffRosterParametrization {
+}
+
+entity Employee {
+	name String,
+    description String 
+}
+
+entity SkillProficiency {
+}
+
+entity EmployeeDayOffRequest {
+	weight Integer
+}
+
+entity EmployeeDayOnRequest {
+	weight Integer
+}
+
+entity EmployeeShiftOnRequest {
+	weight Integer
+}
+
+entity EmployeeShiftOffRequest {
+	weight Integer
+}
+
+entity Shift {
+	staffRequired Integer
+}
+
+entity ShiftDate {
+	dayIndex Integer,
+    dateString String,
+    dayOfWeek DayOfWeek
+}
+
+entity ShiftAssignment {
+	indexInShift Integer
+}
+
+entity ShiftType {
+	code String,
+    description String,
+    nightShift Boolean,
+    startTime ZonedDateTime,
+    endTime ZonedDateTime
+}
+
+entity ShiftTypeTask{
+	//empty
+}
+
+entity Task {
+	code String,
+    description String,
+    staffNeeded Integer min(1),
+    taskType TaskType,
+    important Boolean,
+    urgent Boolean
+}
+
+entity Skill {
+	code String
+}
+
+entity Contract {
+	description String
+}
+
+entity ContractLine {
+	contractLineType ContractLineType,
+    enabled Boolean,
+    weight Integer,
+    minimumEnabled Boolean,
+    minimumValue Integer,
+    minimumWeight Integer,
+    maximumEnabled Boolean,
+    maximumValue Integer,
+    maximumWeight Integer
+}
+
+entity Pattern {
+	code String,
+    weight Integer
+}
+
+entity PatternContractLine {
+}
+
+entity WeekendDefinition {
+	description String
+}
+
+entity WeekendDay {
+	dayOfWeek DayOfWeek
+}
+
+
+//*************************************
+// Enums
+//*************************************
+enum TaskType {
+	SHORT, FULL, MAIN
+}
+
+enum ContractLineType {
+    SINGLE_ASSIGNMENT_PER_DAY,
+    TOTAL_ASSIGNMENTS,
+    CONSECUTIVE_WORKING_DAYS,
+    CONSECUTIVE_FREE_DAYS,
+    CONSECUTIVE_WORKING_WEEKENDS,
+    TOTAL_WORKING_WEEKENDS_IN_FOUR_WEEKS,
+    COMPLETE_WEEKENDS,
+    IDENTICAL_SHIFT_TYPES_DURING_WEEKEND,
+    NO_NIGHT_SHIFT_BEFORE_FREE_WEEKEND,
+    ALTERNATIVE_SKILL_CATEGORY
+}
+
+enum DayOfWeek {
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY
+}
+
+//*************************************
+// Relationships
+//*************************************
+
+relationship OneToOne {
+	StaffRosterParametrization{firstShiftDate} to ShiftDate
+}
+
+relationship OneToOne {
+	StaffRosterParametrization{lastShiftDate} to ShiftDate
+}
+
+relationship OneToOne {
+	StaffRosterParametrization{planningWindowStart} to ShiftDate
+}
+
+relationship OneToOne {
+	Employee{contract} to Contract
+}
+
+relationship OneToOne {
+	Employee{weekendDefinition} to WeekendDefinition
+}
+
+relationship OneToMany {
+	Employee{skills} to SkillProficiency{employee}
+}
+
+relationship OneToMany {
+	Employee{dayOffRequests} to EmployeeDayOffRequest{employee}
+}
+
+relationship OneToMany {
+	Employee{dayOnRequests} to EmployeeDayOnRequest{employee}
+}
+
+relationship OneToMany {
+	Employee{shiftOffRequests} to EmployeeShiftOffRequest{employee}
+}
+
+relationship OneToMany {
+	Employee{shiftOnRequests} to EmployeeShiftOnRequest{employee}
+}
+
+relationship OneToOne {
+	SkillProficiency{skill} to Skill
+}
+
+relationship OneToOne {
+	EmployeeDayOffRequest{shiftDate} to ShiftDate
+}
+
+relationship OneToOne {
+	EmployeeDayOnRequest{shiftDate} to ShiftDate
+}
+
+relationship OneToOne {
+	EmployeeShiftOffRequest{shift} to Shift
+}
+
+relationship OneToOne {
+	EmployeeShiftOnRequest{shift} to Shift
+}
+
+relationship OneToMany {
+	ShiftDate{shiftList} to Shift{shiftDate}
+}
+
+relationship OneToOne {
+	Shift{shiftType} to ShiftType
+}
+
+relationship OneToOne {
+	ShiftAssignment{shift} to Shift
+}
+
+relationship OneToOne {
+	ShiftAssignment{employee} to Employee
+}
+
+relationship OneToMany {
+	ShiftType{tasks} to ShiftTypeTask{shiftType}
+}
+
+relationship OneToOne {
+	ShiftTypeTask{task} to Task
+}
+
+relationship OneToOne {
+	Task{requiredSkill} to Skill
+}
+
+relationship OneToOne {
+	Contract{weekendDefinition} to WeekendDefinition
+}
+
+relationship OneToMany {
+	Contract{contractLineList} to ContractLine{contract}
+}
+
+relationship OneToOne {
+	PatternContractLine{contract} to Contract
+}
+
+relationship OneToOne {
+	PatternContractLine{pattern} to Pattern
+}
+
+relationship OneToMany {
+	WeekendDefinition{days} to WeekendDay{weekendDefinition}
+}
+
+relationship OneToOne {
+	Employees{employee} to Employee
+}
+//*************************************
+// Services
+//*************************************
+service Employee with serviceImpl

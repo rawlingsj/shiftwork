@@ -1,0 +1,9 @@
+{
+    "relationships": [],
+    "fields": [],
+    "changelogDate": "20160422170652",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "task_tpye",
+    "pagination": "no"
+}

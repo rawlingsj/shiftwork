@@ -1,0 +1,44 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myShiftAssignmentLabel" translate="shiftworkApp.shiftAssignment.home.createOrEditLabel">Create or edit a Shift Assignment</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.shiftAssignment.id">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.shiftAssignment.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.shiftAssignment.indexInShift" for="field_indexInShift">Index In Shift</label>
+            <input type="number" class="form-control" name="indexInShift" id="field_indexInShift"
+                    ng-model="vm.shiftAssignment.indexInShift"
+                     />
+        </div>
+
+        <div class="form-group">
+            <label translate="shiftworkApp.shiftAssignment.shift" for="field_shift">Shift</label>
+            <select class="form-control" id="field_shift" name="shift" ng-model="vm.shiftAssignment.shift" ng-options="shift as shift.id for shift in vm.shifts | orderBy:'id' track by shift.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="shiftworkApp.shiftAssignment.employee" for="field_employee">Employee</label>
+            <select class="form-control" id="field_employee" name="employee" ng-model="vm.shiftAssignment.employee" ng-options="employee as employee.id for employee in vm.employees | orderBy:'id' track by employee.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

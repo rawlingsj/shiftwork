@@ -1,0 +1,23 @@
+
+<div>
+    <h2><span translate="shiftworkApp.skillProficiency.detail.title">Skill Proficiency</span> {{vm.skillProficiency.id}}</h2>
+    <hr>
+    <dl class="dl-horizontal">
+        <dt><span translate="shiftworkApp.skillProficiency.skill">Skill</span></dt>
+        <dd>
+            <a ui-sref="skill-detail({id:vm.skillProficiency.skill.id})">{{vm.skillProficiency.skill.id}}</a>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.skillProficiency.employee">Employee</span></dt>
+        <dd>
+            <a ui-sref="employee-detail({id:vm.skillProficiency.employee.id})">{{vm.skillProficiency.employee.id}}</a>
+        </dd>
+        <hr>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

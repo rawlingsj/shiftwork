@@ -1,0 +1,50 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myShiftDateLabel" translate="shiftworkApp.shiftDate.home.createOrEditLabel">Create or edit a Shift Date</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.shiftDate.id">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.shiftDate.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.shiftDate.dayIndex" for="field_dayIndex">Day Index</label>
+            <input type="number" class="form-control" name="dayIndex" id="field_dayIndex"
+                    ng-model="vm.shiftDate.dayIndex"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.shiftDate.dateString" for="field_dateString">Date String</label>
+            <input type="text" class="form-control" name="dateString" id="field_dateString"
+                    ng-model="vm.shiftDate.dateString"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.shiftDate.dayOfWeek" for="field_dayOfWeek">Day Of Week</label>
+            <select class="form-control" name="dayOfWeek" ng-model="vm.shiftDate.dayOfWeek" id="field_dayOfWeek">
+                <option value="MONDAY" translate="shiftworkApp.DayOfWeek.MONDAY">MONDAY</option>
+                <option value="TUESDAY" translate="shiftworkApp.DayOfWeek.TUESDAY">TUESDAY</option>
+                <option value="WEDNESDAY" translate="shiftworkApp.DayOfWeek.WEDNESDAY">WEDNESDAY</option>
+                <option value="THURSDAY" translate="shiftworkApp.DayOfWeek.THURSDAY">THURSDAY</option>
+                <option value="FRIDAY" translate="shiftworkApp.DayOfWeek.FRIDAY">FRIDAY</option>
+                <option value="SATURDAY" translate="shiftworkApp.DayOfWeek.SATURDAY">SATURDAY</option>
+                <option value="SUNDAY" translate="shiftworkApp.DayOfWeek.SUNDAY">SUNDAY</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

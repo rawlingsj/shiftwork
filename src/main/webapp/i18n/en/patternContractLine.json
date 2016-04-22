@@ -1,0 +1,23 @@
+{
+    "shiftworkApp": {
+        "patternContractLine" : {
+            "home": {
+                "title": "Pattern Contract Lines",
+                "createLabel": "Create a new Pattern Contract Line",
+                "createOrEditLabel": "Create or edit a Pattern Contract Line",
+                "search": "Search for Pattern Contract Line"
+            },
+            "created": "A new Pattern Contract Line is created with identifier {{ param }}",
+            "updated": "A Pattern Contract Line is updated with identifier {{ param }}",
+            "deleted": "A Pattern Contract Line is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Pattern Contract Line {{ id }}?"
+            },
+            "detail": {
+                "title": "Pattern Contract Line"
+            },
+            "contract": "Contract",
+            "pattern": "Pattern"
+        }
+    }
+}

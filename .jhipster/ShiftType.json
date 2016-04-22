@@ -1,0 +1,43 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-many",
+      "relationshipName": "tasks",
+      "otherEntityName": "shiftTypeTask",
+      "otherEntityRelationshipName": "shiftType"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "nightShift",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "startTime",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldId": 5,
+      "fieldName": "endTime",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "changelogDate": "20160422164636",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "shift_type"
+}

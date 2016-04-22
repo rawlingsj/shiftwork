@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164634_added_entity_ShiftDate.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164636_added_entity_ShiftType.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164639_added_entity_Skill.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164642_added_entity_Pattern.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164644_added_entity_WeekendDefinition.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164645_added_entity_WeekendDay.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164626_added_entity_StaffRosterParametrization.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164633_added_entity_Shift.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164640_added_entity_Contract.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164641_added_entity_ContractLine.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164643_added_entity_PatternContractLine.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164627_added_entity_Employee.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164628_added_entity_SkillProficiency.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164629_added_entity_EmployeeDayOffRequest.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164630_added_entity_EmployeeDayOnRequest.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164631_added_entity_EmployeeShiftOnRequest.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164632_added_entity_EmployeeShiftOffRequest.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164635_added_entity_ShiftAssignment.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164637_added_entity_ShiftTypeTask.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164638_added_entity_Task.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422170652_added_entity_TaskTpye.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="classpath:config/liquibase/changelog/20160422164645_added_entity_constraints_WeekendDay.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164626_added_entity_constraints_StaffRosterParametrization.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164633_added_entity_constraints_Shift.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164640_added_entity_constraints_Contract.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164641_added_entity_constraints_ContractLine.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164643_added_entity_constraints_PatternContractLine.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164627_added_entity_constraints_Employee.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164628_added_entity_constraints_SkillProficiency.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164629_added_entity_constraints_EmployeeDayOffRequest.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164630_added_entity_constraints_EmployeeDayOnRequest.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164631_added_entity_constraints_EmployeeShiftOnRequest.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164632_added_entity_constraints_EmployeeShiftOffRequest.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164635_added_entity_constraints_ShiftAssignment.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164637_added_entity_constraints_ShiftTypeTask.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160422164638_added_entity_constraints_Task.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+</databaseChangeLog>

@@ -1,0 +1,26 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "task",
+      "otherEntityName": "task",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "shiftTypeTask"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "many-to-one",
+      "relationshipName": "shiftType",
+      "otherEntityName": "shiftType",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [],
+  "changelogDate": "20160422164637",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "shift_type_task"
+}

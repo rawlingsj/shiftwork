@@ -1,0 +1,34 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "shift",
+      "otherEntityName": "shift",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "shiftAssignment"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "one-to-one",
+      "relationshipName": "employee",
+      "otherEntityName": "employee",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "shiftAssignment"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "indexInShift",
+      "fieldType": "Integer"
+    }
+  ],
+  "changelogDate": "20160422164635",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "shift_assignment"
+}

@@ -1,0 +1,28 @@
+
+<div>
+    <h2><span translate="shiftworkApp.staffRosterParametrization.detail.title">Staff Roster Parametrization</span> {{vm.staffRosterParametrization.id}}</h2>
+    <hr>
+    <dl class="dl-horizontal">
+        <dt><span translate="shiftworkApp.staffRosterParametrization.firstShiftDate">First Shift Date</span></dt>
+        <dd>
+            <a ui-sref="shift-date-detail({id:vm.staffRosterParametrization.firstShiftDate.id})">{{vm.staffRosterParametrization.firstShiftDate.id}}</a>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.staffRosterParametrization.lastShiftDate">Last Shift Date</span></dt>
+        <dd>
+            <a ui-sref="shift-date-detail({id:vm.staffRosterParametrization.lastShiftDate.id})">{{vm.staffRosterParametrization.lastShiftDate.id}}</a>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.staffRosterParametrization.planningWindowStart">Planning Window Start</span></dt>
+        <dd>
+            <a ui-sref="shift-date-detail({id:vm.staffRosterParametrization.planningWindowStart.id})">{{vm.staffRosterParametrization.planningWindowStart.id}}</a>
+        </dd>
+        <hr>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

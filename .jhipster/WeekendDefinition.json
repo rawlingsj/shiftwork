@@ -1,0 +1,23 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-many",
+      "relationshipName": "days",
+      "otherEntityName": "weekendDay",
+      "otherEntityRelationshipName": "weekendDefinition"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20160422164644",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "weekend_definition"
+}

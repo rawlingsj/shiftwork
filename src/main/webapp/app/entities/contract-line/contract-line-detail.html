@@ -1,0 +1,63 @@
+
+<div>
+    <h2><span translate="shiftworkApp.contractLine.detail.title">Contract Line</span> {{vm.contractLine.id}}</h2>
+    <hr>
+    <dl class="dl-horizontal">
+        <dt><span translate="shiftworkApp.contractLine.contractLineType">Contract Line Type</span></dt>
+        <dd>
+            <span translate="{{'shiftworkApp.ContractLineType.' + vm.contractLine.contractLineType}}">{{vm.contractLine.contractLineType}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.contractLine.enabled">Enabled</span></dt>
+        <dd>
+            <span>{{vm.contractLine.enabled}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.contractLine.weight">Weight</span></dt>
+        <dd>
+            <span>{{vm.contractLine.weight}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.contractLine.minimumEnabled">Minimum Enabled</span></dt>
+        <dd>
+            <span>{{vm.contractLine.minimumEnabled}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.contractLine.minimumValue">Minimum Value</span></dt>
+        <dd>
+            <span>{{vm.contractLine.minimumValue}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.contractLine.minimumWeight">Minimum Weight</span></dt>
+        <dd>
+            <span>{{vm.contractLine.minimumWeight}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.contractLine.maximumEnabled">Maximum Enabled</span></dt>
+        <dd>
+            <span>{{vm.contractLine.maximumEnabled}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.contractLine.maximumValue">Maximum Value</span></dt>
+        <dd>
+            <span>{{vm.contractLine.maximumValue}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.contractLine.maximumWeight">Maximum Weight</span></dt>
+        <dd>
+            <span>{{vm.contractLine.maximumWeight}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.contractLine.contract">Contract</span></dt>
+        <dd>
+            <a ui-sref="contract-detail({id:vm.contractLine.contract.id})">{{vm.contractLine.contract.id}}</a>
+        </dd>
+        <hr>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

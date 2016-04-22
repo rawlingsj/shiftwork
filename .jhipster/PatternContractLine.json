@@ -1,0 +1,28 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "contract",
+      "otherEntityName": "contract",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "patternContractLine"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "one-to-one",
+      "relationshipName": "pattern",
+      "otherEntityName": "pattern",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "patternContractLine"
+    }
+  ],
+  "fields": [],
+  "changelogDate": "20160422164643",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "pattern_contract_line"
+}

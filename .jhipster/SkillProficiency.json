@@ -1,0 +1,26 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "skill",
+      "otherEntityName": "skill",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "skillProficiency"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "many-to-one",
+      "relationshipName": "employee",
+      "otherEntityName": "employee",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [],
+  "changelogDate": "20160422164628",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "skill_proficiency"
+}

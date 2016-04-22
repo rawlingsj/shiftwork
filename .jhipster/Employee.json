@@ -1,0 +1,74 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "contract",
+      "otherEntityName": "contract",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "employee"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "one-to-one",
+      "relationshipName": "weekendDefinition",
+      "otherEntityName": "weekendDefinition",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "employee"
+    },
+    {
+      "relationshipId": 3,
+      "relationshipType": "one-to-many",
+      "relationshipName": "skills",
+      "otherEntityName": "skillProficiency",
+      "otherEntityRelationshipName": "employee"
+    },
+    {
+      "relationshipId": 4,
+      "relationshipType": "one-to-many",
+      "relationshipName": "dayOffRequests",
+      "otherEntityName": "employeeDayOffRequest",
+      "otherEntityRelationshipName": "employee"
+    },
+    {
+      "relationshipId": 5,
+      "relationshipType": "one-to-many",
+      "relationshipName": "dayOnRequests",
+      "otherEntityName": "employeeDayOnRequest",
+      "otherEntityRelationshipName": "employee"
+    },
+    {
+      "relationshipId": 6,
+      "relationshipType": "one-to-many",
+      "relationshipName": "shiftOffRequests",
+      "otherEntityName": "employeeShiftOffRequest",
+      "otherEntityRelationshipName": "employee"
+    },
+    {
+      "relationshipId": 7,
+      "relationshipType": "one-to-many",
+      "relationshipName": "shiftOnRequests",
+      "otherEntityName": "employeeShiftOnRequest",
+      "otherEntityRelationshipName": "employee"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20160422164627",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "entityTableName": "employee"
+}

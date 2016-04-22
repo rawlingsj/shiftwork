@@ -1,0 +1,21 @@
+{
+    "shiftworkApp": {
+        "taskTpye" : {
+            "home": {
+                "title": "Task Tpyes",
+                "createLabel": "Create a new Task Tpye",
+                "createOrEditLabel": "Create or edit a Task Tpye",
+                "search": "Search for Task Tpye"
+            },
+            "created": "A new Task Tpye is created with identifier {{ param }}",
+            "updated": "A Task Tpye is updated with identifier {{ param }}",
+            "deleted": "A Task Tpye is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Task Tpye {{ id }}?"
+            },
+            "detail": {
+                "title": "Task Tpye"
+            }
+        }
+    }
+}

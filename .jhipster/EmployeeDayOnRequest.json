@@ -1,0 +1,32 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "shiftDate",
+      "otherEntityName": "shiftDate",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "employeeDayOnRequest"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "many-to-one",
+      "relationshipName": "employee",
+      "otherEntityName": "employee",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "weight",
+      "fieldType": "Integer"
+    }
+  ],
+  "changelogDate": "20160422164630",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "employee_day_on_request"
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity EmployeeDayOffRequest.
+    -->
+    <changeSet id="20160422164629-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="shift_date_id"
+                                 baseTableName="employee_day_off_request"
+                                 constraintName="fk_employeedayoffrequest_shiftdate_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shift_date"/>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="employee_day_off_request"
+                                 constraintName="fk_employeedayoffrequest_employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+    </changeSet>
+</databaseChangeLog>

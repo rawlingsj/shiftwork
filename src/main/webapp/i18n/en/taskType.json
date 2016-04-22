@@ -1,0 +1,10 @@
+{
+    "shiftworkApp": {
+        "TaskType" : {
+            "null": "",
+            "SHORT": "SHORT",
+            "FULL": "FULL",
+            "MAIN": "MAIN"
+        }
+    }
+}

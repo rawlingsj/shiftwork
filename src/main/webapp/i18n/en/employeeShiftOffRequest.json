@@ -1,0 +1,24 @@
+{
+    "shiftworkApp": {
+        "employeeShiftOffRequest" : {
+            "home": {
+                "title": "Employee Shift Off Requests",
+                "createLabel": "Create a new Employee Shift Off Request",
+                "createOrEditLabel": "Create or edit a Employee Shift Off Request",
+                "search": "Search for Employee Shift Off Request"
+            },
+            "created": "A new Employee Shift Off Request is created with identifier {{ param }}",
+            "updated": "A Employee Shift Off Request is updated with identifier {{ param }}",
+            "deleted": "A Employee Shift Off Request is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Employee Shift Off Request {{ id }}?"
+            },
+            "detail": {
+                "title": "Employee Shift Off Request"
+            },
+            "weight": "Weight",
+            "shift": "Shift",
+            "employee": "Employee"
+        }
+    }
+}

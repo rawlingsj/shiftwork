@@ -1,0 +1,24 @@
+{
+    "shiftworkApp": {
+        "shiftAssignment" : {
+            "home": {
+                "title": "Shift Assignments",
+                "createLabel": "Create a new Shift Assignment",
+                "createOrEditLabel": "Create or edit a Shift Assignment",
+                "search": "Search for Shift Assignment"
+            },
+            "created": "A new Shift Assignment is created with identifier {{ param }}",
+            "updated": "A Shift Assignment is updated with identifier {{ param }}",
+            "deleted": "A Shift Assignment is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Shift Assignment {{ id }}?"
+            },
+            "detail": {
+                "title": "Shift Assignment"
+            },
+            "indexInShift": "Index In Shift",
+            "shift": "Shift",
+            "employee": "Employee"
+        }
+    }
+}

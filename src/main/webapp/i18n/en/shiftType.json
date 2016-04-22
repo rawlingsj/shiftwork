@@ -1,0 +1,27 @@
+{
+    "shiftworkApp": {
+        "shiftType" : {
+            "home": {
+                "title": "Shift Types",
+                "createLabel": "Create a new Shift Type",
+                "createOrEditLabel": "Create or edit a Shift Type",
+                "search": "Search for Shift Type"
+            },
+            "created": "A new Shift Type is created with identifier {{ param }}",
+            "updated": "A Shift Type is updated with identifier {{ param }}",
+            "deleted": "A Shift Type is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Shift Type {{ id }}?"
+            },
+            "detail": {
+                "title": "Shift Type"
+            },
+            "code": "Code",
+            "description": "Description",
+            "nightShift": "Night Shift",
+            "startTime": "Start Time",
+            "endTime": "End Time",
+            "tasks": "Tasks"
+        }
+    }
+}

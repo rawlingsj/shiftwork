@@ -1,0 +1,51 @@
+(function() {
+    'use strict';
+
+    angular
+        .module('shiftworkApp')
+        .controller('EmployeeDayOffRequestDialogController', EmployeeDayOffRequestDialogController);
+
+    EmployeeDayOffRequestDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'EmployeeDayOffRequest', 'ShiftDate', 'Employee'];
+
+    function EmployeeDayOffRequestDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, EmployeeDayOffRequest, ShiftDate, Employee) {
+        var vm = this;
+        vm.employeeDayOffRequest = entity;
+        vm.shiftdates = ShiftDate.query({filter: 'employeedayoffrequest-is-null'});
+        $q.all([vm.employeeDayOffRequest.$promise, vm.shiftdates.$promise]).then(function() {
+            if (!vm.employeeDayOffRequest.shiftDate || !vm.employeeDayOffRequest.shiftDate.id) {
+                return $q.reject();
+            }
+            return ShiftDate.get({id : vm.employeeDayOffRequest.shiftDate.id}).$promise;
+        }).then(function(shiftDate) {
+            vm.shiftdates.push(shiftDate);
+        });
+        vm.employees = Employee.query();
+
+        $timeout(function (){
+            angular.element('.form-group:eq(1)>input').focus();
+        });
+
+        var onSaveSuccess = function (result) {
+            $scope.$emit('shiftworkApp:employeeDayOffRequestUpdate', result);
+            $uibModalInstance.close(result);
+            vm.isSaving = false;
+        };
+
+        var onSaveError = function () {
+            vm.isSaving = false;
+        };
+
+        vm.save = function () {
+            vm.isSaving = true;
+            if (vm.employeeDayOffRequest.id !== null) {
+                EmployeeDayOffRequest.update(vm.employeeDayOffRequest, onSaveSuccess, onSaveError);
+            } else {
+                EmployeeDayOffRequest.save(vm.employeeDayOffRequest, onSaveSuccess, onSaveError);
+            }
+        };
+
+        vm.clear = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+    }
+})();

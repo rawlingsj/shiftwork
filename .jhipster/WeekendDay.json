@@ -1,0 +1,24 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "many-to-one",
+      "relationshipName": "weekendDefinition",
+      "otherEntityName": "weekendDefinition",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "dayOfWeek",
+      "fieldType": "DayOfWeek",
+      "fieldValues": "MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY"
+    }
+  ],
+  "changelogDate": "20160422164645",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "weekend_day"
+}

@@ -1,0 +1,15 @@
+version: '2'
+services:
+    shiftwork-app:
+        image: shiftwork
+        external_links:
+            - shiftwork-postgresql:postgresql
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/shiftwork
+        ports:
+            - 8080:8080
+    shiftwork-postgresql:
+        extends:
+            file: postgresql.yml
+            service: shiftwork-postgresql

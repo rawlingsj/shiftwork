@@ -1,0 +1,34 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-many",
+      "relationshipName": "shiftList",
+      "otherEntityName": "shift",
+      "otherEntityRelationshipName": "shiftDate"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "dayIndex",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "dateString",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "dayOfWeek",
+      "fieldType": "DayOfWeek",
+      "fieldValues": "MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY"
+    }
+  ],
+  "changelogDate": "20160422164634",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "shift_date"
+}

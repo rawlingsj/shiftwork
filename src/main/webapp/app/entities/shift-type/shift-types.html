@@ -1,0 +1,64 @@
+<div>
+    <h2 translate="shiftworkApp.shiftType.home.title">Shift Types</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="shift-type.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="shiftworkApp.shiftType.home.createLabel">
+                        Create new Shift Type
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span translate="global.field.id">ID</span></th>
+                    <th><span translate="shiftworkApp.shiftType.code">Code</span></th>
+                    <th><span translate="shiftworkApp.shiftType.description">Description</span></th>
+                    <th><span translate="shiftworkApp.shiftType.nightShift">Night Shift</span></th>
+                    <th><span translate="shiftworkApp.shiftType.startTime">Start Time</span></th>
+                    <th><span translate="shiftworkApp.shiftType.endTime">End Time</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="shiftType in vm.shiftTypes track by shiftType.id">
+                    <td><a ui-sref="shift-type-detail({id:shiftType.id})">{{shiftType.id}}</a></td>
+                    <td>{{shiftType.code}}</td>
+                    <td>{{shiftType.description}}</td>
+                    <td>{{shiftType.nightShift}}</td>
+                    <td>{{shiftType.startTime | date:'medium'}}</td>
+                    <td>{{shiftType.endTime | date:'medium'}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="shift-type-detail({id:shiftType.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="shift-type.edit({id:shiftType.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="shift-type.delete({id:shiftType.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+{
+    "shiftworkApp": {
+        "shiftTypeTask" : {
+            "home": {
+                "title": "Shift Type Tasks",
+                "createLabel": "Create a new Shift Type Task",
+                "createOrEditLabel": "Create or edit a Shift Type Task",
+                "search": "Search for Shift Type Task"
+            },
+            "created": "A new Shift Type Task is created with identifier {{ param }}",
+            "updated": "A Shift Type Task is updated with identifier {{ param }}",
+            "deleted": "A Shift Type Task is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Shift Type Task {{ id }}?"
+            },
+            "detail": {
+                "title": "Shift Type Task"
+            },
+            "task": "Task",
+            "shiftType": "Shift Type"
+        }
+    }
+}

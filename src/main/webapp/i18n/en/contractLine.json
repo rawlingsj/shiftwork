@@ -1,0 +1,31 @@
+{
+    "shiftworkApp": {
+        "contractLine" : {
+            "home": {
+                "title": "Contract Lines",
+                "createLabel": "Create a new Contract Line",
+                "createOrEditLabel": "Create or edit a Contract Line",
+                "search": "Search for Contract Line"
+            },
+            "created": "A new Contract Line is created with identifier {{ param }}",
+            "updated": "A Contract Line is updated with identifier {{ param }}",
+            "deleted": "A Contract Line is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Contract Line {{ id }}?"
+            },
+            "detail": {
+                "title": "Contract Line"
+            },
+            "contractLineType": "Contract Line Type",
+            "enabled": "Enabled",
+            "weight": "Weight",
+            "minimumEnabled": "Minimum Enabled",
+            "minimumValue": "Minimum Value",
+            "minimumWeight": "Minimum Weight",
+            "maximumEnabled": "Maximum Enabled",
+            "maximumValue": "Maximum Value",
+            "maximumWeight": "Maximum Weight",
+            "contract": "Contract"
+        }
+    }
+}

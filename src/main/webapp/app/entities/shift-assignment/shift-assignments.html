@@ -1,0 +1,64 @@
+<div>
+    <h2 translate="shiftworkApp.shiftAssignment.home.title">Shift Assignments</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="shift-assignment.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="shiftworkApp.shiftAssignment.home.createLabel">
+                        Create new Shift Assignment
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span translate="global.field.id">ID</span></th>
+                    <th><span translate="shiftworkApp.shiftAssignment.indexInShift">Index In Shift</span></th>
+                    <th><span translate="shiftworkApp.shiftAssignment.shift">Shift</span></th>
+                    <th><span translate="shiftworkApp.shiftAssignment.employee">Employee</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="shiftAssignment in vm.shiftAssignments track by shiftAssignment.id">
+                    <td><a ui-sref="shift-assignment-detail({id:shiftAssignment.id})">{{shiftAssignment.id}}</a></td>
+                    <td>{{shiftAssignment.indexInShift}}</td>
+                    <td>
+                        <a ui-sref="shift-detail({id:shiftAssignment.shift.id})">{{shiftAssignment.shift.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="employee-detail({id:shiftAssignment.employee.id})">{{shiftAssignment.employee.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="shift-assignment-detail({id:shiftAssignment.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="shift-assignment.edit({id:shiftAssignment.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="shift-assignment.delete({id:shiftAssignment.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

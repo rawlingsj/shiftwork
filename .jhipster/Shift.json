@@ -1,0 +1,32 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "shiftType",
+      "otherEntityName": "shiftType",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "shift"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "many-to-one",
+      "relationshipName": "shiftDate",
+      "otherEntityName": "shiftDate",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "staffRequired",
+      "fieldType": "Integer"
+    }
+  ],
+  "changelogDate": "20160422164633",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "shift"
+}

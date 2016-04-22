@@ -1,0 +1,37 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "firstShiftDate",
+      "otherEntityName": "shiftDate",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "staffRosterParametrization"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "one-to-one",
+      "relationshipName": "lastShiftDate",
+      "otherEntityName": "shiftDate",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "staffRosterParametrization"
+    },
+    {
+      "relationshipId": 3,
+      "relationshipType": "one-to-one",
+      "relationshipName": "planningWindowStart",
+      "otherEntityName": "shiftDate",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "staffRosterParametrization"
+    }
+  ],
+  "fields": [],
+  "changelogDate": "20160422164626",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "staff_roster_parametrization"
+}

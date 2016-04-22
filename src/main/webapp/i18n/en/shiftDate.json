@@ -1,0 +1,25 @@
+{
+    "shiftworkApp": {
+        "shiftDate" : {
+            "home": {
+                "title": "Shift Dates",
+                "createLabel": "Create a new Shift Date",
+                "createOrEditLabel": "Create or edit a Shift Date",
+                "search": "Search for Shift Date"
+            },
+            "created": "A new Shift Date is created with identifier {{ param }}",
+            "updated": "A Shift Date is updated with identifier {{ param }}",
+            "deleted": "A Shift Date is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Shift Date {{ id }}?"
+            },
+            "detail": {
+                "title": "Shift Date"
+            },
+            "dayIndex": "Day Index",
+            "dateString": "Date String",
+            "dayOfWeek": "Day Of Week",
+            "shiftList": "Shift List"
+        }
+    }
+}

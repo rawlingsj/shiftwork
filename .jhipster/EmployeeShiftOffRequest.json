@@ -1,0 +1,32 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "shift",
+      "otherEntityName": "shift",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "employeeShiftOffRequest"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "many-to-one",
+      "relationshipName": "employee",
+      "otherEntityName": "employee",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "weight",
+      "fieldType": "Integer"
+    }
+  ],
+  "changelogDate": "20160422164632",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "employee_shift_off_request"
+}

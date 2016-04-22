@@ -1,0 +1,28 @@
+
+<div>
+    <h2><span translate="shiftworkApp.employeeShiftOnRequest.detail.title">Employee Shift On Request</span> {{vm.employeeShiftOnRequest.id}}</h2>
+    <hr>
+    <dl class="dl-horizontal">
+        <dt><span translate="shiftworkApp.employeeShiftOnRequest.weight">Weight</span></dt>
+        <dd>
+            <span>{{vm.employeeShiftOnRequest.weight}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.employeeShiftOnRequest.shift">Shift</span></dt>
+        <dd>
+            <a ui-sref="shift-detail({id:vm.employeeShiftOnRequest.shift.id})">{{vm.employeeShiftOnRequest.shift.id}}</a>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.employeeShiftOnRequest.employee">Employee</span></dt>
+        <dd>
+            <a ui-sref="employee-detail({id:vm.employeeShiftOnRequest.employee.id})">{{vm.employeeShiftOnRequest.employee.id}}</a>
+        </dd>
+        <hr>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

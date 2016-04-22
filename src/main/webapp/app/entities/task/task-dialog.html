@@ -1,0 +1,80 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTaskLabel" translate="shiftworkApp.task.home.createOrEditLabel">Create or edit a Task</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.task.id">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.task.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.task.code" for="field_code">Code</label>
+            <input type="text" class="form-control" name="code" id="field_code"
+                    ng-model="vm.task.code"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.task.description" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="vm.task.description"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.task.staffNeeded" for="field_staffNeeded">Staff Needed</label>
+            <input type="number" class="form-control" name="staffNeeded" id="field_staffNeeded"
+                    ng-model="vm.task.staffNeeded"
+                    min="1" />
+            <div ng-show="editForm.staffNeeded.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.staffNeeded.$error.min" translate="entity.validation.min" translate-value-min="1">
+                    This field should be more than 1.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.staffNeeded.$error.number" translate="entity.validation.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.task.taskType" for="field_taskType">Task Type</label>
+            <select class="form-control" name="taskType" ng-model="vm.task.taskType" id="field_taskType">
+                <option value="SHORT" translate="shiftworkApp.TaskType.SHORT">SHORT</option>
+                <option value="FULL" translate="shiftworkApp.TaskType.FULL">FULL</option>
+                <option value="MAIN" translate="shiftworkApp.TaskType.MAIN">MAIN</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.task.important" for="field_important">Important</label>
+            <input type="checkbox" class="form-control" name="important" id="field_important"
+                    ng-model="vm.task.important"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.task.urgent" for="field_urgent">Urgent</label>
+            <input type="checkbox" class="form-control" name="urgent" id="field_urgent"
+                    ng-model="vm.task.urgent"
+                     />
+        </div>
+
+        <div class="form-group">
+            <label translate="shiftworkApp.task.requiredSkill" for="field_requiredSkill">Required Skill</label>
+            <select class="form-control" id="field_requiredSkill" name="requiredSkill" ng-model="vm.task.requiredSkill" ng-options="skill as skill.id for skill in vm.requiredskills | orderBy:'id' track by skill.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

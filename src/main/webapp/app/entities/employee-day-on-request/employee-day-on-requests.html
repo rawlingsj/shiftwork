@@ -1,0 +1,64 @@
+<div>
+    <h2 translate="shiftworkApp.employeeDayOnRequest.home.title">Employee Day On Requests</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="employee-day-on-request.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="shiftworkApp.employeeDayOnRequest.home.createLabel">
+                        Create new Employee Day On Request
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span translate="global.field.id">ID</span></th>
+                    <th><span translate="shiftworkApp.employeeDayOnRequest.weight">Weight</span></th>
+                    <th><span translate="shiftworkApp.employeeDayOnRequest.shiftDate">Shift Date</span></th>
+                    <th><span translate="shiftworkApp.employeeDayOnRequest.employee">Employee</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employeeDayOnRequest in vm.employeeDayOnRequests track by employeeDayOnRequest.id">
+                    <td><a ui-sref="employee-day-on-request-detail({id:employeeDayOnRequest.id})">{{employeeDayOnRequest.id}}</a></td>
+                    <td>{{employeeDayOnRequest.weight}}</td>
+                    <td>
+                        <a ui-sref="shift-date-detail({id:employeeDayOnRequest.shiftDate.id})">{{employeeDayOnRequest.shiftDate.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="employee-detail({id:employeeDayOnRequest.employee.id})">{{employeeDayOnRequest.employee.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="employee-day-on-request-detail({id:employeeDayOnRequest.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="employee-day-on-request.edit({id:employeeDayOnRequest.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="employee-day-on-request.delete({id:employeeDayOnRequest.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

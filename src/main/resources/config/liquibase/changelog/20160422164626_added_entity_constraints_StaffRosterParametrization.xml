@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity StaffRosterParametrization.
+    -->
+    <changeSet id="20160422164626-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="first_shift_date_id"
+                                 baseTableName="staff_roster_parametrization"
+                                 constraintName="fk_staffrosterparametrization_firstshiftdate_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shift_date"/>
+
+        <addForeignKeyConstraint baseColumnNames="last_shift_date_id"
+                                 baseTableName="staff_roster_parametrization"
+                                 constraintName="fk_staffrosterparametrization_lastshiftdate_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shift_date"/>
+
+        <addForeignKeyConstraint baseColumnNames="planning_window_start_id"
+                                 baseTableName="staff_roster_parametrization"
+                                 constraintName="fk_staffrosterparametrization_planningwindowstart_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shift_date"/>
+
+    </changeSet>
+</databaseChangeLog>

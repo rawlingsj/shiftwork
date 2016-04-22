@@ -1,0 +1,24 @@
+{
+    "shiftworkApp": {
+        "shift" : {
+            "home": {
+                "title": "Shifts",
+                "createLabel": "Create a new Shift",
+                "createOrEditLabel": "Create or edit a Shift",
+                "search": "Search for Shift"
+            },
+            "created": "A new Shift is created with identifier {{ param }}",
+            "updated": "A Shift is updated with identifier {{ param }}",
+            "deleted": "A Shift is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Shift {{ id }}?"
+            },
+            "detail": {
+                "title": "Shift"
+            },
+            "staffRequired": "Staff Required",
+            "shiftType": "Shift Type",
+            "shiftDate": "Shift Date"
+        }
+    }
+}

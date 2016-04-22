@@ -1,0 +1,48 @@
+
+<div>
+    <h2><span translate="shiftworkApp.task.detail.title">Task</span> {{vm.task.id}}</h2>
+    <hr>
+    <dl class="dl-horizontal">
+        <dt><span translate="shiftworkApp.task.code">Code</span></dt>
+        <dd>
+            <span>{{vm.task.code}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.task.description">Description</span></dt>
+        <dd>
+            <span>{{vm.task.description}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.task.staffNeeded">Staff Needed</span></dt>
+        <dd>
+            <span>{{vm.task.staffNeeded}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.task.taskType">Task Type</span></dt>
+        <dd>
+            <span translate="{{'shiftworkApp.TaskType.' + vm.task.taskType}}">{{vm.task.taskType}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.task.important">Important</span></dt>
+        <dd>
+            <span>{{vm.task.important}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.task.urgent">Urgent</span></dt>
+        <dd>
+            <span>{{vm.task.urgent}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.task.requiredSkill">Required Skill</span></dt>
+        <dd>
+            <a ui-sref="skill-detail({id:vm.task.requiredSkill.id})">{{vm.task.requiredSkill.id}}</a>
+        </dd>
+        <hr>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

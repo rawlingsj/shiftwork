@@ -1,0 +1,55 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "requiredSkill",
+      "otherEntityName": "skill",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "task"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "staffNeeded",
+      "fieldType": "Integer",
+      "fieldValidateRules": [
+        "min"
+      ],
+      "fieldValidateRulesMin": 1
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "taskType",
+      "fieldType": "TaskType",
+      "fieldValues": "SHORT,FULL,MAIN"
+    },
+    {
+      "fieldId": 5,
+      "fieldName": "important",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldId": 6,
+      "fieldName": "urgent",
+      "fieldType": "Boolean"
+    }
+  ],
+  "changelogDate": "20160422164638",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "task"
+}

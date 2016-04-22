@@ -1,0 +1,23 @@
+{
+    "shiftworkApp": {
+        "skillProficiency" : {
+            "home": {
+                "title": "Skill Proficiencies",
+                "createLabel": "Create a new Skill Proficiency",
+                "createOrEditLabel": "Create or edit a Skill Proficiency",
+                "search": "Search for Skill Proficiency"
+            },
+            "created": "A new Skill Proficiency is created with identifier {{ param }}",
+            "updated": "A Skill Proficiency is updated with identifier {{ param }}",
+            "deleted": "A Skill Proficiency is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Skill Proficiency {{ id }}?"
+            },
+            "detail": {
+                "title": "Skill Proficiency"
+            },
+            "skill": "Skill",
+            "employee": "Employee"
+        }
+    }
+}

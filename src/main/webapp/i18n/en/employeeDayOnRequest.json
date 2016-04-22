@@ -1,0 +1,24 @@
+{
+    "shiftworkApp": {
+        "employeeDayOnRequest" : {
+            "home": {
+                "title": "Employee Day On Requests",
+                "createLabel": "Create a new Employee Day On Request",
+                "createOrEditLabel": "Create or edit a Employee Day On Request",
+                "search": "Search for Employee Day On Request"
+            },
+            "created": "A new Employee Day On Request is created with identifier {{ param }}",
+            "updated": "A Employee Day On Request is updated with identifier {{ param }}",
+            "deleted": "A Employee Day On Request is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Employee Day On Request {{ id }}?"
+            },
+            "detail": {
+                "title": "Employee Day On Request"
+            },
+            "weight": "Weight",
+            "shiftDate": "Shift Date",
+            "employee": "Employee"
+        }
+    }
+}
