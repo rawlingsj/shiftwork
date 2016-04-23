@@ -65,6 +65,11 @@ public class StaffRosterParametrization implements Serializable {
         this.planningWindowStart = shiftDate;
     }
 
+    public boolean isInPlanningWindow(ShiftDate shiftDate){
+        // TODO implement it
+        throw new UnsupportedOperationException("Not Implemented Yet!");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

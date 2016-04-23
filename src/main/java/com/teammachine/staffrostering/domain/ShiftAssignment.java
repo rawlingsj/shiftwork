@@ -64,6 +64,16 @@ public class ShiftAssignment implements Serializable {
         this.employee = employee;
     }
 
+    public ShiftDate getShiftDate(){
+        //TODO implement it
+        throw new UnsupportedOperationException("Not Implement Yet");
+    }
+
+    public boolean isWeekend(){
+        //TODO implement it
+        throw new UnsupportedOperationException("Not Implement Yet");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
