@@ -1,0 +1,56 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "contract",
+      "otherEntityName": "contract",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "minMaxContractLine"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "contractLineType",
+      "fieldType": "ContractLineType",
+      "fieldValues": "SINGLE_ASSIGNMENT_PER_DAY,TOTAL_ASSIGNMENTS,CONSECUTIVE_WORKING_DAYS,CONSECUTIVE_FREE_DAYS,CONSECUTIVE_WORKING_WEEKENDS,TOTAL_WORKING_WEEKENDS_IN_FOUR_WEEKS,COMPLETE_WEEKENDS,IDENTICAL_SHIFT_TYPES_DURING_WEEKEND,NO_NIGHT_SHIFT_BEFORE_FREE_WEEKEND,ALTERNATIVE_SKILL_CATEGORY"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "minimumEnabled",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "minimumValue",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "minimumWeight",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldId": 5,
+      "fieldName": "maximumEnabled",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldId": 6,
+      "fieldName": "maximumValue",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldId": 7,
+      "fieldName": "maximumWeight",
+      "fieldType": "Integer"
+    }
+  ],
+  "changelogDate": "20160423132945",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "min_max_contract_line"
+}

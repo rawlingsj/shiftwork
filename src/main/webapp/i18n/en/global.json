@@ -28,6 +28,9 @@
                 "shiftTypeTask": "Shift Type Task",
                 "task": "Task",
                 "taskTpye": "Task Tpye",
+                "booleanContractLine": "Boolean Contract Line",
+                "minMaxContractLine": "Min Max Contract Line",
+                "employees": "Employees",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -14,8 +14,10 @@ import com.teammachine.staffrostering.domain.enumeration.ContractLineType;
  */
 @Entity
 @Table(name = "contract_line")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class ContractLine implements Serializable {
+@DiscriminatorColumn(name="boolean_or_minmax")
+public abstract class ContractLine implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,32 +29,10 @@ public class ContractLine implements Serializable {
     @Column(name = "contract_line_type")
     private ContractLineType contractLineType;
 
-    @Column(name = "enabled")
-    private Boolean enabled;
-
-    @Column(name = "weight")
-    private Integer weight;
-
-    @Column(name = "minimum_enabled")
-    private Boolean minimumEnabled;
-
-    @Column(name = "minimum_value")
-    private Integer minimumValue;
-
-    @Column(name = "minimum_weight")
-    private Integer minimumWeight;
-
-    @Column(name = "maximum_enabled")
-    private Boolean maximumEnabled;
-
-    @Column(name = "maximum_value")
-    private Integer maximumValue;
-
-    @Column(name = "maximum_weight")
-    private Integer maximumWeight;
-
     @ManyToOne
     private Contract contract;
+
+    abstract Boolean isEnabled();
 
     public Long getId() {
         return id;
@@ -68,70 +48,6 @@ public class ContractLine implements Serializable {
 
     public void setContractLineType(ContractLineType contractLineType) {
         this.contractLineType = contractLineType;
-    }
-
-    public Boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Integer getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Integer weight) {
-        this.weight = weight;
-    }
-
-    public Boolean isMinimumEnabled() {
-        return minimumEnabled;
-    }
-
-    public void setMinimumEnabled(Boolean minimumEnabled) {
-        this.minimumEnabled = minimumEnabled;
-    }
-
-    public Integer getMinimumValue() {
-        return minimumValue;
-    }
-
-    public void setMinimumValue(Integer minimumValue) {
-        this.minimumValue = minimumValue;
-    }
-
-    public Integer getMinimumWeight() {
-        return minimumWeight;
-    }
-
-    public void setMinimumWeight(Integer minimumWeight) {
-        this.minimumWeight = minimumWeight;
-    }
-
-    public Boolean isMaximumEnabled() {
-        return maximumEnabled;
-    }
-
-    public void setMaximumEnabled(Boolean maximumEnabled) {
-        this.maximumEnabled = maximumEnabled;
-    }
-
-    public Integer getMaximumValue() {
-        return maximumValue;
-    }
-
-    public void setMaximumValue(Integer maximumValue) {
-        this.maximumValue = maximumValue;
-    }
-
-    public Integer getMaximumWeight() {
-        return maximumWeight;
-    }
-
-    public void setMaximumWeight(Integer maximumWeight) {
-        this.maximumWeight = maximumWeight;
     }
 
     public Contract getContract() {
@@ -162,19 +78,4 @@ public class ContractLine implements Serializable {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "ContractLine{" +
-            "id=" + id +
-            ", contractLineType='" + contractLineType + "'" +
-            ", enabled='" + enabled + "'" +
-            ", weight='" + weight + "'" +
-            ", minimumEnabled='" + minimumEnabled + "'" +
-            ", minimumValue='" + minimumValue + "'" +
-            ", minimumWeight='" + minimumWeight + "'" +
-            ", maximumEnabled='" + maximumEnabled + "'" +
-            ", maximumValue='" + maximumValue + "'" +
-            ", maximumWeight='" + maximumWeight + "'" +
-            '}';
-    }
 }

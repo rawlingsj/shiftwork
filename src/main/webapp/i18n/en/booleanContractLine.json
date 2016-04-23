@@ -1,0 +1,25 @@
+{
+    "shiftworkApp": {
+        "booleanContractLine" : {
+            "home": {
+                "title": "Boolean Contract Lines",
+                "createLabel": "Create a new Boolean Contract Line",
+                "createOrEditLabel": "Create or edit a Boolean Contract Line",
+                "search": "Search for Boolean Contract Line"
+            },
+            "created": "A new Boolean Contract Line is created with identifier {{ param }}",
+            "updated": "A Boolean Contract Line is updated with identifier {{ param }}",
+            "deleted": "A Boolean Contract Line is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Boolean Contract Line {{ id }}?"
+            },
+            "detail": {
+                "title": "Boolean Contract Line"
+            },
+            "contractLineType": "Contract Line Type",
+            "enabled": "Enabled",
+            "weight": "Weight",
+            "contract": "Contract"
+        }
+    }
+}

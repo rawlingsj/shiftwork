@@ -1,0 +1,72 @@
+<div>
+    <h2 translate="shiftworkApp.minMaxContractLine.home.title">Min Max Contract Lines</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="min-max-contract-line.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="shiftworkApp.minMaxContractLine.home.createLabel">
+                        Create new Min Max Contract Line
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span translate="global.field.id">ID</span></th>
+                    <th><span translate="shiftworkApp.minMaxContractLine.contractLineType">Contract Line Type</span></th>
+                    <th><span translate="shiftworkApp.minMaxContractLine.minimumEnabled">Minimum Enabled</span></th>
+                    <th><span translate="shiftworkApp.minMaxContractLine.minimumValue">Minimum Value</span></th>
+                    <th><span translate="shiftworkApp.minMaxContractLine.minimumWeight">Minimum Weight</span></th>
+                    <th><span translate="shiftworkApp.minMaxContractLine.maximumEnabled">Maximum Enabled</span></th>
+                    <th><span translate="shiftworkApp.minMaxContractLine.maximumValue">Maximum Value</span></th>
+                    <th><span translate="shiftworkApp.minMaxContractLine.maximumWeight">Maximum Weight</span></th>
+                    <th><span translate="shiftworkApp.minMaxContractLine.contract">Contract</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="minMaxContractLine in vm.minMaxContractLines track by minMaxContractLine.id">
+                    <td><a ui-sref="min-max-contract-line-detail({id:minMaxContractLine.id})">{{minMaxContractLine.id}}</a></td>
+                    <td translate="{{'shiftworkApp.ContractLineType.' + minMaxContractLine.contractLineType}}">{{minMaxContractLine.contractLineType}}</td>
+                    <td>{{minMaxContractLine.minimumEnabled}}</td>
+                    <td>{{minMaxContractLine.minimumValue}}</td>
+                    <td>{{minMaxContractLine.minimumWeight}}</td>
+                    <td>{{minMaxContractLine.maximumEnabled}}</td>
+                    <td>{{minMaxContractLine.maximumValue}}</td>
+                    <td>{{minMaxContractLine.maximumWeight}}</td>
+                    <td>
+                        <a ui-sref="contract-detail({id:minMaxContractLine.contract.id})">{{minMaxContractLine.contract.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="min-max-contract-line-detail({id:minMaxContractLine.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="min-max-contract-line.edit({id:minMaxContractLine.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="min-max-contract-line.delete({id:minMaxContractLine.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

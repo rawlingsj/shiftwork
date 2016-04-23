@@ -1,0 +1,22 @@
+{
+    "shiftworkApp": {
+        "employees" : {
+            "home": {
+                "title": "Employees",
+                "createLabel": "Create a new Employees",
+                "createOrEditLabel": "Create or edit a Employees",
+                "search": "Search for Employees"
+            },
+            "created": "A new Employees is created with identifier {{ param }}",
+            "updated": "A Employees is updated with identifier {{ param }}",
+            "deleted": "A Employees is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Employees {{ id }}?"
+            },
+            "detail": {
+                "title": "Employees"
+            },
+            "employee": "Employee"
+        }
+    }
+}

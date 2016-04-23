@@ -1,0 +1,53 @@
+
+<div>
+    <h2><span translate="shiftworkApp.minMaxContractLine.detail.title">Min Max Contract Line</span> {{vm.minMaxContractLine.id}}</h2>
+    <hr>
+    <dl class="dl-horizontal">
+        <dt><span translate="shiftworkApp.minMaxContractLine.contractLineType">Contract Line Type</span></dt>
+        <dd>
+            <span translate="{{'shiftworkApp.ContractLineType.' + vm.minMaxContractLine.contractLineType}}">{{vm.minMaxContractLine.contractLineType}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.minMaxContractLine.minimumEnabled">Minimum Enabled</span></dt>
+        <dd>
+            <span>{{vm.minMaxContractLine.minimumEnabled}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.minMaxContractLine.minimumValue">Minimum Value</span></dt>
+        <dd>
+            <span>{{vm.minMaxContractLine.minimumValue}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.minMaxContractLine.minimumWeight">Minimum Weight</span></dt>
+        <dd>
+            <span>{{vm.minMaxContractLine.minimumWeight}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.minMaxContractLine.maximumEnabled">Maximum Enabled</span></dt>
+        <dd>
+            <span>{{vm.minMaxContractLine.maximumEnabled}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.minMaxContractLine.maximumValue">Maximum Value</span></dt>
+        <dd>
+            <span>{{vm.minMaxContractLine.maximumValue}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.minMaxContractLine.maximumWeight">Maximum Weight</span></dt>
+        <dd>
+            <span>{{vm.minMaxContractLine.maximumWeight}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.minMaxContractLine.contract">Contract</span></dt>
+        <dd>
+            <a ui-sref="contract-detail({id:vm.minMaxContractLine.contract.id})">{{vm.minMaxContractLine.contract.id}}</a>
+        </dd>
+        <hr>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

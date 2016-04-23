@@ -86,6 +86,30 @@ entity ContractLine {
     maximumWeight Integer
 }
 
+entity BooleanContractLine {
+	contractLineType ContractLineType,
+    enabled Boolean,
+    weight Integer
+}
+
+entity MinMaxContractLine {
+	contractLineType ContractLineType,
+    minimumEnabled Boolean,
+    minimumValue Integer,
+    minimumWeight Integer,
+    maximumEnabled Boolean,
+    maximumValue Integer,
+    maximumWeight Integer
+}
+
+relationship OneToOne {
+	BooleanContractLine{contract} to Contract
+}
+
+relationship OneToOne {
+	MinMaxContractLine{contract} to Contract
+}
+
 entity Pattern {
 	code String,
     weight Integer

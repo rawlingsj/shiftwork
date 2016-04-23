@@ -24,42 +24,46 @@
             <column name="contract_line_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="enabled" type="bit">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="weight" type="integer">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="minimum_enabled" type="bit">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="minimum_value" type="integer">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="minimum_weight" type="integer">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="maximum_enabled" type="bit">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="maximum_value" type="integer">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="maximum_weight" type="integer">
                 <constraints nullable="true" />
             </column>
-            
+
+            <column name="boolean_or_minmax" type="varchar(31)">
+                <constraints nullable="false" />
+            </column>
+
             <column name="contract_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

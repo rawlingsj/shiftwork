@@ -1,0 +1,19 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "employee",
+      "otherEntityName": "employee",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "employees"
+    }
+  ],
+  "fields": [],
+  "changelogDate": "20160423132927",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "employees"
+}

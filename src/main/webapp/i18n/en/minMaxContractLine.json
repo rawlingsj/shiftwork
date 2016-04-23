@@ -1,0 +1,29 @@
+{
+    "shiftworkApp": {
+        "minMaxContractLine" : {
+            "home": {
+                "title": "Min Max Contract Lines",
+                "createLabel": "Create a new Min Max Contract Line",
+                "createOrEditLabel": "Create or edit a Min Max Contract Line",
+                "search": "Search for Min Max Contract Line"
+            },
+            "created": "A new Min Max Contract Line is created with identifier {{ param }}",
+            "updated": "A Min Max Contract Line is updated with identifier {{ param }}",
+            "deleted": "A Min Max Contract Line is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Min Max Contract Line {{ id }}?"
+            },
+            "detail": {
+                "title": "Min Max Contract Line"
+            },
+            "contractLineType": "Contract Line Type",
+            "minimumEnabled": "Minimum Enabled",
+            "minimumValue": "Minimum Value",
+            "minimumWeight": "Minimum Weight",
+            "maximumEnabled": "Maximum Enabled",
+            "maximumValue": "Maximum Value",
+            "maximumWeight": "Maximum Weight",
+            "contract": "Contract"
+        }
+    }
+}
