@@ -1,5 +1,7 @@
 #!/usr/bin/groovy
 
+def utils = new io.fabric8.Utils()
+
 node {
   def envProd = 'shiftwork-production'
 
