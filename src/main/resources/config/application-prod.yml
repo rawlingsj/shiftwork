@@ -18,10 +18,10 @@ spring:
         livereload:
             enabled: false
     datasource:
-        url: jdbc:postgresql://localhost:5432/shiftwork
+        url: jdbc:postgresql://postgresql:5432/staffservice
         name:
-        username: shiftwork
-        password:
+        username: staffservice
+        password: Mnbv!432
     jpa:
         database-platform: com.teammachine.staffrostering.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL
