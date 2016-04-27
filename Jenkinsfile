@@ -13,7 +13,7 @@ node {
   }
 
   def newVersion = "1.0"
-  retry(10) {
+  retry(100) {
     newVersion = performCanaryRelease {}
   }
 
