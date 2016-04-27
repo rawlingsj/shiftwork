@@ -65,7 +65,8 @@ EXPOSE 8080
 COPY . /workdir
 
 RUN npm install \
-    && bower install \
-    && $MAVEN_HOME/bin/mvn -Pprod
+    && bower install
+
+CMD ["$MAVEN_HOME/bin/mvn", "-Pprod"]
 
 
