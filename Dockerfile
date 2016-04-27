@@ -57,12 +57,11 @@ RUN mkdir -p /usr/share/maven \
 ENV MAVEN_HOME /usr/share/maven
 
 
-
-WORKDIR /workdir
-
 EXPOSE 8080
 
 COPY . /workdir
+
+WORKDIR /workdir
 
 RUN npm install \
     && bower install
