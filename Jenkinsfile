@@ -28,7 +28,7 @@ node {
 
   checkout scm
 
-  kubernetes.pod('buildpod').withImage('fabric8/maven-builder')
+  kubernetes.pod('buildpod').withImage('172.30.150.12:80/shiftwork/jhipster-build')
       .withPrivileged(true)
       .withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
       .withEnvVar('DOCKER_CONFIG','/home/jenkins/.docker/')
@@ -49,7 +49,7 @@ node {
       itestPattern = localItestPattern
     }
 
-    stage 'Rolling Upgrade Staging'
+    stage 'Rolling Upgrade Production'
     def rc = readFile 'target/classes/kubernetes.json'
     kubernetesApply(file: rc, environment: envProd)
 
