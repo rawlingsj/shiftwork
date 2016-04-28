@@ -1,5 +1,26 @@
 #!/usr/bin/groovy
+def failIfNoTests = ""
+try {
+  failIfNoTests = ITEST_FAIL_IF_NO_TEST
+} catch (Throwable e) {
+  failIfNoTests = "false"
+}
 
+def itestPattern = ""
+try {
+  itestPattern = ITEST_PATTERN
+} catch (Throwable e) {
+  itestPattern = "*KT"
+}
+
+def versionPrefix = ""
+try {
+  versionPrefix = VERSION_PREFIX
+} catch (Throwable e) {
+  versionPrefix = "1.0"
+}
+
+def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 def utils = new io.fabric8.Utils()
 
 node {
@@ -7,24 +28,30 @@ node {
 
   checkout scm
 
-  stage 'Canary release'
-  if (!fileExists ('Dockerfile')) {
-    writeFile file: 'Dockerfile', text: 'FROM rhscl/php-56-rhel7'
-  }
+  kubernetes.pod('buildpod').withImage('fabric8/maven-builder')
+      .withPrivileged(true)
+      .withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
+      .withEnvVar('DOCKER_CONFIG','/home/jenkins/.docker/')
+      .withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
+      .withSecret('jenkins-maven-settings','/root/.m2')
+      .withServiceAccount('jenkins')
+      .inside {
 
-  def newVersion = "1.0"
-  retry(100) {
-    newVersion = performCanaryRelease {}
-  }
+    stage 'Canary Release'
+    mavenCanaryRelease{
+      version = canaryVersion
+    }
 
-  def rc = getKubernetesJson {
-    port = 8080
-    label = 'staffservice'
-    icon = 'https://cdn.rawgit.com/fabric8io/fabric8/dc05040/website/src/images/logos/nodejs.svg'
-    version = newVersion
-    imageName = clusterImageName
-  }
+    stage 'Integration Test'
+    mavenIntegrationTest{
+      environment = 'Testing'
+      failIfNoTests = localFailIfNoTests
+      itestPattern = localItestPattern
+    }
 
-  stage 'Rolling upgrade Production'
-  kubernetesApply(file: rc, environment: envProd)
+    stage 'Rolling Upgrade Staging'
+    def rc = readFile 'kubernetes.json'
+    kubernetesApply(file: rc, environment: envProd)
+
+  }
 }

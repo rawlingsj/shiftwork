@@ -1,0 +1,158 @@
+{
+    "apiVersion": "v1",
+    "kind": "Template",
+    "labels": {},
+    "metadata": {
+        "annotations": {
+            "description": "Shiftwork Staff Service",
+            "iconClass": "icon-java"
+        },
+        "labels": {},
+        "name": "staffservice"
+    },
+    "parameters": [
+        {
+            "name": "APP_NAME",
+            "value": "Staff Service",
+            "description": "Application Name"
+        },
+        {
+            "name": "config.version",
+            "required": true,
+            "description": "0.0.1-SNAPSHOT"
+        },
+        {
+            "name": "config.port",
+            "required": true,
+            "description": "8080"
+        },
+        {
+            "name": "config.label",
+            "required": true,
+            "description": "staffservice"
+        }
+    ],
+    "objects": [
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${APP_NAME}",
+                "creationTimestamp": null,
+                "labels": {
+                    "component": "${APP_NAME}",
+                    "container": "${APP_NAME}",
+                    "group": "quickstarts",
+                    "project": "${APP_NAME}",
+                    "provider": "fabric8",
+                    "version": "${config.version}"
+                },
+                "annotations": {
+                    "prometheus.io/port": "${config.port}",
+                    "prometheus.io/scheme": "http",
+                    "prometheus.io/scrape": "true"
+                }
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "protocol": "TCP",
+                        "port": 80,
+                        "targetPort": "${config.port}"
+                    }
+                ],
+                "selector": {
+                    "component": "${APP_NAME}",
+                    "container": "${config.label}",
+                    "group": "shiftwork",
+                    "project": "${APP_NAME}",
+                    "provider": "fabric8",
+                    "version": "${config.version}"
+                },
+                "type": "ClusterIP",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "kind": "ReplicationController",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${APP_NAME}",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "component": "${APP_NAME}",
+                    "container": "${config.label}",
+                    "group": "quickstarts",
+                    "project": "${APP_NAME}",
+                    "provider": "fabric8",
+                    "version": "${config.version}"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "component": "${APP_NAME}",
+                    "container": "${config.label}",
+                    "group": "shiftwork",
+                    "project": "${APP_NAME}",
+                    "provider": "fabric8",
+                    "version": "${config.version}"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "component": "${APP_NAME}",
+                            "container": "${config.label}",
+                            "group": "shiftwork",
+                            "project": "${APP_NAME}",
+                            "provider": "fabric8",
+                            "version": "${config.version}"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "${APP_NAME}",
+                                "image": "shiftwork/shiftwork:${config.version}",
+                                "ports": [
+                                    {
+                                        "name": "web",
+                                        "containerPort": "${config.port}",
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "KUBERNETES_NAMESPACE",
+                                        "valueFrom": {
+                                            "fieldRef": {
+                                                "apiVersion": "v1",
+                                                "fieldPath": "metadata.namespace"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent",
+                                "securityContext": {}
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {
+                "replicas": 0
+            }
+        }
+    ]
+}

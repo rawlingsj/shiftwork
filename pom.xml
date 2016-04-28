@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -26,7 +27,7 @@
         <gatling-maven-plugin.version>2.1.7</gatling-maven-plugin.version>
         <docker.assemblyDescriptorRef>artifact</docker.assemblyDescriptorRef>
         <docker.from>docker.io/fabric8/java-jboss-openjdk8-jdk:1.0.10</docker.from>
-        <docker.image>fabric8/${project.artifactId}:${project.version}</docker.image>
+        <docker.image>shiftwork/${project.artifactId}:${project.version}</docker.image>
         <docker.port.container.http>8080</docker.port.container.http>
         <docker.port.container.jolokia>8778</docker.port.container.jolokia>
         <fabric8.iconRef>icons/spring-boot</fabric8.iconRef>
@@ -62,13 +63,17 @@
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
         <run.addResources>false</run.addResources>
         <sonar-maven-plugin.version>2.7.1</sonar-maven-plugin.version>
-        <sonar.exclusions>src/main/webapp/content/**/*.*, src/main/webapp/bower_components/**/*.*, target/www/**/*.*</sonar.exclusions>
-        <sonar.jacoco.itReportPath>${project.testresult.directory}/coverage/jacoco/jacoco-it.exec</sonar.jacoco.itReportPath>
+        <sonar.exclusions>src/main/webapp/content/**/*.*, src/main/webapp/bower_components/**/*.*, target/www/**/*.*
+        </sonar.exclusions>
+        <sonar.jacoco.itReportPath>${project.testresult.directory}/coverage/jacoco/jacoco-it.exec
+        </sonar.jacoco.itReportPath>
         <sonar.jacoco.reportPath>${project.testresult.directory}/coverage/jacoco/jacoco.exec</sonar.jacoco.reportPath>
         <sonar.java.codeCoveragePlugin>jacoco</sonar.java.codeCoveragePlugin>
 
-        <sonar.javascript.jstestdriver.reportsPath>${project.testresult.directory}/karma</sonar.javascript.jstestdriver.reportsPath>
-        <sonar.javascript.lcov.reportPath>${project.testresult.directory}/coverage/report-lcov/lcov.info</sonar.javascript.lcov.reportPath>
+        <sonar.javascript.jstestdriver.reportsPath>${project.testresult.directory}/karma
+        </sonar.javascript.jstestdriver.reportsPath>
+        <sonar.javascript.lcov.reportPath>${project.testresult.directory}/coverage/report-lcov/lcov.info
+        </sonar.javascript.lcov.reportPath>
 
         <sonar.sources>${project.basedir}/src/main/</sonar.sources>
         <sonar.surefire.reportsPath>${project.testresult.directory}/surefire-reports</sonar.surefire.reportsPath>
@@ -385,9 +390,9 @@
             <artifactId>spring-security-data</artifactId>
         </dependency>
         <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
 
@@ -444,7 +449,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore />
+                                        <ignore/>
                                     </action>
                                 </pluginExecution>
                                 <pluginExecution>
@@ -457,7 +462,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore />
+                                        <ignore/>
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
@@ -542,11 +547,14 @@
                 <configuration>
                     <rules>
                         <requireMavenVersion>
-                            <message>You are running an older version of Maven. JHipster requires at least Maven 3.0</message>
+                            <message>You are running an older version of Maven. JHipster requires at least Maven 3.0
+                            </message>
                             <version>[3.0.0,)</version>
                         </requireMavenVersion>
                         <requireJavaVersion>
-                            <message>You are running an older version of Java. JHipster requires at least JDK ${java.version}</message>
+                            <message>You are running an older version of Java. JHipster requires at least JDK
+                                ${java.version}
+                            </message>
                             <version>[${java.version}.0,)</version>
                         </requireJavaVersion>
                     </rules>
@@ -651,12 +659,14 @@
                 </dependencies>
                 <configuration>
                     <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
-                    <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
-                    <driver />
-                    <url />
-                    <defaultSchemaName />
+                    <diffChangeLogFile>
+                        src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml
+                    </diffChangeLogFile>
+                    <driver/>
+                    <url/>
+                    <defaultSchemaName/>
                     <username>shiftwork</username>
-                    <password />
+                    <password/>
                     <referenceUrl>hibernate:spring:com.teammachine.staffrostering.domain?dialect=&amp;hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy</referenceUrl>
                     <verbose>true</verbose>
                     <logging>debug</logging>
@@ -677,49 +687,49 @@
                 </configuration>
             </plugin>
             <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>docker-maven-plugin</artifactId>
-        <version>0.14.2</version>
-        <configuration>
-          <images>
-            <image>
-              <name>${docker.image}</name>
-              <build>
-                <from>${docker.from}</from>
-                <assembly>
-                  <basedir>/app</basedir>
-                  <descriptorRef>${docker.assemblyDescriptorRef}</descriptorRef>
-                </assembly>
-                <env>
-                  <JAR>${project.artifactId}-${project.version}.war</JAR>
-                  <JAVA_OPTIONS>-Djava.security.egd=/dev/./urandom</JAVA_OPTIONS>
-                </env>
-              </build>
-            </image>
-          </images>
-        </configuration>
-      </plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.14.2</version>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>${docker.image}</name>
+                            <build>
+                                <from>${docker.from}</from>
+                                <assembly>
+                                    <basedir>/app</basedir>
+                                    <descriptorRef>${docker.assemblyDescriptorRef}</descriptorRef>
+                                </assembly>
+                                <env>
+                                    <JAVA_APP_JAR>${project.artifactId}-${project.version}.war</JAVA_APP_JAR>
+                                    <JAVA_OPTIONS>-Dspring.profiles.active=prod</JAVA_OPTIONS>
+                                </env>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
             <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>fabric8-maven-plugin</artifactId>
-        <version>2.2.100</version>
-        <executions>
-          <execution>
-            <id>json</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>json</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>attach</id>
-            <phase>package</phase>
-            <goals>
-              <goal>attach</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>fabric8-maven-plugin</artifactId>
+                <version>2.2.100</version>
+                <executions>
+                    <execution>
+                        <id>json</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>json</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>attach</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- jhipster-needle-maven-add-plugin -->
         </plugins>
     </build>
@@ -836,30 +846,30 @@
             </dependencies>
         </profile>
         <profile>
-      <id>f8-build</id>
-      <build>
-        <defaultGoal>clean install docker:build fabric8:json</defaultGoal>
-      </build>
-    </profile>
+            <id>f8-build</id>
+            <build>
+                <defaultGoal>clean install docker:build fabric8:json</defaultGoal>
+            </build>
+        </profile>
         <profile>
-      <id>f8-deploy</id>
-      <build>
-        <defaultGoal>clean install docker:build docker:push fabric8:json fabric8:apply</defaultGoal>
-      </build>
-      <properties>
-        <fabric8.recreate>true</fabric8.recreate>
-        <fabric8.imagePullPolicySnapshot>Always</fabric8.imagePullPolicySnapshot>
-      </properties>
-    </profile>
+            <id>f8-deploy</id>
+            <build>
+                <defaultGoal>clean install docker:build docker:push fabric8:json fabric8:apply</defaultGoal>
+            </build>
+            <properties>
+                <fabric8.recreate>true</fabric8.recreate>
+                <fabric8.imagePullPolicySnapshot>Always</fabric8.imagePullPolicySnapshot>
+            </properties>
+        </profile>
         <profile>
-      <id>f8-local-deploy</id>
-      <build>
-        <defaultGoal>clean install docker:build fabric8:json fabric8:apply</defaultGoal>
-      </build>
-      <properties>
-        <fabric8.recreate>true</fabric8.recreate>
-      </properties>
-    </profile>
+            <id>f8-local-deploy</id>
+            <build>
+                <defaultGoal>clean install docker:build fabric8:json fabric8:apply</defaultGoal>
+            </build>
+            <properties>
+                <fabric8.recreate>true</fabric8.recreate>
+            </properties>
+        </profile>
     </profiles>
 
 </project>
