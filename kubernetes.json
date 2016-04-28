@@ -18,16 +18,19 @@
         },
         {
             "name": "config.version",
+            "value": "1.0.0",
             "required": true,
             "description": "0.0.1-SNAPSHOT"
         },
         {
             "name": "config.port",
+            "value": "8080",
             "required": true,
             "description": "8080"
         },
         {
             "name": "config.label",
+            "value": "staffservice",
             "required": true,
             "description": "staffservice"
         }
@@ -118,7 +121,7 @@
                         "containers": [
                             {
                                 "name": "${APP_NAME}",
-                                "image": "shiftwork/shiftwork:${config.version}",
+                                "image": "shiftwork/shiftwork",
                                 "ports": [
                                     {
                                         "name": "web",
