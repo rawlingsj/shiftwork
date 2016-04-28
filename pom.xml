@@ -27,7 +27,7 @@
         <gatling-maven-plugin.version>2.1.7</gatling-maven-plugin.version>
         <docker.assemblyDescriptorRef>artifact</docker.assemblyDescriptorRef>
         <docker.from>docker.io/fabric8/java-jboss-openjdk8-jdk:1.0.10</docker.from>
-        <docker.image>shiftwork/${project.artifactId}:${project.version}</docker.image>
+        <docker.image>java:8</docker.image>
         <docker.port.container.http>8080</docker.port.container.http>
         <docker.port.container.jolokia>8778</docker.port.container.jolokia>
         <fabric8.iconRef>icons/spring-boot</fabric8.iconRef>
@@ -700,10 +700,12 @@
                                     <basedir>/app</basedir>
                                     <descriptorRef>${docker.assemblyDescriptorRef}</descriptorRef>
                                 </assembly>
-                                <env>
-                                    <JAVA_APP_JAR>${project.artifactId}-${project.version}.war</JAVA_APP_JAR>
-                                    <JAVA_OPTIONS>-Dspring.profiles.active=prod</JAVA_OPTIONS>
-                                </env>
+                                <ports>
+                                    <port>8080</port>
+                                </ports>
+                                <cmd>
+                                    <shell>java -jar /app/${project.artifactId}-${project.version}.war --spring.profiles.active=prod</shell>
+                                </cmd>
                             </build>
                         </image>
                     </images>
