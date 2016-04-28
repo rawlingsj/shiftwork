@@ -701,7 +701,7 @@
                                     <descriptorRef>${docker.assemblyDescriptorRef}</descriptorRef>
                                 </assembly>
                                 <ports>
-                                    <port>8080</port>
+                                    <port>8282</port>
                                 </ports>
                                 <cmd>
                                     <shell>java -jar /app/${project.artifactId}-${project.version}.war --spring.profiles.active=prod</shell>
