@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.teammachine.staffrostering</groupId>
-    <artifactId>shiftwork</artifactId>
+    <artifactId>staffservice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>shiftwork</name>
+    <name>staffservice</name>
 
     <prerequisites>
         <maven>3.0.0</maven>
@@ -33,12 +33,12 @@
         <fabric8.iconRef>icons/spring-boot</fabric8.iconRef>
         <fabric8.label.project>staffservice</fabric8.label.project>
         <fabric8.label.version>${project.version}</fabric8.label.version>
-        <fabric8.readinessProbe.httpGet.path>/health</fabric8.readinessProbe.httpGet.path>
+        <fabric8.readinessProbe.httpGet.path>/</fabric8.readinessProbe.httpGet.path>
         <fabric8.readinessProbe.httpGet.port>8080</fabric8.readinessProbe.httpGet.port>
         <fabric8.readinessProbe.initialDelaySeconds>5</fabric8.readinessProbe.initialDelaySeconds>
         <fabric8.readinessProbe.timeoutSeconds>30</fabric8.readinessProbe.timeoutSeconds>
         <fabric8.service.containerPort>8080</fabric8.service.containerPort>
-        <fabric8.service.name>shiftwork</fabric8.service.name>
+        <fabric8.service.name>staffservice</fabric8.service.name>
         <fabric8.service.port>80</fabric8.service.port>
         <fabric8.service.type>LoadBalancer</fabric8.service.type>
         <gatling.version>2.1.7</gatling.version>
@@ -498,7 +498,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.4.5</version>
                 <configuration>
-                    <imageName>shiftwork</imageName>
+                    <imageName>staffservice</imageName>
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
@@ -665,7 +665,7 @@
                     <driver/>
                     <url/>
                     <defaultSchemaName/>
-                    <username>shiftwork</username>
+                    <username>staffservice</username>
                     <password/>
                     <referenceUrl>hibernate:spring:com.teammachine.staffrostering.domain?dialect=&amp;hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy</referenceUrl>
                     <verbose>true</verbose>
@@ -701,7 +701,7 @@
                                     <descriptorRef>${docker.assemblyDescriptorRef}</descriptorRef>
                                 </assembly>
                                 <ports>
-                                    <port>8282</port>
+                                    <port>8080</port>
                                 </ports>
                                 <cmd>
                                     <shell>java -jar /app/${project.artifactId}-${project.version}.war --spring.profiles.active=prod</shell>
