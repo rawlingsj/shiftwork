@@ -50,7 +50,7 @@ node {
     }
 
     stage 'Rolling Upgrade Staging'
-    def rc = readFile 'kubernetes.json'
+    def rc = readFile 'target/classes/kubernetes.json'
     kubernetesApply(file: rc, environment: envProd)
 
   }
