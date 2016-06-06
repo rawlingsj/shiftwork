@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing PatternContractLine.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class PatternContractLineResource {
 
     private final Logger log = LoggerFactory.getLogger(PatternContractLineResource.class);

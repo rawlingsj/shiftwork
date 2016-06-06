@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing Employee.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class EmployeeResource {
 
     private final Logger log = LoggerFactory.getLogger(EmployeeResource.class);

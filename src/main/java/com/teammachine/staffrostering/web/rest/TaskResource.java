@@ -23,7 +23,7 @@ import java.util.Optional;
  * REST controller for managing Task.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class TaskResource {
 
     private final Logger log = LoggerFactory.getLogger(TaskResource.class);

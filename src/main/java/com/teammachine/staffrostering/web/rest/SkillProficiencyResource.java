@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing SkillProficiency.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class SkillProficiencyResource {
 
     private final Logger log = LoggerFactory.getLogger(SkillProficiencyResource.class);

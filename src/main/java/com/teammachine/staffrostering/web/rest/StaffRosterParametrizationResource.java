@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing StaffRosterParametrization.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class StaffRosterParametrizationResource {
 
     private final Logger log = LoggerFactory.getLogger(StaffRosterParametrizationResource.class);

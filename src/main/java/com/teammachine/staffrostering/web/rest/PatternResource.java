@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing Pattern.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class PatternResource {
 
     private final Logger log = LoggerFactory.getLogger(PatternResource.class);

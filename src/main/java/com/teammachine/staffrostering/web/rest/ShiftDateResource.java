@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing ShiftDate.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class ShiftDateResource {
 
     private final Logger log = LoggerFactory.getLogger(ShiftDateResource.class);

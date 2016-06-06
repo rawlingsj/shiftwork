@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing ShiftAssignment.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class ShiftAssignmentResource {
 
     private final Logger log = LoggerFactory.getLogger(ShiftAssignmentResource.class);

@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing EmployeeShiftOnRequest.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class EmployeeShiftOnRequestResource {
 
     private final Logger log = LoggerFactory.getLogger(EmployeeShiftOnRequestResource.class);

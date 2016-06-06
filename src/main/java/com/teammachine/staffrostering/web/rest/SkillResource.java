@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing Skill.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class SkillResource {
 
     private final Logger log = LoggerFactory.getLogger(SkillResource.class);

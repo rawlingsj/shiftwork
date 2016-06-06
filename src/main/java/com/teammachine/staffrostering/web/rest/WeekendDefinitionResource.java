@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing WeekendDefinition.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class WeekendDefinitionResource {
 
     private final Logger log = LoggerFactory.getLogger(WeekendDefinitionResource.class);

@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing TaskTpye.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class TaskTpyeResource {
 
     private final Logger log = LoggerFactory.getLogger(TaskTpyeResource.class);

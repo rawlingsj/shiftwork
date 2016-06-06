@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing BooleanContractLine.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class BooleanContractLineResource {
 
     private final Logger log = LoggerFactory.getLogger(BooleanContractLineResource.class);
