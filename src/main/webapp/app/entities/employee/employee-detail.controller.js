@@ -5,9 +5,9 @@
         .module('shiftworkApp')
         .controller('EmployeeDetailController', EmployeeDetailController);
 
-    EmployeeDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Employee', 'Contract', 'WeekendDefinition', 'SkillProficiency', 'EmployeeDayOffRequest', 'EmployeeDayOnRequest', 'EmployeeShiftOffRequest', 'EmployeeShiftOnRequest'];
+    EmployeeDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Employee', 'Contract', 'WeekendDefinition', 'EmployeeDayOffRequest', 'EmployeeDayOnRequest', 'EmployeeShiftOffRequest', 'EmployeeShiftOnRequest'];
 
-    function EmployeeDetailController($scope, $rootScope, $stateParams, entity, Employee, Contract, WeekendDefinition, SkillProficiency, EmployeeDayOffRequest, EmployeeDayOnRequest, EmployeeShiftOffRequest, EmployeeShiftOnRequest) {
+    function EmployeeDetailController($scope, $rootScope, $stateParams, entity, Employee, Contract, WeekendDefinition, EmployeeDayOffRequest, EmployeeDayOnRequest, EmployeeShiftOffRequest, EmployeeShiftOnRequest) {
         var vm = this;
         vm.employee = entity;
         

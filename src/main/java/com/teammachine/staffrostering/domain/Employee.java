@@ -41,11 +41,6 @@ public class Employee implements Serializable {
     @OneToMany(mappedBy = "employee")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<SkillProficiency> skills = new HashSet<>();
-
-    @OneToMany(mappedBy = "employee")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<EmployeeDayOffRequest> dayOffRequests = new HashSet<>();
 
     @OneToMany(mappedBy = "employee")
@@ -101,14 +96,6 @@ public class Employee implements Serializable {
 
     public void setWeekendDefinition(WeekendDefinition weekendDefinition) {
         this.weekendDefinition = weekendDefinition;
-    }
-
-    public Set<SkillProficiency> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(Set<SkillProficiency> skillProficiencies) {
-        this.skills = skillProficiencies;
     }
 
     public Set<EmployeeDayOffRequest> getDayOffRequests() {

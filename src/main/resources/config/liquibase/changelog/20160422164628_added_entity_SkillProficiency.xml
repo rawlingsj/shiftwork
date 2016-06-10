@@ -21,12 +21,20 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="skill_id" type="bigint">
-                <constraints unique="true"/>
-            </column>
             <column name="employee_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+
+        <createTable tableName="skill_proficiency_skill_list">
+            <column name="skill_lists_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="skill_proficiencies_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="skill_proficiencies_id, skill_lists_id" tableName="skill_proficiency_skill_list"/>
+
     </changeSet>
 </databaseChangeLog>

@@ -5,9 +5,9 @@
         .module('shiftworkApp')
         .controller('SkillDetailController', SkillDetailController);
 
-    SkillDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Skill'];
+    SkillDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Skill', 'SkillProficiency'];
 
-    function SkillDetailController($scope, $rootScope, $stateParams, entity, Skill) {
+    function SkillDetailController($scope, $rootScope, $stateParams, entity, Skill, SkillProficiency) {
         var vm = this;
         vm.skill = entity;
         

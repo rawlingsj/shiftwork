@@ -16,7 +16,8 @@
             "detail": {
                 "title": "Skill"
             },
-            "code": "Code"
+            "code": "Code",
+            "skillProficiencies": "Skill Proficiencies"
         }
     }
 }

@@ -1,10 +1,13 @@
 package com.teammachine.staffrostering.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -24,6 +27,11 @@ public class Skill implements Serializable {
     @Column(name = "code")
     private String code;
 
+    @ManyToMany(mappedBy = "skillLists")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<SkillProficiency> skillProficiencies = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -38,6 +46,14 @@ public class Skill implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Set<SkillProficiency> getSkillProficiencies() {
+        return skillProficiencies;
+    }
+
+    public void setSkillProficiencies(Set<SkillProficiency> skillProficiencies) {
+        this.skillProficiencies = skillProficiencies;
     }
 
     @Override

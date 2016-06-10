@@ -20,7 +20,6 @@
             "description": "Description",
             "contract": "Contract",
             "weekendDefinition": "Weekend Definition",
-            "skills": "Skills",
             "dayOffRequests": "Day Off Requests",
             "dayOnRequests": "Day On Requests",
             "shiftOffRequests": "Shift Off Requests",
