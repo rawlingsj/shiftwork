@@ -39,7 +39,7 @@ public class ShiftDate implements Serializable {
     @OneToMany(mappedBy = "shiftDate")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Shift> shiftLists = new HashSet<>();
+    private Set<Shift> shiftList = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -73,12 +73,12 @@ public class ShiftDate implements Serializable {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public Set<Shift> getShiftLists() {
-        return shiftLists;
+    public Set<Shift> getShiftList() {
+        return shiftList;
     }
 
-    public void setShiftLists(Set<Shift> shifts) {
-        this.shiftLists = shifts;
+    public void setShiftList(Set<Shift> shifts) {
+        this.shiftList = shifts;
     }
 
     @Override
