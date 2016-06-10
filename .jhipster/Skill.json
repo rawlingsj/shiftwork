@@ -1,5 +1,14 @@
 {
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "many-to-many",
+      "relationshipName": "skillProficiencies",
+      "otherEntityName": "skillProficiency",
+      "ownerSide": false,
+      "otherEntityRelationshipName": "skillList"
+    }
+  ],
   "fields": [
     {
       "fieldId": 1,

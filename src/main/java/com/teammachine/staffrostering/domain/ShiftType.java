@@ -28,6 +28,9 @@ public class ShiftType implements Serializable {
     @Column(name = "code")
     private String code;
 
+    @Column(name = "index")
+    private Integer index;
+
     @Column(name = "description")
     private String description;
 
@@ -59,6 +62,14 @@ public class ShiftType implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     public String getDescription() {
@@ -126,6 +137,7 @@ public class ShiftType implements Serializable {
         return "ShiftType{" +
             "id=" + id +
             ", code='" + code + "'" +
+            ", index='" + index + "'" +
             ", description='" + description + "'" +
             ", nightShift='" + nightShift + "'" +
             ", startTime='" + startTime + "'" +

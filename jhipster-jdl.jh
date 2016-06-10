@@ -9,7 +9,7 @@ entity StaffRosterParametrization {
 
 entity Employee {
 	name String,
-    description String 
+    description String
 }
 
 entity SkillProficiency {
@@ -47,6 +47,7 @@ entity ShiftAssignment {
 
 entity ShiftType {
 	code String,
+	index Integer,
     description String,
     nightShift Boolean,
     startTime ZonedDateTime,
@@ -181,8 +182,8 @@ relationship OneToOne {
 	Employee{weekendDefinition} to WeekendDefinition
 }
 
-relationship OneToMany {
-	Employee{skills} to SkillProficiency{employee}
+relationship OneToOne {
+	SkillProficiency{employee} to Employee
 }
 
 relationship OneToMany {
@@ -201,8 +202,8 @@ relationship OneToMany {
 	Employee{shiftOnRequests} to EmployeeShiftOnRequest{employee}
 }
 
-relationship OneToOne {
-	SkillProficiency{skill} to Skill
+relationship ManyToMany {
+	SkillProficiency{skillList} to Skill{skillProficiencies}
 }
 
 relationship OneToOne {

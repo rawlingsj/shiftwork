@@ -21,33 +21,26 @@
     {
       "relationshipId": 3,
       "relationshipType": "one-to-many",
-      "relationshipName": "skills",
-      "otherEntityName": "skillProficiency",
-      "otherEntityRelationshipName": "employee"
-    },
-    {
-      "relationshipId": 4,
-      "relationshipType": "one-to-many",
       "relationshipName": "dayOffRequests",
       "otherEntityName": "employeeDayOffRequest",
       "otherEntityRelationshipName": "employee"
     },
     {
-      "relationshipId": 5,
+      "relationshipId": 4,
       "relationshipType": "one-to-many",
       "relationshipName": "dayOnRequests",
       "otherEntityName": "employeeDayOnRequest",
       "otherEntityRelationshipName": "employee"
     },
     {
-      "relationshipId": 6,
+      "relationshipId": 5,
       "relationshipType": "one-to-many",
       "relationshipName": "shiftOffRequests",
       "otherEntityName": "employeeShiftOffRequest",
       "otherEntityRelationshipName": "employee"
     },
     {
-      "relationshipId": 7,
+      "relationshipId": 6,
       "relationshipType": "one-to-many",
       "relationshipName": "shiftOnRequests",
       "otherEntityName": "employeeShiftOnRequest",
