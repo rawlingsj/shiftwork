@@ -16,14 +16,16 @@
             "detail": {
                 "title": "Employee"
             },
+            "code": "Code",
+            "isSick": "Is Sick",
             "name": "Name",
-            "description": "Description",
             "contract": "Contract",
-            "weekendDefinition": "Weekend Definition",
             "dayOffRequests": "Day Off Requests",
             "dayOnRequests": "Day On Requests",
             "shiftOffRequests": "Shift Off Requests",
-            "shiftOnRequests": "Shift On Requests"
+            "shiftOnRequests": "Shift On Requests",
+            "unavailableShiftDate": "Unavailable Shift Date",
+            "unavailableShiftType": "Unavailable Shift Type"
         }
     }
 }

@@ -42,10 +42,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class EmployeeResourceIntTest {
 
+    private static final String DEFAULT_CODE = "AAAAA";
+    private static final String UPDATED_CODE = "BBBBB";
+
+    private static final Boolean DEFAULT_IS_SICK = false;
+    private static final Boolean UPDATED_IS_SICK = true;
     private static final String DEFAULT_NAME = "AAAAA";
     private static final String UPDATED_NAME = "BBBBB";
-    private static final String DEFAULT_DESCRIPTION = "AAAAA";
-    private static final String UPDATED_DESCRIPTION = "BBBBB";
 
     @Inject
     private EmployeeRepository employeeRepository;
@@ -76,8 +79,9 @@ public class EmployeeResourceIntTest {
     @Before
     public void initTest() {
         employee = new Employee();
+        employee.setCode(DEFAULT_CODE);
+        employee.setIsSick(DEFAULT_IS_SICK);
         employee.setName(DEFAULT_NAME);
-        employee.setDescription(DEFAULT_DESCRIPTION);
     }
 
     @Test
@@ -96,8 +100,9 @@ public class EmployeeResourceIntTest {
         List<Employee> employees = employeeRepository.findAll();
         assertThat(employees).hasSize(databaseSizeBeforeCreate + 1);
         Employee testEmployee = employees.get(employees.size() - 1);
+        assertThat(testEmployee.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testEmployee.isIsSick()).isEqualTo(DEFAULT_IS_SICK);
         assertThat(testEmployee.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testEmployee.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
     @Test
@@ -111,8 +116,9 @@ public class EmployeeResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(employee.getId().intValue())))
-                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+                .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
+                .andExpect(jsonPath("$.[*].isSick").value(hasItem(DEFAULT_IS_SICK.booleanValue())))
+                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
     @Test
@@ -126,8 +132,9 @@ public class EmployeeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(employee.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
+            .andExpect(jsonPath("$.isSick").value(DEFAULT_IS_SICK.booleanValue()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
 
     @Test
@@ -149,8 +156,9 @@ public class EmployeeResourceIntTest {
         // Update the employee
         Employee updatedEmployee = new Employee();
         updatedEmployee.setId(employee.getId());
+        updatedEmployee.setCode(UPDATED_CODE);
+        updatedEmployee.setIsSick(UPDATED_IS_SICK);
         updatedEmployee.setName(UPDATED_NAME);
-        updatedEmployee.setDescription(UPDATED_DESCRIPTION);
 
         restEmployeeMockMvc.perform(put("/api/employees")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -161,8 +169,9 @@ public class EmployeeResourceIntTest {
         List<Employee> employees = employeeRepository.findAll();
         assertThat(employees).hasSize(databaseSizeBeforeUpdate);
         Employee testEmployee = employees.get(employees.size() - 1);
+        assertThat(testEmployee.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testEmployee.isIsSick()).isEqualTo(UPDATED_IS_SICK);
         assertThat(testEmployee.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testEmployee.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
     @Test

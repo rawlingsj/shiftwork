@@ -8,8 +8,9 @@ entity StaffRosterParametrization {
 }
 
 entity Employee {
-	name String,
-    description String
+    code String,
+    isSick Boolean,
+	name String
 }
 
 entity SkillProficiency {
@@ -181,10 +182,6 @@ relationship OneToOne {
 }
 
 relationship OneToOne {
-	Employee{weekendDefinition} to WeekendDefinition
-}
-
-relationship OneToOne {
 	SkillProficiency{employee} to Employee
 }
 
@@ -210,6 +207,14 @@ relationship ManyToMany {
 
 relationship OneToOne {
 	EmployeeDayOffRequest{shiftDate} to ShiftDate
+}
+
+relationship OneToOne {
+    Employee{unavailableShiftDate} to ShiftDate
+}
+
+relationship OneToOne {
+    Employee{unavailableShiftType} to ShiftType
 }
 
 relationship OneToOne {
