@@ -14,37 +14,19 @@
     <property name="floatType" value="float" dbms="mysql, oracle"/>
 
     <!--
-        Added the entity Task.
+        Added the entity TaskSkillRequirement.
     -->
-    <changeSet id="20160422164638-1" author="jhipster">
-        <createTable tableName="task">
+    <changeSet id="20160611023039-1" author="jhipster">
+        <createTable tableName="task_skill_requirement">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="code" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="task_id" type="bigint">
+                <constraints unique="true"/>
             </column>
-            
-            <column name="description" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="skill_id" type="bigint">
+                <constraints unique="true"/>
             </column>
-            
-            <column name="staff_needed" type="integer">
-                <constraints nullable="true" />
-            </column>
-            
-            <column name="task_type" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            
-            <column name="importance" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            
-            <column name="urgency" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         

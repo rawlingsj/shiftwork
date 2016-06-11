@@ -9,135 +9,123 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-        .state('task', {
+        .state('task-skill-requirement', {
             parent: 'entity',
-            url: '/task',
+            url: '/task-skill-requirement',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'shiftworkApp.task.home.title'
+                pageTitle: 'shiftworkApp.taskSkillRequirement.home.title'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/entities/task/tasks.html',
-                    controller: 'TaskController',
+                    templateUrl: 'app/entities/task-skill-requirement/task-skill-requirements.html',
+                    controller: 'TaskSkillRequirementController',
                     controllerAs: 'vm'
                 }
             },
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('task');
-                    $translatePartialLoader.addPart('taskType');
-                    $translatePartialLoader.addPart('taskImportance');
-                    $translatePartialLoader.addPart('taskUrgency');
+                    $translatePartialLoader.addPart('taskSkillRequirement');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
             }
         })
-        .state('task-detail', {
+        .state('task-skill-requirement-detail', {
             parent: 'entity',
-            url: '/task/{id}',
+            url: '/task-skill-requirement/{id}',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'shiftworkApp.task.detail.title'
+                pageTitle: 'shiftworkApp.taskSkillRequirement.detail.title'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/entities/task/task-detail.html',
-                    controller: 'TaskDetailController',
+                    templateUrl: 'app/entities/task-skill-requirement/task-skill-requirement-detail.html',
+                    controller: 'TaskSkillRequirementDetailController',
                     controllerAs: 'vm'
                 }
             },
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('task');
-                    $translatePartialLoader.addPart('taskType');
-                    $translatePartialLoader.addPart('taskImportance');
-                    $translatePartialLoader.addPart('taskUrgency');
+                    $translatePartialLoader.addPart('taskSkillRequirement');
                     return $translate.refresh();
                 }],
-                entity: ['$stateParams', 'Task', function($stateParams, Task) {
-                    return Task.get({id : $stateParams.id});
+                entity: ['$stateParams', 'TaskSkillRequirement', function($stateParams, TaskSkillRequirement) {
+                    return TaskSkillRequirement.get({id : $stateParams.id});
                 }]
             }
         })
-        .state('task.new', {
-            parent: 'task',
+        .state('task-skill-requirement.new', {
+            parent: 'task-skill-requirement',
             url: '/new',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/task/task-dialog.html',
-                    controller: 'TaskDialogController',
+                    templateUrl: 'app/entities/task-skill-requirement/task-skill-requirement-dialog.html',
+                    controller: 'TaskSkillRequirementDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
                         entity: function () {
                             return {
-                                code: null,
-                                description: null,
-                                staffNeeded: null,
-                                taskType: null,
-                                importance: null,
-                                urgency: null,
                                 id: null
                             };
                         }
                     }
                 }).result.then(function() {
-                    $state.go('task', null, { reload: true });
+                    $state.go('task-skill-requirement', null, { reload: true });
                 }, function() {
-                    $state.go('task');
+                    $state.go('task-skill-requirement');
                 });
             }]
         })
-        .state('task.edit', {
-            parent: 'task',
+        .state('task-skill-requirement.edit', {
+            parent: 'task-skill-requirement',
             url: '/{id}/edit',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/task/task-dialog.html',
-                    controller: 'TaskDialogController',
+                    templateUrl: 'app/entities/task-skill-requirement/task-skill-requirement-dialog.html',
+                    controller: 'TaskSkillRequirementDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: ['Task', function(Task) {
-                            return Task.get({id : $stateParams.id});
+                        entity: ['TaskSkillRequirement', function(TaskSkillRequirement) {
+                            return TaskSkillRequirement.get({id : $stateParams.id});
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('task', null, { reload: true });
+                    $state.go('task-skill-requirement', null, { reload: true });
                 }, function() {
                     $state.go('^');
                 });
             }]
         })
-        .state('task.delete', {
-            parent: 'task',
+        .state('task-skill-requirement.delete', {
+            parent: 'task-skill-requirement',
             url: '/{id}/delete',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/task/task-delete-dialog.html',
-                    controller: 'TaskDeleteController',
+                    templateUrl: 'app/entities/task-skill-requirement/task-skill-requirement-delete-dialog.html',
+                    controller: 'TaskSkillRequirementDeleteController',
                     controllerAs: 'vm',
                     size: 'md',
                     resolve: {
-                        entity: ['Task', function(Task) {
-                            return Task.get({id : $stateParams.id});
+                        entity: ['TaskSkillRequirement', function(TaskSkillRequirement) {
+                            return TaskSkillRequirement.get({id : $stateParams.id});
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('task', null, { reload: true });
+                    $state.go('task-skill-requirement', null, { reload: true });
                 }, function() {
                     $state.go('^');
                 });

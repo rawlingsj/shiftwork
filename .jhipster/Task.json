@@ -1,15 +1,5 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipType": "one-to-one",
-      "relationshipName": "requiredSkill",
-      "otherEntityName": "skill",
-      "otherEntityField": "id",
-      "ownerSide": true,
-      "otherEntityRelationshipName": "task"
-    }
-  ],
+  "relationships": [],
   "fields": [
     {
       "fieldId": 1,
@@ -38,13 +28,15 @@
     },
     {
       "fieldId": 5,
-      "fieldName": "important",
-      "fieldType": "Boolean"
+      "fieldName": "importance",
+      "fieldType": "TaskImportance",
+      "fieldValues": "IMPORTANT,NOT_IMPORTANT"
     },
     {
       "fieldId": 6,
-      "fieldName": "urgent",
-      "fieldType": "Boolean"
+      "fieldName": "urgency",
+      "fieldType": "TaskUrgency",
+      "fieldValues": "URGENT,NOT_URGENT"
     }
   ],
   "changelogDate": "20160422164638",

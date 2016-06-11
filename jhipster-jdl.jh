@@ -65,12 +65,16 @@ entity Task {
     description String,
     staffNeeded Integer min(1),
     taskType TaskType,
-    important Boolean,
-    urgent Boolean
+    importance TaskImportance,
+    urgency TaskUrgency
 }
 
 entity Skill {
 	code String
+}
+
+entity TaskSkillRequirement {
+
 }
 
 entity Contract {
@@ -161,6 +165,16 @@ enum DayOfWeek {
     SUNDAY
 }
 
+enum TaskImportance {
+    IMPORTANT,
+    NOT_IMPORTANT
+}
+
+enum TaskUrgency {
+    URGENT,
+    NOT_URGENT
+}
+
 //*************************************
 // Relationships
 //*************************************
@@ -214,6 +228,14 @@ relationship OneToOne {
 }
 
 relationship OneToOne {
+    TaskSkillRequirement{task} to Task
+}
+
+relationship OneToOne {
+    TaskSkillRequirement{skill} to Skill
+}
+
+relationship OneToOne {
     Employee{unavailableShiftType} to ShiftType
 }
 
@@ -251,10 +273,6 @@ relationship OneToMany {
 
 relationship OneToOne {
 	ShiftTypeTask{task} to Task
-}
-
-relationship OneToOne {
-	Task{requiredSkill} to Skill
 }
 
 relationship OneToOne {

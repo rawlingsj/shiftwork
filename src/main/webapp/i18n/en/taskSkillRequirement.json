@@ -1,0 +1,23 @@
+{
+    "shiftworkApp": {
+        "taskSkillRequirement" : {
+            "home": {
+                "title": "Task Skill Requirements",
+                "createLabel": "Create a new Task Skill Requirement",
+                "createOrEditLabel": "Create or edit a Task Skill Requirement",
+                "search": "Search for Task Skill Requirement"
+            },
+            "created": "A new Task Skill Requirement is created with identifier {{ param }}",
+            "updated": "A Task Skill Requirement is updated with identifier {{ param }}",
+            "deleted": "A Task Skill Requirement is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Task Skill Requirement {{ id }}?"
+            },
+            "detail": {
+                "title": "Task Skill Requirement"
+            },
+            "task": "Task",
+            "skill": "Skill"
+        }
+    }
+}

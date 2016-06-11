@@ -5,20 +5,11 @@
         .module('shiftworkApp')
         .controller('TaskDialogController', TaskDialogController);
 
-    TaskDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Task', 'Skill'];
+    TaskDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Task'];
 
-    function TaskDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Task, Skill) {
+    function TaskDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Task) {
         var vm = this;
         vm.task = entity;
-        vm.requiredskills = Skill.query({filter: 'task-is-null'});
-        $q.all([vm.task.$promise, vm.requiredskills.$promise]).then(function() {
-            if (!vm.task.requiredSkill || !vm.task.requiredSkill.id) {
-                return $q.reject();
-            }
-            return Skill.get({id : vm.task.requiredSkill.id}).$promise;
-        }).then(function(requiredSkill) {
-            vm.requiredskills.push(requiredSkill);
-        });
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

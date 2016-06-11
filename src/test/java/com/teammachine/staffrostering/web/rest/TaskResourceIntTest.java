@@ -30,6 +30,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.teammachine.staffrostering.domain.enumeration.TaskType;
+import com.teammachine.staffrostering.domain.enumeration.TaskImportance;
+import com.teammachine.staffrostering.domain.enumeration.TaskUrgency;
 
 /**
  * Test class for the TaskResource REST controller.
@@ -53,11 +55,11 @@ public class TaskResourceIntTest {
     private static final TaskType DEFAULT_TASK_TYPE = TaskType.SHORT;
     private static final TaskType UPDATED_TASK_TYPE = TaskType.FULL;
 
-    private static final Boolean DEFAULT_IMPORTANT = false;
-    private static final Boolean UPDATED_IMPORTANT = true;
+    private static final TaskImportance DEFAULT_IMPORTANCE = TaskImportance.IMPORTANT;
+    private static final TaskImportance UPDATED_IMPORTANCE = TaskImportance.NOT_IMPORTANT;
 
-    private static final Boolean DEFAULT_URGENT = false;
-    private static final Boolean UPDATED_URGENT = true;
+    private static final TaskUrgency DEFAULT_URGENCY = TaskUrgency.URGENT;
+    private static final TaskUrgency UPDATED_URGENCY = TaskUrgency.NOT_URGENT;
 
     @Inject
     private TaskRepository taskRepository;
@@ -89,8 +91,8 @@ public class TaskResourceIntTest {
         task.setDescription(DEFAULT_DESCRIPTION);
         task.setStaffNeeded(DEFAULT_STAFF_NEEDED);
         task.setTaskType(DEFAULT_TASK_TYPE);
-        task.setImportant(DEFAULT_IMPORTANT);
-        task.setUrgent(DEFAULT_URGENT);
+        task.setImportance(DEFAULT_IMPORTANCE);
+        task.setUrgency(DEFAULT_URGENCY);
     }
 
     @Test
@@ -113,8 +115,8 @@ public class TaskResourceIntTest {
         assertThat(testTask.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testTask.getStaffNeeded()).isEqualTo(DEFAULT_STAFF_NEEDED);
         assertThat(testTask.getTaskType()).isEqualTo(DEFAULT_TASK_TYPE);
-        assertThat(testTask.isImportant()).isEqualTo(DEFAULT_IMPORTANT);
-        assertThat(testTask.isUrgent()).isEqualTo(DEFAULT_URGENT);
+        assertThat(testTask.getImportance()).isEqualTo(DEFAULT_IMPORTANCE);
+        assertThat(testTask.getUrgency()).isEqualTo(DEFAULT_URGENCY);
     }
 
     @Test
@@ -132,8 +134,8 @@ public class TaskResourceIntTest {
                 .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
                 .andExpect(jsonPath("$.[*].staffNeeded").value(hasItem(DEFAULT_STAFF_NEEDED)))
                 .andExpect(jsonPath("$.[*].taskType").value(hasItem(DEFAULT_TASK_TYPE.toString())))
-                .andExpect(jsonPath("$.[*].important").value(hasItem(DEFAULT_IMPORTANT.booleanValue())))
-                .andExpect(jsonPath("$.[*].urgent").value(hasItem(DEFAULT_URGENT.booleanValue())));
+                .andExpect(jsonPath("$.[*].importance").value(hasItem(DEFAULT_IMPORTANCE.toString())))
+                .andExpect(jsonPath("$.[*].urgency").value(hasItem(DEFAULT_URGENCY.toString())));
     }
 
     @Test
@@ -151,8 +153,8 @@ public class TaskResourceIntTest {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.staffNeeded").value(DEFAULT_STAFF_NEEDED))
             .andExpect(jsonPath("$.taskType").value(DEFAULT_TASK_TYPE.toString()))
-            .andExpect(jsonPath("$.important").value(DEFAULT_IMPORTANT.booleanValue()))
-            .andExpect(jsonPath("$.urgent").value(DEFAULT_URGENT.booleanValue()));
+            .andExpect(jsonPath("$.importance").value(DEFAULT_IMPORTANCE.toString()))
+            .andExpect(jsonPath("$.urgency").value(DEFAULT_URGENCY.toString()));
     }
 
     @Test
@@ -177,8 +179,8 @@ public class TaskResourceIntTest {
         updatedTask.setDescription(UPDATED_DESCRIPTION);
         updatedTask.setStaffNeeded(UPDATED_STAFF_NEEDED);
         updatedTask.setTaskType(UPDATED_TASK_TYPE);
-        updatedTask.setImportant(UPDATED_IMPORTANT);
-        updatedTask.setUrgent(UPDATED_URGENT);
+        updatedTask.setImportance(UPDATED_IMPORTANCE);
+        updatedTask.setUrgency(UPDATED_URGENCY);
 
         restTaskMockMvc.perform(put("/api/tasks")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -193,8 +195,8 @@ public class TaskResourceIntTest {
         assertThat(testTask.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testTask.getStaffNeeded()).isEqualTo(UPDATED_STAFF_NEEDED);
         assertThat(testTask.getTaskType()).isEqualTo(UPDATED_TASK_TYPE);
-        assertThat(testTask.isImportant()).isEqualTo(UPDATED_IMPORTANT);
-        assertThat(testTask.isUrgent()).isEqualTo(UPDATED_URGENT);
+        assertThat(testTask.getImportance()).isEqualTo(UPDATED_IMPORTANCE);
+        assertThat(testTask.getUrgency()).isEqualTo(UPDATED_URGENCY);
     }
 
     @Test

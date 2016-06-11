@@ -23,19 +23,14 @@
             <span translate="{{'shiftworkApp.TaskType.' + vm.task.taskType}}">{{vm.task.taskType}}</span>
         </dd>
         <hr>
-        <dt><span translate="shiftworkApp.task.important">Important</span></dt>
+        <dt><span translate="shiftworkApp.task.importance">Importance</span></dt>
         <dd>
-            <span>{{vm.task.important}}</span>
+            <span translate="{{'shiftworkApp.TaskImportance.' + vm.task.importance}}">{{vm.task.importance}}</span>
         </dd>
         <hr>
-        <dt><span translate="shiftworkApp.task.urgent">Urgent</span></dt>
+        <dt><span translate="shiftworkApp.task.urgency">Urgency</span></dt>
         <dd>
-            <span>{{vm.task.urgent}}</span>
-        </dd>
-        <hr>
-        <dt><span translate="shiftworkApp.task.requiredSkill">Required Skill</span></dt>
-        <dd>
-            <a ui-sref="skill-detail({id:vm.task.requiredSkill.id})">{{vm.task.requiredSkill.id}}</a>
+            <span translate="{{'shiftworkApp.TaskUrgency.' + vm.task.urgency}}">{{vm.task.urgency}}</span>
         </dd>
         <hr>
     </dl>

@@ -31,6 +31,7 @@
                 "booleanContractLine": "Boolean Contract Line",
                 "minMaxContractLine": "Min Max Contract Line",
                 "employees": "Employees",
+                "taskSkillRequirement": "Task Skill Requirement",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
