@@ -19,6 +19,7 @@
             <thead>
                 <tr>
                     <th><span translate="global.field.id">ID</span></th>
+                    <th><span translate="shiftworkApp.shift.index">Index</span></th>
                     <th><span translate="shiftworkApp.shift.staffRequired">Staff Required</span></th>
                     <th><span translate="shiftworkApp.shift.shiftType">Shift Type</span></th>
                     <th><span translate="shiftworkApp.shift.shiftDate">Shift Date</span></th>
@@ -28,6 +29,7 @@
             <tbody>
                 <tr ng-repeat="shift in vm.shifts track by shift.id">
                     <td><a ui-sref="shift-detail({id:shift.id})">{{shift.id}}</a></td>
+                    <td>{{shift.index}}</td>
                     <td>{{shift.staffRequired}}</td>
                     <td>
                         <a ui-sref="shift-type-detail({id:shift.shiftType.id})">{{shift.shiftType.id}}</a>

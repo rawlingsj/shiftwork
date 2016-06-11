@@ -71,6 +71,7 @@
                     resolve: {
                         entity: function () {
                             return {
+                                index: null,
                                 staffRequired: null,
                                 id: null
                             };

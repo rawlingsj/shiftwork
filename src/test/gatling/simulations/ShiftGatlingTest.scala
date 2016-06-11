@@ -67,7 +67,7 @@ class ShiftGatlingTest extends Simulation {
             .exec(http("Create new shift")
             .post("/api/shifts")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "staffRequired":"0"}""")).asJSON
+            .body(StringBody("""{"id":null, "index":"0", "staffRequired":"0"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_shift_url"))).exitHereIfFailed
             .pause(10)

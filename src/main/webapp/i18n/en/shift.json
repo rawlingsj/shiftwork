@@ -16,6 +16,7 @@
             "detail": {
                 "title": "Shift"
             },
+            "index": "Index",
             "staffRequired": "Staff Required",
             "shiftType": "Shift Type",
             "shiftDate": "Shift Date"

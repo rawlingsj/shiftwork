@@ -32,6 +32,7 @@ entity EmployeeShiftOffRequest {
 }
 
 entity Shift {
+    index   Integer,
 	staffRequired Integer
 }
 

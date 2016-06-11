@@ -20,6 +20,11 @@
   "fields": [
     {
       "fieldId": 1,
+      "fieldName": "index",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldId": 2,
       "fieldName": "staffRequired",
       "fieldType": "Integer"
     }
