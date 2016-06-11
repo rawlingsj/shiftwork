@@ -72,6 +72,7 @@ entity Skill {
 }
 
 entity Contract {
+    code String,
 	description String
 }
 
