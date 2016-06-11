@@ -50,6 +50,9 @@ public class Task implements Serializable {
     @Column(name = "urgency")
     private TaskUrgency urgency;
 
+    @ManyToOne
+    private ShiftAssignment shiftAssignment;
+
     public Long getId() {
         return id;
     }
@@ -104,6 +107,14 @@ public class Task implements Serializable {
 
     public void setUrgency(TaskUrgency urgency) {
         this.urgency = urgency;
+    }
+
+    public ShiftAssignment getShiftAssignment() {
+        return shiftAssignment;
+    }
+
+    public void setShiftAssignment(ShiftAssignment shiftAssignment) {
+        this.shiftAssignment = shiftAssignment;
     }
 
     @Override

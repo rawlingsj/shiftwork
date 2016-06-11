@@ -5,9 +5,9 @@
         .module('shiftworkApp')
         .controller('ShiftAssignmentDialogController', ShiftAssignmentDialogController);
 
-    ShiftAssignmentDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'ShiftAssignment', 'Shift', 'Employee'];
+    ShiftAssignmentDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'ShiftAssignment', 'Shift', 'Employee', 'Task'];
 
-    function ShiftAssignmentDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, ShiftAssignment, Shift, Employee) {
+    function ShiftAssignmentDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, ShiftAssignment, Shift, Employee, Task) {
         var vm = this;
         vm.shiftAssignment = entity;
         vm.shifts = Shift.query({filter: 'shiftassignment-is-null'});
@@ -28,6 +28,7 @@
         }).then(function(employee) {
             vm.employees.push(employee);
         });
+        vm.tasks = Task.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

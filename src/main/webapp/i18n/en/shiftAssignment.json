@@ -17,8 +17,12 @@
                 "title": "Shift Assignment"
             },
             "indexInShift": "Index In Shift",
+            "isNeedToReassign": "Is Need To Reassign",
+            "isDropped": "Is Dropped",
+            "locked": "Locked",
             "shift": "Shift",
-            "employee": "Employee"
+            "employee": "Employee",
+            "taskList": "Task List"
         }
     }
 }

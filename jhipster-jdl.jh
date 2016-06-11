@@ -44,7 +44,10 @@ entity ShiftDate {
 }
 
 entity ShiftAssignment {
-	indexInShift Integer
+	indexInShift Integer,
+	isNeedToReassign Boolean,
+	isDropped Boolean,
+	locked Boolean
 }
 
 entity ShiftType {
@@ -265,6 +268,10 @@ relationship OneToOne {
 
 relationship OneToOne {
 	ShiftAssignment{employee} to Employee
+}
+
+relationship OneToMany {
+    ShiftAssignment{taskList} to Task{shiftAssignment}
 }
 
 relationship OneToMany {

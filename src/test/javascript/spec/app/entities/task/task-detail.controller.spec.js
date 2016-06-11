@@ -4,7 +4,7 @@ describe('Controller Tests', function() {
 
     describe('Task Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockTask;
+        var MockEntity, MockTask, MockShiftAssignment;
         var createController;
 
         beforeEach(inject(function($injector) {
@@ -12,13 +12,15 @@ describe('Controller Tests', function() {
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
             MockTask = jasmine.createSpy('MockTask');
+            MockShiftAssignment = jasmine.createSpy('MockShiftAssignment');
             
 
             var locals = {
                 '$scope': $scope,
                 '$rootScope': $rootScope,
                 'entity': MockEntity ,
-                'Task': MockTask
+                'Task': MockTask,
+                'ShiftAssignment': MockShiftAssignment
             };
             createController = function() {
                 $injector.get('$controller')("TaskDetailController", locals);

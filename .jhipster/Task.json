@@ -1,5 +1,13 @@
 {
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "many-to-one",
+      "relationshipName": "shiftAssignment",
+      "otherEntityName": "shiftAssignment",
+      "otherEntityField": "id"
+    }
+  ],
   "fields": [
     {
       "fieldId": 1,

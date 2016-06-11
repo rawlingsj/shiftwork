@@ -17,6 +17,13 @@
       "otherEntityField": "id",
       "ownerSide": true,
       "otherEntityRelationshipName": "shiftAssignment"
+    },
+    {
+      "relationshipId": 3,
+      "relationshipType": "one-to-many",
+      "relationshipName": "taskList",
+      "otherEntityName": "task",
+      "otherEntityRelationshipName": "shiftAssignment"
     }
   ],
   "fields": [
@@ -24,6 +31,21 @@
       "fieldId": 1,
       "fieldName": "indexInShift",
       "fieldType": "Integer"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "isNeedToReassign",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "isDropped",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "locked",
+      "fieldType": "Boolean"
     }
   ],
   "changelogDate": "20160422164635",

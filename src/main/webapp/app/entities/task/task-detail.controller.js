@@ -5,9 +5,9 @@
         .module('shiftworkApp')
         .controller('TaskDetailController', TaskDetailController);
 
-    TaskDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Task'];
+    TaskDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Task', 'ShiftAssignment'];
 
-    function TaskDetailController($scope, $rootScope, $stateParams, entity, Task) {
+    function TaskDetailController($scope, $rootScope, $stateParams, entity, Task, ShiftAssignment) {
         var vm = this;
         vm.task = entity;
         
