@@ -87,7 +87,7 @@ public class SkillProficiencyResource {
     @Timed
     public List<SkillProficiency> getAllSkillProficiencies() {
         log.debug("REST request to get all SkillProficiencies");
-        List<SkillProficiency> skillProficiencies = skillProficiencyRepository.findAll();
+        List<SkillProficiency> skillProficiencies = skillProficiencyRepository.findAllWithEagerRelationships();
         return skillProficiencies;
     }
 
@@ -103,7 +103,7 @@ public class SkillProficiencyResource {
     @Timed
     public ResponseEntity<SkillProficiency> getSkillProficiency(@PathVariable Long id) {
         log.debug("REST request to get SkillProficiency : {}", id);
-        SkillProficiency skillProficiency = skillProficiencyRepository.findOne(id);
+        SkillProficiency skillProficiency = skillProficiencyRepository.findOneWithEagerRelationships(id);
         return Optional.ofNullable(skillProficiency)
             .map(result -> new ResponseEntity<>(
                 result,

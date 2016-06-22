@@ -50,21 +50,23 @@
             </select>
         </div>
         <div class="form-group">
-            <label class="control-label" translate="shiftworkApp.task.important" for="field_important">Important</label>
-            <input type="checkbox" class="form-control" name="important" id="field_important"
-                    ng-model="vm.task.important"
-                     />
+            <label class="control-label" translate="shiftworkApp.task.importance" for="field_importance">Importance</label>
+            <select class="form-control" name="importance" ng-model="vm.task.importance" id="field_importance">
+                <option value="Important" translate="shiftworkApp.TaskImportance.Important">Important</option>
+                <option value="Not_Important" translate="shiftworkApp.TaskImportance.Not_Important">Not_Important</option>
+            </select>
         </div>
         <div class="form-group">
-            <label class="control-label" translate="shiftworkApp.task.urgent" for="field_urgent">Urgent</label>
-            <input type="checkbox" class="form-control" name="urgent" id="field_urgent"
-                    ng-model="vm.task.urgent"
-                     />
+            <label class="control-label" translate="shiftworkApp.task.urgency" for="field_urgency">Urgency</label>
+            <select class="form-control" name="urgency" ng-model="vm.task.urgency" id="field_urgency">
+                <option value="Urgent" translate="shiftworkApp.TaskUrgency.Urgent">Urgent</option>
+                <option value="Not_Urgent" translate="shiftworkApp.TaskUrgency.Not_Urgent">Not_Urgent</option>
+            </select>
         </div>
 
         <div class="form-group">
-            <label translate="shiftworkApp.task.requiredSkill" for="field_requiredSkill">Required Skill</label>
-            <select class="form-control" id="field_requiredSkill" name="requiredSkill" ng-model="vm.task.requiredSkill" ng-options="skill as skill.id for skill in vm.requiredskills | orderBy:'id' track by skill.id">
+            <label translate="shiftworkApp.task.shiftAssignment" for="field_shiftAssignment">Shift Assignment</label>
+            <select class="form-control" id="field_shiftAssignment" name="shiftAssignment" ng-model="vm.task.shiftAssignment" ng-options="shiftAssignment as shiftAssignment.id for shiftAssignment in vm.shiftassignments track by shiftAssignment.id">
                 <option value=""></option>
             </select>
         </div>

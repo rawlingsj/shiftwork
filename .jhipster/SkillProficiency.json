@@ -3,18 +3,19 @@
     {
       "relationshipId": 1,
       "relationshipType": "one-to-one",
-      "relationshipName": "skill",
-      "otherEntityName": "skill",
+      "relationshipName": "employee",
+      "otherEntityName": "employee",
       "otherEntityField": "id",
       "ownerSide": true,
       "otherEntityRelationshipName": "skillProficiency"
     },
     {
       "relationshipId": 2,
-      "relationshipType": "many-to-one",
-      "relationshipName": "employee",
-      "otherEntityName": "employee",
-      "otherEntityField": "id"
+      "relationshipType": "many-to-many",
+      "relationshipName": "skillList",
+      "otherEntityName": "skill",
+      "otherEntityField": "id",
+      "ownerSide": true
     }
   ],
   "fields": [],

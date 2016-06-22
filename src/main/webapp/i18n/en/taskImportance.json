@@ -1,0 +1,9 @@
+{
+    "shiftworkApp": {
+        "TaskImportance" : {
+            "null": "",
+            "Important": "Important",
+            "Not_Important": "Not_Important"
+        }
+    }
+}

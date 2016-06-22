@@ -42,6 +42,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ShiftResourceIntTest {
 
 
+    private static final Integer DEFAULT_INDEX = 1;
+    private static final Integer UPDATED_INDEX = 2;
+
     private static final Integer DEFAULT_STAFF_REQUIRED = 1;
     private static final Integer UPDATED_STAFF_REQUIRED = 2;
 
@@ -71,6 +74,7 @@ public class ShiftResourceIntTest {
     @Before
     public void initTest() {
         shift = new Shift();
+        shift.setIndex(DEFAULT_INDEX);
         shift.setStaffRequired(DEFAULT_STAFF_REQUIRED);
     }
 
@@ -90,6 +94,7 @@ public class ShiftResourceIntTest {
         List<Shift> shifts = shiftRepository.findAll();
         assertThat(shifts).hasSize(databaseSizeBeforeCreate + 1);
         Shift testShift = shifts.get(shifts.size() - 1);
+        assertThat(testShift.getIndex()).isEqualTo(DEFAULT_INDEX);
         assertThat(testShift.getStaffRequired()).isEqualTo(DEFAULT_STAFF_REQUIRED);
     }
 
@@ -104,6 +109,7 @@ public class ShiftResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(shift.getId().intValue())))
+                .andExpect(jsonPath("$.[*].index").value(hasItem(DEFAULT_INDEX)))
                 .andExpect(jsonPath("$.[*].staffRequired").value(hasItem(DEFAULT_STAFF_REQUIRED)));
     }
 
@@ -118,6 +124,7 @@ public class ShiftResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(shift.getId().intValue()))
+            .andExpect(jsonPath("$.index").value(DEFAULT_INDEX))
             .andExpect(jsonPath("$.staffRequired").value(DEFAULT_STAFF_REQUIRED));
     }
 
@@ -139,6 +146,7 @@ public class ShiftResourceIntTest {
         // Update the shift
         Shift updatedShift = new Shift();
         updatedShift.setId(shift.getId());
+        updatedShift.setIndex(UPDATED_INDEX);
         updatedShift.setStaffRequired(UPDATED_STAFF_REQUIRED);
 
         restShiftMockMvc.perform(put("/api/shifts")
@@ -150,6 +158,7 @@ public class ShiftResourceIntTest {
         List<Shift> shifts = shiftRepository.findAll();
         assertThat(shifts).hasSize(databaseSizeBeforeUpdate);
         Shift testShift = shifts.get(shifts.size() - 1);
+        assertThat(testShift.getIndex()).isEqualTo(UPDATED_INDEX);
         assertThat(testShift.getStaffRequired()).isEqualTo(UPDATED_STAFF_REQUIRED);
     }
 

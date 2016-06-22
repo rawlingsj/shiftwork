@@ -16,21 +16,26 @@
     },
     {
       "fieldId": 2,
+      "fieldName": "index",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldId": 3,
       "fieldName": "description",
       "fieldType": "String"
     },
     {
-      "fieldId": 3,
+      "fieldId": 4,
       "fieldName": "nightShift",
       "fieldType": "Boolean"
     },
     {
-      "fieldId": 4,
+      "fieldId": 5,
       "fieldName": "startTime",
       "fieldType": "ZonedDateTime"
     },
     {
-      "fieldId": 5,
+      "fieldId": 6,
       "fieldName": "endTime",
       "fieldType": "ZonedDateTime"
     }

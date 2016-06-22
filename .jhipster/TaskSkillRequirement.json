@@ -1,0 +1,28 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "task",
+      "otherEntityName": "task",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "taskSkillRequirement"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "one-to-one",
+      "relationshipName": "skill",
+      "otherEntityName": "skill",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "taskSkillRequirement"
+    }
+  ],
+  "fields": [],
+  "changelogDate": "20160611023039",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "task_skill_requirement"
+}

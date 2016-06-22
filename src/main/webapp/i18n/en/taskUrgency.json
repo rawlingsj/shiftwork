@@ -1,0 +1,9 @@
+{
+    "shiftworkApp": {
+        "TaskUrgency" : {
+            "null": "",
+            "Urgent": "Urgent",
+            "Not_Urgent": "Not_Urgent"
+        }
+    }
+}

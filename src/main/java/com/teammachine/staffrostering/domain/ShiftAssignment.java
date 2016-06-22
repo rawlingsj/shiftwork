@@ -1,10 +1,13 @@
 package com.teammachine.staffrostering.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -24,6 +27,15 @@ public class ShiftAssignment implements Serializable {
     @Column(name = "index_in_shift")
     private Integer indexInShift;
 
+    @Column(name = "is_need_to_reassign")
+    private Boolean isNeedToReassign;
+
+    @Column(name = "is_dropped")
+    private Boolean isDropped;
+
+    @Column(name = "locked")
+    private Boolean locked;
+
     @OneToOne
     @JoinColumn(unique = true)
     private Shift shift;
@@ -31,6 +43,11 @@ public class ShiftAssignment implements Serializable {
     @OneToOne
     @JoinColumn(unique = true)
     private Employee employee;
+
+    @OneToMany(mappedBy = "shiftAssignment")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Task> taskLists = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -48,6 +65,30 @@ public class ShiftAssignment implements Serializable {
         this.indexInShift = indexInShift;
     }
 
+    public Boolean isIsNeedToReassign() {
+        return isNeedToReassign;
+    }
+
+    public void setIsNeedToReassign(Boolean isNeedToReassign) {
+        this.isNeedToReassign = isNeedToReassign;
+    }
+
+    public Boolean isIsDropped() {
+        return isDropped;
+    }
+
+    public void setIsDropped(Boolean isDropped) {
+        this.isDropped = isDropped;
+    }
+
+    public Boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
     public Shift getShift() {
         return shift;
     }
@@ -62,6 +103,14 @@ public class ShiftAssignment implements Serializable {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public Set<Task> getTaskLists() {
+        return taskLists;
+    }
+
+    public void setTaskLists(Set<Task> tasks) {
+        this.taskLists = tasks;
     }
 
     @Override
@@ -89,6 +138,9 @@ public class ShiftAssignment implements Serializable {
         return "ShiftAssignment{" +
             "id=" + id +
             ", indexInShift='" + indexInShift + "'" +
+            ", isNeedToReassign='" + isNeedToReassign + "'" +
+            ", isDropped='" + isDropped + "'" +
+            ", locked='" + locked + "'" +
             '}';
     }
 }

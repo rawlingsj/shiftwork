@@ -20,6 +20,9 @@
                 <tr>
                     <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.shiftAssignment.indexInShift">Index In Shift</span></th>
+                    <th><span translate="shiftworkApp.shiftAssignment.isNeedToReassign">Is Need To Reassign</span></th>
+                    <th><span translate="shiftworkApp.shiftAssignment.isDropped">Is Dropped</span></th>
+                    <th><span translate="shiftworkApp.shiftAssignment.locked">Locked</span></th>
                     <th><span translate="shiftworkApp.shiftAssignment.shift">Shift</span></th>
                     <th><span translate="shiftworkApp.shiftAssignment.employee">Employee</span></th>
                     <th></th>
@@ -29,6 +32,9 @@
                 <tr ng-repeat="shiftAssignment in vm.shiftAssignments track by shiftAssignment.id">
                     <td><a ui-sref="shift-assignment-detail({id:shiftAssignment.id})">{{shiftAssignment.id}}</a></td>
                     <td>{{shiftAssignment.indexInShift}}</td>
+                    <td>{{shiftAssignment.isNeedToReassign}}</td>
+                    <td>{{shiftAssignment.isDropped}}</td>
+                    <td>{{shiftAssignment.locked}}</td>
                     <td>
                         <a ui-sref="shift-detail({id:shiftAssignment.shift.id})">{{shiftAssignment.shift.id}}</a>
                     </td>

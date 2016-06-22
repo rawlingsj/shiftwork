@@ -67,7 +67,7 @@ class ShiftAssignmentGatlingTest extends Simulation {
             .exec(http("Create new shiftAssignment")
             .post("/api/shift-assignments")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "indexInShift":"0"}""")).asJSON
+            .body(StringBody("""{"id":null, "indexInShift":"0", "isNeedToReassign":null, "isDropped":null, "locked":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_shiftAssignment_url"))).exitHereIfFailed
             .pause(10)

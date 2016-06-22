@@ -4,7 +4,7 @@ describe('Controller Tests', function() {
 
     describe('Employee Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockEmployee, MockContract, MockWeekendDefinition, MockSkillProficiency, MockEmployeeDayOffRequest, MockEmployeeDayOnRequest, MockEmployeeShiftOffRequest, MockEmployeeShiftOnRequest;
+        var MockEntity, MockEmployee, MockContract, MockEmployeeDayOffRequest, MockEmployeeDayOnRequest, MockEmployeeShiftOffRequest, MockEmployeeShiftOnRequest, MockShiftDate, MockShiftType;
         var createController;
 
         beforeEach(inject(function($injector) {
@@ -13,12 +13,12 @@ describe('Controller Tests', function() {
             MockEntity = jasmine.createSpy('MockEntity');
             MockEmployee = jasmine.createSpy('MockEmployee');
             MockContract = jasmine.createSpy('MockContract');
-            MockWeekendDefinition = jasmine.createSpy('MockWeekendDefinition');
-            MockSkillProficiency = jasmine.createSpy('MockSkillProficiency');
             MockEmployeeDayOffRequest = jasmine.createSpy('MockEmployeeDayOffRequest');
             MockEmployeeDayOnRequest = jasmine.createSpy('MockEmployeeDayOnRequest');
             MockEmployeeShiftOffRequest = jasmine.createSpy('MockEmployeeShiftOffRequest');
             MockEmployeeShiftOnRequest = jasmine.createSpy('MockEmployeeShiftOnRequest');
+            MockShiftDate = jasmine.createSpy('MockShiftDate');
+            MockShiftType = jasmine.createSpy('MockShiftType');
             
 
             var locals = {
@@ -27,12 +27,12 @@ describe('Controller Tests', function() {
                 'entity': MockEntity ,
                 'Employee': MockEmployee,
                 'Contract': MockContract,
-                'WeekendDefinition': MockWeekendDefinition,
-                'SkillProficiency': MockSkillProficiency,
                 'EmployeeDayOffRequest': MockEmployeeDayOffRequest,
                 'EmployeeDayOnRequest': MockEmployeeDayOnRequest,
                 'EmployeeShiftOffRequest': MockEmployeeShiftOffRequest,
-                'EmployeeShiftOnRequest': MockEmployeeShiftOnRequest
+                'EmployeeShiftOnRequest': MockEmployeeShiftOnRequest,
+                'ShiftDate': MockShiftDate,
+                'ShiftType': MockShiftType
             };
             createController = function() {
                 $injector.get('$controller')("EmployeeDetailController", locals);

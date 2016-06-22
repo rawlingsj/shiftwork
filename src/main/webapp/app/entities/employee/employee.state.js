@@ -71,8 +71,9 @@
                     resolve: {
                         entity: function () {
                             return {
+                                code: null,
+                                isSick: null,
                                 name: null,
-                                description: null,
                                 id: null
                             };
                         }

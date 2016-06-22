@@ -27,6 +27,7 @@
     <include file="classpath:config/liquibase/changelog/20160422170652_added_entity_TaskTpye.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160422164641_added_entity_ContractLine.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160423132927_added_entity_Employees.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160611023039_added_entity_TaskSkillRequirement.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20160422164645_added_entity_constraints_WeekendDay.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160422164626_added_entity_constraints_StaffRosterParametrization.xml" relativeToChangelogFile="false"/>
@@ -44,5 +45,6 @@
     <include file="classpath:config/liquibase/changelog/20160422164637_added_entity_constraints_ShiftTypeTask.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160422164638_added_entity_constraints_Task.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160423132927_added_entity_constraints_Employees.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160611023039_added_entity_constraints_TaskSkillRequirement.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

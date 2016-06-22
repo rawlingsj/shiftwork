@@ -24,24 +24,18 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "code")
+    private String code;
+
+    @Column(name = "is_sick")
+    private Boolean isSick;
+
     @Column(name = "name")
     private String name;
-
-    @Column(name = "description")
-    private String description;
 
     @OneToOne
     @JoinColumn(unique = true)
     private Contract contract;
-
-    @OneToOne
-    @JoinColumn(unique = true)
-    private WeekendDefinition weekendDefinition;
-
-    @OneToMany(mappedBy = "employee")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<SkillProficiency> skills = new HashSet<>();
 
     @OneToMany(mappedBy = "employee")
     @JsonIgnore
@@ -63,12 +57,36 @@ public class Employee implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<EmployeeShiftOnRequest> shiftOnRequests = new HashSet<>();
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private ShiftDate unavailableShiftDate;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private ShiftType unavailableShiftType;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Boolean isIsSick() {
+        return isSick;
+    }
+
+    public void setIsSick(Boolean isSick) {
+        this.isSick = isSick;
     }
 
     public String getName() {
@@ -79,36 +97,12 @@ public class Employee implements Serializable {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Contract getContract() {
         return contract;
     }
 
     public void setContract(Contract contract) {
         this.contract = contract;
-    }
-
-    public WeekendDefinition getWeekendDefinition() {
-        return weekendDefinition;
-    }
-
-    public void setWeekendDefinition(WeekendDefinition weekendDefinition) {
-        this.weekendDefinition = weekendDefinition;
-    }
-
-    public Set<SkillProficiency> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(Set<SkillProficiency> skillProficiencies) {
-        this.skills = skillProficiencies;
     }
 
     public Set<EmployeeDayOffRequest> getDayOffRequests() {
@@ -143,6 +137,22 @@ public class Employee implements Serializable {
         this.shiftOnRequests = employeeShiftOnRequests;
     }
 
+    public ShiftDate getUnavailableShiftDate() {
+        return unavailableShiftDate;
+    }
+
+    public void setUnavailableShiftDate(ShiftDate shiftDate) {
+        this.unavailableShiftDate = shiftDate;
+    }
+
+    public ShiftType getUnavailableShiftType() {
+        return unavailableShiftType;
+    }
+
+    public void setUnavailableShiftType(ShiftType shiftType) {
+        this.unavailableShiftType = shiftType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -167,8 +177,9 @@ public class Employee implements Serializable {
     public String toString() {
         return "Employee{" +
             "id=" + id +
+            ", code='" + code + "'" +
+            ", isSick='" + isSick + "'" +
             ", name='" + name + "'" +
-            ", description='" + description + "'" +
             '}';
     }
 }

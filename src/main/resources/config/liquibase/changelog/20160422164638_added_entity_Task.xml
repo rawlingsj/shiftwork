@@ -37,17 +37,15 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="important" type="bit">
+            <column name="importance" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             
-            <column name="urgent" type="bit">
+            <column name="urgency" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             
-            <column name="required_skill_id" type="bigint">
-                <constraints unique="true"/>
-            </column>
+            <column name="shift_assignment_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         

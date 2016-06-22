@@ -11,58 +11,65 @@
     },
     {
       "relationshipId": 2,
-      "relationshipType": "one-to-one",
-      "relationshipName": "weekendDefinition",
-      "otherEntityName": "weekendDefinition",
-      "otherEntityField": "id",
-      "ownerSide": true,
-      "otherEntityRelationshipName": "employee"
-    },
-    {
-      "relationshipId": 3,
-      "relationshipType": "one-to-many",
-      "relationshipName": "skills",
-      "otherEntityName": "skillProficiency",
-      "otherEntityRelationshipName": "employee"
-    },
-    {
-      "relationshipId": 4,
       "relationshipType": "one-to-many",
       "relationshipName": "dayOffRequests",
       "otherEntityName": "employeeDayOffRequest",
       "otherEntityRelationshipName": "employee"
     },
     {
-      "relationshipId": 5,
+      "relationshipId": 3,
       "relationshipType": "one-to-many",
       "relationshipName": "dayOnRequests",
       "otherEntityName": "employeeDayOnRequest",
       "otherEntityRelationshipName": "employee"
     },
     {
-      "relationshipId": 6,
+      "relationshipId": 4,
       "relationshipType": "one-to-many",
       "relationshipName": "shiftOffRequests",
       "otherEntityName": "employeeShiftOffRequest",
       "otherEntityRelationshipName": "employee"
     },
     {
-      "relationshipId": 7,
+      "relationshipId": 5,
       "relationshipType": "one-to-many",
       "relationshipName": "shiftOnRequests",
       "otherEntityName": "employeeShiftOnRequest",
+      "otherEntityRelationshipName": "employee"
+    },
+    {
+      "relationshipId": 6,
+      "relationshipType": "one-to-one",
+      "relationshipName": "unavailableShiftDate",
+      "otherEntityName": "shiftDate",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "employee"
+    },
+    {
+      "relationshipId": 7,
+      "relationshipType": "one-to-one",
+      "relationshipName": "unavailableShiftType",
+      "otherEntityName": "shiftType",
+      "otherEntityField": "id",
+      "ownerSide": true,
       "otherEntityRelationshipName": "employee"
     }
   ],
   "fields": [
     {
       "fieldId": 1,
-      "fieldName": "name",
+      "fieldName": "code",
       "fieldType": "String"
     },
     {
       "fieldId": 2,
-      "fieldName": "description",
+      "fieldName": "isSick",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "name",
       "fieldType": "String"
     }
   ],

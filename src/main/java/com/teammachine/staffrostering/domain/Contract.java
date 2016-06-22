@@ -24,6 +24,9 @@ public class Contract implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "code")
+    private String code;
+
     @Column(name = "description")
     private String description;
 
@@ -42,6 +45,14 @@ public class Contract implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getDescription() {
@@ -92,6 +103,7 @@ public class Contract implements Serializable {
     public String toString() {
         return "Contract{" +
             "id=" + id +
+            ", code='" + code + "'" +
             ", description='" + description + "'" +
             '}';
     }

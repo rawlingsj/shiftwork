@@ -21,6 +21,10 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="index" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
             <column name="staff_required" type="integer">
                 <constraints nullable="true" />
             </column>

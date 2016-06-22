@@ -72,6 +72,7 @@
                         entity: function () {
                             return {
                                 code: null,
+                                index: null,
                                 description: null,
                                 nightShift: null,
                                 startTime: null,

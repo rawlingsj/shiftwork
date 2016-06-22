@@ -14,11 +14,17 @@
                                  referencedColumnNames="id"
                                  referencedTableName="contract"/>
 
-        <addForeignKeyConstraint baseColumnNames="weekend_definition_id"
+        <addForeignKeyConstraint baseColumnNames="unavailable_shift_date_id"
                                  baseTableName="employee"
-                                 constraintName="fk_employee_weekenddefinition_id"
+                                 constraintName="fk_employee_unavailableshiftdate_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="weekend_definition"/>
+                                 referencedTableName="shift_date"/>
+
+        <addForeignKeyConstraint baseColumnNames="unavailable_shift_type_id"
+                                 baseTableName="employee"
+                                 constraintName="fk_employee_unavailableshifttype_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shift_type"/>
 
     </changeSet>
 </databaseChangeLog>

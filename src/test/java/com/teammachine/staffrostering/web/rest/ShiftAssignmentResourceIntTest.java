@@ -45,6 +45,15 @@ public class ShiftAssignmentResourceIntTest {
     private static final Integer DEFAULT_INDEX_IN_SHIFT = 1;
     private static final Integer UPDATED_INDEX_IN_SHIFT = 2;
 
+    private static final Boolean DEFAULT_IS_NEED_TO_REASSIGN = false;
+    private static final Boolean UPDATED_IS_NEED_TO_REASSIGN = true;
+
+    private static final Boolean DEFAULT_IS_DROPPED = false;
+    private static final Boolean UPDATED_IS_DROPPED = true;
+
+    private static final Boolean DEFAULT_LOCKED = false;
+    private static final Boolean UPDATED_LOCKED = true;
+
     @Inject
     private ShiftAssignmentRepository shiftAssignmentRepository;
 
@@ -72,6 +81,9 @@ public class ShiftAssignmentResourceIntTest {
     public void initTest() {
         shiftAssignment = new ShiftAssignment();
         shiftAssignment.setIndexInShift(DEFAULT_INDEX_IN_SHIFT);
+        shiftAssignment.setIsNeedToReassign(DEFAULT_IS_NEED_TO_REASSIGN);
+        shiftAssignment.setIsDropped(DEFAULT_IS_DROPPED);
+        shiftAssignment.setLocked(DEFAULT_LOCKED);
     }
 
     @Test
@@ -91,6 +103,9 @@ public class ShiftAssignmentResourceIntTest {
         assertThat(shiftAssignments).hasSize(databaseSizeBeforeCreate + 1);
         ShiftAssignment testShiftAssignment = shiftAssignments.get(shiftAssignments.size() - 1);
         assertThat(testShiftAssignment.getIndexInShift()).isEqualTo(DEFAULT_INDEX_IN_SHIFT);
+        assertThat(testShiftAssignment.isIsNeedToReassign()).isEqualTo(DEFAULT_IS_NEED_TO_REASSIGN);
+        assertThat(testShiftAssignment.isIsDropped()).isEqualTo(DEFAULT_IS_DROPPED);
+        assertThat(testShiftAssignment.isLocked()).isEqualTo(DEFAULT_LOCKED);
     }
 
     @Test
@@ -104,7 +119,10 @@ public class ShiftAssignmentResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(shiftAssignment.getId().intValue())))
-                .andExpect(jsonPath("$.[*].indexInShift").value(hasItem(DEFAULT_INDEX_IN_SHIFT)));
+                .andExpect(jsonPath("$.[*].indexInShift").value(hasItem(DEFAULT_INDEX_IN_SHIFT)))
+                .andExpect(jsonPath("$.[*].isNeedToReassign").value(hasItem(DEFAULT_IS_NEED_TO_REASSIGN.booleanValue())))
+                .andExpect(jsonPath("$.[*].isDropped").value(hasItem(DEFAULT_IS_DROPPED.booleanValue())))
+                .andExpect(jsonPath("$.[*].locked").value(hasItem(DEFAULT_LOCKED.booleanValue())));
     }
 
     @Test
@@ -118,7 +136,10 @@ public class ShiftAssignmentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(shiftAssignment.getId().intValue()))
-            .andExpect(jsonPath("$.indexInShift").value(DEFAULT_INDEX_IN_SHIFT));
+            .andExpect(jsonPath("$.indexInShift").value(DEFAULT_INDEX_IN_SHIFT))
+            .andExpect(jsonPath("$.isNeedToReassign").value(DEFAULT_IS_NEED_TO_REASSIGN.booleanValue()))
+            .andExpect(jsonPath("$.isDropped").value(DEFAULT_IS_DROPPED.booleanValue()))
+            .andExpect(jsonPath("$.locked").value(DEFAULT_LOCKED.booleanValue()));
     }
 
     @Test
@@ -140,6 +161,9 @@ public class ShiftAssignmentResourceIntTest {
         ShiftAssignment updatedShiftAssignment = new ShiftAssignment();
         updatedShiftAssignment.setId(shiftAssignment.getId());
         updatedShiftAssignment.setIndexInShift(UPDATED_INDEX_IN_SHIFT);
+        updatedShiftAssignment.setIsNeedToReassign(UPDATED_IS_NEED_TO_REASSIGN);
+        updatedShiftAssignment.setIsDropped(UPDATED_IS_DROPPED);
+        updatedShiftAssignment.setLocked(UPDATED_LOCKED);
 
         restShiftAssignmentMockMvc.perform(put("/api/shift-assignments")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -151,6 +175,9 @@ public class ShiftAssignmentResourceIntTest {
         assertThat(shiftAssignments).hasSize(databaseSizeBeforeUpdate);
         ShiftAssignment testShiftAssignment = shiftAssignments.get(shiftAssignments.size() - 1);
         assertThat(testShiftAssignment.getIndexInShift()).isEqualTo(UPDATED_INDEX_IN_SHIFT);
+        assertThat(testShiftAssignment.isIsNeedToReassign()).isEqualTo(UPDATED_IS_NEED_TO_REASSIGN);
+        assertThat(testShiftAssignment.isIsDropped()).isEqualTo(UPDATED_IS_DROPPED);
+        assertThat(testShiftAssignment.isLocked()).isEqualTo(UPDATED_LOCKED);
     }
 
     @Test

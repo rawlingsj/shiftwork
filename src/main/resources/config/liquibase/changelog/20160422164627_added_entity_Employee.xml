@@ -21,18 +21,25 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="varchar(255)">
+            <column name="code" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             
-            <column name="description" type="varchar(255)">
+            <column name="is_sick" type="bit">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             
             <column name="contract_id" type="bigint">
                 <constraints unique="true"/>
             </column>
-            <column name="weekend_definition_id" type="bigint">
+            <column name="unavailable_shift_date_id" type="bigint">
+                <constraints unique="true"/>
+            </column>
+            <column name="unavailable_shift_type_id" type="bigint">
                 <constraints unique="true"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->

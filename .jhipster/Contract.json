@@ -20,6 +20,11 @@
   "fields": [
     {
       "fieldId": 1,
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 2,
       "fieldName": "description",
       "fieldType": "String"
     }

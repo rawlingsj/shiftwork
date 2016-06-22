@@ -10,6 +10,10 @@ import java.util.Objects;
 
 import com.teammachine.staffrostering.domain.enumeration.TaskType;
 
+import com.teammachine.staffrostering.domain.enumeration.TaskImportance;
+
+import com.teammachine.staffrostering.domain.enumeration.TaskUrgency;
+
 /**
  * A Task.
  */
@@ -38,15 +42,16 @@ public class Task implements Serializable {
     @Column(name = "task_type")
     private TaskType taskType;
 
-    @Column(name = "important")
-    private Boolean important;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "importance")
+    private TaskImportance importance;
 
-    @Column(name = "urgent")
-    private Boolean urgent;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "urgency")
+    private TaskUrgency urgency;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Skill requiredSkill;
+    @ManyToOne
+    private ShiftAssignment shiftAssignment;
 
     public Long getId() {
         return id;
@@ -88,28 +93,28 @@ public class Task implements Serializable {
         this.taskType = taskType;
     }
 
-    public Boolean isImportant() {
-        return important;
+    public TaskImportance getImportance() {
+        return importance;
     }
 
-    public void setImportant(Boolean important) {
-        this.important = important;
+    public void setImportance(TaskImportance importance) {
+        this.importance = importance;
     }
 
-    public Boolean isUrgent() {
-        return urgent;
+    public TaskUrgency getUrgency() {
+        return urgency;
     }
 
-    public void setUrgent(Boolean urgent) {
-        this.urgent = urgent;
+    public void setUrgency(TaskUrgency urgency) {
+        this.urgency = urgency;
     }
 
-    public Skill getRequiredSkill() {
-        return requiredSkill;
+    public ShiftAssignment getShiftAssignment() {
+        return shiftAssignment;
     }
 
-    public void setRequiredSkill(Skill skill) {
-        this.requiredSkill = skill;
+    public void setShiftAssignment(ShiftAssignment shiftAssignment) {
+        this.shiftAssignment = shiftAssignment;
     }
 
     @Override
@@ -140,8 +145,8 @@ public class Task implements Serializable {
             ", description='" + description + "'" +
             ", staffNeeded='" + staffNeeded + "'" +
             ", taskType='" + taskType + "'" +
-            ", important='" + important + "'" +
-            ", urgent='" + urgent + "'" +
+            ", importance='" + importance + "'" +
+            ", urgency='" + urgency + "'" +
             '}';
     }
 }

@@ -17,6 +17,7 @@
                 "title": "Shift Type"
             },
             "code": "Code",
+            "index": "Index",
             "description": "Description",
             "nightShift": "Night Shift",
             "startTime": "Start Time",

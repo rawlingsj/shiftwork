@@ -21,6 +21,9 @@ public class Shift implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "index")
+    private Integer index;
+
     @Column(name = "staff_required")
     private Integer staffRequired;
 
@@ -37,6 +40,14 @@ public class Shift implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     public Integer getStaffRequired() {
@@ -87,6 +98,7 @@ public class Shift implements Serializable {
     public String toString() {
         return "Shift{" +
             "id=" + id +
+            ", index='" + index + "'" +
             ", staffRequired='" + staffRequired + "'" +
             '}';
     }

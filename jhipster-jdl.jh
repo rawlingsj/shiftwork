@@ -8,8 +8,9 @@ entity StaffRosterParametrization {
 }
 
 entity Employee {
-	name String,
-    description String 
+    code String,
+    isSick Boolean,
+	name String
 }
 
 entity SkillProficiency {
@@ -32,6 +33,7 @@ entity EmployeeShiftOffRequest {
 }
 
 entity Shift {
+    index   Integer,
 	staffRequired Integer
 }
 
@@ -42,11 +44,15 @@ entity ShiftDate {
 }
 
 entity ShiftAssignment {
-	indexInShift Integer
+	indexInShift Integer,
+	isNeedToReassign Boolean,
+	isDropped Boolean,
+	locked Boolean
 }
 
 entity ShiftType {
 	code String,
+	index Integer,
     description String,
     nightShift Boolean,
     startTime ZonedDateTime,
@@ -62,15 +68,20 @@ entity Task {
     description String,
     staffNeeded Integer min(1),
     taskType TaskType,
-    important Boolean,
-    urgent Boolean
+    importance TaskImportance,
+    urgency TaskUrgency
 }
 
 entity Skill {
 	code String
 }
 
+entity TaskSkillRequirement {
+
+}
+
 entity Contract {
+    code String,
 	description String
 }
 
@@ -157,6 +168,16 @@ enum DayOfWeek {
     SUNDAY
 }
 
+enum TaskImportance {
+    IMPORTANT,
+    NOT_IMPORTANT
+}
+
+enum TaskUrgency {
+    URGENT,
+    NOT_URGENT
+}
+
 //*************************************
 // Relationships
 //*************************************
@@ -178,11 +199,7 @@ relationship OneToOne {
 }
 
 relationship OneToOne {
-	Employee{weekendDefinition} to WeekendDefinition
-}
-
-relationship OneToMany {
-	Employee{skills} to SkillProficiency{employee}
+	SkillProficiency{employee} to Employee
 }
 
 relationship OneToMany {
@@ -201,12 +218,28 @@ relationship OneToMany {
 	Employee{shiftOnRequests} to EmployeeShiftOnRequest{employee}
 }
 
-relationship OneToOne {
-	SkillProficiency{skill} to Skill
+relationship ManyToMany {
+	SkillProficiency{skillList} to Skill{skillProficiencies}
 }
 
 relationship OneToOne {
 	EmployeeDayOffRequest{shiftDate} to ShiftDate
+}
+
+relationship OneToOne {
+    Employee{unavailableShiftDate} to ShiftDate
+}
+
+relationship OneToOne {
+    TaskSkillRequirement{task} to Task
+}
+
+relationship OneToOne {
+    TaskSkillRequirement{skill} to Skill
+}
+
+relationship OneToOne {
+    Employee{unavailableShiftType} to ShiftType
 }
 
 relationship OneToOne {
@@ -238,15 +271,15 @@ relationship OneToOne {
 }
 
 relationship OneToMany {
+    ShiftAssignment{taskList} to Task{shiftAssignment}
+}
+
+relationship OneToMany {
 	ShiftType{tasks} to ShiftTypeTask{shiftType}
 }
 
 relationship OneToOne {
 	ShiftTypeTask{task} to Task
-}
-
-relationship OneToOne {
-	Task{requiredSkill} to Skill
 }
 
 relationship OneToOne {

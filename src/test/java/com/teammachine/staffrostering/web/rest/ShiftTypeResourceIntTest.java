@@ -49,6 +49,9 @@ public class ShiftTypeResourceIntTest {
 
     private static final String DEFAULT_CODE = "AAAAA";
     private static final String UPDATED_CODE = "BBBBB";
+
+    private static final Integer DEFAULT_INDEX = 1;
+    private static final Integer UPDATED_INDEX = 2;
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBB";
 
@@ -90,6 +93,7 @@ public class ShiftTypeResourceIntTest {
     public void initTest() {
         shiftType = new ShiftType();
         shiftType.setCode(DEFAULT_CODE);
+        shiftType.setIndex(DEFAULT_INDEX);
         shiftType.setDescription(DEFAULT_DESCRIPTION);
         shiftType.setNightShift(DEFAULT_NIGHT_SHIFT);
         shiftType.setStartTime(DEFAULT_START_TIME);
@@ -113,6 +117,7 @@ public class ShiftTypeResourceIntTest {
         assertThat(shiftTypes).hasSize(databaseSizeBeforeCreate + 1);
         ShiftType testShiftType = shiftTypes.get(shiftTypes.size() - 1);
         assertThat(testShiftType.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testShiftType.getIndex()).isEqualTo(DEFAULT_INDEX);
         assertThat(testShiftType.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testShiftType.isNightShift()).isEqualTo(DEFAULT_NIGHT_SHIFT);
         assertThat(testShiftType.getStartTime()).isEqualTo(DEFAULT_START_TIME);
@@ -131,6 +136,7 @@ public class ShiftTypeResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(shiftType.getId().intValue())))
                 .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
+                .andExpect(jsonPath("$.[*].index").value(hasItem(DEFAULT_INDEX)))
                 .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
                 .andExpect(jsonPath("$.[*].nightShift").value(hasItem(DEFAULT_NIGHT_SHIFT.booleanValue())))
                 .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME_STR)))
@@ -149,6 +155,7 @@ public class ShiftTypeResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(shiftType.getId().intValue()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
+            .andExpect(jsonPath("$.index").value(DEFAULT_INDEX))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.nightShift").value(DEFAULT_NIGHT_SHIFT.booleanValue()))
             .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME_STR))
@@ -174,6 +181,7 @@ public class ShiftTypeResourceIntTest {
         ShiftType updatedShiftType = new ShiftType();
         updatedShiftType.setId(shiftType.getId());
         updatedShiftType.setCode(UPDATED_CODE);
+        updatedShiftType.setIndex(UPDATED_INDEX);
         updatedShiftType.setDescription(UPDATED_DESCRIPTION);
         updatedShiftType.setNightShift(UPDATED_NIGHT_SHIFT);
         updatedShiftType.setStartTime(UPDATED_START_TIME);
@@ -189,6 +197,7 @@ public class ShiftTypeResourceIntTest {
         assertThat(shiftTypes).hasSize(databaseSizeBeforeUpdate);
         ShiftType testShiftType = shiftTypes.get(shiftTypes.size() - 1);
         assertThat(testShiftType.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testShiftType.getIndex()).isEqualTo(UPDATED_INDEX);
         assertThat(testShiftType.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testShiftType.isNightShift()).isEqualTo(UPDATED_NIGHT_SHIFT);
         assertThat(testShiftType.getStartTime()).isEqualTo(UPDATED_START_TIME);

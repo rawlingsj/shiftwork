@@ -2,17 +2,18 @@
 <div>
     <h2><span translate="shiftworkApp.skillProficiency.detail.title">Skill Proficiency</span> {{vm.skillProficiency.id}}</h2>
     <hr>
-    <dl class="dl-horizontal">
-        <dt><span translate="shiftworkApp.skillProficiency.skill">Skill</span></dt>
-        <dd>
-            <a ui-sref="skill-detail({id:vm.skillProficiency.skill.id})">{{vm.skillProficiency.skill.id}}</a>
-        </dd>
-        <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
         <dt><span translate="shiftworkApp.skillProficiency.employee">Employee</span></dt>
         <dd>
             <a ui-sref="employee-detail({id:vm.skillProficiency.employee.id})">{{vm.skillProficiency.employee.id}}</a>
         </dd>
-        <hr>
+        <dt><span translate="shiftworkApp.skillProficiency.skillList">Skill List</span></dt>
+        <dd>
+            <span ng-repeat="skillList in vm.skillProficiency.skillLists">
+                <a ui-sref="skill-detail({id: {{skillList.id}}})">{{skillList.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
     </dl>
 
     <button type="submit"

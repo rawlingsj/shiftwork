@@ -5,6 +5,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -23,10 +25,14 @@ public class SkillProficiency implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private Skill skill;
-
-    @ManyToOne
     private Employee employee;
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "skill_proficiency_skill_list",
+               joinColumns = @JoinColumn(name="skill_proficiencies_id", referencedColumnName="ID"),
+               inverseJoinColumns = @JoinColumn(name="skill_lists_id", referencedColumnName="ID"))
+    private Set<Skill> skillLists = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -36,20 +42,20 @@ public class SkillProficiency implements Serializable {
         this.id = id;
     }
 
-    public Skill getSkill() {
-        return skill;
-    }
-
-    public void setSkill(Skill skill) {
-        this.skill = skill;
-    }
-
     public Employee getEmployee() {
         return employee;
     }
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public Set<Skill> getSkillLists() {
+        return skillLists;
+    }
+
+    public void setSkillLists(Set<Skill> skills) {
+        this.skillLists = skills;
     }
 
     @Override

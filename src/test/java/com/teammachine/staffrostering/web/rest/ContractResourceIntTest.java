@@ -41,6 +41,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class ContractResourceIntTest {
 
+    private static final String DEFAULT_CODE = "AAAAA";
+    private static final String UPDATED_CODE = "BBBBB";
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBB";
 
@@ -70,6 +72,7 @@ public class ContractResourceIntTest {
     @Before
     public void initTest() {
         contract = new Contract();
+        contract.setCode(DEFAULT_CODE);
         contract.setDescription(DEFAULT_DESCRIPTION);
     }
 
@@ -89,6 +92,7 @@ public class ContractResourceIntTest {
         List<Contract> contracts = contractRepository.findAll();
         assertThat(contracts).hasSize(databaseSizeBeforeCreate + 1);
         Contract testContract = contracts.get(contracts.size() - 1);
+        assertThat(testContract.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testContract.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
@@ -103,6 +107,7 @@ public class ContractResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(contract.getId().intValue())))
+                .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
                 .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
 
@@ -117,6 +122,7 @@ public class ContractResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(contract.getId().intValue()))
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
     }
 
@@ -138,6 +144,7 @@ public class ContractResourceIntTest {
         // Update the contract
         Contract updatedContract = new Contract();
         updatedContract.setId(contract.getId());
+        updatedContract.setCode(UPDATED_CODE);
         updatedContract.setDescription(UPDATED_DESCRIPTION);
 
         restContractMockMvc.perform(put("/api/contracts")
@@ -149,6 +156,7 @@ public class ContractResourceIntTest {
         List<Contract> contracts = contractRepository.findAll();
         assertThat(contracts).hasSize(databaseSizeBeforeUpdate);
         Contract testContract = contracts.get(contracts.size() - 1);
+        assertThat(testContract.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testContract.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 

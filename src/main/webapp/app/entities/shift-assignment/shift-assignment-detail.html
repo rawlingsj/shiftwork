@@ -8,6 +8,21 @@
             <span>{{vm.shiftAssignment.indexInShift}}</span>
         </dd>
         <hr>
+        <dt><span translate="shiftworkApp.shiftAssignment.isNeedToReassign">Is Need To Reassign</span></dt>
+        <dd>
+            <span>{{vm.shiftAssignment.isNeedToReassign}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.shiftAssignment.isDropped">Is Dropped</span></dt>
+        <dd>
+            <span>{{vm.shiftAssignment.isDropped}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.shiftAssignment.locked">Locked</span></dt>
+        <dd>
+            <span>{{vm.shiftAssignment.locked}}</span>
+        </dd>
+        <hr>
         <dt><span translate="shiftworkApp.shiftAssignment.shift">Shift</span></dt>
         <dd>
             <a ui-sref="shift-detail({id:vm.shiftAssignment.shift.id})">{{vm.shiftAssignment.shift.id}}</a>

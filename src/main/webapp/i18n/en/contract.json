@@ -16,6 +16,7 @@
             "detail": {
                 "title": "Contract"
             },
+            "code": "Code",
             "description": "Description",
             "weekendDefinition": "Weekend Definition",
             "contractLineList": "Contract Line List"

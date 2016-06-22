@@ -27,6 +27,8 @@
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('task');
                     $translatePartialLoader.addPart('taskType');
+                    $translatePartialLoader.addPart('taskImportance');
+                    $translatePartialLoader.addPart('taskUrgency');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
@@ -50,6 +52,8 @@
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('task');
                     $translatePartialLoader.addPart('taskType');
+                    $translatePartialLoader.addPart('taskImportance');
+                    $translatePartialLoader.addPart('taskUrgency');
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Task', function($stateParams, Task) {
@@ -77,8 +81,8 @@
                                 description: null,
                                 staffNeeded: null,
                                 taskType: null,
-                                important: null,
-                                urgent: null,
+                                importance: null,
+                                urgency: null,
                                 id: null
                             };
                         }

@@ -16,8 +16,8 @@
             "detail": {
                 "title": "Skill Proficiency"
             },
-            "skill": "Skill",
-            "employee": "Employee"
+            "employee": "Employee",
+            "skillList": "Skill List"
         }
     }
 }

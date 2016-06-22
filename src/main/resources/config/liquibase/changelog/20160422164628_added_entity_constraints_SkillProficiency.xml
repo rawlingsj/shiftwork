@@ -7,18 +7,23 @@
         Added the constraints for entity SkillProficiency.
     -->
     <changeSet id="20160422164628-2" author="jhipster">
-        
-        <addForeignKeyConstraint baseColumnNames="skill_id"
-                                 baseTableName="skill_proficiency"
-                                 constraintName="fk_skillproficiency_skill_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="skill"/>
 
         <addForeignKeyConstraint baseColumnNames="employee_id"
                                  baseTableName="skill_proficiency"
                                  constraintName="fk_skillproficiency_employee_id"
                                  referencedColumnNames="id"
                                  referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="skill_proficiencies_id"
+                                 baseTableName="skill_proficiency_skill_list"
+                                 constraintName="fk_skill_proficiency_skill_list_skill_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="skill_proficiency"/>
+        <addForeignKeyConstraint baseColumnNames="skill_lists_id"
+                                 baseTableName="skill_proficiency_skill_list"
+                                 constraintName="fk_skill_proficiency_skill_list_skillproficiency_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="skill"/>
 
     </changeSet>
 </databaseChangeLog>

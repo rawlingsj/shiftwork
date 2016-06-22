@@ -20,9 +20,9 @@
             "description": "Description",
             "staffNeeded": "Staff Needed",
             "taskType": "Task Type",
-            "important": "Important",
-            "urgent": "Urgent",
-            "requiredSkill": "Required Skill"
+            "importance": "Importance",
+            "urgency": "Urgency",
+            "shiftAssignment": "Shift Assignment"
         }
     }
 }

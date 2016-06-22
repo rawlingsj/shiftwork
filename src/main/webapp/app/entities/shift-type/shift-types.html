@@ -20,6 +20,7 @@
                 <tr>
                     <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.shiftType.code">Code</span></th>
+                    <th><span translate="shiftworkApp.shiftType.index">Index</span></th>
                     <th><span translate="shiftworkApp.shiftType.description">Description</span></th>
                     <th><span translate="shiftworkApp.shiftType.nightShift">Night Shift</span></th>
                     <th><span translate="shiftworkApp.shiftType.startTime">Start Time</span></th>
@@ -31,6 +32,7 @@
                 <tr ng-repeat="shiftType in vm.shiftTypes track by shiftType.id">
                     <td><a ui-sref="shift-type-detail({id:shiftType.id})">{{shiftType.id}}</a></td>
                     <td>{{shiftType.code}}</td>
+                    <td>{{shiftType.index}}</td>
                     <td>{{shiftType.description}}</td>
                     <td>{{shiftType.nightShift}}</td>
                     <td>{{shiftType.startTime | date:'medium'}}</td>

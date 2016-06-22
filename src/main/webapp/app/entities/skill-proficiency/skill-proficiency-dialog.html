@@ -15,23 +15,21 @@
         </div>
 
         <div class="form-group">
-            <label translate="shiftworkApp.skillProficiency.skill" for="field_skill">Skill</label>
-            <select class="form-control" id="field_skill" name="skill" ng-model="vm.skillProficiency.skill" ng-options="skill as skill.id for skill in vm.skills | orderBy:'id' track by skill.id">
+            <label translate="shiftworkApp.skillProficiency.employee" for="field_employee">Employee</label>
+            <select class="form-control" id="field_employee" name="employee" ng-model="vm.skillProficiency.employee" ng-options="employee as employee.id for employee in vm.employees | orderBy:'id' track by employee.id">
                 <option value=""></option>
             </select>
         </div>
         <div class="form-group">
-            <label translate="shiftworkApp.skillProficiency.employee" for="field_employee">Employee</label>
-            <select class="form-control" id="field_employee" name="employee" ng-model="vm.skillProficiency.employee" ng-options="employee as employee.id for employee in vm.employees track by employee.id">
-                <option value=""></option>
-            </select>
+            <label translate="shiftworkApp.skillProficiency.skillList" for="field_skillList">Skill List</label>
+            <select class="form-control" id="field_skillList" multiple name="skillList" ng-model="vm.skillProficiency.skillLists" ng-options="skill as skill.id for skill in vm.skills track by skill.id"></select>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>
