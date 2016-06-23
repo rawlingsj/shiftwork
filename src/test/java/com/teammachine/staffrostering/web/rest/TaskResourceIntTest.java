@@ -134,8 +134,8 @@ public class TaskResourceIntTest {
                 .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
                 .andExpect(jsonPath("$.[*].staffNeeded").value(hasItem(DEFAULT_STAFF_NEEDED)))
                 .andExpect(jsonPath("$.[*].taskType").value(hasItem(DEFAULT_TASK_TYPE.toString())))
-                .andExpect(jsonPath("$.[*].importance").value(hasItem(DEFAULT_IMPORTANCE.toString())))
-                .andExpect(jsonPath("$.[*].urgency").value(hasItem(DEFAULT_URGENCY.toString())));
+                .andExpect(jsonPath("$.[*].importance").value(hasItem(DEFAULT_IMPORTANCE.getCode())))
+                .andExpect(jsonPath("$.[*].urgency").value(hasItem(DEFAULT_URGENCY.getCode())));
     }
 
     @Test
@@ -153,8 +153,8 @@ public class TaskResourceIntTest {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.staffNeeded").value(DEFAULT_STAFF_NEEDED))
             .andExpect(jsonPath("$.taskType").value(DEFAULT_TASK_TYPE.toString()))
-            .andExpect(jsonPath("$.importance").value(DEFAULT_IMPORTANCE.toString()))
-            .andExpect(jsonPath("$.urgency").value(DEFAULT_URGENCY.toString()));
+            .andExpect(jsonPath("$.importance").value(DEFAULT_IMPORTANCE.getCode()))
+            .andExpect(jsonPath("$.urgency").value(DEFAULT_URGENCY.getCode()));
     }
 
     @Test

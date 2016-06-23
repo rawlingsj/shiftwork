@@ -28,10 +28,10 @@
                 <tr ng-repeat="patternContractLine in vm.patternContractLines track by patternContractLine.id">
                     <td><a ui-sref="pattern-contract-line-detail({id:patternContractLine.id})">{{patternContractLine.id}}</a></td>
                     <td>
-                        <a ui-sref="contract-detail({id:patternContractLine.contract.id})">{{patternContractLine.contract.id}}</a>
+                        <a ui-sref="contract-detail({id:patternContractLine.contract.id})">{{patternContractLine.contract.code}}</a>
                     </td>
                     <td>
-                        <a ui-sref="pattern-detail({id:patternContractLine.pattern.id})">{{patternContractLine.pattern.id}}</a>
+                        <a ui-sref="pattern-detail({id:patternContractLine.pattern.id})">{{patternContractLine.pattern.code}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

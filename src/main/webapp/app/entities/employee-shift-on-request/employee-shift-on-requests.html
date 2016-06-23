@@ -30,10 +30,10 @@
                     <td><a ui-sref="employee-shift-on-request-detail({id:employeeShiftOnRequest.id})">{{employeeShiftOnRequest.id}}</a></td>
                     <td>{{employeeShiftOnRequest.weight}}</td>
                     <td>
-                        <a ui-sref="shift-detail({id:employeeShiftOnRequest.shift.id})">{{employeeShiftOnRequest.shift.id}}</a>
+                        <a ui-sref="shift-detail({id:employeeShiftOnRequest.shift.id})">{{employeeShiftOnRequest.shift.index}}</a>
                     </td>
                     <td>
-                        <a ui-sref="employee-detail({id:employeeShiftOnRequest.employee.id})">{{employeeShiftOnRequest.employee.id}}</a>
+                        <a ui-sref="employee-detail({id:employeeShiftOnRequest.employee.id})">{{employeeShiftOnRequest.employee.code}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

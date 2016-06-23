@@ -6,12 +6,12 @@
     <dl class="dl-horizontal jh-entity-details">
         <dt><span translate="shiftworkApp.skillProficiency.employee">Employee</span></dt>
         <dd>
-            <a ui-sref="employee-detail({id:vm.skillProficiency.employee.id})">{{vm.skillProficiency.employee.id}}</a>
+            <a ui-sref="employee-detail({id:vm.skillProficiency.employee.id})">{{vm.skillProficiency.employee.code}}</a>
         </dd>
         <dt><span translate="shiftworkApp.skillProficiency.skillList">Skill List</span></dt>
         <dd>
             <span ng-repeat="skillList in vm.skillProficiency.skillLists">
-                <a ui-sref="skill-detail({id: {{skillList.id}}})">{{skillList.id}}</a>{{$last ? '' : ', '}}
+                <a ui-sref="skill-detail({id: {{skillList.id}}})">{{skillList.code}}</a>{{$last ? '' : ', '}}
             </span>
         </dd>
     </dl>

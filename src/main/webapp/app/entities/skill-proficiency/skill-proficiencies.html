@@ -28,11 +28,11 @@
                 <tr ng-repeat="skillProficiency in vm.skillProficiencies track by skillProficiency.id">
                     <td><a ui-sref="skill-proficiency-detail({id:skillProficiency.id})">{{skillProficiency.id}}</a></td>
                     <td>
-                        <a ui-sref="employee-detail({id:skillProficiency.employee.id})">{{skillProficiency.employee.id}}</a>
+                        <a ui-sref="employee-detail({id:skillProficiency.employee.id})">{{skillProficiency.employee.code}}</a>
                     </td>
                     <td>
                         <span ng-repeat="skillList in skillProficiency.skillLists">
-                            <a class="form-control-static" ui-sref="skill-detail({id: {{skillList.id}}})">{{skillList.id}}</a>{{$last ? '' : ', '}}
+                            <a class="form-control-static" ui-sref="skill-detail({id: {{skillList.id}}})">{{skillList.code}}</a>{{$last ? '' : ', '}}
                         </span>
                     </td>
                     <td class="text-right">

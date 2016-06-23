@@ -36,10 +36,10 @@
                     <td>{{shiftAssignment.isDropped}}</td>
                     <td>{{shiftAssignment.locked}}</td>
                     <td>
-                        <a ui-sref="shift-detail({id:shiftAssignment.shift.id})">{{shiftAssignment.shift.id}}</a>
+                        <a ui-sref="shift-detail({id:shiftAssignment.shift.id})">{{shiftAssignment.shift.index}}</a>
                     </td>
                     <td>
-                        <a ui-sref="employee-detail({id:shiftAssignment.employee.id})">{{shiftAssignment.employee.id}}</a>
+                        <a ui-sref="employee-detail({id:shiftAssignment.employee.id})">{{shiftAssignment.employee.code}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

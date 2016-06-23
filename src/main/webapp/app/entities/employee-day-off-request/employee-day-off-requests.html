@@ -30,10 +30,10 @@
                     <td><a ui-sref="employee-day-off-request-detail({id:employeeDayOffRequest.id})">{{employeeDayOffRequest.id}}</a></td>
                     <td>{{employeeDayOffRequest.weight}}</td>
                     <td>
-                        <a ui-sref="shift-date-detail({id:employeeDayOffRequest.shiftDate.id})">{{employeeDayOffRequest.shiftDate.id}}</a>
+                        <a ui-sref="shift-date-detail({id:employeeDayOffRequest.shiftDate.id})">{{employeeDayOffRequest.shiftDate.dateString}}</a>
                     </td>
                     <td>
-                        <a ui-sref="employee-detail({id:employeeDayOffRequest.employee.id})">{{employeeDayOffRequest.employee.id}}</a>
+                        <a ui-sref="employee-detail({id:employeeDayOffRequest.employee.id})">{{employeeDayOffRequest.employee.code}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

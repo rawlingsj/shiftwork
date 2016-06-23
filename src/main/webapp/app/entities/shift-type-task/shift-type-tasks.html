@@ -28,10 +28,10 @@
                 <tr ng-repeat="shiftTypeTask in vm.shiftTypeTasks track by shiftTypeTask.id">
                     <td><a ui-sref="shift-type-task-detail({id:shiftTypeTask.id})">{{shiftTypeTask.id}}</a></td>
                     <td>
-                        <a ui-sref="task-detail({id:shiftTypeTask.task.id})">{{shiftTypeTask.task.id}}</a>
+                        <a ui-sref="task-detail({id:shiftTypeTask.task.id})">{{shiftTypeTask.task.code}}</a>
                     </td>
                     <td>
-                        <a ui-sref="shift-type-detail({id:shiftTypeTask.shiftType.id})">{{shiftTypeTask.shiftType.id}}</a>
+                        <a ui-sref="shift-type-detail({id:shiftTypeTask.shiftType.id})">{{shiftTypeTask.shiftType.code}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

@@ -67,7 +67,7 @@
 
         <div class="form-group">
             <label translate="shiftworkApp.minMaxContractLine.contract" for="field_contract">Contract</label>
-            <select class="form-control" id="field_contract" name="contract" ng-model="vm.minMaxContractLine.contract" ng-options="contract as contract.id for contract in vm.contracts | orderBy:'id' track by contract.id">
+            <select class="form-control" id="field_contract" name="contract" ng-model="vm.minMaxContractLine.contract" ng-options="contract as contract.code for contract in vm.contracts | orderBy:'id' track by contract.id">
                 <option value=""></option>
             </select>
         </div>

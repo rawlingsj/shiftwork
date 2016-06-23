@@ -16,13 +16,13 @@
 
         <div class="form-group">
             <label translate="shiftworkApp.taskSkillRequirement.task" for="field_task">Task</label>
-            <select class="form-control" id="field_task" name="task" ng-model="vm.taskSkillRequirement.task" ng-options="task as task.id for task in vm.tasks | orderBy:'id' track by task.id">
+            <select class="form-control" id="field_task" name="task" ng-model="vm.taskSkillRequirement.task" ng-options="task as task.code for task in vm.tasks | orderBy:'id' track by task.id">
                 <option value=""></option>
             </select>
         </div>
         <div class="form-group">
             <label translate="shiftworkApp.taskSkillRequirement.skill" for="field_skill">Skill</label>
-            <select class="form-control" id="field_skill" name="skill" ng-model="vm.taskSkillRequirement.skill" ng-options="skill as skill.id for skill in vm.skills | orderBy:'id' track by skill.id">
+            <select class="form-control" id="field_skill" name="skill" ng-model="vm.taskSkillRequirement.skill" ng-options="skill as skill.code for skill in vm.skills | orderBy:'id' track by skill.id">
                 <option value=""></option>
             </select>
         </div>
