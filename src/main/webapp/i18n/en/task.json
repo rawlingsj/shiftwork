@@ -3,6 +3,7 @@
         "task" : {
             "home": {
                 "title": "Tasks",
+                "description": "Each day when an employee comes to work, they are expected to do one or more tasks. This is where you define those tasks.",
                 "createLabel": "Create a new Task",
                 "createOrEditLabel": "Create or edit a Task",
                 "search": "Search for Task"
