@@ -3,6 +3,7 @@
         "booleanContractLine" : {
             "home": {
                 "title": "Boolean Contract Lines",
+                "description": "Assign and enable contract rules to contracts, such as enabling the rule for the total number of shift asignments an employee can have, or the employee can only have one shift assigned per day.",
                 "createLabel": "Create a new Boolean Contract Line",
                 "createOrEditLabel": "Create or edit a Boolean Contract Line",
                 "search": "Search for Boolean Contract Line"
