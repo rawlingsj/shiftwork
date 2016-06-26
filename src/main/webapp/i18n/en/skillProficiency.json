@@ -3,6 +3,7 @@
         "skillProficiency" : {
             "home": {
                 "title": "Skill Proficiencies",
+                "description": "Assign skills to an employee",
                 "createLabel": "Create a new Skill Proficiency",
                 "createOrEditLabel": "Create or edit a Skill Proficiency",
                 "search": "Search for Skill Proficiency"

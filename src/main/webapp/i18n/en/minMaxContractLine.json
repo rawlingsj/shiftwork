@@ -2,7 +2,8 @@
     "shiftworkApp": {
         "minMaxContractLine" : {
             "home": {
-                "title": "Min Max Contract Lines",
+                "title": "Min Max Contract Lines!",
+                "description": "Minimum and maximum number of assignments an employee may have.",
                 "createLabel": "Create a new Min Max Contract Line",
                 "createOrEditLabel": "Create or edit a Min Max Contract Line",
                 "search": "Search for Min Max Contract Line"

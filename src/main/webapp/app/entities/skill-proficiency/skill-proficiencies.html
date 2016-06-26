@@ -1,5 +1,6 @@
 <div>
     <h2 translate="shiftworkApp.skillProficiency.home.title">Skill Proficiencies</h2>
+    <p><span translate="shiftworkApp.skillProficiency.home.description">Skill Proficiencies</span></p>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
@@ -28,7 +29,7 @@
                 <tr ng-repeat="skillProficiency in vm.skillProficiencies track by skillProficiency.id">
                     <td><a ui-sref="skill-proficiency-detail({id:skillProficiency.id})">{{skillProficiency.id}}</a></td>
                     <td>
-                        <a ui-sref="employee-detail({id:skillProficiency.employee.id})">{{skillProficiency.employee.code}}</a>
+                        <a ui-sref="employee-detail({id:skillProficiency.employee.id})">{{skillProficiency.employee.name}}</a>
                     </td>
                     <td>
                         <span ng-repeat="skillList in skillProficiency.skillLists">
