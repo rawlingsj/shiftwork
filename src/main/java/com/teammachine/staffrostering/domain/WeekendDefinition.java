@@ -6,7 +6,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Objects;
 
@@ -31,8 +33,22 @@ public class WeekendDefinition implements Serializable {
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<WeekendDay> days = new HashSet<>();
+    
+    @OneToMany(mappedBy = "weekendDefinition")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Contract> contract = new HashSet<Contract>();
+    
 
-    public Long getId() {
+    public Set<Contract> getContract() {
+		return contract;
+	}
+
+	public void setContract(Set<Contract> contract) {
+		this.contract = contract;
+	}
+
+	public Long getId() {
         return id;
     }
 

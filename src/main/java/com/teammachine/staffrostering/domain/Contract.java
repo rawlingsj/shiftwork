@@ -30,9 +30,10 @@ public class Contract implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private WeekendDefinition weekendDefinition;
+    @OneToMany
+    @JsonIgnore    
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<WeekendDefinition> weekendDefinition = new HashSet<>();
 
     @OneToMany(mappedBy = "contract")
     @JsonIgnore
@@ -63,11 +64,11 @@ public class Contract implements Serializable {
         this.description = description;
     }
 
-    public WeekendDefinition getWeekendDefinition() {
+    public Set<WeekendDefinition> getWeekendDefinition() {
         return weekendDefinition;
     }
 
-    public void setWeekendDefinition(WeekendDefinition weekendDefinition) {
+    public void setWeekendDefinition(Set<WeekendDefinition> weekendDefinition) {
         this.weekendDefinition = weekendDefinition;
     }
 
