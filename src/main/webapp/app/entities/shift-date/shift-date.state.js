@@ -74,7 +74,7 @@
                         entity: function () {
                             return {
                                 dayIndex: null,
-                                dateString: null,
+                                date: null,
                                 dayOfWeek: null,
                                 id: null
                             };
