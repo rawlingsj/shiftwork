@@ -30,8 +30,7 @@ public class Contract implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private WeekendDefinition weekendDefinition;
 
     @OneToMany(mappedBy = "contract")
