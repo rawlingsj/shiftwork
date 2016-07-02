@@ -5,21 +5,13 @@
         .module('shiftworkApp')
         .controller('ContractDialogController', ContractDialogController);
 
-    ContractDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Contract', 'WeekendDefinition', 'ContractLine'];
+    ContractDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Contract', 'ContractLine', 'WeekendDefinition'];
 
-    function ContractDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Contract, WeekendDefinition, ContractLine) {
+    function ContractDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Contract, ContractLine, WeekendDefinition) {
         var vm = this;
         vm.contract = entity;
-        vm.weekenddefinitions = WeekendDefinition.query({filter: 'contract-is-null'});
-        $q.all([vm.contract.$promise, vm.weekenddefinitions.$promise]).then(function() {
-            if (!vm.contract.weekendDefinition || !vm.contract.weekendDefinition.id) {
-                return $q.reject();
-            }
-            return WeekendDefinition.get({id : vm.contract.weekendDefinition.id}).$promise;
-        }).then(function(weekendDefinition) {
-            vm.weekenddefinitions.push(weekendDefinition);
-        });
         vm.contractlines = ContractLine.query();
+        vm.weekenddefinitions = WeekendDefinition.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

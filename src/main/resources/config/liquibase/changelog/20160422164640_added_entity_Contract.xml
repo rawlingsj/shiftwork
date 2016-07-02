@@ -24,16 +24,16 @@
             <column name="code" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="description" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="weekend_definition_id" type="bigint">
-                <constraints unique="false"/>
+                <constraints unique="true"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

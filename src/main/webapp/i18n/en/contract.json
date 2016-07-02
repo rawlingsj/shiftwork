@@ -19,8 +19,8 @@
             },
             "code": "Code",
             "description": "Description",
-            "weekendDefinition": "Weekend Definition",
-            "contractLineList": "Contract Line List"
+            "contractLineList": "Contract Line List",
+            "weekendDefinitions": "Weekend Definitions"
         }
     }
 }

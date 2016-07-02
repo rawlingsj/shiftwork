@@ -24,17 +24,17 @@
             <column name="day_index" type="integer">
                 <constraints nullable="true" />
             </column>
-            
-            <column name="date" type="date">
+
+            <column name="date_string" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="day_of_week" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
+
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

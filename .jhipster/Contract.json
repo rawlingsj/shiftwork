@@ -1,37 +1,35 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipType": "one-to-one",
-      "relationshipName": "weekendDefinition",
-      "otherEntityName": "weekendDefinition",
-      "otherEntityField": "id",
-      "ownerSide": true,
-      "otherEntityRelationshipName": "contract"
-    },
-    {
-      "relationshipId": 2,
-      "relationshipType": "one-to-many",
-      "relationshipName": "contractLineList",
-      "otherEntityName": "contractLine",
-      "otherEntityRelationshipName": "contract"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "code",
-      "fieldType": "String"
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "description",
-      "fieldType": "String"
-    }
-  ],
-  "changelogDate": "20160422164640",
-  "dto": "no",
-  "pagination": "no",
-  "service": "no",
-  "entityTableName": "contract"
+    "relationships": [
+        {
+            "relationshipId": 2,
+            "relationshipType": "one-to-many",
+            "relationshipName": "contractLineList",
+            "otherEntityName": "contractLine",
+            "otherEntityRelationshipName": "contract"
+        },
+        {
+            "relationshipName": "weekendDefinitions",
+            "otherEntityName": "weekendDefinition",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "description",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "code",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "description",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160422164640",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "contract",
+    "pagination": "no"
 }
