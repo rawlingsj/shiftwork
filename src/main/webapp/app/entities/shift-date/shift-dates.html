@@ -20,7 +20,7 @@
                 <tr>
                     <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.shiftDate.dayIndex">Day Index</span></th>
-                    <th><span translate="shiftworkApp.shiftDate.dateString">Date String</span></th>
+                    <th><span translate="shiftworkApp.shiftDate.date">Date</span></th>
                     <th><span translate="shiftworkApp.shiftDate.dayOfWeek">Day Of Week</span></th>
                     <th></th>
                 </tr>
@@ -29,7 +29,7 @@
                 <tr ng-repeat="shiftDate in vm.shiftDates track by shiftDate.id">
                     <td><a ui-sref="shift-date-detail({id:shiftDate.id})">{{shiftDate.id}}</a></td>
                     <td>{{shiftDate.dayIndex}}</td>
-                    <td>{{shiftDate.dateString}}</td>
+                    <td>{{shiftDate.date}}</td>
                     <td translate="{{'shiftworkApp.DayOfWeek.' + shiftDate.dayOfWeek}}">{{shiftDate.dayOfWeek}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

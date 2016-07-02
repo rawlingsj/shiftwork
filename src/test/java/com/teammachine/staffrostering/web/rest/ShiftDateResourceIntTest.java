@@ -2,18 +2,18 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.ShiftDate;
+import com.teammachine.staffrostering.domain.enumeration.DayOfWeek;
+import com.teammachine.staffrostering.domain.util.JSR310LocalDateSerializer;
 import com.teammachine.staffrostering.repository.ShiftDateRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -23,13 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.teammachine.staffrostering.domain.enumeration.DayOfWeek;
 
 /**
  * Test class for the ShiftDateResource REST controller.
@@ -45,8 +45,8 @@ public class ShiftDateResourceIntTest {
 
     private static final Integer DEFAULT_DAY_INDEX = 1;
     private static final Integer UPDATED_DAY_INDEX = 2;
-    private static final String DEFAULT_DATE_STRING = "AAAAA";
-    private static final String UPDATED_DATE_STRING = "BBBBB";
+    private static final LocalDate DEFAULT_DATE = LocalDate.ofYearDay(2016, 1);
+    private static final LocalDate UPDATED_DATE = LocalDate.ofYearDay(2016, 2);
 
     private static final DayOfWeek DEFAULT_DAY_OF_WEEK = DayOfWeek.MONDAY;
     private static final DayOfWeek UPDATED_DAY_OF_WEEK = DayOfWeek.TUESDAY;
@@ -78,7 +78,7 @@ public class ShiftDateResourceIntTest {
     public void initTest() {
         shiftDate = new ShiftDate();
         shiftDate.setDayIndex(DEFAULT_DAY_INDEX);
-        shiftDate.setDateString(DEFAULT_DATE_STRING);
+        shiftDate.setDate(DEFAULT_DATE);
         shiftDate.setDayOfWeek(DEFAULT_DAY_OF_WEEK);
     }
 
@@ -99,7 +99,7 @@ public class ShiftDateResourceIntTest {
         assertThat(shiftDates).hasSize(databaseSizeBeforeCreate + 1);
         ShiftDate testShiftDate = shiftDates.get(shiftDates.size() - 1);
         assertThat(testShiftDate.getDayIndex()).isEqualTo(DEFAULT_DAY_INDEX);
-        assertThat(testShiftDate.getDateString()).isEqualTo(DEFAULT_DATE_STRING);
+        assertThat(testShiftDate.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testShiftDate.getDayOfWeek()).isEqualTo(DEFAULT_DAY_OF_WEEK);
     }
 
@@ -115,7 +115,7 @@ public class ShiftDateResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(shiftDate.getId().intValue())))
                 .andExpect(jsonPath("$.[*].dayIndex").value(hasItem(DEFAULT_DAY_INDEX)))
-                .andExpect(jsonPath("$.[*].dateString").value(hasItem(DEFAULT_DATE_STRING.toString())))
+                .andExpect(jsonPath("$.[*].date").value(hasItem(JSR310LocalDateSerializer.ISOFormatter.format(DEFAULT_DATE))))
                 .andExpect(jsonPath("$.[*].dayOfWeek").value(hasItem(DEFAULT_DAY_OF_WEEK.toString())));
     }
 
@@ -131,7 +131,7 @@ public class ShiftDateResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(shiftDate.getId().intValue()))
             .andExpect(jsonPath("$.dayIndex").value(DEFAULT_DAY_INDEX))
-            .andExpect(jsonPath("$.dateString").value(DEFAULT_DATE_STRING.toString()))
+            .andExpect(jsonPath("$.date").value(JSR310LocalDateSerializer.ISOFormatter.format(DEFAULT_DATE)))
             .andExpect(jsonPath("$.dayOfWeek").value(DEFAULT_DAY_OF_WEEK.toString()));
     }
 
@@ -154,7 +154,7 @@ public class ShiftDateResourceIntTest {
         ShiftDate updatedShiftDate = new ShiftDate();
         updatedShiftDate.setId(shiftDate.getId());
         updatedShiftDate.setDayIndex(UPDATED_DAY_INDEX);
-        updatedShiftDate.setDateString(UPDATED_DATE_STRING);
+        updatedShiftDate.setDate(UPDATED_DATE);
         updatedShiftDate.setDayOfWeek(UPDATED_DAY_OF_WEEK);
 
         restShiftDateMockMvc.perform(put("/api/shift-dates")
@@ -167,7 +167,7 @@ public class ShiftDateResourceIntTest {
         assertThat(shiftDates).hasSize(databaseSizeBeforeUpdate);
         ShiftDate testShiftDate = shiftDates.get(shiftDates.size() - 1);
         assertThat(testShiftDate.getDayIndex()).isEqualTo(UPDATED_DAY_INDEX);
-        assertThat(testShiftDate.getDateString()).isEqualTo(UPDATED_DATE_STRING);
+        assertThat(testShiftDate.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testShiftDate.getDayOfWeek()).isEqualTo(UPDATED_DAY_OF_WEEK);
     }
 

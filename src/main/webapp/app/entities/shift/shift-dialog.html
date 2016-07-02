@@ -34,7 +34,7 @@
         </div>
         <div class="form-group">
             <label translate="shiftworkApp.shift.shiftDate" for="field_shiftDate">Shift Date</label>
-            <select class="form-control" id="field_shiftDate" name="shiftDate" ng-model="vm.shift.shiftDate" ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
+            <select class="form-control" id="field_shiftDate" name="shiftDate" ng-model="vm.shift.shiftDate" ng-options="shiftDate as shiftDate.date for shiftDate in vm.shiftdates track by shiftDate.id">
                 <option value=""></option>
             </select>
         </div>

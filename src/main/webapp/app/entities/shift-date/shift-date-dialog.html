@@ -20,10 +20,13 @@
                      />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="shiftworkApp.shiftDate.dateString" for="field_dateString">Date String</label>
-            <input type="text" class="form-control" name="dateString" id="field_dateString"
-                    ng-model="vm.shiftDate.dateString"
-                     />
+            <label class="control-label" translate="shiftworkApp.shiftDate.date" for="field_date">Date</label>
+            <div class="input-group">
+                <input id="field_date" type="text" class="form-control" name="date" datetime-picker="yyyy-MM-dd" enable-time="false" ng-model="vm.shiftDate.date" is-open="vm.datePickerOpenStatus.date"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('date')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+            </div>
         </div>
         <div class="form-group">
             <label class="control-label" translate="shiftworkApp.shiftDate.dayOfWeek" for="field_dayOfWeek">Day Of Week</label>
