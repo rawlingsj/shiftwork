@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -32,7 +33,7 @@ public class WeekendDefinition implements Serializable {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "weekend_day", joinColumns = @JoinColumn(name = "weekend_definition_id"))
     @Column(name = "day_of_week")
-    private Set<DayOfWeek> days;
+    private Set<DayOfWeek> days = new HashSet<>();
 
     public Long getId() {
         return id;
