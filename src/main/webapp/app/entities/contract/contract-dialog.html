@@ -27,10 +27,8 @@
         </div>
 
         <div class="form-group">
-            <label translate="shiftworkApp.contract.weekendDefinition" for="field_weekendDefinition">Weekend Definition</label>
-            <select class="form-control" id="field_weekendDefinition" name="weekendDefinition" ng-model="vm.contract.weekendDefinition" ng-options="weekendDefinition as weekendDefinition.description for weekendDefinition in vm.weekenddefinitions | orderBy:'id' track by weekendDefinition.id">
-                <option value=""></option>
-            </select>
+            <label translate="shiftworkApp.contract.weekendDefinitions" for="field_weekendDefinitions">Weekend Definitions</label>
+            <select class="form-control" id="field_weekendDefinitions" multiple name="weekendDefinitions" ng-model="vm.contract.weekendDefinitions" ng-options="weekendDefinition as weekendDefinition.description for weekendDefinition in vm.weekenddefinitions track by weekendDefinition.id"></select>
         </div>
     </div>
     <div class="modal-footer">

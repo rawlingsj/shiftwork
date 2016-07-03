@@ -30,13 +30,17 @@ public class Contract implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    private WeekendDefinition weekendDefinition;
-
     @OneToMany(mappedBy = "contract")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ContractLine> contractLineLists = new HashSet<>();
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "contract_weekend_definitions",
+               joinColumns = @JoinColumn(name="contracts_id", referencedColumnName="ID"),
+               inverseJoinColumns = @JoinColumn(name="weekend_definitions_id", referencedColumnName="ID"))
+    private Set<WeekendDefinition> weekendDefinitions = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -62,20 +66,20 @@ public class Contract implements Serializable {
         this.description = description;
     }
 
-    public WeekendDefinition getWeekendDefinition() {
-        return weekendDefinition;
-    }
-
-    public void setWeekendDefinition(WeekendDefinition weekendDefinition) {
-        this.weekendDefinition = weekendDefinition;
-    }
-
     public Set<ContractLine> getContractLineLists() {
         return contractLineLists;
     }
 
     public void setContractLineLists(Set<ContractLine> contractLines) {
         this.contractLineLists = contractLines;
+    }
+
+    public Set<WeekendDefinition> getWeekendDefinitions() {
+        return weekendDefinitions;
+    }
+
+    public void setWeekendDefinitions(Set<WeekendDefinition> weekendDefinitions) {
+        this.weekendDefinitions = weekendDefinitions;
     }
 
     @Override

@@ -662,12 +662,15 @@
                     <diffChangeLogFile>
                         src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml
                     </diffChangeLogFile>
-                    <driver/>
-                    <url/>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://localhost:5432/staffservicedev</url>
                     <defaultSchemaName/>
-                    <username>staffservice</username>
-                    <password/>
-                    <referenceUrl>hibernate:spring:com.teammachine.staffrostering.domain?dialect=&amp;hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy</referenceUrl>
+                    <username>staffservicedev</username>
+                    <password>654321</password>
+                    <referenceUrl>jdbc:postgresql://localhost:5432/staffserviceref</referenceUrl>
+                    <referenceDriver>org.postgresql.Driver</referenceDriver>
+                    <referenceUsername>staffservicedev</referenceUsername>
+                    <referencePassword>654321</referencePassword>
                     <verbose>true</verbose>
                     <logging>debug</logging>
                 </configuration>

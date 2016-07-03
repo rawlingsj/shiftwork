@@ -2,18 +2,18 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.Contract;
-import com.teammachine.staffrostering.domain.WeekendDefinition;
 import com.teammachine.staffrostering.repository.ContractRepository;
-import com.teammachine.staffrostering.repository.WeekendDefinitionRepository;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -26,7 +26,6 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -47,13 +46,8 @@ public class ContractResourceIntTest {
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBB";
 
-    private static final String WEEKEND_DEFINITION_DESCRIPTION = "CCCCC";
-
     @Inject
     private ContractRepository contractRepository;
-
-    @Inject
-    private WeekendDefinitionRepository weekendDefinitionRepository;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -64,8 +58,6 @@ public class ContractResourceIntTest {
     private MockMvc restContractMockMvc;
 
     private Contract contract;
-
-    private WeekendDefinition weekendDefinition;
 
     @PostConstruct
     public void setup() {
@@ -79,15 +71,9 @@ public class ContractResourceIntTest {
 
     @Before
     public void initTest() {
-        // Create the WeekendDefinition
-        weekendDefinition = new WeekendDefinition();
-        weekendDefinition.setDescription(WEEKEND_DEFINITION_DESCRIPTION);
-        weekendDefinitionRepository.saveAndFlush(weekendDefinition);
-
         contract = new Contract();
         contract.setCode(DEFAULT_CODE);
         contract.setDescription(DEFAULT_DESCRIPTION);
-        contract.setWeekendDefinition(weekendDefinition);
     }
 
     @Test
@@ -108,7 +94,6 @@ public class ContractResourceIntTest {
         Contract testContract = contracts.get(contracts.size() - 1);
         assertThat(testContract.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testContract.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testContract.getWeekendDefinition()).isEqualTo(weekendDefinition);
     }
 
     @Test
@@ -123,9 +108,7 @@ public class ContractResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(contract.getId().intValue())))
                 .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
-                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-                .andExpect(jsonPath("$.[*].weekendDefinition.id").value(hasItem(weekendDefinition.getId().intValue())))
-                .andExpect(jsonPath("$.[*].weekendDefinition.description").value(hasItem(WEEKEND_DEFINITION_DESCRIPTION.toString())));
+                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
 
     @Test
@@ -140,9 +123,7 @@ public class ContractResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(contract.getId().intValue()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.weekendDefinition.id").value(weekendDefinition.getId().intValue()))
-            .andExpect(jsonPath("$.weekendDefinition.description").value(WEEKEND_DEFINITION_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
     }
 
     @Test
@@ -194,32 +175,5 @@ public class ContractResourceIntTest {
         // Validate the database is empty
         List<Contract> contracts = contractRepository.findAll();
         assertThat(contracts).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void createTwoContractsReferringToTheSameWeekendDefinition() throws Exception {
-        // Initialize the database
-        contractRepository.saveAndFlush(contract);
-        int databaseSizeBeforeUpdate = contractRepository.findAll().size();
-
-        // Create the second contract
-        Contract newContract = new Contract();
-        newContract.setCode(UPDATED_CODE);
-        newContract.setDescription(UPDATED_DESCRIPTION);
-        newContract.setWeekendDefinition(weekendDefinition);
-
-        restContractMockMvc.perform(post("/api/contracts")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(newContract)))
-                .andExpect(status().isCreated());
-
-        // Validate the Contract in the database
-        List<Contract> contracts = contractRepository.findAll();
-        assertThat(contracts).hasSize(databaseSizeBeforeUpdate + 1);
-        Contract testContract = contracts.get(contracts.size() - 1);
-        assertThat(testContract.getCode()).isEqualTo(UPDATED_CODE);
-        assertThat(testContract.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testContract.getWeekendDefinition()).isEqualTo(weekendDefinition);
     }
 }

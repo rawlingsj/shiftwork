@@ -17,7 +17,7 @@
                 "title": "Shift Date"
             },
             "dayIndex": "Day Index",
-            "dateString": "Date String",
+            "date": "Date",
             "dayOfWeek": "Day Of Week",
             "shiftList": "Shift List"
         }

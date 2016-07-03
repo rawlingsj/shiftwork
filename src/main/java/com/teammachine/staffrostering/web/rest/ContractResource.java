@@ -87,7 +87,7 @@ public class ContractResource {
     @Timed
     public List<Contract> getAllContracts() {
         log.debug("REST request to get all Contracts");
-        List<Contract> contracts = contractRepository.findAll();
+        List<Contract> contracts = contractRepository.findAllWithEagerRelationships();
         return contracts;
     }
 
@@ -103,7 +103,7 @@ public class ContractResource {
     @Timed
     public ResponseEntity<Contract> getContract(@PathVariable Long id) {
         log.debug("REST request to get Contract : {}", id);
-        Contract contract = contractRepository.findOne(id);
+        Contract contract = contractRepository.findOneWithEagerRelationships(id);
         return Optional.ofNullable(contract)
             .map(result -> new ResponseEntity<>(
                 result,

@@ -1,16 +1,16 @@
 package com.teammachine.staffrostering.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teammachine.staffrostering.domain.enumeration.DayOfWeek;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
-
-import com.teammachine.staffrostering.domain.enumeration.DayOfWeek;
+import java.util.Set;
 
 /**
  * A ShiftDate.
@@ -29,8 +29,8 @@ public class ShiftDate implements Serializable {
     @Column(name = "day_index")
     private Integer dayIndex;
 
-    @Column(name = "date_string")
-    private String dateString;
+    @Column(name = "date")
+    private LocalDate date;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "day_of_week")
@@ -57,12 +57,12 @@ public class ShiftDate implements Serializable {
         this.dayIndex = dayIndex;
     }
 
-    public String getDateString() {
-        return dateString;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateString(String dateString) {
-        this.dateString = dateString;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public DayOfWeek getDayOfWeek() {
@@ -106,7 +106,7 @@ public class ShiftDate implements Serializable {
         return "ShiftDate{" +
             "id=" + id +
             ", dayIndex='" + dayIndex + "'" +
-            ", dateString='" + dateString + "'" +
+            ", date='" + date + "'" +
             ", dayOfWeek='" + dayOfWeek + "'" +
             '}';
     }
