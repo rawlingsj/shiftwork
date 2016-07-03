@@ -19,7 +19,18 @@
                     ng-model="vm.weekendDefinition.description"
                      />
         </div>
-
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.weekendDefinition.days" for="field_daysOfWeek">Days</label>
+            <select multiple="true" class="form-control" name="daysOfWeek" ng-model="vm.weekendDefinition.days" id="field_daysOfWeek">
+                <option value="MONDAY" translate="shiftworkApp.DayOfWeek.MONDAY">MONDAY</option>
+                <option value="TUESDAY" translate="shiftworkApp.DayOfWeek.TUESDAY">TUESDAY</option>
+                <option value="WEDNESDAY" translate="shiftworkApp.DayOfWeek.WEDNESDAY">WEDNESDAY</option>
+                <option value="THURSDAY" translate="shiftworkApp.DayOfWeek.THURSDAY">THURSDAY</option>
+                <option value="FRIDAY" translate="shiftworkApp.DayOfWeek.FRIDAY">FRIDAY</option>
+                <option value="SATURDAY" translate="shiftworkApp.DayOfWeek.SATURDAY">SATURDAY</option>
+                <option value="SUNDAY" translate="shiftworkApp.DayOfWeek.SUNDAY">SUNDAY</option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

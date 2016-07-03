@@ -10,7 +10,6 @@
     function WeekendDefinitionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, WeekendDefinition, WeekendDay) {
         var vm = this;
         vm.weekendDefinition = entity;
-        vm.weekenddays = WeekendDay.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

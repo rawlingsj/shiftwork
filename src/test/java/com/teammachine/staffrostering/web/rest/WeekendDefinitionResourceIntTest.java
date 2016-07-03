@@ -2,18 +2,17 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.WeekendDefinition;
+import com.teammachine.staffrostering.domain.enumeration.DayOfWeek;
 import com.teammachine.staffrostering.repository.WeekendDefinitionRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -23,9 +22,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -63,14 +67,15 @@ public class WeekendDefinitionResourceIntTest {
         WeekendDefinitionResource weekendDefinitionResource = new WeekendDefinitionResource();
         ReflectionTestUtils.setField(weekendDefinitionResource, "weekendDefinitionRepository", weekendDefinitionRepository);
         this.restWeekendDefinitionMockMvc = MockMvcBuilders.standaloneSetup(weekendDefinitionResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setMessageConverters(jacksonMessageConverter).build();
+                .setCustomArgumentResolvers(pageableArgumentResolver)
+                .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
     public void initTest() {
         weekendDefinition = new WeekendDefinition();
         weekendDefinition.setDescription(DEFAULT_DESCRIPTION);
+        weekendDefinition.setDays(new LinkedHashSet<>(Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY)));
     }
 
     @Test
@@ -79,7 +84,6 @@ public class WeekendDefinitionResourceIntTest {
         int databaseSizeBeforeCreate = weekendDefinitionRepository.findAll().size();
 
         // Create the WeekendDefinition
-
         restWeekendDefinitionMockMvc.perform(post("/api/weekend-definitions")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(weekendDefinition)))
@@ -90,6 +94,7 @@ public class WeekendDefinitionResourceIntTest {
         assertThat(weekendDefinitions).hasSize(databaseSizeBeforeCreate + 1);
         WeekendDefinition testWeekendDefinition = weekendDefinitions.get(weekendDefinitions.size() - 1);
         assertThat(testWeekendDefinition.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testWeekendDefinition.getDays()).containsExactly(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
     }
 
     @Test
@@ -103,7 +108,8 @@ public class WeekendDefinitionResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(weekendDefinition.getId().intValue())))
-                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+                .andExpect(jsonPath("$.[*].days[*]").value(contains(DayOfWeek.SATURDAY.name(), DayOfWeek.SUNDAY.name())));
     }
 
     @Test
@@ -114,10 +120,11 @@ public class WeekendDefinitionResourceIntTest {
 
         // Get the weekendDefinition
         restWeekendDefinitionMockMvc.perform(get("/api/weekend-definitions/{id}", weekendDefinition.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.id").value(weekendDefinition.getId().intValue()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(weekendDefinition.getId().intValue()))
+                .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+                .andExpect(jsonPath("$.days").value(contains(DayOfWeek.SATURDAY.name(), DayOfWeek.SUNDAY.name())));
     }
 
     @Test
@@ -139,6 +146,7 @@ public class WeekendDefinitionResourceIntTest {
         WeekendDefinition updatedWeekendDefinition = new WeekendDefinition();
         updatedWeekendDefinition.setId(weekendDefinition.getId());
         updatedWeekendDefinition.setDescription(UPDATED_DESCRIPTION);
+        updatedWeekendDefinition.setDays(new HashSet<>(Arrays.asList(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY)));
 
         restWeekendDefinitionMockMvc.perform(put("/api/weekend-definitions")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -150,6 +158,7 @@ public class WeekendDefinitionResourceIntTest {
         assertThat(weekendDefinitions).hasSize(databaseSizeBeforeUpdate);
         WeekendDefinition testWeekendDefinition = weekendDefinitions.get(weekendDefinitions.size() - 1);
         assertThat(testWeekendDefinition.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testWeekendDefinition.getDays()).contains(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY);
     }
 
     @Test

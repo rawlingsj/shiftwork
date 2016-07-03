@@ -1,11 +1,20 @@
-
 <div>
-    <h2><span translate="shiftworkApp.weekendDefinition.detail.title">Weekend Definition</span> {{vm.weekendDefinition.id}}</h2>
+    <h2><span translate="shiftworkApp.weekendDefinition.detail.title">Weekend Definition</span>
+        {{vm.weekendDefinition.id}}</h2>
     <hr>
     <dl class="dl-horizontal">
         <dt><span translate="shiftworkApp.weekendDefinition.description">Description</span></dt>
         <dd>
             <span>{{vm.weekendDefinition.description}}</span>
+        </dd>
+        <hr>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt><span translate="shiftworkApp.weekendDefinition.days">Days</span></dt>
+        <dd>
+            <div ng-repeat="day in vm.weekendDefinition.days">
+                <span translate="{{'shiftworkApp.DayOfWeek.' + day}}">{{day}}</span>
+            </div>
         </dd>
         <hr>
     </dl>
