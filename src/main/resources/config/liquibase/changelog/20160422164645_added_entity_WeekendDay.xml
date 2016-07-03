@@ -18,14 +18,16 @@
     -->
     <changeSet id="20160422164645-1" author="jhipster">
         <createTable tableName="weekend_day">
-            <column name="weekend_definition_id" type="bigint">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="day_of_week" type="varchar(255)">
-                <constraints primaryKey="true" nullable="true" />
+                <constraints nullable="true" />
             </column>
+
+            <column name="weekend_definition_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>
