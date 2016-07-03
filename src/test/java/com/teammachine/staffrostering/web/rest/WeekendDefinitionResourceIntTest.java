@@ -24,7 +24,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -75,7 +74,7 @@ public class WeekendDefinitionResourceIntTest {
     public void initTest() {
         weekendDefinition = new WeekendDefinition();
         weekendDefinition.setDescription(DEFAULT_DESCRIPTION);
-        weekendDefinition.setDays(new LinkedHashSet<>(Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY)));
+        weekendDefinition.setDays(new HashSet<>(Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY)));
     }
 
     @Test

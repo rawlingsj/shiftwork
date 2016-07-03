@@ -29,9 +29,9 @@
                     <td><a ui-sref="weekend-definition-detail({id:weekendDefinition.id})">{{weekendDefinition.id}}</a></td>
                     <td>{{weekendDefinition.description}}</td>
                     <td>
-                        <div ng-repeat="day in weekendDefinition.days">
-                            <span translate="{{'shiftworkApp.DayOfWeek.' + day}}">{{day}}</span>
-                        </div>
+                        <span ng-repeat="day in weekendDefinition.days">
+                            <span translate="{{'shiftworkApp.DayOfWeek.' + day}}">{{day}}</span>{{$last ? '' : ', '}}
+                        </span>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

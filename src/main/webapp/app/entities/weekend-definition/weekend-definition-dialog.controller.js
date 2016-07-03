@@ -5,7 +5,7 @@
         .module('shiftworkApp')
         .controller('WeekendDefinitionDialogController', WeekendDefinitionDialogController);
 
-    WeekendDefinitionDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'WeekendDefinition', 'WeekendDay'];
+    WeekendDefinitionDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'WeekendDefinition'];
 
     function WeekendDefinitionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, WeekendDefinition, WeekendDay) {
         var vm = this;

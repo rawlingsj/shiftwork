@@ -6,8 +6,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A WeekendDefinition.
@@ -52,8 +54,8 @@ public class WeekendDefinition implements Serializable {
         this.days = days;
     }
 
-    public Set<DayOfWeek> getDays() {
-        return days;
+    public List<DayOfWeek> getDays() {
+        return days.stream().sorted().collect(Collectors.toList());
     }
 
     @Override
