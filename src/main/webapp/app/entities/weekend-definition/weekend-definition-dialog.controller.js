@@ -7,7 +7,7 @@
 
     WeekendDefinitionDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'WeekendDefinition'];
 
-    function WeekendDefinitionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, WeekendDefinition, WeekendDay) {
+    function WeekendDefinitionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, WeekendDefinition) {
         var vm = this;
         vm.weekendDefinition = entity;
 

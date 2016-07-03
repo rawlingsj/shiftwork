@@ -4,7 +4,7 @@ describe('Controller Tests', function() {
 
     describe('WeekendDefinition Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockWeekendDefinition, MockWeekendDay;
+        var MockEntity, MockWeekendDefinition;
         var createController;
 
         beforeEach(inject(function($injector) {
@@ -12,15 +12,12 @@ describe('Controller Tests', function() {
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
             MockWeekendDefinition = jasmine.createSpy('MockWeekendDefinition');
-            MockWeekendDay = jasmine.createSpy('MockWeekendDay');
-            
 
             var locals = {
                 '$scope': $scope,
                 '$rootScope': $rootScope,
                 'entity': MockEntity ,
-                'WeekendDefinition': MockWeekendDefinition,
-                'WeekendDay': MockWeekendDay
+                'WeekendDefinition': MockWeekendDefinition
             };
             createController = function() {
                 $injector.get('$controller')("WeekendDefinitionDetailController", locals);
