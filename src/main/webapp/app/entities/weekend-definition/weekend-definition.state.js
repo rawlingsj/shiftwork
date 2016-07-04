@@ -26,6 +26,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('weekendDefinition');
+                    $translatePartialLoader.addPart('dayOfWeek');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
@@ -48,6 +49,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('weekendDefinition');
+                    $translatePartialLoader.addPart('dayOfWeek');
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'WeekendDefinition', function($stateParams, WeekendDefinition) {

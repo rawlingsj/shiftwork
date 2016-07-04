@@ -1,14 +1,16 @@
 package com.teammachine.staffrostering.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teammachine.staffrostering.domain.enumeration.DayOfWeek;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A WeekendDefinition.
@@ -27,10 +29,11 @@ public class WeekendDefinition implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "weekendDefinition")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<WeekendDay> days = new HashSet<>();
+    @ElementCollection(targetClass = DayOfWeek.class, fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "weekend_day", joinColumns = @JoinColumn(name = "weekend_definition_id"))
+    @Column(name = "day_of_week")
+    private Set<DayOfWeek> days = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -48,12 +51,12 @@ public class WeekendDefinition implements Serializable {
         this.description = description;
     }
 
-    public Set<WeekendDay> getDays() {
-        return days;
+    public void setDays(Set<DayOfWeek> days) {
+        this.days = days;
     }
 
-    public void setDays(Set<WeekendDay> weekendDays) {
-        this.days = weekendDays;
+    public List<DayOfWeek> getDays() {
+        return days.stream().sorted().collect(Collectors.toList());
     }
 
     @Override
@@ -65,7 +68,7 @@ public class WeekendDefinition implements Serializable {
             return false;
         }
         WeekendDefinition weekendDefinition = (WeekendDefinition) o;
-        if(weekendDefinition.id == null || id == null) {
+        if (weekendDefinition.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, weekendDefinition.id);
@@ -79,8 +82,8 @@ public class WeekendDefinition implements Serializable {
     @Override
     public String toString() {
         return "WeekendDefinition{" +
-            "id=" + id +
-            ", description='" + description + "'" +
-            '}';
+                "id=" + id +
+                ", description='" + description + "'" +
+                '}';
     }
 }

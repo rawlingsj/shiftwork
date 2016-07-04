@@ -5,12 +5,11 @@
         .module('shiftworkApp')
         .controller('WeekendDefinitionDialogController', WeekendDefinitionDialogController);
 
-    WeekendDefinitionDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'WeekendDefinition', 'WeekendDay'];
+    WeekendDefinitionDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'WeekendDefinition'];
 
-    function WeekendDefinitionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, WeekendDefinition, WeekendDay) {
+    function WeekendDefinitionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, WeekendDefinition) {
         var vm = this;
         vm.weekendDefinition = entity;
-        vm.weekenddays = WeekendDay.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

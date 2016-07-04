@@ -20,6 +20,7 @@
                 <tr>
                     <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.weekendDefinition.description">Description</span></th>
+                    <th><span translate="shiftworkApp.weekendDefinition.days">Days</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -27,6 +28,11 @@
                 <tr ng-repeat="weekendDefinition in vm.weekendDefinitions track by weekendDefinition.id">
                     <td><a ui-sref="weekend-definition-detail({id:weekendDefinition.id})">{{weekendDefinition.id}}</a></td>
                     <td>{{weekendDefinition.description}}</td>
+                    <td>
+                        <span ng-repeat="day in weekendDefinition.days">
+                            <span translate="{{'shiftworkApp.DayOfWeek.' + day}}">{{day}}</span>{{$last ? '' : ', '}}
+                        </span>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
