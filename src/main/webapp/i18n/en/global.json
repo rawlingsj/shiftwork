@@ -31,6 +31,8 @@
                 "minMaxContractLine": "Min Max Contract Line",
                 "employees": "Employees",
                 "taskSkillRequirement": "Task Skill Requirement",
+                "employeeAbsentReason": "Employee Absent Reason",
+                "employeeLeaveAbsence": "Employee Leave Absence",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -1,0 +1,58 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myEmployeeLeaveAbsenceLabel" translate="shiftworkApp.employeeLeaveAbsence.home.createOrEditLabel">Create or edit a Employee Leave Absence</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.employeeLeaveAbsence.id">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.employeeLeaveAbsence.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.employeeLeaveAbsence.absentFrom" for="field_absentFrom">Absent From</label>
+                <div class="input-group">
+                    <input id="field_absentFrom" type="text" class="form-control" name="absentFrom" datetime-picker="{{dateformat}}" ng-model="vm.employeeLeaveAbsence.absentFrom" is-open="vm.datePickerOpenStatus.absentFrom"
+                      />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('absentFrom')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.employeeLeaveAbsence.absentTo" for="field_absentTo">Absent To</label>
+                <div class="input-group">
+                    <input id="field_absentTo" type="text" class="form-control" name="absentTo" datetime-picker="{{dateformat}}" ng-model="vm.employeeLeaveAbsence.absentTo" is-open="vm.datePickerOpenStatus.absentTo"
+                      />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('absentTo')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+
+        <div class="form-group">
+            <label translate="shiftworkApp.employeeLeaveAbsence.reason" for="field_reason">Reason</label>
+            <select class="form-control" id="field_reason" name="reason" ng-model="vm.employeeLeaveAbsence.reason" ng-options="employeeAbsentReason as employeeAbsentReason.name for employeeAbsentReason in vm.employeeabsentreasons track by employeeAbsentReason.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="shiftworkApp.employeeLeaveAbsence.employee" for="field_employee">Employee</label>
+            <select class="form-control" id="field_employee" name="employee" ng-model="vm.employeeLeaveAbsence.employee" ng-options="employee as employee.name for employee in vm.employees track by employee.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

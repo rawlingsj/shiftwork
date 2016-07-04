@@ -25,7 +25,8 @@
             "shiftOffRequests": "Shift Off Requests",
             "shiftOnRequests": "Shift On Requests",
             "unavailableShiftDate": "Unavailable Shift Date",
-            "unavailableShiftType": "Unavailable Shift Type"
+            "unavailableShiftType": "Unavailable Shift Type",
+            "employeeLeaveAbsences": "Employee Leave Absences"
         }
     }
 }

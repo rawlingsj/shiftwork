@@ -1,81 +1,87 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipType": "one-to-one",
-      "relationshipName": "contract",
-      "otherEntityName": "contract",
-      "otherEntityField": "id",
-      "ownerSide": true,
-      "otherEntityRelationshipName": "employee"
-    },
-    {
-      "relationshipId": 2,
-      "relationshipType": "one-to-many",
-      "relationshipName": "dayOffRequests",
-      "otherEntityName": "employeeDayOffRequest",
-      "otherEntityRelationshipName": "employee"
-    },
-    {
-      "relationshipId": 3,
-      "relationshipType": "one-to-many",
-      "relationshipName": "dayOnRequests",
-      "otherEntityName": "employeeDayOnRequest",
-      "otherEntityRelationshipName": "employee"
-    },
-    {
-      "relationshipId": 4,
-      "relationshipType": "one-to-many",
-      "relationshipName": "shiftOffRequests",
-      "otherEntityName": "employeeShiftOffRequest",
-      "otherEntityRelationshipName": "employee"
-    },
-    {
-      "relationshipId": 5,
-      "relationshipType": "one-to-many",
-      "relationshipName": "shiftOnRequests",
-      "otherEntityName": "employeeShiftOnRequest",
-      "otherEntityRelationshipName": "employee"
-    },
-    {
-      "relationshipId": 6,
-      "relationshipType": "one-to-one",
-      "relationshipName": "unavailableShiftDate",
-      "otherEntityName": "shiftDate",
-      "otherEntityField": "id",
-      "ownerSide": true,
-      "otherEntityRelationshipName": "employee"
-    },
-    {
-      "relationshipId": 7,
-      "relationshipType": "one-to-one",
-      "relationshipName": "unavailableShiftType",
-      "otherEntityName": "shiftType",
-      "otherEntityField": "id",
-      "ownerSide": true,
-      "otherEntityRelationshipName": "employee"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "code",
-      "fieldType": "String"
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "isSick",
-      "fieldType": "Boolean"
-    },
-    {
-      "fieldId": 3,
-      "fieldName": "name",
-      "fieldType": "String"
-    }
-  ],
-  "changelogDate": "20160422164627",
-  "dto": "no",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "entityTableName": "employee"
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipType": "one-to-one",
+            "relationshipName": "contract",
+            "otherEntityName": "contract",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "employee"
+        },
+        {
+            "relationshipId": 2,
+            "relationshipType": "one-to-many",
+            "relationshipName": "dayOffRequests",
+            "otherEntityName": "employeeDayOffRequest",
+            "otherEntityRelationshipName": "employee"
+        },
+        {
+            "relationshipId": 3,
+            "relationshipType": "one-to-many",
+            "relationshipName": "dayOnRequests",
+            "otherEntityName": "employeeDayOnRequest",
+            "otherEntityRelationshipName": "employee"
+        },
+        {
+            "relationshipId": 4,
+            "relationshipType": "one-to-many",
+            "relationshipName": "shiftOffRequests",
+            "otherEntityName": "employeeShiftOffRequest",
+            "otherEntityRelationshipName": "employee"
+        },
+        {
+            "relationshipId": 5,
+            "relationshipType": "one-to-many",
+            "relationshipName": "shiftOnRequests",
+            "otherEntityName": "employeeShiftOnRequest",
+            "otherEntityRelationshipName": "employee"
+        },
+        {
+            "relationshipId": 6,
+            "relationshipType": "one-to-one",
+            "relationshipName": "unavailableShiftDate",
+            "otherEntityName": "shiftDate",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "employee"
+        },
+        {
+            "relationshipId": 7,
+            "relationshipType": "one-to-one",
+            "relationshipName": "unavailableShiftType",
+            "otherEntityName": "shiftType",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "employee"
+        },
+        {
+            "relationshipName": "employeeLeaveAbsences",
+            "otherEntityName": "employeeLeaveAbsence",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "employee"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "code",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "isSick",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "name",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160422164627",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "employee",
+    "pagination": "no"
 }

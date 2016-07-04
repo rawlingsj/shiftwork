@@ -65,6 +65,11 @@ public class Employee implements Serializable {
     @JoinColumn(unique = true)
     private ShiftType unavailableShiftType;
 
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<EmployeeLeaveAbsence> employeeLeaveAbsences = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -151,6 +156,14 @@ public class Employee implements Serializable {
 
     public void setUnavailableShiftType(ShiftType shiftType) {
         this.unavailableShiftType = shiftType;
+    }
+
+    public Set<EmployeeLeaveAbsence> getEmployeeLeaveAbsences() {
+        return employeeLeaveAbsences;
+    }
+
+    public void setEmployeeLeaveAbsences(Set<EmployeeLeaveAbsence> employeeLeaveAbsences) {
+        this.employeeLeaveAbsences = employeeLeaveAbsences;
     }
 
     @Override

@@ -5,9 +5,9 @@
         .module('shiftworkApp')
         .controller('EmployeeDialogController', EmployeeDialogController);
 
-    EmployeeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Employee', 'Contract', 'EmployeeDayOffRequest', 'EmployeeDayOnRequest', 'EmployeeShiftOffRequest', 'EmployeeShiftOnRequest', 'ShiftDate', 'ShiftType'];
+    EmployeeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Employee', 'Contract', 'EmployeeDayOffRequest', 'EmployeeDayOnRequest', 'EmployeeShiftOffRequest', 'EmployeeShiftOnRequest', 'ShiftDate', 'ShiftType', 'EmployeeLeaveAbsence'];
 
-    function EmployeeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Employee, Contract, EmployeeDayOffRequest, EmployeeDayOnRequest, EmployeeShiftOffRequest, EmployeeShiftOnRequest, ShiftDate, ShiftType) {
+    function EmployeeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Employee, Contract, EmployeeDayOffRequest, EmployeeDayOnRequest, EmployeeShiftOffRequest, EmployeeShiftOnRequest, ShiftDate, ShiftType, EmployeeLeaveAbsence) {
         var vm = this;
         vm.employee = entity;
         vm.contracts = Contract.query({filter: 'employee-is-null'});
@@ -41,6 +41,7 @@
         }).then(function(unavailableShiftType) {
             vm.unavailableshifttypes.push(unavailableShiftType);
         });
+        vm.employeeleaveabsences = EmployeeLeaveAbsence.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

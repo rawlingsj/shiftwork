@@ -1,13 +1,13 @@
 <div>
-    <h2 translate="shiftworkApp.employee.home.title">Employees</h2>
+    <h2 translate="shiftworkApp.employeeLeaveAbsence.home.title">Employee Leave Absences</h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="employee.new" >
+                <button class="btn btn-primary" ui-sref="employee-leave-absence.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span  translate="shiftworkApp.employee.home.createLabel">
-                        Create new Employee
+                    <span  translate="shiftworkApp.employeeLeaveAbsence.home.createLabel">
+                        Create new Employee Leave Absence
                     </span>
                 </button>
             </div>
@@ -19,46 +19,40 @@
             <thead>
                 <tr>
                     <th><span translate="global.field.id">ID</span></th>
-                    <th><span translate="shiftworkApp.employee.code">Code</span></th>
-                    <th><span translate="shiftworkApp.employee.isSick">Is Sick</span></th>
-                    <th><span translate="shiftworkApp.employee.name">Name</span></th>
-                    <th><span translate="shiftworkApp.employee.contract">Contract</span></th>
-                    <th><span translate="shiftworkApp.employee.unavailableShiftDate">Unavailable Shift Date</span></th>
-                    <th><span translate="shiftworkApp.employee.unavailableShiftType">Unavailable Shift Type</span></th>
+                    <th><span translate="shiftworkApp.employeeLeaveAbsence.absentFrom">Absent From</span></th>
+                    <th><span translate="shiftworkApp.employeeLeaveAbsence.absentTo">Absent To</span></th>
+                    <th><span translate="shiftworkApp.employeeLeaveAbsence.reason">Reason</span></th>
+                    <th><span translate="shiftworkApp.employeeLeaveAbsence.employee">Employee</span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="employee in vm.employees track by employee.id">
-                    <td><a ui-sref="employee-detail({id:employee.id})">{{employee.id}}</a></td>
-                    <td>{{employee.code}}</td>
-                    <td>{{employee.isSick}}</td>
-                    <td>{{employee.name}}</td>
+                <tr ng-repeat="employeeLeaveAbsence in vm.employeeLeaveAbsences track by employeeLeaveAbsence.id">
+                    <td><a ui-sref="employee-leave-absence-detail({id:employeeLeaveAbsence.id})">{{employeeLeaveAbsence.id}}</a></td>
+                    <td>{{employeeLeaveAbsence.absentFrom | date:'medium'}}</td>
+                    <td>{{employeeLeaveAbsence.absentTo | date:'medium'}}</td>
                     <td>
-                        <a ui-sref="contract-detail({id:employee.contract.id})">{{employee.contract.id}}</a>
+                        <a ui-sref="employee-absent-reason-detail({id:employeeLeaveAbsence.reason.id})">{{employeeLeaveAbsence.reason.name}}</a>
                     </td>
                     <td>
-                        <a ui-sref="shift-date-detail({id:employee.unavailableShiftDate.id})">{{employee.unavailableShiftDate.id}}</a>
-                    </td>
-                    <td>
-                        <a ui-sref="shift-type-detail({id:employee.unavailableShiftType.id})">{{employee.unavailableShiftType.id}}</a>
+                        <a ui-sref="employee-detail({id:employeeLeaveAbsence.employee.id})">{{employeeLeaveAbsence.employee.name}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
-                                    ui-sref="employee-detail({id:employee.id})"
+                                    ui-sref="employee-leave-absence-detail({id:employeeLeaveAbsence.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
                             </button>
                             <button type="submit"
-                                    ui-sref="employee.edit({id:employee.id})"
+                                    ui-sref="employee-leave-absence.edit({id:employeeLeaveAbsence.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
                             </button>
                             <button type="submit"
-                                    ui-sref="employee.delete({id:employee.id})"
+                                    ui-sref="employee-leave-absence.delete({id:employeeLeaveAbsence.id})"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>

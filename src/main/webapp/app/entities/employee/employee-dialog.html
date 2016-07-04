@@ -34,19 +34,19 @@
 
         <div class="form-group">
             <label translate="shiftworkApp.employee.contract" for="field_contract">Contract</label>
-            <select class="form-control" id="field_contract" name="contract" ng-model="vm.employee.contract" ng-options="contract as contract.code for contract in vm.contracts | orderBy:'id' track by contract.id">
+            <select class="form-control" id="field_contract" name="contract" ng-model="vm.employee.contract" ng-options="contract as contract.id for contract in vm.contracts | orderBy:'id' track by contract.id">
                 <option value=""></option>
             </select>
         </div>
         <div class="form-group">
             <label translate="shiftworkApp.employee.unavailableShiftDate" for="field_unavailableShiftDate">Unavailable Shift Date</label>
-            <select class="form-control" id="field_unavailableShiftDate" name="unavailableShiftDate" ng-model="vm.employee.unavailableShiftDate" ng-options="shiftDate as shiftDate.date for shiftDate in vm.unavailableshiftdates | orderBy:'id' track by shiftDate.id">
+            <select class="form-control" id="field_unavailableShiftDate" name="unavailableShiftDate" ng-model="vm.employee.unavailableShiftDate" ng-options="shiftDate as shiftDate.id for shiftDate in vm.unavailableshiftdates | orderBy:'id' track by shiftDate.id">
                 <option value=""></option>
             </select>
         </div>
         <div class="form-group">
             <label translate="shiftworkApp.employee.unavailableShiftType" for="field_unavailableShiftType">Unavailable Shift Type</label>
-            <select class="form-control" id="field_unavailableShiftType" name="unavailableShiftType" ng-model="vm.employee.unavailableShiftType" ng-options="shiftType as shiftType.code for shiftType in vm.unavailableshifttypes | orderBy:'id' track by shiftType.id">
+            <select class="form-control" id="field_unavailableShiftType" name="unavailableShiftType" ng-model="vm.employee.unavailableShiftType" ng-options="shiftType as shiftType.id for shiftType in vm.unavailableshifttypes | orderBy:'id' track by shiftType.id">
                 <option value=""></option>
             </select>
         </div>
