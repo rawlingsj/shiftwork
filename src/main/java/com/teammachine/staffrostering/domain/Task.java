@@ -1,18 +1,16 @@
 package com.teammachine.staffrostering.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teammachine.staffrostering.domain.enumeration.TaskImportance;
+import com.teammachine.staffrostering.domain.enumeration.TaskType;
+import com.teammachine.staffrostering.domain.enumeration.TaskUrgency;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.teammachine.staffrostering.domain.enumeration.TaskType;
-
-import com.teammachine.staffrostering.domain.enumeration.TaskImportance;
-
-import com.teammachine.staffrostering.domain.enumeration.TaskUrgency;
 
 /**
  * A Task.
@@ -51,6 +49,7 @@ public class Task implements Serializable {
     private TaskUrgency urgency;
 
     @ManyToOne
+    @JsonIgnore
     private ShiftAssignment shiftAssignment;
 
     public Long getId() {

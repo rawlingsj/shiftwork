@@ -1,14 +1,13 @@
 package com.teammachine.staffrostering.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A ShiftAssignment.
@@ -44,10 +43,10 @@ public class ShiftAssignment implements Serializable {
     @JoinColumn(unique = true)
     private Employee employee;
 
-    @OneToMany(mappedBy = "shiftAssignment")
-    @JsonIgnore
+    @OneToMany(mappedBy = "shiftAssignment", fetch = FetchType.EAGER)
+//    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Task> taskLists = new HashSet<>();
+    private Set<Task> taskList = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -105,12 +104,12 @@ public class ShiftAssignment implements Serializable {
         this.employee = employee;
     }
 
-    public Set<Task> getTaskLists() {
-        return taskLists;
+    public Set<Task> getTaskList() {
+        return taskList;
     }
 
-    public void setTaskLists(Set<Task> tasks) {
-        this.taskLists = tasks;
+    public void setTaskList(Set<Task> tasks) {
+        this.taskList = tasks;
     }
 
     @Override

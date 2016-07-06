@@ -35,7 +35,7 @@ public class Contract implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ContractLine> contractLineLists = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "contract_weekend_definitions",
                joinColumns = @JoinColumn(name="contracts_id", referencedColumnName="ID"),
@@ -76,6 +76,10 @@ public class Contract implements Serializable {
 
     public Set<WeekendDefinition> getWeekendDefinitions() {
         return weekendDefinitions;
+    }
+
+    public WeekendDefinition getWeekendDefinition() {
+        return weekendDefinitions.isEmpty() ? null : weekendDefinitions.iterator().next();
     }
 
     public void setWeekendDefinitions(Set<WeekendDefinition> weekendDefinitions) {

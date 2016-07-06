@@ -2,11 +2,12 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.teammachine.staffrostering.domain.Shift;
+import com.teammachine.staffrostering.domain.ShiftAssignment;
+import com.teammachine.staffrostering.repository.ShiftAssignmentRepository;
 import com.teammachine.staffrostering.repository.ShiftRepository;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,9 @@ public class ShiftResource {
         
     @Inject
     private ShiftRepository shiftRepository;
+
+    @Inject
+    private ShiftAssignmentRepository shiftAssignmentRepository;
     
     /**
      * POST  /shifts : Create a new shift.
@@ -47,9 +51,17 @@ public class ShiftResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("shift", "idexists", "A new shift cannot already have an ID")).body(null);
         }
         Shift result = shiftRepository.save(shift);
+        ShiftAssignment shiftAssignemnt = createNewShiftAssignemnt(result);
+        shiftAssignmentRepository.save(shiftAssignemnt);
         return ResponseEntity.created(new URI("/api/shifts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("shift", result.getId().toString()))
             .body(result);
+    }
+
+    private ShiftAssignment createNewShiftAssignemnt(Shift shift) {
+        ShiftAssignment shiftAssignment = new ShiftAssignment();
+        shiftAssignment.setShift(shift);
+        return shiftAssignment;
     }
 
     /**
