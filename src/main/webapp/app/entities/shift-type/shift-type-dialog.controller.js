@@ -38,13 +38,5 @@
         vm.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
-
-        vm.datePickerOpenStatus = {};
-        vm.datePickerOpenStatus.startTime = false;
-        vm.datePickerOpenStatus.endTime = false;
-
-        vm.openCalendar = function(date) {
-            vm.datePickerOpenStatus[date] = true;
-        };
     }
 })();

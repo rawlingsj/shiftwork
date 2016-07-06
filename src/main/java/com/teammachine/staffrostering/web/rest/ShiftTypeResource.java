@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.Optional;
  * REST controller for managing ShiftType.
  */
 @RestController
-@RequestMapping({"/api", "/api_basic"})
+@RequestMapping("/api")
 public class ShiftTypeResource {
 
     private final Logger log = LoggerFactory.getLogger(ShiftTypeResource.class);
@@ -41,7 +42,7 @@ public class ShiftTypeResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ShiftType> createShiftType(@RequestBody ShiftType shiftType) throws URISyntaxException {
+    public ResponseEntity<ShiftType> createShiftType(@Valid @RequestBody ShiftType shiftType) throws URISyntaxException {
         log.debug("REST request to save ShiftType : {}", shiftType);
         if (shiftType.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("shiftType", "idexists", "A new shiftType cannot already have an ID")).body(null);
@@ -65,7 +66,7 @@ public class ShiftTypeResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ShiftType> updateShiftType(@RequestBody ShiftType shiftType) throws URISyntaxException {
+    public ResponseEntity<ShiftType> updateShiftType(@Valid @RequestBody ShiftType shiftType) throws URISyntaxException {
         log.debug("REST request to update ShiftType : {}", shiftType);
         if (shiftType.getId() == null) {
             return createShiftType(shiftType);
