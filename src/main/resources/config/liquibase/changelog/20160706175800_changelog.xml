@@ -13,4 +13,7 @@
                       newDataType="varchar(8)"
                       tableName="shift_type"/>
    </changeSet>
+   <changeSet author="LD (generated)" id="1467827892010-3">
+      <dropUniqueConstraint constraintName="shift_shift_type_id_key" tableName="shift"/>
+   </changeSet>
 </databaseChangeLog>
