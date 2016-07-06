@@ -29,7 +29,7 @@
                 <tr ng-repeat="shiftDate in vm.shiftDates track by shiftDate.id">
                     <td><a ui-sref="shift-date-detail({id:shiftDate.id})">{{shiftDate.id}}</a></td>
                     <td>{{shiftDate.dayIndex}}</td>
-                    <td>{{shiftDate.date}}</td>
+                        <td>{{shiftDate.date | date:'mediumDate'}}</td>
                     <td translate="{{'shiftworkApp.DayOfWeek.' + shiftDate.dayOfWeek}}">{{shiftDate.dayOfWeek}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

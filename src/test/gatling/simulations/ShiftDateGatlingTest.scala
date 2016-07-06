@@ -67,7 +67,7 @@ class ShiftDateGatlingTest extends Simulation {
             .exec(http("Create new shiftDate")
             .post("/api/shift-dates")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "dayIndex":"0", "dateString":"SAMPLE_TEXT", "dayOfWeek":null}""")).asJSON
+            .body(StringBody("""{"id":null, "dayIndex":"0", "date":"2020-01-01T00:00:00.000Z", "dayOfWeek":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_shiftDate_url"))).exitHereIfFailed
             .pause(10)

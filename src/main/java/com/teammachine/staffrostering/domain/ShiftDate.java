@@ -30,6 +30,7 @@ public class ShiftDate implements Serializable {
     private Integer dayIndex;
 
     @Column(name = "date")
+    @JsonIgnore
     private LocalDate date;
 
     @Enumerated(EnumType.STRING)
@@ -39,7 +40,7 @@ public class ShiftDate implements Serializable {
     @OneToMany(mappedBy = "shiftDate")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Shift> shiftList = new HashSet<>();
+    private Set<Shift> shiftLists = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -73,12 +74,12 @@ public class ShiftDate implements Serializable {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public Set<Shift> getShiftList() {
-        return shiftList;
+    public Set<Shift> getShiftLists() {
+        return shiftLists;
     }
 
-    public void setShiftList(Set<Shift> shifts) {
-        this.shiftList = shifts;
+    public void setShiftLists(Set<Shift> shifts) {
+        this.shiftLists = shifts;
     }
 
     @Override
