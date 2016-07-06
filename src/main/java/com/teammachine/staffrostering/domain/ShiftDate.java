@@ -8,6 +8,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -30,7 +31,6 @@ public class ShiftDate implements Serializable {
     private Integer dayIndex;
 
     @Column(name = "date")
-    @JsonIgnore
     private LocalDate date;
 
     @Enumerated(EnumType.STRING)
@@ -60,6 +60,10 @@ public class ShiftDate implements Serializable {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public String getDateString() {
+        return date != null ? date.format(DateTimeFormatter.ISO_DATE) : null;
     }
 
     public void setDate(LocalDate date) {
