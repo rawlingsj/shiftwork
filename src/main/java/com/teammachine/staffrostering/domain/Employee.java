@@ -33,8 +33,7 @@ public class Employee implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private Contract contract;
 
     @OneToMany(mappedBy = "employee")

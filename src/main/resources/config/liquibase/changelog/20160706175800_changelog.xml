@@ -16,4 +16,7 @@
    <changeSet author="LD (generated)" id="1467827892010-3">
       <dropUniqueConstraint constraintName="shift_shift_type_id_key" tableName="shift"/>
    </changeSet>
+   <changeSet author="LD (generated)" id="1467827892010-4">
+      <dropUniqueConstraint constraintName="employee_contract_id_key" tableName="employee"/>
+   </changeSet>
 </databaseChangeLog>

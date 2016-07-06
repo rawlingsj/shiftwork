@@ -35,13 +35,13 @@
                     <td>{{employee.isSick}}</td>
                     <td>{{employee.name}}</td>
                     <td>
-                        <a ui-sref="contract-detail({id:employee.contract.id})">{{employee.contract.code}}</a>
+                        <a ui-sref="contract-detail({id:employee.contract.id})">{{employee.contract.id}}</a>
                     </td>
                     <td>
-                        <a ui-sref="shift-date-detail({id:employee.unavailableShiftDate.id})">{{employee.unavailableShiftDate.date}}</a>
+                        <a ui-sref="shift-date-detail({id:employee.unavailableShiftDate.id})">{{employee.unavailableShiftDate.id}}</a>
                     </td>
                     <td>
-                        <a ui-sref="shift-type-detail({id:employee.unavailableShiftType.id})">{{employee.unavailableShiftType.code}}</a>
+                        <a ui-sref="shift-type-detail({id:employee.unavailableShiftType.id})">{{employee.unavailableShiftType.id}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
