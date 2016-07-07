@@ -1,13 +1,16 @@
 package com.teammachine.staffrostering.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.teammachine.staffrostering.domain.enumeration.ContractLineType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.teammachine.staffrostering.domain.enumeration.ContractLineType;
 
 /**
  * A ContractLine.
@@ -17,6 +20,14 @@ import com.teammachine.staffrostering.domain.enumeration.ContractLineType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DiscriminatorColumn(name="boolean_or_minmax")
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = BooleanContractLine.class, name = "boolean"),
+        @JsonSubTypes.Type(value = MinMaxContractLine.class, name = "minmax")
+})
 public abstract class ContractLine implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,6 +41,7 @@ public abstract class ContractLine implements Serializable {
     private ContractLineType contractLineType;
 
     @ManyToOne
+    @JsonIgnore
     private Contract contract;
 
     abstract Boolean isEnabled();
@@ -50,10 +62,12 @@ public abstract class ContractLine implements Serializable {
         this.contractLineType = contractLineType;
     }
 
-    public Contract getContract() {
-        return contract;
+    @JsonProperty("contract")
+    public EntityRefInfo getContract() {
+        return new EntityRefInfo(contract.getId());
     }
 
+    @JsonProperty("contract")
     public void setContract(Contract contract) {
         this.contract = contract;
     }

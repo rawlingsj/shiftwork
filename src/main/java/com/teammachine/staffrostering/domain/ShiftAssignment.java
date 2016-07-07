@@ -44,7 +44,6 @@ public class ShiftAssignment implements Serializable {
     private Employee employee;
 
     @OneToMany(mappedBy = "shiftAssignment", fetch = FetchType.EAGER)
-//    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Task> taskList = new HashSet<>();
 

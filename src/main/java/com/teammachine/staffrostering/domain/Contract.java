@@ -1,14 +1,13 @@
 package com.teammachine.staffrostering.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Contract.
@@ -30,8 +29,7 @@ public class Contract implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "contract")
-    @JsonIgnore
+    @OneToMany(mappedBy = "contract", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ContractLine> contractLineLists = new HashSet<>();
 
