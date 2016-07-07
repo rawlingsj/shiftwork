@@ -64,7 +64,7 @@ public abstract class ContractLine implements Serializable {
 
     @JsonProperty("contract")
     public EntityRefInfo getContract() {
-        return new EntityRefInfo(contract.getId());
+        return contract != null ? new EntityRefInfo(contract.getId(), contract.getCode()) : null;
     }
 
     @JsonProperty("contract")

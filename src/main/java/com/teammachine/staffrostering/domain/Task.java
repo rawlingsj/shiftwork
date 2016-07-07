@@ -1,6 +1,7 @@
 package com.teammachine.staffrostering.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.teammachine.staffrostering.domain.enumeration.TaskImportance;
 import com.teammachine.staffrostering.domain.enumeration.TaskType;
 import com.teammachine.staffrostering.domain.enumeration.TaskUrgency;
@@ -108,10 +109,16 @@ public class Task implements Serializable {
         this.urgency = urgency;
     }
 
-    public ShiftAssignment getShiftAssignment() {
-        return shiftAssignment;
+    @JsonProperty("shiftAssignment")
+    public EntityRefInfo getShiftAssignment() {
+        if (shiftAssignment != null) {
+            return new EntityRefInfo(shiftAssignment.getId(), shiftAssignment.getShift().getShiftType().getCode() + "/" + shiftAssignment.getShift().getShiftDate().getDateString());
+        } else {
+            return null;
+        }
     }
 
+    @JsonProperty("shiftAssignment")
     public void setShiftAssignment(ShiftAssignment shiftAssignment) {
         this.shiftAssignment = shiftAssignment;
     }

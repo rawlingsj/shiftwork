@@ -27,7 +27,7 @@ public class ShiftAssignment implements Serializable {
     private Integer indexInShift;
 
     @Column(name = "is_need_to_reassign")
-    private Boolean isNeedToReassign;
+    private Boolean isNeedToReassign = true;
 
     @Column(name = "is_dropped")
     private Boolean isDropped;

@@ -36,7 +36,7 @@
                     <td>{{shiftAssignment.isDropped}}</td>
                     <td>{{shiftAssignment.locked}}</td>
                     <td>
-                        <a ui-sref="shift-detail({id:shiftAssignment.shift.id})">{{shiftAssignment.shift.index}}</a>
+                            <a ui-sref="shift-detail({id:shiftAssignment.shift.id})">{{shiftAssignment.shift.shiftType.code}}/{{shiftAssignment.shift.shiftDate.dateString}}</a>
                     </td>
                     <td>
                         <a ui-sref="employee-detail({id:shiftAssignment.employee.id})">{{shiftAssignment.employee.code}}</a>

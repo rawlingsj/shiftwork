@@ -16,7 +16,7 @@
 
         <div class="form-group">
             <label translate="shiftworkApp.taskSkillRequirement.task" for="field_task">Task</label>
-            <select class="form-control" id="field_task" name="task" ng-model="vm.taskSkillRequirement.task" ng-options="task as task.code for task in vm.tasks | orderBy:'id' track by task.id">
+            <select class="form-control" id="field_task" name="task" ng-model="vm.taskSkillRequirement.task" ng-options="task as task.id + '-' + task.code for task in vm.tasks | orderBy:'id' track by task.id">
                 <option value=""></option>
             </select>
         </div>
