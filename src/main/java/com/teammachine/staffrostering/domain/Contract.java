@@ -31,7 +31,7 @@ public class Contract implements Serializable {
 
     @OneToMany(mappedBy = "contract", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<ContractLine> contractLineLists = new HashSet<>();
+    private Set<ContractLine> contractLineList = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -64,12 +64,12 @@ public class Contract implements Serializable {
         this.description = description;
     }
 
-    public Set<ContractLine> getContractLineLists() {
-        return contractLineLists;
+    public Set<ContractLine> getContractLineList() {
+        return contractLineList;
     }
 
-    public void setContractLineLists(Set<ContractLine> contractLines) {
-        this.contractLineLists = contractLines;
+    public void setContractLineList(Set<ContractLine> contractLines) {
+        this.contractLineList = contractLines;
     }
 
     public Set<WeekendDefinition> getWeekendDefinitions() {
