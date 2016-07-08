@@ -32,7 +32,7 @@ public class SkillProficiency implements Serializable {
     @JoinTable(name = "skill_proficiency_skill_list",
                joinColumns = @JoinColumn(name="skill_proficiencies_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="skill_lists_id", referencedColumnName="ID"))
-    private Set<Skill> skillLists = new HashSet<>();
+    private Set<Skill> skillList = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -50,12 +50,12 @@ public class SkillProficiency implements Serializable {
         this.employee = employee;
     }
 
-    public Set<Skill> getSkillLists() {
-        return skillLists;
+    public Set<Skill> getSkillList() {
+        return skillList;
     }
 
-    public void setSkillLists(Set<Skill> skills) {
-        this.skillLists = skills;
+    public void setSkillList(Set<Skill> skills) {
+        this.skillList = skills;
     }
 
     @Override

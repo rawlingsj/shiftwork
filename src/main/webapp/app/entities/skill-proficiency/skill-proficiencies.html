@@ -32,7 +32,7 @@
                         <a ui-sref="employee-detail({id:skillProficiency.employee.id})">{{skillProficiency.employee.name}}</a>
                     </td>
                     <td>
-                        <span ng-repeat="skillList in skillProficiency.skillLists">
+                        <span ng-repeat="skillList in skillProficiency.skillList">
                             <a class="form-control-static" ui-sref="skill-detail({id: {{skillList.id}}})">{{skillList.code}}</a>{{$last ? '' : ', '}}
                         </span>
                     </td>
