@@ -33,12 +33,8 @@ public class Contract implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ContractLine> contractLineList = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "contract_weekend_definitions",
-               joinColumns = @JoinColumn(name="contracts_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="weekend_definitions_id", referencedColumnName="ID"))
-    private Set<WeekendDefinition> weekendDefinitions = new HashSet<>();
+    @ManyToOne
+    private WeekendDefinition weekendDefinition;
 
     public Long getId() {
         return id;
@@ -72,16 +68,12 @@ public class Contract implements Serializable {
         this.contractLineList = contractLines;
     }
 
-    public Set<WeekendDefinition> getWeekendDefinitions() {
-        return weekendDefinitions;
-    }
-
     public WeekendDefinition getWeekendDefinition() {
-        return weekendDefinitions.isEmpty() ? null : weekendDefinitions.iterator().next();
+        return weekendDefinition;
     }
 
-    public void setWeekendDefinitions(Set<WeekendDefinition> weekendDefinitions) {
-        this.weekendDefinitions = weekendDefinitions;
+    public void setWeekendDefinition(WeekendDefinition weekendDefinition) {
+        this.weekendDefinition = weekendDefinition;
     }
 
     @Override

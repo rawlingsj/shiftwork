@@ -6,7 +6,6 @@ import com.teammachine.staffrostering.repository.ContractRepository;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -87,7 +86,7 @@ public class ContractResource {
     @Timed
     public List<Contract> getAllContracts() {
         log.debug("REST request to get all Contracts");
-        List<Contract> contracts = contractRepository.findAllWithEagerRelationships();
+        List<Contract> contracts = contractRepository.findAll();
         return contracts;
     }
 
@@ -103,7 +102,7 @@ public class ContractResource {
     @Timed
     public ResponseEntity<Contract> getContract(@PathVariable Long id) {
         log.debug("REST request to get Contract : {}", id);
-        Contract contract = contractRepository.findOneWithEagerRelationships(id);
+        Contract contract = contractRepository.findOne(id);
         return Optional.ofNullable(contract)
             .map(result -> new ResponseEntity<>(
                 result,
