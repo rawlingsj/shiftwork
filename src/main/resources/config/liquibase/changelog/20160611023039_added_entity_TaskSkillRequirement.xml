@@ -25,7 +25,7 @@
                 <constraints unique="true"/>
             </column>
             <column name="skill_id" type="bigint">
-                <constraints unique="true"/>
+                <constraints unique="true" uniqueConstraintName="task_skill_requirement_skill_id_key"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
