@@ -73,6 +73,7 @@
                     resolve: {
                         entity: function () {
                             return {
+                                type: 'minmax',
                                 contractLineType: null,
                                 minimumEnabled: null,
                                 minimumValue: null,

@@ -16,19 +16,19 @@
 
         <div class="form-group">
             <label translate="shiftworkApp.staffRosterParametrization.firstShiftDate" for="field_firstShiftDate">First Shift Date</label>
-            <select class="form-control" id="field_firstShiftDate" name="firstShiftDate" ng-model="vm.staffRosterParametrization.firstShiftDate" ng-options="shiftDate as shiftDate.id for shiftDate in vm.firstshiftdates | orderBy:'id' track by shiftDate.id">
+            <select class="form-control" id="field_firstShiftDate" name="firstShiftDate" ng-model="vm.staffRosterParametrization.firstShiftDate" ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.firstshiftdates | orderBy:'id' track by shiftDate.id">
                 <option value=""></option>
             </select>
         </div>
         <div class="form-group">
             <label translate="shiftworkApp.staffRosterParametrization.lastShiftDate" for="field_lastShiftDate">Last Shift Date</label>
-            <select class="form-control" id="field_lastShiftDate" name="lastShiftDate" ng-model="vm.staffRosterParametrization.lastShiftDate" ng-options="shiftDate as shiftDate.id for shiftDate in vm.lastshiftdates | orderBy:'id' track by shiftDate.id">
+            <select class="form-control" id="field_lastShiftDate" name="lastShiftDate" ng-model="vm.staffRosterParametrization.lastShiftDate" ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.lastshiftdates | orderBy:'id' track by shiftDate.id">
                 <option value=""></option>
             </select>
         </div>
         <div class="form-group">
             <label translate="shiftworkApp.staffRosterParametrization.planningWindowStart" for="field_planningWindowStart">Planning Window Start</label>
-            <select class="form-control" id="field_planningWindowStart" name="planningWindowStart" ng-model="vm.staffRosterParametrization.planningWindowStart" ng-options="shiftDate as shiftDate.id for shiftDate in vm.planningwindowstarts | orderBy:'id' track by shiftDate.id">
+            <select class="form-control" id="field_planningWindowStart" name="planningWindowStart" ng-model="vm.staffRosterParametrization.planningWindowStart" ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.planningwindowstarts | orderBy:'id' track by shiftDate.id">
                 <option value=""></option>
             </select>
         </div>

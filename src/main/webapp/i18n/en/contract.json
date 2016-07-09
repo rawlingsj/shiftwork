@@ -3,7 +3,6 @@
         "contract" : {
             "home": {
                 "title": "Contracts",
-                "description": "Create or modify contract types, such as Full time, Part time, and assign a weekend defintion.",
                 "createLabel": "Create a new Contract",
                 "createOrEditLabel": "Create or edit a Contract",
                 "search": "Search for Contract"
@@ -20,7 +19,7 @@
             "code": "Code",
             "description": "Description",
             "contractLineList": "Contract Line List",
-            "weekendDefinitions": "Weekend Definitions"
+            "weekendDefinition": "Weekend Definition"
         }
     }
 }

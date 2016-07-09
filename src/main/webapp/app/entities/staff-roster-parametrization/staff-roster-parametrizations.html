@@ -29,13 +29,13 @@
                 <tr ng-repeat="staffRosterParametrization in vm.staffRosterParametrizations track by staffRosterParametrization.id">
                     <td><a ui-sref="staff-roster-parametrization-detail({id:staffRosterParametrization.id})">{{staffRosterParametrization.id}}</a></td>
                     <td>
-                        <a ui-sref="shift-date-detail({id:staffRosterParametrization.firstShiftDate.id})">{{staffRosterParametrization.firstShiftDate.id}}</a>
+                        <a ui-sref="shift-date-detail({id:staffRosterParametrization.firstShiftDate.id})">{{staffRosterParametrization.firstShiftDate.dateString}}</a>
                     </td>
                     <td>
-                        <a ui-sref="shift-date-detail({id:staffRosterParametrization.lastShiftDate.id})">{{staffRosterParametrization.lastShiftDate.id}}</a>
+                        <a ui-sref="shift-date-detail({id:staffRosterParametrization.lastShiftDate.id})">{{staffRosterParametrization.lastShiftDate.dateString}}</a>
                     </td>
                     <td>
-                        <a ui-sref="shift-date-detail({id:staffRosterParametrization.planningWindowStart.id})">{{staffRosterParametrization.planningWindowStart.id}}</a>
+                        <a ui-sref="shift-date-detail({id:staffRosterParametrization.planningWindowStart.id})">{{staffRosterParametrization.planningWindowStart.dateString}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

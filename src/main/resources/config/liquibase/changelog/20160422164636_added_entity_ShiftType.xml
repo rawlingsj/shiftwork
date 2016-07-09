@@ -37,18 +37,15 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="start_time" type="timestamp">
+            <column name="start_time" type="varchar(8)">
                 <constraints nullable="true" />
             </column>
             
-            <column name="end_time" type="timestamp">
+            <column name="end_time" type="varchar(8)">
                 <constraints nullable="true" />
             </column>
             
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="shift_type" columnName="start_time" columnDataType="datetime"/>
-        <dropDefaultValue tableName="shift_type" columnName="end_time" columnDataType="datetime"/>
-        
     </changeSet>
 </databaseChangeLog>

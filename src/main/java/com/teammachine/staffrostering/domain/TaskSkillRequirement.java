@@ -2,6 +2,8 @@ package com.teammachine.staffrostering.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,10 +25,11 @@ public class TaskSkillRequirement implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
+    @JsonIgnore
     private Task task;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
+    @JsonIgnore
     private Skill skill;
 
     public Long getId() {
@@ -37,18 +40,22 @@ public class TaskSkillRequirement implements Serializable {
         this.id = id;
     }
 
-    public Task getTask() {
-        return task;
+    @JsonProperty("task")
+    public EntityRefInfo getTask() {
+        return task != null ? new EntityRefInfo(task.getId(), task.getCode()) : null;
     }
 
+    @JsonProperty("task")
     public void setTask(Task task) {
         this.task = task;
     }
 
-    public Skill getSkill() {
-        return skill;
+    @JsonProperty("skill")
+    public EntityRefInfo getSkill() {
+        return skill != null ? new EntityRefInfo(skill.getId(), skill.getCode()) : null;
     }
 
+    @JsonProperty("skill")
     public void setSkill(Skill skill) {
         this.skill = skill;
     }

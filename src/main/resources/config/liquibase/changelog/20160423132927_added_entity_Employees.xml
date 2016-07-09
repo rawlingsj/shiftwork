@@ -22,7 +22,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="employee_id" type="bigint">
-                <constraints unique="true"/>
+                <constraints unique="true" uniqueConstraintName="employees_employee_id_key"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>

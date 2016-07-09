@@ -4,10 +4,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Objects;
-
-import com.teammachine.staffrostering.domain.enumeration.ContractLineType;
 
 /**
  * A MinMaxContractLine.
@@ -103,7 +99,6 @@ public class MinMaxContractLine extends ContractLine {
 
     @Override
     Boolean isEnabled() {
-        //TODO implement this
-        throw new UnsupportedOperationException("Not Implemented Yet!");
+        return minimumEnabled || maximumEnabled;
     }
 }

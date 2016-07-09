@@ -40,7 +40,7 @@
                     <td translate="{{'shiftworkApp.TaskImportance.' + task.importance}}">{{task.importance}}</td>
                     <td translate="{{'shiftworkApp.TaskUrgency.' + task.urgency}}">{{task.urgency}}</td>
                     <td>
-                        <a ui-sref="shift-assignment-detail({id:task.shiftAssignment.id})">{{task.shiftAssignment.indexInShift}}</a>
+                        <a ui-sref="shift-assignment-detail({id:task.shiftAssignment.id})">{{task.shiftAssignment.id}}-{{task.shiftAssignment.code}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

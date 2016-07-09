@@ -4,9 +4,9 @@
         .module('shiftworkApp')
         .factory('ShiftType', ShiftType);
 
-    ShiftType.$inject = ['$resource', 'DateUtils'];
+    ShiftType.$inject = ['$resource'];
 
-    function ShiftType ($resource, DateUtils) {
+    function ShiftType ($resource) {
         var resourceUrl =  'api/shift-types/:id';
 
         return $resource(resourceUrl, {}, {
@@ -15,8 +15,6 @@
                 method: 'GET',
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
-                    data.startTime = DateUtils.convertDateTimeFromServer(data.startTime);
-                    data.endTime = DateUtils.convertDateTimeFromServer(data.endTime);
                     return data;
                 }
             },

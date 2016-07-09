@@ -38,10 +38,10 @@
             </column>
             
             <column name="shift_id" type="bigint">
-                <constraints unique="true"/>
+                <constraints unique="true" uniqueConstraintName="shift_assignment_shift_id_key"/>
             </column>
             <column name="employee_id" type="bigint">
-                <constraints unique="true"/>
+                <constraints unique="true" uniqueConstraintName="shift_assignment_employee_id_key"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>

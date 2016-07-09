@@ -22,10 +22,10 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="contract_id" type="bigint">
-                <constraints unique="true"/>
+                <constraints unique="true" uniqueConstraintName="pattern_contract_line_contract_id_key"/>
             </column>
             <column name="pattern_id" type="bigint">
-                <constraints unique="true"/>
+                <constraints unique="true" uniqueConstraintName="pattern_contract_line_pattern_id_key"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>

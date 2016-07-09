@@ -1,48 +1,56 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipType": "one-to-many",
-      "relationshipName": "tasks",
-      "otherEntityName": "shiftTypeTask",
-      "otherEntityRelationshipName": "shiftType"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "code",
-      "fieldType": "String"
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "index",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldId": 3,
-      "fieldName": "description",
-      "fieldType": "String"
-    },
-    {
-      "fieldId": 4,
-      "fieldName": "nightShift",
-      "fieldType": "Boolean"
-    },
-    {
-      "fieldId": 5,
-      "fieldName": "startTime",
-      "fieldType": "ZonedDateTime"
-    },
-    {
-      "fieldId": 6,
-      "fieldName": "endTime",
-      "fieldType": "ZonedDateTime"
-    }
-  ],
-  "changelogDate": "20160422164636",
-  "dto": "no",
-  "pagination": "no",
-  "service": "no",
-  "entityTableName": "shift_type"
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipType": "one-to-many",
+            "relationshipName": "tasks",
+            "otherEntityName": "shiftTypeTask",
+            "otherEntityRelationshipName": "shiftType"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "code",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "index",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "nightShift",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "startTime",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$",
+            "fieldValidateRulesPatternJava": "^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$"
+        },
+        {
+            "fieldName": "endTime",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$",
+            "fieldValidateRulesPatternJava": "^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$"
+        }
+    ],
+    "changelogDate": "20160422164636",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "shift_type",
+    "pagination": "no"
 }

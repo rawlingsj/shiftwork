@@ -26,7 +26,7 @@
             </column>
             
             <column name="shift_id" type="bigint">
-                <constraints unique="true"/>
+                <constraints unique="true" uniqueConstraintName="employee_shift_off_request_shift_id_key"/>
             </column>
             <column name="employee_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->

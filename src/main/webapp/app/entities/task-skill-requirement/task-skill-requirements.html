@@ -28,7 +28,7 @@
                 <tr ng-repeat="taskSkillRequirement in vm.taskSkillRequirements track by taskSkillRequirement.id">
                     <td><a ui-sref="task-skill-requirement-detail({id:taskSkillRequirement.id})">{{taskSkillRequirement.id}}</a></td>
                     <td>
-                        <a ui-sref="task-detail({id:taskSkillRequirement.task.id})">{{taskSkillRequirement.task.code}}</a>
+                        <a ui-sref="task-detail({id:taskSkillRequirement.task.id})">{{taskSkillRequirement.task.id}}</a>
                     </td>
                     <td>
                         <a ui-sref="skill-detail({id:taskSkillRequirement.skill.id})">{{taskSkillRequirement.skill.code}}</a>

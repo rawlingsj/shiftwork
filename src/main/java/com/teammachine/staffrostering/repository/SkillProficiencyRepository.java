@@ -12,10 +12,10 @@ import java.util.List;
  */
 public interface SkillProficiencyRepository extends JpaRepository<SkillProficiency,Long> {
 
-    @Query("select distinct skillProficiency from SkillProficiency skillProficiency left join fetch skillProficiency.skillLists")
+    @Query("select distinct skillProficiency from SkillProficiency skillProficiency left join fetch skillProficiency.skillList")
     List<SkillProficiency> findAllWithEagerRelationships();
 
-    @Query("select skillProficiency from SkillProficiency skillProficiency left join fetch skillProficiency.skillLists where skillProficiency.id =:id")
+    @Query("select skillProficiency from SkillProficiency skillProficiency left join fetch skillProficiency.skillList where skillProficiency.id =:id")
     SkillProficiency findOneWithEagerRelationships(@Param("id") Long id);
 
 }

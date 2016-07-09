@@ -10,7 +10,7 @@
         </dd>
         <dt><span translate="shiftworkApp.skillProficiency.skillList">Skill List</span></dt>
         <dd>
-            <span ng-repeat="skillList in vm.skillProficiency.skillLists">
+            <span ng-repeat="skillList in vm.skillProficiency.skillList">
                 <a ui-sref="skill-detail({id: {{skillList.id}}})">{{skillList.code}}</a>{{$last ? '' : ', '}}
             </span>
         </dd>

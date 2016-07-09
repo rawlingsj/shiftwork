@@ -5,11 +5,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A ShiftType.
@@ -37,11 +37,13 @@ public class ShiftType implements Serializable {
     @Column(name = "night_shift")
     private Boolean nightShift;
 
+    @Pattern(regexp = "^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$")
     @Column(name = "start_time")
-    private ZonedDateTime startTime;
+    private String startTime;
 
+    @Pattern(regexp = "^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$")
     @Column(name = "end_time")
-    private ZonedDateTime endTime;
+    private String endTime;
 
     @OneToMany(mappedBy = "shiftType")
     @JsonIgnore
@@ -88,20 +90,28 @@ public class ShiftType implements Serializable {
         this.nightShift = nightShift;
     }
 
-    public ZonedDateTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(ZonedDateTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public ZonedDateTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(ZonedDateTime endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getStartTimeString() {
+        return startTime;
+    }
+
+    public String getEndTimeString() {
+        return endTime;
     }
 
     public Set<ShiftTypeTask> getTasks() {
@@ -121,7 +131,7 @@ public class ShiftType implements Serializable {
             return false;
         }
         ShiftType shiftType = (ShiftType) o;
-        if(shiftType.id == null || id == null) {
+        if (shiftType.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, shiftType.id);
@@ -135,13 +145,13 @@ public class ShiftType implements Serializable {
     @Override
     public String toString() {
         return "ShiftType{" +
-            "id=" + id +
-            ", code='" + code + "'" +
-            ", index='" + index + "'" +
-            ", description='" + description + "'" +
-            ", nightShift='" + nightShift + "'" +
-            ", startTime='" + startTime + "'" +
-            ", endTime='" + endTime + "'" +
-            '}';
+                "id=" + id +
+                ", code='" + code + "'" +
+                ", index='" + index + "'" +
+                ", description='" + description + "'" +
+                ", nightShift='" + nightShift + "'" +
+                ", startTime='" + startTime + "'" +
+                ", endTime='" + endTime + "'" +
+                '}';
     }
 }

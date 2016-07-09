@@ -5,9 +5,9 @@
         .module('shiftworkApp')
         .controller('ContractDetailController', ContractDetailController);
 
-    ContractDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Contract', 'WeekendDefinition', 'ContractLine'];
+    ContractDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Contract', 'ContractLine', 'WeekendDefinition'];
 
-    function ContractDetailController($scope, $rootScope, $stateParams, entity, Contract, WeekendDefinition, ContractLine) {
+    function ContractDetailController($scope, $rootScope, $stateParams, entity, Contract, ContractLine, WeekendDefinition) {
         var vm = this;
         vm.contract = entity;
         

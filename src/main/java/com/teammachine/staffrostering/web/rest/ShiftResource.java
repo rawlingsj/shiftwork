@@ -2,11 +2,12 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.teammachine.staffrostering.domain.Shift;
+import com.teammachine.staffrostering.domain.ShiftAssignment;
+import com.teammachine.staffrostering.repository.ShiftAssignmentRepository;
 import com.teammachine.staffrostering.repository.ShiftRepository;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +27,14 @@ import java.util.Optional;
 public class ShiftResource {
 
     private final Logger log = LoggerFactory.getLogger(ShiftResource.class);
-        
+
     @Inject
     private ShiftRepository shiftRepository;
-    
+
+    @Inject
+    private ShiftAssignmentRepository shiftAssignmentRepository;
+
+
     /**
      * POST  /shifts : Create a new shift.
      *
@@ -38,8 +43,8 @@ public class ShiftResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @RequestMapping(value = "/shifts",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Shift> createShift(@RequestBody Shift shift) throws URISyntaxException {
         log.debug("REST request to save Shift : {}", shift);
@@ -47,9 +52,17 @@ public class ShiftResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("shift", "idexists", "A new shift cannot already have an ID")).body(null);
         }
         Shift result = shiftRepository.save(shift);
+        ShiftAssignment shiftAssignment = createNewShiftAssignment(result);
+        shiftAssignmentRepository.save(shiftAssignment);
         return ResponseEntity.created(new URI("/api/shifts/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("shift", result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert("shift", result.getId().toString()))
+                .body(result);
+    }
+
+    private ShiftAssignment createNewShiftAssignment(Shift shift) {
+        ShiftAssignment shiftAssignment = new ShiftAssignment();
+        shiftAssignment.setShift(shift);
+        return shiftAssignment;
     }
 
     /**
@@ -62,8 +75,8 @@ public class ShiftResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @RequestMapping(value = "/shifts",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Shift> updateShift(@RequestBody Shift shift) throws URISyntaxException {
         log.debug("REST request to update Shift : {}", shift);
@@ -72,8 +85,8 @@ public class ShiftResource {
         }
         Shift result = shiftRepository.save(shift);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("shift", shift.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert("shift", shift.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -82,8 +95,8 @@ public class ShiftResource {
      * @return the ResponseEntity with status 200 (OK) and the list of shifts in body
      */
     @RequestMapping(value = "/shifts",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public List<Shift> getAllShifts() {
         log.debug("REST request to get all Shifts");
@@ -98,17 +111,17 @@ public class ShiftResource {
      * @return the ResponseEntity with status 200 (OK) and with body the shift, or with status 404 (Not Found)
      */
     @RequestMapping(value = "/shifts/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Shift> getShift(@PathVariable Long id) {
         log.debug("REST request to get Shift : {}", id);
         Shift shift = shiftRepository.findOne(id);
         return Optional.ofNullable(shift)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .map(result -> new ResponseEntity<>(
+                        result,
+                        HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -118,8 +131,8 @@ public class ShiftResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @RequestMapping(value = "/shifts/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Void> deleteShift(@PathVariable Long id) {
         log.debug("REST request to delete Shift : {}", id);
