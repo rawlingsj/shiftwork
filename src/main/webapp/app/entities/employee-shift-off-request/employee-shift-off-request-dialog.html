@@ -22,7 +22,7 @@
 
         <div class="form-group">
             <label translate="shiftworkApp.employeeShiftOffRequest.shift" for="field_shift">Shift</label>
-            <select class="form-control" id="field_shift" name="shift" ng-model="vm.employeeShiftOffRequest.shift" ng-options="shift as shift.index for shift in vm.shifts | orderBy:'id' track by shift.id">
+            <select class="form-control" id="field_shift" name="shift" ng-model="vm.employeeShiftOffRequest.shift" ng-options="shift as shift.shiftType.code + '/' + shift.shiftDate.dateString for shift in vm.shifts track by shift.id">
                 <option value=""></option>
             </select>
         </div>

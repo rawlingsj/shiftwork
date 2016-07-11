@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing EmployeeDayOnRequest.
  */
 @RestController
-@RequestMapping({"/api", "/api_basic"})
+@RequestMapping("/api")
 public class EmployeeDayOnRequestResource {
 
     private final Logger log = LoggerFactory.getLogger(EmployeeDayOnRequestResource.class);
