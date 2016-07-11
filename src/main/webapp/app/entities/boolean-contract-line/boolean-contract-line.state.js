@@ -73,6 +73,7 @@
                     resolve: {
                         entity: function () {
                             return {
+                                type: 'boolean',
                                 contractLineType: null,
                                 enabled: null,
                                 weight: null,
