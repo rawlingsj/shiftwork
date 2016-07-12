@@ -10,7 +10,7 @@
         <hr>
         <dt><span translate="shiftworkApp.employeeShiftOffRequest.shift">Shift</span></dt>
         <dd>
-            <a ui-sref="shift-detail({id:vm.employeeShiftOffRequest.shift.id})">{{vm.employeeShiftOffRequest.shift.index}}</a>
+            <a ui-sref="shift-detail({id:vm.employeeShiftOffRequest.shift.id})">{{vm.employeeShiftOffRequest.shift.shiftType.code}}/{{vm.employeeShiftOffRequest.shift.shiftDate.dateString}}</a>
         </dd>
         <hr>
         <dt><span translate="shiftworkApp.employeeShiftOffRequest.employee">Employee</span></dt>
