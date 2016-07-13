@@ -43,8 +43,9 @@ public class ShiftAssignment implements Serializable {
     @JoinColumn(unique = true)
     private Employee employee;
 
-    @OneToMany(mappedBy = "shiftAssignment", fetch = FetchType.EAGER)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//    @OneToMany(mappedBy = "shiftAssignment", fetch = FetchType.EAGER)
+//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Transient
     private Set<Task> taskList = new HashSet<>();
 
     public Long getId() {

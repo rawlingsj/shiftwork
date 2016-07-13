@@ -22,8 +22,7 @@
             "staffNeeded": "Staff Needed",
             "taskType": "Task Type",
             "importance": "Importance",
-            "urgency": "Urgency",
-            "shiftAssignment": "Shift Assignment"
+            "urgency": "Urgency"
         }
     }
 }

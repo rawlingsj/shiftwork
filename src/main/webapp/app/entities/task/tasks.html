@@ -1,6 +1,5 @@
 <div>
     <h2 translate="shiftworkApp.task.home.title">Tasks</h2>
-    <p><span translate="shiftworkApp.task.home.description">Tasks</span></p>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
@@ -26,7 +25,6 @@
                     <th><span translate="shiftworkApp.task.taskType">Task Type</span></th>
                     <th><span translate="shiftworkApp.task.importance">Importance</span></th>
                     <th><span translate="shiftworkApp.task.urgency">Urgency</span></th>
-                    <th><span translate="shiftworkApp.task.shiftAssignment">Shift Assignment</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -39,9 +37,6 @@
                     <td translate="{{'shiftworkApp.TaskType.' + task.taskType}}">{{task.taskType}}</td>
                     <td translate="{{'shiftworkApp.TaskImportance.' + task.importance}}">{{task.importance}}</td>
                     <td translate="{{'shiftworkApp.TaskUrgency.' + task.urgency}}">{{task.urgency}}</td>
-                    <td>
-                        <a ui-sref="shift-assignment-detail({id:task.shiftAssignment.id})">{{task.shiftAssignment.id}}-{{task.shiftAssignment.code}}</a>
-                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
