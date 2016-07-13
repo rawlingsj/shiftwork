@@ -27,7 +27,7 @@ public class ShiftAssignment implements Serializable {
     private Integer indexInShift;
 
     @Column(name = "is_need_to_reassign")
-    private Boolean isNeedToReassign = true;
+    private Boolean isNeedToReassign;
 
     @Column(name = "is_dropped")
     private Boolean isDropped;
@@ -35,17 +35,17 @@ public class ShiftAssignment implements Serializable {
     @Column(name = "locked")
     private Boolean locked;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private Shift shift;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private Employee employee;
 
-//    @OneToMany(mappedBy = "shiftAssignment", fetch = FetchType.EAGER)
-//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @Transient
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "shift_assignment_task",
+            joinColumns = @JoinColumn(name = "shift_assignment_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"))
     private Set<Task> taskList = new HashSet<>();
 
     public Long getId() {

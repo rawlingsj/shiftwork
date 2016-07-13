@@ -5,29 +5,13 @@
         .module('shiftworkApp')
         .controller('ShiftAssignmentDialogController', ShiftAssignmentDialogController);
 
-    ShiftAssignmentDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'ShiftAssignment', 'Shift', 'Employee', 'Task'];
+    ShiftAssignmentDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'ShiftAssignment', 'Shift', 'Employee', 'Task'];
 
-    function ShiftAssignmentDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, ShiftAssignment, Shift, Employee, Task) {
+    function ShiftAssignmentDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, ShiftAssignment, Shift, Employee, Task) {
         var vm = this;
         vm.shiftAssignment = entity;
-        vm.shifts = Shift.query({filter: 'shiftassignment-is-null'});
-        $q.all([vm.shiftAssignment.$promise, vm.shifts.$promise]).then(function() {
-            if (!vm.shiftAssignment.shift || !vm.shiftAssignment.shift.id) {
-                return $q.reject();
-            }
-            return Shift.get({id : vm.shiftAssignment.shift.id}).$promise;
-        }).then(function(shift) {
-            vm.shifts.push(shift);
-        });
-        vm.employees = Employee.query({filter: 'shiftassignment-is-null'});
-        $q.all([vm.shiftAssignment.$promise, vm.employees.$promise]).then(function() {
-            if (!vm.shiftAssignment.employee || !vm.shiftAssignment.employee.id) {
-                return $q.reject();
-            }
-            return Employee.get({id : vm.shiftAssignment.employee.id}).$promise;
-        }).then(function(employee) {
-            vm.employees.push(employee);
-        });
+        vm.shifts = Shift.query();
+        vm.employees = Employee.query();
         vm.tasks = Task.query();
 
         $timeout(function (){

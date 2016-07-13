@@ -2,7 +2,7 @@
   "relationships": [
     {
       "relationshipId": 1,
-      "relationshipType": "one-to-one",
+      "relationshipType": "many-to-one",
       "relationshipName": "shift",
       "otherEntityName": "shift",
       "otherEntityField": "id",
@@ -11,19 +11,21 @@
     },
     {
       "relationshipId": 2,
-      "relationshipType": "one-to-one",
+      "relationshipType": "many-to-one",
       "relationshipName": "employee",
       "otherEntityName": "employee",
-      "otherEntityField": "id",
+      "otherEntityField": "name",
       "ownerSide": true,
       "otherEntityRelationshipName": "shiftAssignment"
     },
     {
       "relationshipId": 3,
-      "relationshipType": "one-to-many",
+      "relationshipType": "many-to-many",
       "relationshipName": "taskList",
       "otherEntityName": "task",
-      "otherEntityRelationshipName": "shiftAssignment"
+      "otherEntityField": "code",
+      "otherEntityRelationshipName": "shiftAssignment",
+      "ownerSide": true
     }
   ],
   "fields": [

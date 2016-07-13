@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,17 +53,23 @@ public class ShiftResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("shift", "idexists", "A new shift cannot already have an ID")).body(null);
         }
         Shift result = shiftRepository.save(shift);
-        ShiftAssignment shiftAssignment = createNewShiftAssignment(result);
-        shiftAssignmentRepository.save(shiftAssignment);
+        List<ShiftAssignment> shiftAssignments = createNewShiftAssignments(result);
+        shiftAssignmentRepository.save(shiftAssignments);
         return ResponseEntity.created(new URI("/api/shifts/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("shift", result.getId().toString()))
                 .body(result);
     }
 
-    private ShiftAssignment createNewShiftAssignment(Shift shift) {
-        ShiftAssignment shiftAssignment = new ShiftAssignment();
-        shiftAssignment.setShift(shift);
-        return shiftAssignment;
+    private List<ShiftAssignment> createNewShiftAssignments(Shift shift) {
+        List<ShiftAssignment> shiftAssignments = new ArrayList<>(shift.getStaffRequired());
+        for(int i = 1; i <= shift.getStaffRequired(); i++) {
+            ShiftAssignment shiftAssignment = new ShiftAssignment();
+            shiftAssignment.setIndexInShift(i);
+            shiftAssignment.setShift(shift);
+//            shiftAssignment.setTaskList(shift.get);
+            shiftAssignments.add(shiftAssignment);
+        }
+        return shiftAssignments;
     }
 
     /**
