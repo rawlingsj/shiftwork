@@ -66,7 +66,7 @@ public class ShiftResource {
             ShiftAssignment shiftAssignment = new ShiftAssignment();
             shiftAssignment.setIndexInShift(i);
             shiftAssignment.setShift(shift);
-//            shiftAssignment.setTaskList(shift.get);
+            shiftAssignment.setTaskList(shift.getShiftType().getTasks());
             shiftAssignments.add(shiftAssignment);
         }
         return shiftAssignments;

@@ -6,6 +6,7 @@ import com.teammachine.staffrostering.repository.ShiftTypeRepository;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -87,7 +88,7 @@ public class ShiftTypeResource {
     @Timed
     public List<ShiftType> getAllShiftTypes() {
         log.debug("REST request to get all ShiftTypes");
-        List<ShiftType> shiftTypes = shiftTypeRepository.findAll();
+        List<ShiftType> shiftTypes = shiftTypeRepository.findAllWithEagerRelationships();
         return shiftTypes;
     }
 
@@ -103,7 +104,7 @@ public class ShiftTypeResource {
     @Timed
     public ResponseEntity<ShiftType> getShiftType(@PathVariable Long id) {
         log.debug("REST request to get ShiftType : {}", id);
-        ShiftType shiftType = shiftTypeRepository.findOne(id);
+        ShiftType shiftType = shiftTypeRepository.findOneWithEagerRelationships(id);
         return Optional.ofNullable(shiftType)
             .map(result -> new ResponseEntity<>(
                 result,

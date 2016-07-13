@@ -33,7 +33,7 @@
             <a ui-sref="employee-detail({id:vm.shiftAssignment.employee.id})">{{vm.shiftAssignment.employee.name}}</a>
         </dd>
         <hr>
-        <dt><span translate="shiftworkApp.shiftAssignment.taskList">Task List</span></dt>
+        <dt><span translate="shiftworkApp.shiftAssignment.tasks">Tasks</span></dt>
         <dd>
             <span ng-repeat="taskList in vm.shiftAssignment.taskList">
                 <a ui-sref="task-detail({id: {{taskList.id}}})">{{taskList.code}}</a>{{$last ? '' : ', '}}
