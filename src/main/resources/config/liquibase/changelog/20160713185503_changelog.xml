@@ -42,12 +42,26 @@
     </changeSet>
     <!-- alter shift_assignment table -->
     <changeSet author="LD (generated)" id="1468436112501-5">
-        <dropUniqueConstraint constraintName="shift_assignment_employee_id_key"
-                              tableName="shift_assignment"/>
-    </changeSet>
-    <changeSet author="LD (generated)" id="1468436112501-6">
+        <dropForeignKeyConstraint baseTableName="shift_assignment"
+                                  constraintName="fk_shiftassignment_shift_id"/>
         <dropUniqueConstraint constraintName="shift_assignment_shift_id_key"
                               tableName="shift_assignment"/>
+        <addForeignKeyConstraint baseColumnNames="shift_id"
+                                 baseTableName="shift_assignment"
+                                 constraintName="fk_shiftassignment_shift_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shift"/>
+    </changeSet>
+    <changeSet author="LD (generated)" id="1468436112501-6">
+        <dropForeignKeyConstraint baseTableName="shift_assignment"
+                                  constraintName="fk_shiftassignment_employee_id"/>
+        <dropUniqueConstraint constraintName="shift_assignment_employee_id_key"
+                              tableName="shift_assignment"/>
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="shift_assignment"
+                                 constraintName="fk_shiftassignment_employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
     </changeSet>
     <!-- alter shift_type_task table -->
     <changeSet author="LD (generated)" id="1468436112501-7">
