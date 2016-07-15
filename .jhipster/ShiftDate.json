@@ -16,8 +16,8 @@
     },
     {
       "fieldId": 2,
-      "fieldName": "dateString",
-      "fieldType": "String"
+      "fieldName": "date",
+      "fieldType": "LocalDate"
     },
     {
       "fieldId": 3,

@@ -72,7 +72,7 @@
                         entity: function () {
                             return {
                                 indexInShift: null,
-                                isNeedToReassign: null,
+                                isNeedToReassign: true,
                                 isDropped: null,
                                 locked: null,
                                 id: null

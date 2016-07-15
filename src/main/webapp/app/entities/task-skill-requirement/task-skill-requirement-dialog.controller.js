@@ -19,15 +19,7 @@
         }).then(function(task) {
             vm.tasks.push(task);
         });
-        vm.skills = Skill.query({filter: 'taskskillrequirement-is-null'});
-        $q.all([vm.taskSkillRequirement.$promise, vm.skills.$promise]).then(function() {
-            if (!vm.taskSkillRequirement.skill || !vm.taskSkillRequirement.skill.id) {
-                return $q.reject();
-            }
-            return Skill.get({id : vm.taskSkillRequirement.skill.id}).$promise;
-        }).then(function(skill) {
-            vm.skills.push(skill);
-        });
+        vm.skills = Skill.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

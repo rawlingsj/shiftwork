@@ -6,13 +6,13 @@ import com.teammachine.staffrostering.repository.ShiftTypeRepository;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -41,7 +41,7 @@ public class ShiftTypeResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ShiftType> createShiftType(@RequestBody ShiftType shiftType) throws URISyntaxException {
+    public ResponseEntity<ShiftType> createShiftType(@Valid @RequestBody ShiftType shiftType) throws URISyntaxException {
         log.debug("REST request to save ShiftType : {}", shiftType);
         if (shiftType.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("shiftType", "idexists", "A new shiftType cannot already have an ID")).body(null);
@@ -65,7 +65,7 @@ public class ShiftTypeResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ShiftType> updateShiftType(@RequestBody ShiftType shiftType) throws URISyntaxException {
+    public ResponseEntity<ShiftType> updateShiftType(@Valid @RequestBody ShiftType shiftType) throws URISyntaxException {
         log.debug("REST request to update ShiftType : {}", shiftType);
         if (shiftType.getId() == null) {
             return createShiftType(shiftType);

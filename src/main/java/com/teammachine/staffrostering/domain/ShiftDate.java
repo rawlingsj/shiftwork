@@ -8,6 +8,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -39,7 +40,7 @@ public class ShiftDate implements Serializable {
     @OneToMany(mappedBy = "shiftDate")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Shift> shiftList = new HashSet<>();
+    private Set<Shift> shiftLists = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -61,6 +62,10 @@ public class ShiftDate implements Serializable {
         return date;
     }
 
+    public String getDateString() {
+        return date != null ? date.format(DateTimeFormatter.ISO_DATE) : null;
+    }
+
     public void setDate(LocalDate date) {
         this.date = date;
     }
@@ -73,12 +78,12 @@ public class ShiftDate implements Serializable {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public Set<Shift> getShiftList() {
-        return shiftList;
+    public Set<Shift> getShiftLists() {
+        return shiftLists;
     }
 
-    public void setShiftList(Set<Shift> shifts) {
-        this.shiftList = shifts;
+    public void setShiftLists(Set<Shift> shifts) {
+        this.shiftLists = shifts;
     }
 
     @Override

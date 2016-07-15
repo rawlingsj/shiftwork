@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <property name="now" value="now()" dbms="mysql,h2"/>
     <property name="now" value="current_timestamp" dbms="postgresql"/>
@@ -22,19 +22,18 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="index" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
-            
+
             <column name="staff_required" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
-            
-            <column name="shift_type_id" type="bigint">
-                <constraints unique="true"/>
-            </column>
+
+            <column name="shift_type_id" type="bigint"/>
+
             <column name="shift_date_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

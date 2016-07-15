@@ -13,11 +13,9 @@
             <span>{{vm.contract.description}}</span>
         </dd>
         <hr>
-        <dt><span translate="shiftworkApp.contract.weekendDefinitions">Weekend Definitions</span></dt>
+        <dt><span translate="shiftworkApp.contract.weekendDefinition">Weekend Definition</span></dt>
         <dd>
-            <span ng-repeat="weekendDefinitions in vm.contract.weekendDefinitions">
-                <a ui-sref="weekend-definition-detail({id: {{weekendDefinitions.id}}})">{{weekendDefinitions.description}}</a>{{$last ? '' : ', '}}
-            </span>
+            <a ui-sref="weekend-definition-detail({id:vm.contract.weekendDefinition.id})">{{vm.contract.weekendDefinition.description}}</a>
         </dd>
         <hr>
     </dl>

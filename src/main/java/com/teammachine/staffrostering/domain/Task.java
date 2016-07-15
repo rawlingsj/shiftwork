@@ -1,18 +1,17 @@
 package com.teammachine.staffrostering.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.teammachine.staffrostering.domain.enumeration.TaskImportance;
+import com.teammachine.staffrostering.domain.enumeration.TaskType;
+import com.teammachine.staffrostering.domain.enumeration.TaskUrgency;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.teammachine.staffrostering.domain.enumeration.TaskType;
-
-import com.teammachine.staffrostering.domain.enumeration.TaskImportance;
-
-import com.teammachine.staffrostering.domain.enumeration.TaskUrgency;
 
 /**
  * A Task.
@@ -51,6 +50,7 @@ public class Task implements Serializable {
     private TaskUrgency urgency;
 
     @ManyToOne
+    @JsonIgnore
     private ShiftAssignment shiftAssignment;
 
     public Long getId() {
@@ -109,10 +109,16 @@ public class Task implements Serializable {
         this.urgency = urgency;
     }
 
-    public ShiftAssignment getShiftAssignment() {
-        return shiftAssignment;
+    @JsonProperty("shiftAssignment")
+    public EntityRefInfo getShiftAssignment() {
+        if (shiftAssignment != null) {
+            return new EntityRefInfo(shiftAssignment.getId(), shiftAssignment.getShift().getShiftType().getCode() + "/" + shiftAssignment.getShift().getShiftDate().getDateString());
+        } else {
+            return null;
+        }
     }
 
+    @JsonProperty("shiftAssignment")
     public void setShiftAssignment(ShiftAssignment shiftAssignment) {
         this.shiftAssignment = shiftAssignment;
     }

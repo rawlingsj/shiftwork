@@ -5,20 +5,12 @@
         .module('shiftworkApp')
         .controller('EmployeeShiftOnRequestDialogController', EmployeeShiftOnRequestDialogController);
 
-    EmployeeShiftOnRequestDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'EmployeeShiftOnRequest', 'Shift', 'Employee'];
+    EmployeeShiftOnRequestDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'EmployeeShiftOnRequest', 'Shift', 'Employee'];
 
-    function EmployeeShiftOnRequestDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, EmployeeShiftOnRequest, Shift, Employee) {
+    function EmployeeShiftOnRequestDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, EmployeeShiftOnRequest, Shift, Employee) {
         var vm = this;
         vm.employeeShiftOnRequest = entity;
-        vm.shifts = Shift.query({filter: 'employeeshiftonrequest-is-null'});
-        $q.all([vm.employeeShiftOnRequest.$promise, vm.shifts.$promise]).then(function() {
-            if (!vm.employeeShiftOnRequest.shift || !vm.employeeShiftOnRequest.shift.id) {
-                return $q.reject();
-            }
-            return Shift.get({id : vm.employeeShiftOnRequest.shift.id}).$promise;
-        }).then(function(shift) {
-            vm.shifts.push(shift);
-        });
+        vm.shifts = Shift.query();
         vm.employees = Employee.query();
 
         $timeout(function (){

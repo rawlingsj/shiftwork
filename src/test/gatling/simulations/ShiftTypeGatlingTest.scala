@@ -67,7 +67,7 @@ class ShiftTypeGatlingTest extends Simulation {
             .exec(http("Create new shiftType")
             .post("/api/shift-types")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "code":"SAMPLE_TEXT", "index":"0", "description":"SAMPLE_TEXT", "nightShift":null, "startTime":"2020-01-01T00:00:00.000Z", "endTime":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{"id":null, "code":"SAMPLE_TEXT", "index":"0", "description":"SAMPLE_TEXT", "nightShift":null, "startTime":"SAMPLE_TEXT", "endTime":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_shiftType_url"))).exitHereIfFailed
             .pause(10)

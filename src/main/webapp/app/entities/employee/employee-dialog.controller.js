@@ -10,15 +10,7 @@
     function EmployeeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Employee, Contract, EmployeeDayOffRequest, EmployeeDayOnRequest, EmployeeShiftOffRequest, EmployeeShiftOnRequest, ShiftDate, ShiftType, EmployeeLeaveAbsence) {
         var vm = this;
         vm.employee = entity;
-        vm.contracts = Contract.query({filter: 'employee-is-null'});
-        $q.all([vm.employee.$promise, vm.contracts.$promise]).then(function() {
-            if (!vm.employee.contract || !vm.employee.contract.id) {
-                return $q.reject();
-            }
-            return Contract.get({id : vm.employee.contract.id}).$promise;
-        }).then(function(contract) {
-            vm.contracts.push(contract);
-        });
+        vm.contracts = Contract.query();
         vm.employeedayoffrequests = EmployeeDayOffRequest.query();
         vm.employeedayonrequests = EmployeeDayOnRequest.query();
         vm.employeeshiftoffrequests = EmployeeShiftOffRequest.query();

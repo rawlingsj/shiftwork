@@ -1,6 +1,5 @@
 <div>
     <h2 translate="shiftworkApp.contract.home.title">Contracts</h2>
-    <p><span translate="shiftworkApp.contract.home.description">Contracts</span></p>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
@@ -22,7 +21,7 @@
                     <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.contract.code">Code</span></th>
                     <th><span translate="shiftworkApp.contract.description">Description</span></th>
-                    <th><span translate="shiftworkApp.contract.weekendDefinitions">Weekend Definitions</span></th>
+                    <th><span translate="shiftworkApp.contract.weekendDefinition">Weekend Definition</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -32,9 +31,7 @@
                     <td>{{contract.code}}</td>
                     <td>{{contract.description}}</td>
                     <td>
-                        <span ng-repeat="weekendDefinitions in contract.weekendDefinitions">
-                            <a class="form-control-static" ui-sref="weekend-definition-detail({id: {{weekendDefinitions.id}}})">{{weekendDefinitions.description}}</a>{{$last ? '' : ', '}}
-                        <span>
+                        <a ui-sref="weekend-definition-detail({id:contract.weekendDefinition.id})">{{contract.weekendDefinition.description}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

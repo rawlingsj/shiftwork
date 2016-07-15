@@ -5,20 +5,12 @@
         .module('shiftworkApp')
         .controller('ShiftDialogController', ShiftDialogController);
 
-    ShiftDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Shift', 'ShiftType', 'ShiftDate'];
+    ShiftDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Shift', 'ShiftType', 'ShiftDate'];
 
-    function ShiftDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Shift, ShiftType, ShiftDate) {
+    function ShiftDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Shift, ShiftType, ShiftDate) {
         var vm = this;
         vm.shift = entity;
-        vm.shifttypes = ShiftType.query({filter: 'shift-is-null'});
-        $q.all([vm.shift.$promise, vm.shifttypes.$promise]).then(function() {
-            if (!vm.shift.shiftType || !vm.shift.shiftType.id) {
-                return $q.reject();
-            }
-            return ShiftType.get({id : vm.shift.shiftType.id}).$promise;
-        }).then(function(shiftType) {
-            vm.shifttypes.push(shiftType);
-        });
+        vm.shifttypes = ShiftType.query();
         vm.shiftdates = ShiftDate.query();
 
         $timeout(function (){

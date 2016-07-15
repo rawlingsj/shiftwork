@@ -27,8 +27,7 @@ public class Shift implements Serializable {
     @Column(name = "staff_required")
     private Integer staffRequired;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private ShiftType shiftType;
 
     @ManyToOne

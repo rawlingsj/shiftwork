@@ -27,7 +27,7 @@ public class Skill implements Serializable {
     @Column(name = "code")
     private String code;
 
-    @ManyToMany(mappedBy = "skillLists")
+    @ManyToMany(mappedBy = "skillList")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<SkillProficiency> skillProficiencies = new HashSet<>();

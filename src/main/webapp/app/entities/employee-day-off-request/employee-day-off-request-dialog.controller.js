@@ -5,20 +5,12 @@
         .module('shiftworkApp')
         .controller('EmployeeDayOffRequestDialogController', EmployeeDayOffRequestDialogController);
 
-    EmployeeDayOffRequestDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'EmployeeDayOffRequest', 'ShiftDate', 'Employee'];
+    EmployeeDayOffRequestDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'EmployeeDayOffRequest', 'ShiftDate', 'Employee'];
 
-    function EmployeeDayOffRequestDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, EmployeeDayOffRequest, ShiftDate, Employee) {
+    function EmployeeDayOffRequestDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, EmployeeDayOffRequest, ShiftDate, Employee) {
         var vm = this;
         vm.employeeDayOffRequest = entity;
-        vm.shiftdates = ShiftDate.query({filter: 'employeedayoffrequest-is-null'});
-        $q.all([vm.employeeDayOffRequest.$promise, vm.shiftdates.$promise]).then(function() {
-            if (!vm.employeeDayOffRequest.shiftDate || !vm.employeeDayOffRequest.shiftDate.id) {
-                return $q.reject();
-            }
-            return ShiftDate.get({id : vm.employeeDayOffRequest.shiftDate.id}).$promise;
-        }).then(function(shiftDate) {
-            vm.shiftdates.push(shiftDate);
-        });
+        vm.shiftdates = ShiftDate.query();
         vm.employees = Employee.query();
 
         $timeout(function (){

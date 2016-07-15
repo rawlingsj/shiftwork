@@ -24,8 +24,7 @@ public class EmployeeDayOnRequest implements Serializable {
     @Column(name = "weight")
     private Integer weight;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private ShiftDate shiftDate;
 
     @ManyToOne
@@ -55,8 +54,8 @@ public class EmployeeDayOnRequest implements Serializable {
         this.shiftDate = shiftDate;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public EntityRefInfo getEmployee() {
+        return employee != null ? new EntityRefInfo(employee.getId(), employee.getCode()) : null;
     }
 
     public void setEmployee(Employee employee) {

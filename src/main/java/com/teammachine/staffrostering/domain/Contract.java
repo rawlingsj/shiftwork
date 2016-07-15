@@ -1,14 +1,13 @@
 package com.teammachine.staffrostering.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Contract.
@@ -30,17 +29,12 @@ public class Contract implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "contract")
-    @JsonIgnore
+    @OneToMany(mappedBy = "contract", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<ContractLine> contractLineLists = new HashSet<>();
+    private Set<ContractLine> contractLineList = new HashSet<>();
 
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "contract_weekend_definitions",
-               joinColumns = @JoinColumn(name="contracts_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="weekend_definitions_id", referencedColumnName="ID"))
-    private Set<WeekendDefinition> weekendDefinitions = new HashSet<>();
+    @ManyToOne
+    private WeekendDefinition weekendDefinition;
 
     public Long getId() {
         return id;
@@ -66,20 +60,20 @@ public class Contract implements Serializable {
         this.description = description;
     }
 
-    public Set<ContractLine> getContractLineLists() {
-        return contractLineLists;
+    public Set<ContractLine> getContractLineList() {
+        return contractLineList;
     }
 
-    public void setContractLineLists(Set<ContractLine> contractLines) {
-        this.contractLineLists = contractLines;
+    public void setContractLineList(Set<ContractLine> contractLines) {
+        this.contractLineList = contractLines;
     }
 
-    public Set<WeekendDefinition> getWeekendDefinitions() {
-        return weekendDefinitions;
+    public WeekendDefinition getWeekendDefinition() {
+        return weekendDefinition;
     }
 
-    public void setWeekendDefinitions(Set<WeekendDefinition> weekendDefinitions) {
-        this.weekendDefinitions = weekendDefinitions;
+    public void setWeekendDefinition(WeekendDefinition weekendDefinition) {
+        this.weekendDefinition = weekendDefinition;
     }
 
     @Override

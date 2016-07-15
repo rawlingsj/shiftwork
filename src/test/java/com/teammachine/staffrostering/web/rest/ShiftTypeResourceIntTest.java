@@ -3,17 +3,15 @@ package com.teammachine.staffrostering.web.rest;
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.ShiftType;
 import com.teammachine.staffrostering.repository.ShiftTypeRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -23,13 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,8 +40,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class ShiftTypeResourceIntTest {
 
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneId.of("Z"));
-
     private static final String DEFAULT_CODE = "AAAAA";
     private static final String UPDATED_CODE = "BBBBB";
 
@@ -57,14 +50,10 @@ public class ShiftTypeResourceIntTest {
 
     private static final Boolean DEFAULT_NIGHT_SHIFT = false;
     private static final Boolean UPDATED_NIGHT_SHIFT = true;
-
-    private static final ZonedDateTime DEFAULT_START_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
-    private static final ZonedDateTime UPDATED_START_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final String DEFAULT_START_TIME_STR = dateTimeFormatter.format(DEFAULT_START_TIME);
-
-    private static final ZonedDateTime DEFAULT_END_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
-    private static final ZonedDateTime UPDATED_END_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final String DEFAULT_END_TIME_STR = dateTimeFormatter.format(DEFAULT_END_TIME);
+    private static final String DEFAULT_START_TIME = "06:30:00";
+    private static final String UPDATED_START_TIME = "06:00:00";
+    private static final String DEFAULT_END_TIME = "14:30:00";
+    private static final String UPDATED_END_TIME = "14:00:00";
 
     @Inject
     private ShiftTypeRepository shiftTypeRepository;
@@ -139,8 +128,8 @@ public class ShiftTypeResourceIntTest {
                 .andExpect(jsonPath("$.[*].index").value(hasItem(DEFAULT_INDEX)))
                 .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
                 .andExpect(jsonPath("$.[*].nightShift").value(hasItem(DEFAULT_NIGHT_SHIFT.booleanValue())))
-                .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME_STR)))
-                .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME_STR)));
+                .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
+                .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
     }
 
     @Test
@@ -158,8 +147,8 @@ public class ShiftTypeResourceIntTest {
             .andExpect(jsonPath("$.index").value(DEFAULT_INDEX))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.nightShift").value(DEFAULT_NIGHT_SHIFT.booleanValue()))
-            .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME_STR))
-            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME_STR));
+            .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
+            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()));
     }
 
     @Test

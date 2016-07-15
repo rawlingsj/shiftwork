@@ -30,7 +30,7 @@
                     <td><a ui-sref="employee-shift-off-request-detail({id:employeeShiftOffRequest.id})">{{employeeShiftOffRequest.id}}</a></td>
                     <td>{{employeeShiftOffRequest.weight}}</td>
                     <td>
-                        <a ui-sref="shift-detail({id:employeeShiftOffRequest.shift.id})">{{employeeShiftOffRequest.shift.index}}</a>
+                        <a ui-sref="shift-detail({id:employeeShiftOffRequest.shift.id})">{{employeeShiftOffRequest.shift.shiftType.code}}/{{employeeShiftOffRequest.shift.shiftDate.dateString}}</a>
                     </td>
                     <td>
                         <a ui-sref="employee-detail({id:employeeShiftOffRequest.employee.id})">{{employeeShiftOffRequest.employee.code}}</a>

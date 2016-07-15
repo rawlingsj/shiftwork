@@ -1,16 +1,17 @@
 {
     "relationships": [
         {
-            "relationshipId": 2,
+            "relationshipId": 1,
             "relationshipType": "one-to-many",
             "relationshipName": "contractLineList",
             "otherEntityName": "contractLine",
             "otherEntityRelationshipName": "contract"
         },
         {
-            "relationshipName": "weekendDefinitions",
+            "relationshipId": 2,
+            "relationshipName": "weekendDefinition",
             "otherEntityName": "weekendDefinition",
-            "relationshipType": "many-to-many",
+            "relationshipType": "many-to-one",
             "otherEntityField": "description",
             "ownerSide": true
         }

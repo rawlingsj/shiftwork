@@ -33,14 +33,12 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="contract_id" type="bigint">
-                <constraints unique="true"/>
-            </column>
+            <column name="contract_id" type="bigint"/>
             <column name="unavailable_shift_date_id" type="bigint">
-                <constraints unique="true"/>
+                <constraints unique="true" uniqueConstraintName="employee_unavailable_shift_date_id_key"/>
             </column>
             <column name="unavailable_shift_type_id" type="bigint">
-                <constraints unique="true"/>
+                <constraints unique="true" uniqueConstraintName="employee_unavailable_shift_type_id_key"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>

@@ -2,7 +2,7 @@
   "relationships": [
     {
       "relationshipId": 1,
-      "relationshipType": "one-to-one",
+      "relationshipType": "many-to-one",
       "relationshipName": "shift",
       "otherEntityName": "shift",
       "otherEntityField": "id",
@@ -14,7 +14,7 @@
       "relationshipType": "many-to-one",
       "relationshipName": "employee",
       "otherEntityName": "employee",
-      "otherEntityField": "id"
+      "otherEntityField": "code"
     }
   ],
   "fields": [

@@ -22,11 +22,9 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="task_id" type="bigint">
-                <constraints unique="true"/>
+                <constraints unique="true" uniqueConstraintName="task_skill_requirement_task_id_key"/>
             </column>
-            <column name="skill_id" type="bigint">
-                <constraints unique="true"/>
-            </column>
+            <column name="skill_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         
