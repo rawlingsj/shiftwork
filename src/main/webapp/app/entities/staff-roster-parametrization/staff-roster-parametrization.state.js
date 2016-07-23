@@ -71,6 +71,11 @@
                     resolve: {
                         entity: function () {
                             return {
+                                name: null,
+                                description: null,
+                                hardConstraintMatches: null,
+                                softConstraintMatches: null,
+                                lastRunTime: null,
                                 id: null
                             };
                         }

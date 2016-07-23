@@ -4,9 +4,9 @@
         .module('shiftworkApp')
         .factory('StaffRosterParametrization', StaffRosterParametrization);
 
-    StaffRosterParametrization.$inject = ['$resource'];
+    StaffRosterParametrization.$inject = ['$resource', 'DateUtils'];
 
-    function StaffRosterParametrization ($resource) {
+    function StaffRosterParametrization ($resource, DateUtils) {
         var resourceUrl =  'api/staff-roster-parametrizations/:id';
 
         return $resource(resourceUrl, {}, {
@@ -15,6 +15,7 @@
                 method: 'GET',
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
+                    data.lastRunTime = DateUtils.convertDateTimeFromServer(data.lastRunTime);
                     return data;
                 }
             },

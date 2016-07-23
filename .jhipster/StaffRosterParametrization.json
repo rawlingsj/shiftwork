@@ -1,37 +1,69 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipType": "one-to-one",
-      "relationshipName": "firstShiftDate",
-      "otherEntityName": "shiftDate",
-      "otherEntityField": "id",
-      "ownerSide": true,
-      "otherEntityRelationshipName": "staffRosterParametrization"
-    },
-    {
-      "relationshipId": 2,
-      "relationshipType": "one-to-one",
-      "relationshipName": "lastShiftDate",
-      "otherEntityName": "shiftDate",
-      "otherEntityField": "id",
-      "ownerSide": true,
-      "otherEntityRelationshipName": "staffRosterParametrization"
-    },
-    {
-      "relationshipId": 3,
-      "relationshipType": "one-to-one",
-      "relationshipName": "planningWindowStart",
-      "otherEntityName": "shiftDate",
-      "otherEntityField": "id",
-      "ownerSide": true,
-      "otherEntityRelationshipName": "staffRosterParametrization"
-    }
-  ],
-  "fields": [],
-  "changelogDate": "20160422164626",
-  "dto": "no",
-  "pagination": "no",
-  "service": "no",
-  "entityTableName": "staff_roster_parametrization"
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipType": "many-to-one",
+            "relationshipName": "firstShiftDate",
+            "otherEntityName": "shiftDate",
+            "otherEntityField": "dateString",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "staffRosterParametrization"
+        },
+        {
+            "relationshipId": 2,
+            "relationshipType": "many-to-one",
+            "relationshipName": "lastShiftDate",
+            "otherEntityName": "shiftDate",
+            "otherEntityField": "dateString",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "staffRosterParametrization"
+        },
+        {
+            "relationshipId": 3,
+            "relationshipType": "many-to-one",
+            "relationshipName": "planningWindowStart",
+            "otherEntityName": "shiftDate",
+            "otherEntityField": "dateString",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "staffRosterParametrization"
+        },
+        {
+            "relationshipId": 4,
+            "relationshipType": "many-to-one",
+            "relationshipName": "planningWindowEnd",
+            "otherEntityName": "shiftDate",
+            "otherEntityField": "dateString",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "staffRosterParametrization"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hardConstraintMatches",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "softConstraintMatches",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "lastRunTime",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20160422164626",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "staff_roster_parametrization",
+    "pagination": "no"
 }

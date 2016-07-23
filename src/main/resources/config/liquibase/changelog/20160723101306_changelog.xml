@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+   <changeSet author="LD (generated)" id="1469268804695-1">
+      <addColumn tableName="staff_roster_parametrization">
+         <column name="name" type="varchar(255)"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1469268804695-2">
+      <addColumn tableName="staff_roster_parametrization">
+         <column name="description" type="varchar(255)"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1469268804695-3">
+      <addColumn tableName="staff_roster_parametrization">
+         <column name="hard_constraint_matches" type="int4"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1469268804695-4">
+      <addColumn tableName="staff_roster_parametrization">
+         <column name="soft_constraint_matches" type="int4"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1469268804695-5">
+      <addColumn tableName="staff_roster_parametrization">
+         <column name="last_run_time" type="timestamp(29, 6)"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1469268804695-6">
+      <addColumn tableName="staff_roster_parametrization">
+         <column name="planning_window_end_id" type="int8"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1469268804695-7">
+      <addForeignKeyConstraint baseColumnNames="planning_window_end_id"
+                               baseTableName="staff_roster_parametrization"
+                               constraintName="fk_staffrosterparametrization_planningwindowend_id"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               onDelete="NO ACTION"
+                               onUpdate="NO ACTION"
+                               referencedColumnNames="id"
+                               referencedTableName="shift_date"/>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1469268804695-8">
+      <dropUniqueConstraint constraintName="staff_roster_parametrization_first_shift_date_id_key"
+                            tableName="staff_roster_parametrization"/>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1469268804695-9">
+      <dropUniqueConstraint constraintName="staff_roster_parametrization_last_shift_date_id_key"
+                            tableName="staff_roster_parametrization"/>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1469268804695-10">
+      <dropUniqueConstraint constraintName="staff_roster_parametrization_planning_window_start_id_key"
+                            tableName="staff_roster_parametrization"/>
+   </changeSet>
+</databaseChangeLog>
