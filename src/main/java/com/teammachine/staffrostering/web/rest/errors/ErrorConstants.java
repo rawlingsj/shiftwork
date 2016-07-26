@@ -8,6 +8,9 @@ public final class ErrorConstants {
     public static final String ERR_METHOD_NOT_SUPPORTED = "error.methodNotSupported";
     public static final String ERR_INTERNAL_SERVER_ERROR = "error.internalServerError";
 
+    // Custom
+    public static final String ERR_NO_SUCH_SHIFT_DATE = "noSuchShiftDate";
+
     private ErrorConstants() {
     }
 

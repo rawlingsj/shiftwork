@@ -2,7 +2,11 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.teammachine.staffrostering.domain.ShiftAssignment;
+import com.teammachine.staffrostering.domain.ShiftDate;
 import com.teammachine.staffrostering.repository.ShiftAssignmentRepository;
+import com.teammachine.staffrostering.repository.ShiftDateRepository;
+import com.teammachine.staffrostering.web.rest.errors.CustomParameterizedException;
+import com.teammachine.staffrostering.web.rest.errors.ErrorConstants;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing ShiftAssignment.
@@ -26,10 +31,12 @@ import java.util.Optional;
 public class ShiftAssignmentResource {
 
     private final Logger log = LoggerFactory.getLogger(ShiftAssignmentResource.class);
-        
+
     @Inject
     private ShiftAssignmentRepository shiftAssignmentRepository;
-    
+    @Inject
+    private ShiftDateRepository shiftDateRepository;
+
     /**
      * POST  /shift-assignments : Create a new shiftAssignment.
      *
@@ -85,11 +92,29 @@ public class ShiftAssignmentResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<ShiftAssignment> getAllShiftAssignments() {
-        log.debug("REST request to get all ShiftAssignments");
-        List<ShiftAssignment> shiftAssignments = shiftAssignmentRepository.findAllWithEagerRelationships();
-        Collections.sort(shiftAssignments, (o1, o2) -> o1.getShift().getShiftDate().getDayIndex() - o2.getShift().getShiftDate().getDayIndex());
-        return shiftAssignments;
+    public List<ShiftAssignment> getAllShiftAssignments(@RequestParam(value = "shiftDateId", required = false) Long shiftDateId) {
+        log.debug("REST request to get ShiftAssignments");
+        if (shiftDateId != null) {
+            return getShiftAssignmentsForShiftDate(shiftDateId);
+        } else {
+            return getAllShiftAssignments();
+        }
+    }
+
+    private List<ShiftAssignment> getAllShiftAssignments() {
+        return shiftAssignmentRepository.findAllWithEagerRelationships().stream()
+            .sorted(Comparator.comparing(sha -> sha.getShift().getShiftDate().getDayIndex()))
+            .collect(Collectors.toList());
+    }
+
+    private List<ShiftAssignment> getShiftAssignmentsForShiftDate(long shiftDateId) {
+        ShiftDate shiftDate = shiftDateRepository.findOne(shiftDateId);
+        if (shiftDate == null) {
+            throw new CustomParameterizedException(ErrorConstants.ERR_NO_SUCH_SHIFT_DATE, "" + shiftDateId);
+        }
+        return shiftAssignmentRepository.findAllForShiftDate(shiftDate).stream()
+            .sorted(Comparator.<ShiftAssignment, Integer>comparing(sha -> sha.getShift().getShiftType().getIndex()).thenComparing(ShiftAssignment::getIndexInShift))
+            .collect(Collectors.toList());
     }
 
     /**
