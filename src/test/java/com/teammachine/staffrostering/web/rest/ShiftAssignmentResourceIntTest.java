@@ -4,9 +4,11 @@ import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.Shift;
 import com.teammachine.staffrostering.domain.ShiftAssignment;
 import com.teammachine.staffrostering.domain.ShiftDate;
+import com.teammachine.staffrostering.domain.ShiftType;
 import com.teammachine.staffrostering.repository.ShiftAssignmentRepository;
 import com.teammachine.staffrostering.repository.ShiftDateRepository;
 import com.teammachine.staffrostering.repository.ShiftRepository;
+import com.teammachine.staffrostering.repository.ShiftTypeRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,6 +70,9 @@ public class ShiftAssignmentResourceIntTest {
     private ShiftDateRepository shiftDateRepository;
 
     @Inject
+    private ShiftTypeRepository shiftTypeRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
@@ -76,12 +81,15 @@ public class ShiftAssignmentResourceIntTest {
     private MockMvc restShiftAssignmentMockMvc;
 
     private ShiftAssignment shiftAssignment;
+    private ShiftDate shiftDate;
+    private ShiftType shiftType_E, shiftType_L;
 
     @PostConstruct
     public void setup() {
         MockitoAnnotations.initMocks(this);
         ShiftAssignmentResource shiftAssignmentResource = new ShiftAssignmentResource();
         ReflectionTestUtils.setField(shiftAssignmentResource, "shiftAssignmentRepository", shiftAssignmentRepository);
+        ReflectionTestUtils.setField(shiftAssignmentResource, "shiftDateRepository", shiftDateRepository);
         this.restShiftAssignmentMockMvc = MockMvcBuilders.standaloneSetup(shiftAssignmentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -89,8 +97,10 @@ public class ShiftAssignmentResourceIntTest {
 
     @Before
     public void initTest() {
-        ShiftDate shiftDate = createShiftDate(1);
-        Shift shift = createShift(shiftDate);
+        shiftDate = createShiftDate(1);
+        shiftType_E = createShiftType("E", 1);
+        shiftType_L = createShiftType("L", 2);
+        Shift shift = createShift(shiftDate, shiftType_E);
 
         shiftAssignment = new ShiftAssignment();
         shiftAssignment.setIndexInShift(DEFAULT_INDEX_IN_SHIFT);
@@ -100,6 +110,14 @@ public class ShiftAssignmentResourceIntTest {
         shiftAssignment.setShift(shift);
     }
 
+    private ShiftType createShiftType(String code, int index) {
+        ShiftType shiftType = new ShiftType();
+        shiftType.setCode(code);
+        shiftType.setIndex(index);
+        shiftTypeRepository.saveAndFlush(shiftType);
+        return shiftType;
+    }
+
     private ShiftDate createShiftDate(int index) {
         ShiftDate shiftDate = new ShiftDate();
         shiftDate.setDayIndex(index);
@@ -107,16 +125,18 @@ public class ShiftAssignmentResourceIntTest {
         return shiftDate;
     }
 
-    private Shift createShift(ShiftDate shiftDate) {
+    private Shift createShift(ShiftDate shiftDate, ShiftType shiftType) {
         Shift shift = new Shift();
         shift.setShiftDate(shiftDate);
+        shift.setShiftType(shiftType);
         shiftRepository.saveAndFlush(shift);
         return shift;
     }
 
-    private ShiftAssignment createShiftAssignment(Shift shift) {
+    private ShiftAssignment createShiftAssignment(Shift shift, int indexInShift) {
         ShiftAssignment shiftAssignment = new ShiftAssignment();
         shiftAssignment.setShift(shift);
+        shiftAssignment.setIndexInShift(indexInShift);
         shiftAssignmentRepository.saveAndFlush(shiftAssignment);
         return shiftAssignment;
     }
@@ -227,14 +247,33 @@ public class ShiftAssignmentResourceIntTest {
 
     @Test
     public void getShiftAssignmentsReturnsSortedByDayIndexList() throws Exception {
-        ShiftAssignment shiftAssignment1 = createShiftAssignment(createShift(createShiftDate(3)));
-        ShiftAssignment shiftAssignment2 = createShiftAssignment(createShift(createShiftDate(1)));
-        ShiftAssignment shiftAssignment3 = createShiftAssignment(createShift(createShiftDate(2)));
+        ShiftAssignment shiftAssignment1 = createShiftAssignment(createShift(createShiftDate(3), shiftType_E), 1);
+        ShiftAssignment shiftAssignment2 = createShiftAssignment(createShift(createShiftDate(1), shiftType_E), 1);
+        ShiftAssignment shiftAssignment3 = createShiftAssignment(createShift(createShiftDate(2), shiftType_E), 1);
 
         restShiftAssignmentMockMvc.perform(get("/api/shift-assignments"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.[*].id").value(contains(shiftAssignment2.getId().intValue(), shiftAssignment3.getId().intValue(), shiftAssignment1.getId().intValue())))
             .andExpect(jsonPath("$.[*].shift.shiftDate.dayIndex").value(contains(1, 2, 3)));
+    }
+
+    @Test
+    public void getShiftAssignmentForShiftDate() throws Exception {
+        ShiftDate shiftDate = createShiftDate(3);
+        Shift shift = createShift(shiftDate, shiftType_E);
+        ShiftAssignment shiftAssignment1 = createShiftAssignment(shift, 2);
+        ShiftAssignment shiftAssignment2 = createShiftAssignment(shift, 1);
+        ShiftAssignment shiftAssignment3 = createShiftAssignment(createShift(shiftDate, shiftType_L), 1);
+        ShiftAssignment shiftAssignment4 = createShiftAssignment(createShift(createShiftDate(2), shiftType_E), 1);
+
+        restShiftAssignmentMockMvc.perform(get("/api/shift-assignments").param("shiftDate", shiftDate.getId().toString()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.[*].id").value(contains(
+                shiftAssignment2.getId().intValue(),
+                shiftAssignment1.getId().intValue(),
+                shiftAssignment3.getId().intValue()
+            )));
     }
 }

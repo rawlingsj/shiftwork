@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.*;
 import com.teammachine.staffrostering.repository.*;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
@@ -45,55 +46,61 @@ public class ShiftAssignmentRepositoryIntTest {
     @Inject
     private TaskRepository taskRepository;
 
-    @Test
-    public void findShiftAssignmentForShiftDate() {
+    private Task task_1, task_2;
+
+    private ShiftType shiftType_E, shiftType_L, shiftType_N;
+
+    private ShiftDate shiftDate_25, shiftDate_26, shiftDate_27;
+
+    private Employee employee_001, employee_002, employee_003;
+
+    private Shift shift_E25, shift_L25, shift_N25, shift_E26, shift_L26, shift_N26, shift_E27, shift_L27, shift_N27;
+
+    @Before
+    public void before() {
         // create shift types
-        ShiftType shiftType_E = createShiftType("E", 1);
-        ShiftType shiftType_L = createShiftType("L", 2);
-        ShiftType shiftType_N = createShiftType("N", 3);
-        shiftTypeRepository.flush();
+        shiftType_E = createShiftType("E", 1);
+        shiftType_L = createShiftType("L", 2);
+        shiftType_N = createShiftType("N", 3);
+
+        // create tasks
+        task_1 = createTask("Task_1");
+        task_2 = createTask("Task_2");
 
         // create shift dates
-        ShiftDate shiftDate_25 = createShiftDate(1, DATE_2016_07_25);
-        ShiftDate shiftDate_26 = createShiftDate(2, DATE_2016_07_26);
-        ShiftDate shiftDate_27 = createShiftDate(3, DATE_2016_07_27);
-        shiftDateRepository.flush();
-
-        // create task
-        Task task_1 = createTask("Task_1");
-        Task task_2 = createTask("Task_2");
-        taskRepository.flush();
-
-
-        // create shifts
-        Shift shiftE_25 = createShift(shiftDate_25, shiftType_E);
-        Shift shiftL_25 = createShift(shiftDate_25, shiftType_L);
-        Shift shiftN_25 = createShift(shiftDate_25, shiftType_N);
-        Shift shiftE_26 = createShift(shiftDate_26, shiftType_E);
-        Shift shiftL_26 = createShift(shiftDate_26, shiftType_L);
-        Shift shiftN_26 = createShift(shiftDate_26, shiftType_N);
-        Shift shiftE_27 = createShift(shiftDate_27, shiftType_E);
-        Shift shiftL_27 = createShift(shiftDate_27, shiftType_L);
-        Shift shiftN_27 = createShift(shiftDate_27, shiftType_N);
-        shiftRepository.flush();
+        shiftDate_25 = createShiftDate(1, DATE_2016_07_25);
+        shiftDate_26 = createShiftDate(2, DATE_2016_07_26);
+        shiftDate_27 = createShiftDate(3, DATE_2016_07_27);
 
         // create employees
-        Employee employee001 = createEmployee("001");
-        Employee employee002 = createEmployee("002");
-        Employee employee003 = createEmployee("003");
-        employeeRepository.flush();
+        employee_001 = createEmployee("001");
+        employee_002 = createEmployee("002");
+        employee_003 = createEmployee("003");
 
+        // create shifts
+        shift_E25 = createShift(shiftDate_25, shiftType_E);
+        shift_L25 = createShift(shiftDate_25, shiftType_L);
+        shift_N25 = createShift(shiftDate_25, shiftType_N);
+        shift_E26 = createShift(shiftDate_26, shiftType_E);
+        shift_L26 = createShift(shiftDate_26, shiftType_L);
+        shift_N26 = createShift(shiftDate_26, shiftType_N);
+        shift_E27 = createShift(shiftDate_27, shiftType_E);
+        shift_L27 = createShift(shiftDate_27, shiftType_L);
+        shift_N27 = createShift(shiftDate_27, shiftType_N);
+    }
+
+    @Test
+    public void findShiftAssignmentForShiftDate() {
         // create shift assignments
-        ShiftAssignment shiftAssignmentE_25 = createShiftAssignment(shiftE_25, employee001, task_1, task_2);
-        ShiftAssignment shiftAssignmentL_25 = createShiftAssignment(shiftL_25, employee002, task_1, task_2 );
-        ShiftAssignment shiftAssignmentN_25 = createShiftAssignment(shiftN_25, employee003, task_1, task_2);
-        ShiftAssignment shiftAssignmentE_26 = createShiftAssignment(shiftE_26, employee001, task_1, task_2);
-        ShiftAssignment shiftAssignmentL_26 = createShiftAssignment(shiftL_26, employee002, task_1, task_2);
-        ShiftAssignment shiftAssignmentN_26 = createShiftAssignment(shiftN_26, employee003, task_1, task_2);
-        ShiftAssignment shiftAssignmentE_27 = createShiftAssignment(shiftE_27, employee001, task_1, task_2);
-        ShiftAssignment shiftAssignmentL_27 = createShiftAssignment(shiftL_27, employee002, task_1, task_2);
-        ShiftAssignment shiftAssignmentN_27 = createShiftAssignment(shiftN_27, employee003, task_1, task_2);
-        shiftAssignmentRepository.flush();
+        ShiftAssignment shiftAssignment_E25 = createShiftAssignment(shift_E25, employee_001, task_1, task_2);
+        ShiftAssignment shiftAssignment_L25 = createShiftAssignment(shift_L25, employee_002, task_1, task_2);
+        ShiftAssignment shiftAssignment_N25 = createShiftAssignment(shift_N25, employee_003, task_1, task_2);
+        ShiftAssignment shiftAssignment_E26 = createShiftAssignment(shift_E26, employee_001, task_1, task_2);
+        ShiftAssignment shiftAssignment_L26 = createShiftAssignment(shift_L26, employee_002, task_1, task_2);
+        ShiftAssignment shiftAssignment_N26 = createShiftAssignment(shift_N26, employee_003, task_1, task_2);
+        ShiftAssignment shiftAssignment_E27 = createShiftAssignment(shift_E27, employee_001, task_1, task_2);
+        ShiftAssignment shiftAssignment_L27 = createShiftAssignment(shift_L27, employee_002, task_1, task_2);
+        ShiftAssignment shiftAssignment_N27 = createShiftAssignment(shift_N27, employee_003, task_1, task_2);
 
         // Business method
         List<ShiftAssignment> shiftAssignments_26 = shiftAssignmentRepository.findAllForShiftDate(shiftDate_26).stream()
@@ -101,29 +108,79 @@ public class ShiftAssignmentRepositoryIntTest {
 
         // Asserts
         assertThat(shiftAssignments_26).hasSize(3);
-        assertThat(shiftAssignments_26).contains(shiftAssignmentE_26, shiftAssignmentL_26, shiftAssignmentN_26);
+        assertThat(shiftAssignments_26).containsOnly(shiftAssignment_E26, shiftAssignment_L26, shiftAssignment_N26);
 
         ShiftAssignment shiftAssignment;
         shiftAssignment = shiftAssignments_26.get(0);
         assertThat(shiftAssignment.getShift().getShiftType().getIndex()).isEqualTo(1);
-        assertThat(shiftAssignment.getShift()).isEqualTo(shiftE_26);
+        assertThat(shiftAssignment.getShift()).isEqualTo(shift_E26);
         assertThat(shiftAssignment.getShift().getShiftDate()).isEqualTo(shiftDate_26);
-        assertThat(shiftAssignment.getEmployee()).isEqualTo(employee001);
+        assertThat(shiftAssignment.getEmployee()).isEqualTo(employee_001);
         assertThat(shiftAssignment.getTaskList()).contains(task_1, task_2);
 
         shiftAssignment = shiftAssignments_26.get(1);
         assertThat(shiftAssignment.getShift().getShiftType().getIndex()).isEqualTo(2);
-        assertThat(shiftAssignment.getShift()).isEqualTo(shiftL_26);
+        assertThat(shiftAssignment.getShift()).isEqualTo(shift_L26);
         assertThat(shiftAssignment.getShift().getShiftDate()).isEqualTo(shiftDate_26);
-        assertThat(shiftAssignment.getEmployee()).isEqualTo(employee002);
+        assertThat(shiftAssignment.getEmployee()).isEqualTo(employee_002);
         assertThat(shiftAssignment.getTaskList()).contains(task_1, task_2);
 
         shiftAssignment = shiftAssignments_26.get(2);
         assertThat(shiftAssignment.getShift().getShiftType().getIndex()).isEqualTo(3);
-        assertThat(shiftAssignment.getShift()).isEqualTo(shiftN_26);
+        assertThat(shiftAssignment.getShift()).isEqualTo(shift_N26);
         assertThat(shiftAssignment.getShift().getShiftDate()).isEqualTo(shiftDate_26);
-        assertThat(shiftAssignment.getEmployee()).isEqualTo(employee003);
+        assertThat(shiftAssignment.getEmployee()).isEqualTo(employee_003);
         assertThat(shiftAssignment.getTaskList()).contains(task_1, task_2);
+    }
+
+    @Test
+    public void findByEmployee() {
+        ShiftAssignment shiftAssignment_25 = createShiftAssignment(shift_E25, employee_001);
+        createShiftAssignment(shift_E25, employee_002);
+        createShiftAssignment(shift_E25, employee_003);
+
+        ShiftAssignment shiftAssignment_26 = createShiftAssignment(shift_E26, employee_001);
+        createShiftAssignment(shift_E26, employee_002);
+
+        ShiftAssignment shiftAssignment_27 = createShiftAssignment(shift_E27, employee_001);
+
+        // Business method
+        List<ShiftAssignment> shiftAssignments = shiftAssignmentRepository.findForEmployee(employee_001, DATE_2016_07_25, DATE_2016_07_27);
+        // Asserts
+        assertThat(shiftAssignments).hasSize(3);
+        assertThat(shiftAssignments).containsOnly(shiftAssignment_25, shiftAssignment_26, shiftAssignment_27);
+
+        // Business method
+        shiftAssignments = shiftAssignmentRepository.findForEmployee(employee_001, DATE_2016_07_26, DATE_2016_07_26);
+        // Asserts
+        assertThat(shiftAssignments).hasSize(1);
+        assertThat(shiftAssignments).containsOnly(shiftAssignment_26);
+
+        // Business method
+        shiftAssignments = shiftAssignmentRepository.findForEmployee(employee_003, DATE_2016_07_26, DATE_2016_07_26);
+        // Asserts
+        assertThat(shiftAssignments).isEmpty();
+    }
+
+    @Test
+    public void findAllForShiftDatesAndShiftTypes() {
+        ShiftAssignment shiftAssignment_E25_001 = createShiftAssignment(shift_E25, employee_001, task_1);
+        ShiftAssignment shiftAssignment_E25_002 = createShiftAssignment(shift_E25, employee_002, task_1);
+        ShiftAssignment shiftAssignment_L25_003 = createShiftAssignment(shift_L25, employee_003, task_1);
+        ShiftAssignment shiftAssignment_E26_002 = createShiftAssignment(shift_E26, employee_002, task_2);
+        ShiftAssignment shiftAssignment_L26_001 = createShiftAssignment(shift_L26, employee_001, task_2);
+        ShiftAssignment shiftAssignment_E27_002 = createShiftAssignment(shift_E27, employee_002, task_1, task_2);
+        ShiftAssignment shiftAssignment_E27_003 = createShiftAssignment(shift_E27, employee_003, task_1, task_2);
+
+        // Business method
+        List<ShiftAssignment> shiftAssignments = shiftAssignmentRepository.findAllForShifts(ImmutableSet.of(shift_E25, shift_L26));
+        // Asserts
+        assertThat(shiftAssignments).containsOnly(shiftAssignment_E25_001, shiftAssignment_E25_002, shiftAssignment_L26_001);
+
+        // Business method
+        shiftAssignments = shiftAssignmentRepository.findAllForShifts(ImmutableSet.of(shift_N25));
+        // Asserts
+        assertThat(shiftAssignments).isEmpty();
     }
 
     private ShiftDate createShiftDate(int index, LocalDate date) {

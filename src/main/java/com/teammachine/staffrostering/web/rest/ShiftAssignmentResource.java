@@ -92,7 +92,7 @@ public class ShiftAssignmentResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<ShiftAssignment> getAllShiftAssignments(@RequestParam(value = "shiftDateId", required = false) Long shiftDateId) {
+    public List<ShiftAssignment> getAllShiftAssignments(@RequestParam(value = "shiftDate", required = false) Long shiftDateId) {
         log.debug("REST request to get ShiftAssignments");
         if (shiftDateId != null) {
             return getShiftAssignmentsForShiftDate(shiftDateId);
