@@ -45,7 +45,7 @@ public class ScheduleResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<ScheduledShiftDTO> getEmployeeSchedule(@RequestParam(value = "employeeId") Long employeeId,
+    public List<ScheduledShiftDTO> getEmployeeSchedule(@RequestParam(value = "employee") Long employeeId,
                                                        @RequestParam(value = "from") Long fromShiftDate,
                                                        @RequestParam(value = "to") Long toShiftDate) {
         log.debug("REST request to get employee schedule");
