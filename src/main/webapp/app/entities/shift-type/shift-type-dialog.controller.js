@@ -5,12 +5,12 @@
         .module('shiftworkApp')
         .controller('ShiftTypeDialogController', ShiftTypeDialogController);
 
-    ShiftTypeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'ShiftType', 'ShiftTypeTask'];
+    ShiftTypeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'ShiftType', 'Task'];
 
-    function ShiftTypeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, ShiftType, ShiftTypeTask) {
+    function ShiftTypeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, ShiftType, Task) {
         var vm = this;
         vm.shiftType = entity;
-        vm.shifttypetasks = ShiftTypeTask.query();
+        vm.tasks = Task.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

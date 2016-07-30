@@ -25,6 +25,7 @@
                     <th><span translate="shiftworkApp.shiftAssignment.locked">Locked</span></th>
                     <th><span translate="shiftworkApp.shiftAssignment.shift">Shift</span></th>
                     <th><span translate="shiftworkApp.shiftAssignment.employee">Employee</span></th>
+                    <th><span translate="shiftworkApp.shiftAssignment.tasks">Tasks</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -39,7 +40,12 @@
                             <a ui-sref="shift-detail({id:shiftAssignment.shift.id})">{{shiftAssignment.shift.shiftType.code}}/{{shiftAssignment.shift.shiftDate.dateString}}</a>
                     </td>
                     <td>
-                        <a ui-sref="employee-detail({id:shiftAssignment.employee.id})">{{shiftAssignment.employee.code}}</a>
+                        <a ui-sref="employee-detail({id:shiftAssignment.employee.id})">{{shiftAssignment.employee.name}}</a>
+                    </td>
+                    <td>
+                        <span ng-repeat="taskList in shiftAssignment.taskList">
+                            <a class="form-control-static" ui-sref="task-detail({id: {{taskList.id}}})">{{taskList.code}}</a>{{$last ? '' : ', '}}
+                        <span>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

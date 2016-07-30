@@ -1,11 +1,13 @@
 {
     "relationships": [
         {
-            "relationshipId": 1,
-            "relationshipType": "one-to-many",
-            "relationshipName": "tasks",
-            "otherEntityName": "shiftTypeTask",
-            "otherEntityRelationshipName": "shiftType"
+            "relationshipId": 3,
+            "relationshipType": "many-to-many",
+            "relationshipName": "task",
+            "otherEntityName": "task",
+            "otherEntityField": "code",
+            "otherEntityRelationshipName": "shiftType",
+            "ownerSide": true
         }
     ],
     "fields": [

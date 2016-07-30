@@ -87,7 +87,7 @@ public class ShiftAssignmentResource {
     @Timed
     public List<ShiftAssignment> getAllShiftAssignments() {
         log.debug("REST request to get all ShiftAssignments");
-        List<ShiftAssignment> shiftAssignments = shiftAssignmentRepository.findAll();
+        List<ShiftAssignment> shiftAssignments = shiftAssignmentRepository.findAllWithEagerRelationships();
         return shiftAssignments;
     }
 
@@ -103,7 +103,7 @@ public class ShiftAssignmentResource {
     @Timed
     public ResponseEntity<ShiftAssignment> getShiftAssignment(@PathVariable Long id) {
         log.debug("REST request to get ShiftAssignment : {}", id);
-        ShiftAssignment shiftAssignment = shiftAssignmentRepository.findOne(id);
+        ShiftAssignment shiftAssignment = shiftAssignmentRepository.findOneWithEagerRelationships(id);
         return Optional.ofNullable(shiftAssignment)
             .map(result -> new ResponseEntity<>(
                 result,

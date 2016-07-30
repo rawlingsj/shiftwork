@@ -22,7 +22,7 @@
             "locked": "Locked",
             "shift": "Shift",
             "employee": "Employee",
-            "taskList": "Task List"
+            "tasks": "Tasks"
         }
     }
 }
