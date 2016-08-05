@@ -42,7 +42,12 @@ public interface EmployeeService {
 	 */
 	void delete(Long id);
 
-	List<Employee> filterEmployee(Employee employee);
-
+	/**
+	 * List the employees based on name or code
+	 * 
+	 * @param like
+	 *            of type String
+	 * @return list of employees
+	 */
 	List<Employee> findByCodeOrName(String like);
 }

@@ -1,14 +1,10 @@
 package com.teammachine.staffrostering.domain.filters;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.BeanUtils;
 
 import com.teammachine.staffrostering.domain.Employee;
 
-public class EmployeeFilter extends Employee implements Serializable {
+public class EmployeeFilter implements Serializable {
 
 	/**
 	 * 

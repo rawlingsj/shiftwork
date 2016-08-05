@@ -10,4 +10,5 @@ import com.teammachine.staffrostering.domain.Employee;
  */
 public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
 
+		
 }

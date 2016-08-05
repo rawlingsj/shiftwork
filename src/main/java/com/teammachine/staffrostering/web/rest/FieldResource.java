@@ -12,7 +12,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,28 +53,6 @@ public class FieldResource {
 		return Optional.ofNullable(employeeFilters).map(result -> new ResponseEntity<>(result, HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
-	}
-
-	@RequestMapping(value = "/employees/filter", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	@Timed
-	public ResponseEntity<List<EmployeeFilter>> filterEmployees(@RequestBody EmployeeFilter employeeFilter) {
-
-		log.debug("Filter employees method entered");
-		List<Employee> employees = new ArrayList<>();
-
-		if (employeeFilter.getName() != null || employeeFilter.getCode() != null) {
-			employees = employeeService.filterEmployee(employeeFilter.getEmployee());
-
-		} else {
-			employees = employeeService.findAll();
-
-		}
-		if (employees == null || employees.isEmpty()) {
-			return new ResponseEntity<List<EmployeeFilter>>(HttpStatus.NO_CONTENT);
-		}
-		List<EmployeeFilter> employeeFilters = getEmployeeFilterList(employees);
-		return Optional.ofNullable(employeeFilters).map(result -> new ResponseEntity<>(result, HttpStatus.OK))
-				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
 	// Preparing Employee filter list from list of employees
