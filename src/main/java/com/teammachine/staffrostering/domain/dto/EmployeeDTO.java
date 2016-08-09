@@ -1,10 +1,8 @@
-package com.teammachine.staffrostering.domain.filters;
+package com.teammachine.staffrostering.domain.dto;
 
 import java.io.Serializable;
 
-import com.teammachine.staffrostering.domain.Employee;
-
-public class EmployeeFilter implements Serializable {
+public class EmployeeDTO implements Serializable {
 
 	/**
 	 * 
@@ -39,19 +37,9 @@ public class EmployeeFilter implements Serializable {
 		this.code = code;
 	}
 
-	// Initiating Employee object from EmpFilter Object
-	public Employee getEmployee() {
-		Employee employee = new Employee();
-		employee.setId(id);
-		employee.setName(name);
-		employee.setCode(code);
-		return employee;
-	}
-
-	
 	@Override
 	public String toString() {
-		return "EmployeeFilter [id=" + id + ", name=" + name + ", code=" + code + "]";
+		return "EmployeeDTO [id=" + id + ", name=" + name + ", code=" + code + "]";
 	}
 
 }

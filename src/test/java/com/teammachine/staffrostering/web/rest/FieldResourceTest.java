@@ -27,15 +27,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.Employee;
-import com.teammachine.staffrostering.domain.filters.EmployeeFilter;
 import com.teammachine.staffrostering.repository.EmployeeRepository;
-import com.teammachine.staffrostering.service.EmployeeService;
+import com.teammachine.staffrostering.service.TypeaheadService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ShiftworkApp.class)
 @WebAppConfiguration
 @IntegrationTest
-public class FieldResouceTest {
+public class FieldResourceTest {
 
 	private static final String DEFAULT_CODE = "AAAAA";
 
@@ -52,19 +51,18 @@ public class FieldResouceTest {
 	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	@Inject
-	private EmployeeService employeeService;
+	private TypeaheadService typeaheadService;
 
 	private MockMvc restEmployeeMockMvc;
 
 	private Employee employee;
 
-	private EmployeeFilter employeeFilter;
 
 	@PostConstruct
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		FieldResource fieldResource = new FieldResource();
-		ReflectionTestUtils.setField(fieldResource, "employeeService", employeeService);
+		ReflectionTestUtils.setField(fieldResource, "typeaheadService", typeaheadService);
 		this.restEmployeeMockMvc = MockMvcBuilders.standaloneSetup(fieldResource)
 				.setCustomArgumentResolvers(pageableArgumentResolver).setMessageConverters(jacksonMessageConverter)
 				.build();
@@ -72,11 +70,6 @@ public class FieldResouceTest {
 
 	@Before
 	public void initTest() {
-
-		employeeFilter = new EmployeeFilter();
-		employeeFilter.setCode(DEFAULT_CODE);
-		employeeFilter.setName(DEFAULT_NAME);
-
 		employee = new Employee();
 		employee.setCode(DEFAULT_CODE);
 		employee.setIsSick(DEFAULT_IS_SICK);
@@ -90,7 +83,20 @@ public class FieldResouceTest {
 		employeeRepository.saveAndFlush(employee);
 
 		// Get all the employees
-		restEmployeeMockMvc.perform(get("/api/employees/filter?like=shift")).andExpect(status().isOk())
+		restEmployeeMockMvc.perform(get("/api/fields/employees?like=shift")).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
+				.andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+	}
+	
+	@Test
+	@Transactional
+	public void filterEmployeeWithNoLikeParam() throws Exception {
+		// Initialize the database
+		employeeRepository.saveAndFlush(employee);
+
+		// Get all the employees
+		restEmployeeMockMvc.perform(get("/api/fields/employees?like")).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
 				.andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
@@ -103,7 +109,7 @@ public class FieldResouceTest {
 		employeeRepository.saveAndFlush(employee);
 
 		// Get all the employees
-		restEmployeeMockMvc.perform(get("/api/employees/filter?like=test")).andExpect(status().isNoContent());
+		restEmployeeMockMvc.perform(get("/api/fields/employees?like=test")).andExpect(status().isNoContent());
 	}
 
 }
