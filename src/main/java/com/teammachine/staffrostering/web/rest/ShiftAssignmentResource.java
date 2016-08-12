@@ -152,5 +152,4 @@ public class ShiftAssignmentResource {
         shiftAssignmentRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("shiftAssignment", id.toString())).build();
     }
-
 }
