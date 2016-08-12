@@ -27,6 +27,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -50,6 +51,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = ShiftworkApp.class)
 @WebAppConfiguration
 @IntegrationTest
+@Transactional
 public class ShiftResourceIntTest {
 
     private static final Integer DEFAULT_INDEX = 1;
@@ -145,7 +147,8 @@ public class ShiftResourceIntTest {
         assertThat(testShift.getShiftType()).isEqualTo(shiftType);
 
         //Validate the ShiftAssignments in the database
-        List<ShiftAssignment> shiftAssignments = shiftAssignmentRepository.findAllWithEagerRelationships().stream().sorted(Comparator.comparing(ShiftAssignment::getIndexInShift)).collect(Collectors.toList());
+        List<ShiftAssignment> allWithEagerRelationships = shiftAssignmentRepository.findAllWithEagerRelationships();
+        List<ShiftAssignment> shiftAssignments = allWithEagerRelationships.stream().sorted(Comparator.comparing(ShiftAssignment::getIndexInShift)).collect(Collectors.toList());
         assertThat(shiftAssignments).hasSize(shiftAssignmentsSizeBeforeCreate + DEFAULT_STAFF_REQUIRED);
         ShiftAssignment testShiftAssignment;
         //#1

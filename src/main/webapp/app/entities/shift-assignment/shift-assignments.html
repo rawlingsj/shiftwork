@@ -11,6 +11,16 @@
                     </span>
                 </button>
             </div>
+            <div class="col-xs-4 no-padding-left">
+                <select class="input-sm" id="export_shiftDate" name="shiftDate" ng-model="exportShiftDate"
+                        ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
+                </select>
+                <button class="btn btn-primary" ng-click="vm.exportToExcel(exportShiftDate)" ng-disabled="!exportShiftDate">
+                    <span translate="shiftworkApp.shiftAssignment.home.export">
+                        Export to Excel
+                    </span>
+                </button>
+            </div>
         </div>
     </div>
     <br/>

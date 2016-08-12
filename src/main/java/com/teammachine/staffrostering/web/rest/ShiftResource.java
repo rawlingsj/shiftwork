@@ -55,7 +55,6 @@ public class ShiftResource {
         Shift result = shiftRepository.save(shift);
         List<ShiftAssignment> shiftAssignments = createNewShiftAssignments(result);
         shiftAssignmentRepository.save(shiftAssignments);
-        shiftAssignmentRepository.flush();
         return ResponseEntity.created(new URI("/api/shifts/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("shift", result.getId().toString()))
                 .body(result);
