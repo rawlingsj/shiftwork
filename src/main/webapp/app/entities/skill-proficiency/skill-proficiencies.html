@@ -19,7 +19,6 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr>
-                    <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.skillProficiency.employee">Employee</span></th>
                     <th><span translate="shiftworkApp.skillProficiency.skillList">Skill List</span></th>
                     <th></th>
@@ -27,7 +26,6 @@
             </thead>
             <tbody>
                 <tr ng-repeat="skillProficiency in vm.skillProficiencies track by skillProficiency.id">
-                    <td><a ui-sref="skill-proficiency-detail({id:skillProficiency.id})">{{skillProficiency.id}}</a></td>
                     <td>
                         <a ui-sref="employee-detail({id:skillProficiency.employee.id})">{{skillProficiency.employee.name}}</a>
                     </td>
