@@ -4,15 +4,17 @@ import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.Employee;
 import com.teammachine.staffrostering.repository.EmployeeRepository;
 import com.teammachine.staffrostering.service.EmployeeService;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -25,7 +27,6 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,6 +46,9 @@ public class EmployeeResourceIntTest {
     private static final String UPDATED_CODE = "BBBBB";
     private static final String DEFAULT_NAME = "AAAAA";
     private static final String UPDATED_NAME = "BBBBB";
+
+    private static final Boolean DEFAULT_ACTIVE = false;
+    private static final Boolean UPDATED_ACTIVE = true;
 
     @Inject
     private EmployeeRepository employeeRepository;
@@ -77,6 +81,7 @@ public class EmployeeResourceIntTest {
         employee = new Employee();
         employee.setCode(DEFAULT_CODE);
         employee.setName(DEFAULT_NAME);
+        employee.setActive(DEFAULT_ACTIVE);
     }
 
     @Test
@@ -97,6 +102,7 @@ public class EmployeeResourceIntTest {
         Employee testEmployee = employees.get(employees.size() - 1);
         assertThat(testEmployee.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testEmployee.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testEmployee.isActive()).isEqualTo(DEFAULT_ACTIVE);
     }
 
     @Test
@@ -111,7 +117,8 @@ public class EmployeeResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(employee.getId().intValue())))
                 .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
-                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+                .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
     }
 
     @Test
@@ -126,7 +133,8 @@ public class EmployeeResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(employee.getId().intValue()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()));
     }
 
     @Test
@@ -150,6 +158,7 @@ public class EmployeeResourceIntTest {
         updatedEmployee.setId(employee.getId());
         updatedEmployee.setCode(UPDATED_CODE);
         updatedEmployee.setName(UPDATED_NAME);
+        updatedEmployee.setActive(UPDATED_ACTIVE);
 
         restEmployeeMockMvc.perform(put("/api/employees")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -162,6 +171,7 @@ public class EmployeeResourceIntTest {
         Employee testEmployee = employees.get(employees.size() - 1);
         assertThat(testEmployee.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testEmployee.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testEmployee.isActive()).isEqualTo(UPDATED_ACTIVE);
     }
 
     @Test

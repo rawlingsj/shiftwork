@@ -18,6 +18,7 @@
             },
             "code": "Code",
             "name": "Name",
+            "active": "Active",
             "contract": "Contract",
             "dayOffRequests": "Day Off Requests",
             "dayOnRequests": "Day On Requests",

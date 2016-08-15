@@ -30,6 +30,9 @@ public class Employee implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "active")
+    private Boolean active;
+
     @ManyToOne
     private Contract contract;
 
@@ -80,6 +83,14 @@ public class Employee implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Contract getContract() {
@@ -156,6 +167,7 @@ public class Employee implements Serializable {
             "id=" + id +
             ", code='" + code + "'" +
             ", name='" + name + "'" +
+            ", active='" + active + "'" +
             '}';
     }
 }

@@ -28,4 +28,9 @@
    <changeSet author="LD (generated)" id="1471284027788-7">
       <dropColumn columnName="unavailable_shift_type_id" tableName="employee"/>
    </changeSet>
+    <changeSet author="LD (generated)" id="1471284027788-8">
+        <addColumn tableName="employee">
+            <column name="active" type="bit" defaultValue="1"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

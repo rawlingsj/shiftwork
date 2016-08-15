@@ -13,6 +13,11 @@
             <span>{{vm.employee.name}}</span>
         </dd>
         <hr>
+        <dt><span translate="shiftworkApp.employee.active">Active</span></dt>
+        <dd>
+            <span>{{vm.employee.active}}</span>
+        </dd>
+        <hr>
         <dt><span translate="shiftworkApp.employee.contract">Contract</span></dt>
         <dd>
             <a ui-sref="contract-detail({id:vm.employee.contract.id})">{{vm.employee.contract.code}}</a>

@@ -73,6 +73,7 @@
                             return {
                                 code: null,
                                 name: null,
+                                active: true,
                                 id: null
                             };
                         }

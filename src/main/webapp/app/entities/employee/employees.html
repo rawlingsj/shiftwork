@@ -21,6 +21,7 @@
                     <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.employee.code">Code</span></th>
                     <th><span translate="shiftworkApp.employee.name">Name</span></th>
+                    <th><span translate="shiftworkApp.employee.active">Active</span></th>
                     <th><span translate="shiftworkApp.employee.contract">Contract</span></th>
                     <th></th>
                 </tr>
@@ -30,6 +31,7 @@
                     <td><a ui-sref="employee-detail({id:employee.id})">{{employee.id}}</a></td>
                     <td>{{employee.code}}</td>
                     <td>{{employee.name}}</td>
+                    <td>{{employee.active}}</td>
                     <td>
                         <a ui-sref="contract-detail({id:employee.contract.id})">{{employee.contract.code}}</a>
                     </td>

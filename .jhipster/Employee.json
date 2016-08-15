@@ -55,6 +55,10 @@
             "fieldId": 2,
             "fieldName": "name",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "active",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20160422164627",
