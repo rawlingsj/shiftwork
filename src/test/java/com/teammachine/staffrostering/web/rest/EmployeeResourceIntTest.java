@@ -4,17 +4,15 @@ import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.Employee;
 import com.teammachine.staffrostering.repository.EmployeeRepository;
 import com.teammachine.staffrostering.service.EmployeeService;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -27,6 +25,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -44,9 +43,6 @@ public class EmployeeResourceIntTest {
 
     private static final String DEFAULT_CODE = "AAAAA";
     private static final String UPDATED_CODE = "BBBBB";
-
-    private static final Boolean DEFAULT_IS_SICK = false;
-    private static final Boolean UPDATED_IS_SICK = true;
     private static final String DEFAULT_NAME = "AAAAA";
     private static final String UPDATED_NAME = "BBBBB";
 
@@ -80,7 +76,6 @@ public class EmployeeResourceIntTest {
     public void initTest() {
         employee = new Employee();
         employee.setCode(DEFAULT_CODE);
-        employee.setIsSick(DEFAULT_IS_SICK);
         employee.setName(DEFAULT_NAME);
     }
 
@@ -101,7 +96,6 @@ public class EmployeeResourceIntTest {
         assertThat(employees).hasSize(databaseSizeBeforeCreate + 1);
         Employee testEmployee = employees.get(employees.size() - 1);
         assertThat(testEmployee.getCode()).isEqualTo(DEFAULT_CODE);
-        assertThat(testEmployee.isIsSick()).isEqualTo(DEFAULT_IS_SICK);
         assertThat(testEmployee.getName()).isEqualTo(DEFAULT_NAME);
     }
 
@@ -117,7 +111,6 @@ public class EmployeeResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(employee.getId().intValue())))
                 .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
-                .andExpect(jsonPath("$.[*].isSick").value(hasItem(DEFAULT_IS_SICK.booleanValue())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
@@ -133,7 +126,6 @@ public class EmployeeResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(employee.getId().intValue()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
-            .andExpect(jsonPath("$.isSick").value(DEFAULT_IS_SICK.booleanValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
 
@@ -157,7 +149,6 @@ public class EmployeeResourceIntTest {
         Employee updatedEmployee = new Employee();
         updatedEmployee.setId(employee.getId());
         updatedEmployee.setCode(UPDATED_CODE);
-        updatedEmployee.setIsSick(UPDATED_IS_SICK);
         updatedEmployee.setName(UPDATED_NAME);
 
         restEmployeeMockMvc.perform(put("/api/employees")
@@ -170,7 +161,6 @@ public class EmployeeResourceIntTest {
         assertThat(employees).hasSize(databaseSizeBeforeUpdate);
         Employee testEmployee = employees.get(employees.size() - 1);
         assertThat(testEmployee.getCode()).isEqualTo(UPDATED_CODE);
-        assertThat(testEmployee.isIsSick()).isEqualTo(UPDATED_IS_SICK);
         assertThat(testEmployee.getName()).isEqualTo(UPDATED_NAME);
     }
 

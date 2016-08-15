@@ -17,15 +17,12 @@
                 "title": "Employee"
             },
             "code": "Code",
-            "isSick": "Is Sick",
             "name": "Name",
             "contract": "Contract",
             "dayOffRequests": "Day Off Requests",
             "dayOnRequests": "Day On Requests",
             "shiftOffRequests": "Shift Off Requests",
             "shiftOnRequests": "Shift On Requests",
-            "unavailableShiftDate": "Unavailable Shift Date",
-            "unavailableShiftType": "Unavailable Shift Type",
             "employeeLeaveAbsences": "Employee Leave Absences"
         }
     }

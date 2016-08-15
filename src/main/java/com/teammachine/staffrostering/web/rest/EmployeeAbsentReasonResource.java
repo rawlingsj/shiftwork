@@ -21,14 +21,14 @@ import java.util.Optional;
  * REST controller for managing EmployeeAbsentReason.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping({"/api", "/api_basic"})
 public class EmployeeAbsentReasonResource {
 
     private final Logger log = LoggerFactory.getLogger(EmployeeAbsentReasonResource.class);
-        
+
     @Inject
     private EmployeeAbsentReasonRepository employeeAbsentReasonRepository;
-    
+
     /**
      * POST  /employee-absent-reasons : Create a new employeeAbsentReason.
      *

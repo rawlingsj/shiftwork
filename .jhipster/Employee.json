@@ -39,23 +39,6 @@
         },
         {
             "relationshipId": 6,
-            "relationshipType": "one-to-one",
-            "relationshipName": "unavailableShiftDate",
-            "otherEntityName": "shiftDate",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "employee"
-        },
-        {
-            "relationshipId": 7,
-            "relationshipType": "one-to-one",
-            "relationshipName": "unavailableShiftType",
-            "otherEntityName": "shiftType",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "employee"
-        },
-        {
             "relationshipName": "employeeLeaveAbsences",
             "otherEntityName": "employeeLeaveAbsence",
             "relationshipType": "one-to-many",
@@ -70,11 +53,6 @@
         },
         {
             "fieldId": 2,
-            "fieldName": "isSick",
-            "fieldType": "Boolean"
-        },
-        {
-            "fieldId": 3,
             "fieldName": "name",
             "fieldType": "String"
         }

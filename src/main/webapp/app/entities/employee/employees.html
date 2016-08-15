@@ -20,11 +20,8 @@
                 <tr>
                     <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.employee.code">Code</span></th>
-                    <th><span translate="shiftworkApp.employee.isSick">Is Sick</span></th>
                     <th><span translate="shiftworkApp.employee.name">Name</span></th>
                     <th><span translate="shiftworkApp.employee.contract">Contract</span></th>
-                    <th><span translate="shiftworkApp.employee.unavailableShiftDate">Unavailable Shift Date</span></th>
-                    <th><span translate="shiftworkApp.employee.unavailableShiftType">Unavailable Shift Type</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -32,16 +29,9 @@
                 <tr ng-repeat="employee in vm.employees track by employee.id">
                     <td><a ui-sref="employee-detail({id:employee.id})">{{employee.id}}</a></td>
                     <td>{{employee.code}}</td>
-                    <td>{{employee.isSick}}</td>
                     <td>{{employee.name}}</td>
                     <td>
                         <a ui-sref="contract-detail({id:employee.contract.id})">{{employee.contract.code}}</a>
-                    </td>
-                    <td>
-                        <a ui-sref="shift-date-detail({id:employee.unavailableShiftDate.id})">{{employee.unavailableShiftDate.dateString}}</a>
-                    </td>
-                    <td>
-                        <a ui-sref="shift-type-detail({id:employee.unavailableShiftType.id})">{{employee.unavailableShiftType.code}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
