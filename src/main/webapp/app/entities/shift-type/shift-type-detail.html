@@ -33,6 +33,13 @@
             <span>{{vm.shiftType.endTime}}</span>
         </dd>
         <hr>
+        <dt><span translate="shiftworkApp.shiftType.tasks">Tasks</span></dt>
+        <dd>
+            <span ng-repeat="task in vm.shiftType.tasks">
+                <a ui-sref="task-detail({id: {{task.id}}})">{{task.code}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <hr>
     </dl>
 
     <button type="submit"

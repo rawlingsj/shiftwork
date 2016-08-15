@@ -1,6 +1,5 @@
 package com.teammachine.staffrostering.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,8 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+import java.util.Objects;
 
 /**
  * A ShiftType.
@@ -45,10 +44,12 @@ public class ShiftType implements Serializable {
     @Column(name = "end_time")
     private String endTime;
 
-    @OneToMany(mappedBy = "shiftType")
-    @JsonIgnore
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<ShiftTypeTask> tasks = new HashSet<>();
+    @JoinTable(name = "shift_type_task",
+               joinColumns = @JoinColumn(name="shift_type_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="task_id", referencedColumnName="id"))
+    private Set<Task> tasks = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -114,12 +115,12 @@ public class ShiftType implements Serializable {
         return endTime;
     }
 
-    public Set<ShiftTypeTask> getTasks() {
+    public Set<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Set<ShiftTypeTask> shiftTypeTasks) {
-        this.tasks = shiftTypeTasks;
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override
@@ -145,13 +146,13 @@ public class ShiftType implements Serializable {
     @Override
     public String toString() {
         return "ShiftType{" +
-                "id=" + id +
-                ", code='" + code + "'" +
-                ", index='" + index + "'" +
-                ", description='" + description + "'" +
-                ", nightShift='" + nightShift + "'" +
-                ", startTime='" + startTime + "'" +
-                ", endTime='" + endTime + "'" +
-                '}';
+            "id=" + id +
+            ", code='" + code + "'" +
+            ", index='" + index + "'" +
+            ", description='" + description + "'" +
+            ", nightShift='" + nightShift + "'" +
+            ", startTime='" + startTime + "'" +
+            ", endTime='" + endTime + "'" +
+            '}';
     }
 }

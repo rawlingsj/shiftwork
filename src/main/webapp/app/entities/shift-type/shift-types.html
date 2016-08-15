@@ -25,6 +25,7 @@
                     <th><span translate="shiftworkApp.shiftType.nightShift">Night Shift</span></th>
                     <th><span translate="shiftworkApp.shiftType.startTime">Start Time</span></th>
                     <th><span translate="shiftworkApp.shiftType.endTime">End Time</span></th>
+                    <th><span translate="shiftworkApp.shiftType.tasks">Tasks</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -37,6 +38,11 @@
                     <td>{{shiftType.nightShift}}</td>
                     <td>{{shiftType.startTime}}</td>
                     <td>{{shiftType.endTime}}</td>
+                    <td>
+                        <span ng-repeat="task in shiftType.tasks">
+                            <a class="form-control-static" ui-sref="task-detail({id: {{task.id}}})">{{task.code}}</a>{{$last ? '' : ', '}}
+                        <span>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

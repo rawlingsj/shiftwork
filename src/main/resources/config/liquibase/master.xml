@@ -51,4 +51,6 @@
     <include file="classpath:config/liquibase/changelog/20160704162605_added_entity_constraints_EmployeeLeaveAbsence.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <include file="classpath:config/liquibase/changelog/20160711170704_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160713185503_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160723101306_changelog.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

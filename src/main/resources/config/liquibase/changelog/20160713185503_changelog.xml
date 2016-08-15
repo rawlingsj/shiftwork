@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!-- create shift_assignment_task table -->
+    <changeSet author="LD (generated)" id="1468436112501-1">
+        <createTable tableName="shift_assignment_task">
+            <column name="task_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="shift_assignment_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="LD (generated)" id="1468436112501-2">
+        <addPrimaryKey columnNames="shift_assignment_id, task_id"
+                       constraintName="shift_assignment_task_pkey"
+                       tableName="shift_assignment_task"/>
+    </changeSet>
+    <changeSet author="LD (generated)" id="1468436112501-3">
+        <addForeignKeyConstraint baseColumnNames="task_id"
+                                 baseTableName="shift_assignment_task"
+                                 constraintName="fk_shift_assignment_task_shiftassignment_id"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="task"/>
+    </changeSet>
+    <changeSet author="LD (generated)" id="1468436112501-4">
+        <addForeignKeyConstraint baseColumnNames="shift_assignment_id"
+                                 baseTableName="shift_assignment_task"
+                                 constraintName="fk_shift_assignment_task_task_id"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shift_assignment"/>
+    </changeSet>
+    <!-- alter shift_assignment table -->
+    <changeSet author="LD (generated)" id="1468436112501-5">
+        <dropForeignKeyConstraint baseTableName="shift_assignment"
+                                  constraintName="fk_shiftassignment_shift_id"/>
+        <dropUniqueConstraint constraintName="shift_assignment_shift_id_key"
+                              tableName="shift_assignment"/>
+        <addForeignKeyConstraint baseColumnNames="shift_id"
+                                 baseTableName="shift_assignment"
+                                 constraintName="fk_shiftassignment_shift_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shift"/>
+    </changeSet>
+    <changeSet author="LD (generated)" id="1468436112501-6">
+        <dropForeignKeyConstraint baseTableName="shift_assignment"
+                                  constraintName="fk_shiftassignment_employee_id"/>
+        <dropUniqueConstraint constraintName="shift_assignment_employee_id_key"
+                              tableName="shift_assignment"/>
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="shift_assignment"
+                                 constraintName="fk_shiftassignment_employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+    </changeSet>
+    <!-- alter shift_type_task table -->
+    <changeSet author="LD (generated)" id="1468436112501-7">
+        <dropUniqueConstraint constraintName="shift_type_task_task_id_key"
+                              tableName="shift_type_task"/>
+    </changeSet>
+    <changeSet author="LD (generated)" id="1468436112501-8">
+        <addNotNullConstraint columnDataType="bigint"
+                              columnName="shift_type_id"
+                              tableName="shift_type_task"/>
+    </changeSet>
+    <changeSet author="LD (generated)" id="1468436112501-9">
+        <addNotNullConstraint columnDataType="bigint"
+                              columnName="task_id"
+                              tableName="shift_type_task"/>
+    </changeSet>
+    <changeSet author="LD (generated)" id="1468436112501-10">
+        <dropPrimaryKey tableName="shift_type_task"/>
+        <addPrimaryKey columnNames="shift_type_id, task_id"
+                       constraintName="shift_type_task_pkey"
+                       tableName="shift_type_task"/>
+    </changeSet>
+    <changeSet author="LD (generated)" id="1468436112501-11">
+        <dropColumn columnName="id" tableName="shift_type_task"/>
+    </changeSet>
+    <changeSet author="LD (generated)" id="1468436112501-12">
+        <preConditions onFail="MARK_RAN">
+            <sequenceExists sequenceName="shift_type_task_id_seq"/>
+        </preConditions>
+        <dropSequence sequenceName="shift_type_task_id_seq"/>
+    </changeSet>
+    <!-- remove shift_assignment_id column from task table -->
+    <changeSet author="LD (generated)" id="1468436112501-13">
+        <dropColumn columnName="shift_assignment_id" tableName="task"/>
+    </changeSet>
+</databaseChangeLog>

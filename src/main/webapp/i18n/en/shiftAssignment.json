@@ -5,7 +5,8 @@
                 "title": "Shift Assignments",
                 "createLabel": "Create a new Shift Assignment",
                 "createOrEditLabel": "Create or edit a Shift Assignment",
-                "search": "Search for Shift Assignment"
+                "search": "Search for Shift Assignment",
+                "export": "Export to Excel"
             },
             "created": "A new Shift Assignment is created with identifier {{ param }}",
             "updated": "A Shift Assignment is updated with identifier {{ param }}",
@@ -22,7 +23,7 @@
             "locked": "Locked",
             "shift": "Shift",
             "employee": "Employee",
-            "taskList": "Task List"
+            "tasks": "Tasks"
         }
     }
 }

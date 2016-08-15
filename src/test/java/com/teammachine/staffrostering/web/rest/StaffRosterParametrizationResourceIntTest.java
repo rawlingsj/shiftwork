@@ -3,17 +3,15 @@ package com.teammachine.staffrostering.web.rest;
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.StaffRosterParametrization;
 import com.teammachine.staffrostering.repository.StaffRosterParametrizationRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -23,9 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -41,6 +44,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class StaffRosterParametrizationResourceIntTest {
 
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneId.of("Z"));
+
+    private static final String DEFAULT_NAME = "AAAAA";
+    private static final String UPDATED_NAME = "BBBBB";
+    private static final String DEFAULT_DESCRIPTION = "AAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBB";
+
+    private static final Integer DEFAULT_HARD_CONSTRAINT_MATCHES = 1;
+    private static final Integer UPDATED_HARD_CONSTRAINT_MATCHES = 2;
+
+    private static final Integer DEFAULT_SOFT_CONSTRAINT_MATCHES = 1;
+    private static final Integer UPDATED_SOFT_CONSTRAINT_MATCHES = 2;
+
+    private static final ZonedDateTime DEFAULT_LAST_RUN_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
+    private static final ZonedDateTime UPDATED_LAST_RUN_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final String DEFAULT_LAST_RUN_TIME_STR = dateTimeFormatter.format(DEFAULT_LAST_RUN_TIME);
 
     @Inject
     private StaffRosterParametrizationRepository staffRosterParametrizationRepository;
@@ -68,6 +87,11 @@ public class StaffRosterParametrizationResourceIntTest {
     @Before
     public void initTest() {
         staffRosterParametrization = new StaffRosterParametrization();
+        staffRosterParametrization.setName(DEFAULT_NAME);
+        staffRosterParametrization.setDescription(DEFAULT_DESCRIPTION);
+        staffRosterParametrization.setHardConstraintMatches(DEFAULT_HARD_CONSTRAINT_MATCHES);
+        staffRosterParametrization.setSoftConstraintMatches(DEFAULT_SOFT_CONSTRAINT_MATCHES);
+        staffRosterParametrization.setLastRunTime(DEFAULT_LAST_RUN_TIME);
     }
 
     @Test
@@ -86,6 +110,11 @@ public class StaffRosterParametrizationResourceIntTest {
         List<StaffRosterParametrization> staffRosterParametrizations = staffRosterParametrizationRepository.findAll();
         assertThat(staffRosterParametrizations).hasSize(databaseSizeBeforeCreate + 1);
         StaffRosterParametrization testStaffRosterParametrization = staffRosterParametrizations.get(staffRosterParametrizations.size() - 1);
+        assertThat(testStaffRosterParametrization.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testStaffRosterParametrization.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testStaffRosterParametrization.getHardConstraintMatches()).isEqualTo(DEFAULT_HARD_CONSTRAINT_MATCHES);
+        assertThat(testStaffRosterParametrization.getSoftConstraintMatches()).isEqualTo(DEFAULT_SOFT_CONSTRAINT_MATCHES);
+        assertThat(testStaffRosterParametrization.getLastRunTime()).isEqualTo(DEFAULT_LAST_RUN_TIME);
     }
 
     @Test
@@ -98,7 +127,12 @@ public class StaffRosterParametrizationResourceIntTest {
         restStaffRosterParametrizationMockMvc.perform(get("/api/staff-roster-parametrizations?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(staffRosterParametrization.getId().intValue())));
+                .andExpect(jsonPath("$.[*].id").value(hasItem(staffRosterParametrization.getId().intValue())))
+                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+                .andExpect(jsonPath("$.[*].hardConstraintMatches").value(hasItem(DEFAULT_HARD_CONSTRAINT_MATCHES)))
+                .andExpect(jsonPath("$.[*].softConstraintMatches").value(hasItem(DEFAULT_SOFT_CONSTRAINT_MATCHES)))
+                .andExpect(jsonPath("$.[*].lastRunTime").value(hasItem(DEFAULT_LAST_RUN_TIME_STR)));
     }
 
     @Test
@@ -111,7 +145,12 @@ public class StaffRosterParametrizationResourceIntTest {
         restStaffRosterParametrizationMockMvc.perform(get("/api/staff-roster-parametrizations/{id}", staffRosterParametrization.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.id").value(staffRosterParametrization.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(staffRosterParametrization.getId().intValue()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.hardConstraintMatches").value(DEFAULT_HARD_CONSTRAINT_MATCHES))
+            .andExpect(jsonPath("$.softConstraintMatches").value(DEFAULT_SOFT_CONSTRAINT_MATCHES))
+            .andExpect(jsonPath("$.lastRunTime").value(DEFAULT_LAST_RUN_TIME_STR));
     }
 
     @Test
@@ -132,6 +171,11 @@ public class StaffRosterParametrizationResourceIntTest {
         // Update the staffRosterParametrization
         StaffRosterParametrization updatedStaffRosterParametrization = new StaffRosterParametrization();
         updatedStaffRosterParametrization.setId(staffRosterParametrization.getId());
+        updatedStaffRosterParametrization.setName(UPDATED_NAME);
+        updatedStaffRosterParametrization.setDescription(UPDATED_DESCRIPTION);
+        updatedStaffRosterParametrization.setHardConstraintMatches(UPDATED_HARD_CONSTRAINT_MATCHES);
+        updatedStaffRosterParametrization.setSoftConstraintMatches(UPDATED_SOFT_CONSTRAINT_MATCHES);
+        updatedStaffRosterParametrization.setLastRunTime(UPDATED_LAST_RUN_TIME);
 
         restStaffRosterParametrizationMockMvc.perform(put("/api/staff-roster-parametrizations")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -142,6 +186,11 @@ public class StaffRosterParametrizationResourceIntTest {
         List<StaffRosterParametrization> staffRosterParametrizations = staffRosterParametrizationRepository.findAll();
         assertThat(staffRosterParametrizations).hasSize(databaseSizeBeforeUpdate);
         StaffRosterParametrization testStaffRosterParametrization = staffRosterParametrizations.get(staffRosterParametrizations.size() - 1);
+        assertThat(testStaffRosterParametrization.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testStaffRosterParametrization.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testStaffRosterParametrization.getHardConstraintMatches()).isEqualTo(UPDATED_HARD_CONSTRAINT_MATCHES);
+        assertThat(testStaffRosterParametrization.getSoftConstraintMatches()).isEqualTo(UPDATED_SOFT_CONSTRAINT_MATCHES);
+        assertThat(testStaffRosterParametrization.getLastRunTime()).isEqualTo(UPDATED_LAST_RUN_TIME);
     }
 
     @Test

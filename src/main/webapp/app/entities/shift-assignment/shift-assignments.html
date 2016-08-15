@@ -11,6 +11,16 @@
                     </span>
                 </button>
             </div>
+            <div class="col-xs-4 no-padding-left">
+                <select class="input-sm" id="export_shiftDate" name="shiftDate" ng-model="exportShiftDate"
+                        ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
+                </select>
+                <button class="btn btn-primary" ng-click="vm.exportToExcel(exportShiftDate)" ng-disabled="!exportShiftDate">
+                    <span translate="shiftworkApp.shiftAssignment.home.export">
+                        Export to Excel
+                    </span>
+                </button>
+            </div>
         </div>
     </div>
     <br/>
@@ -25,6 +35,7 @@
                     <th><span translate="shiftworkApp.shiftAssignment.locked">Locked</span></th>
                     <th><span translate="shiftworkApp.shiftAssignment.shift">Shift</span></th>
                     <th><span translate="shiftworkApp.shiftAssignment.employee">Employee</span></th>
+                    <th><span translate="shiftworkApp.shiftAssignment.tasks">Tasks</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -39,7 +50,12 @@
                             <a ui-sref="shift-detail({id:shiftAssignment.shift.id})">{{shiftAssignment.shift.shiftType.code}}/{{shiftAssignment.shift.shiftDate.dateString}}</a>
                     </td>
                     <td>
-                        <a ui-sref="employee-detail({id:shiftAssignment.employee.id})">{{shiftAssignment.employee.code}}</a>
+                        <a ui-sref="employee-detail({id:shiftAssignment.employee.id})">{{shiftAssignment.employee.name}}</a>
+                    </td>
+                    <td>
+                        <span ng-repeat="taskList in shiftAssignment.taskList">
+                            <a class="form-control-static" ui-sref="task-detail({id: {{taskList.id}}})">{{taskList.code}}</a>{{$last ? '' : ', '}}
+                        <span>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
