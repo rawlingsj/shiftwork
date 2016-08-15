@@ -18,7 +18,6 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr>
-                    <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.taskSkillRequirement.task">Task</span></th>
                     <th><span translate="shiftworkApp.taskSkillRequirement.skill">Skill</span></th>
                     <th></th>
@@ -26,9 +25,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="taskSkillRequirement in vm.taskSkillRequirements track by taskSkillRequirement.id">
-                    <td><a ui-sref="task-skill-requirement-detail({id:taskSkillRequirement.id})">{{taskSkillRequirement.id}}</a></td>
+                    
                     <td>
-                        <a ui-sref="task-detail({id:taskSkillRequirement.task.id})">{{taskSkillRequirement.task.id}}</a>
+                        <a ui-sref="task-detail({id:taskSkillRequirement.task.id})">{{taskSkillRequirement.task.code}}</a>
                     </td>
                     <td>
                         <a ui-sref="skill-detail({id:taskSkillRequirement.skill.id})">{{taskSkillRequirement.skill.code}}</a>
