@@ -706,13 +706,13 @@
                     <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
                     <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                     <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost:5432/staffservicedev</url>
+                    <url>jdbc:postgresql://localhost:5432/staffservice</url>
                     <defaultSchemaName />
-                    <username>staffservicedev</username>
+                    <username>staffservice</username>
                     <password>654321</password>
                     <referenceUrl>jdbc:postgresql://localhost:5432/staffserviceref</referenceUrl>
                     <referenceDriver>org.postgresql.Driver</referenceDriver>
-                    <referenceUsername>staffservicedev</referenceUsername>
+                    <referenceUsername>staffservice</referenceUsername>
                     <referencePassword>654321</referencePassword>
                     <verbose>true</verbose>
                     <logging>debug</logging>
