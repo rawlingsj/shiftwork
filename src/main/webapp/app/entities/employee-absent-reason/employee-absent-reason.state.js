@@ -26,6 +26,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('employeeAbsentReason');
+                    $translatePartialLoader.addPart('durationUnit');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
@@ -48,6 +49,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('employeeAbsentReason');
+                    $translatePartialLoader.addPart('durationUnit');
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'EmployeeAbsentReason', function($stateParams, EmployeeAbsentReason) {
@@ -75,6 +77,7 @@
                                 name: null,
                                 description: null,
                                 defaultDuration: null,
+                                defaultDurationUnit: null,
                                 id: null
                             };
                         }

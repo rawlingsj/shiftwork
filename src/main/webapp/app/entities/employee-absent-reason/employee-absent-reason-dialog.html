@@ -33,11 +33,19 @@
         </div>
         <div class="form-group">
             <label class="control-label" translate="shiftworkApp.employeeAbsentReason.defaultDuration" for="field_defaultDuration">Default Duration</label>
-            <input type="text" class="form-control" name="defaultDuration" id="field_defaultDuration"
-                    ng-model="vm.employeeAbsentReason.defaultDuration"
-                     />
+            <div class="form-inline">
+                <input type="number" class="form-control" name="defaultDuration" id="field_defaultDuration"
+                       ng-model="vm.employeeAbsentReason.defaultDuration"
+                />
+                <select class="form-control" name="defaultDurationUnit" ng-model="vm.employeeAbsentReason.defaultDurationUnit" id="field_defaultDurationUnit">
+                    <option value="HOURS" translate="shiftworkApp.DurationUnit.HOURS">HOURS</option>
+                    <option value="DAYS" translate="shiftworkApp.DurationUnit.DAYS">DAYS</option>
+                    <option value="WEEKS" translate="shiftworkApp.DurationUnit.WEEKS">WEEKS</option>
+                    <option value="MONTHS" translate="shiftworkApp.DurationUnit.MONTHS">MONTHS</option>
+                    <option value="YEARS" translate="shiftworkApp.DurationUnit.YEARS">YEARS</option>
+                </select>
+            </div>
         </div>
-
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

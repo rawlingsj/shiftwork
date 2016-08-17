@@ -1,7 +1,9 @@
 package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.teammachine.staffrostering.domain.EmployeeAbsentReason;
 import com.teammachine.staffrostering.domain.EmployeeLeaveAbsence;
+import com.teammachine.staffrostering.domain.enumeration.DurationUnit;
 import com.teammachine.staffrostering.repository.EmployeeLeaveAbsenceRepository;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,10 +48,25 @@ public class EmployeeLeaveAbsenceResource {
         if (employeeLeaveAbsence.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("employeeLeaveAbsence", "idexists", "A new employeeLeaveAbsence cannot already have an ID")).body(null);
         }
+        if (employeeLeaveAbsence.getAbsentFrom() != null
+            && employeeLeaveAbsence.getAbsentTo() == null
+            && employeeLeaveAbsence.getReason() != null) {
+            employeeLeaveAbsence.setAbsentTo(getAbsentToDateFromDefaultPeriodOfReason(employeeLeaveAbsence.getAbsentFrom(), employeeLeaveAbsence.getReason()));
+        }
         EmployeeLeaveAbsence result = employeeLeaveAbsenceRepository.save(employeeLeaveAbsence);
         return ResponseEntity.created(new URI("/api/employee-leave-absences/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("employeeLeaveAbsence", result.getId().toString()))
             .body(result);
+    }
+
+    private ZonedDateTime getAbsentToDateFromDefaultPeriodOfReason(ZonedDateTime absentFrom, EmployeeAbsentReason reason) {
+        Integer amount = reason.getDefaultDuration();
+        DurationUnit durationUnit = reason.getDefaultDurationUnit();
+        if (amount != null && durationUnit != null) {
+            return absentFrom.plus(amount, durationUnit.getTemporalUnit());
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -68,6 +86,11 @@ public class EmployeeLeaveAbsenceResource {
         log.debug("REST request to update EmployeeLeaveAbsence : {}", employeeLeaveAbsence);
         if (employeeLeaveAbsence.getId() == null) {
             return createEmployeeLeaveAbsence(employeeLeaveAbsence);
+        }
+        if (employeeLeaveAbsence.getAbsentFrom() != null
+            && employeeLeaveAbsence.getAbsentTo() == null
+            && employeeLeaveAbsence.getReason() != null) {
+            employeeLeaveAbsence.setAbsentTo(getAbsentToDateFromDefaultPeriodOfReason(employeeLeaveAbsence.getAbsentFrom(), employeeLeaveAbsence.getReason()));
         }
         EmployeeLeaveAbsence result = employeeLeaveAbsenceRepository.save(employeeLeaveAbsence);
         return ResponseEntity.ok()

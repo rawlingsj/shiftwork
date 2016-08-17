@@ -2,18 +2,17 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.EmployeeAbsentReason;
+import com.teammachine.staffrostering.domain.enumeration.DurationUnit;
 import com.teammachine.staffrostering.repository.EmployeeAbsentReasonRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -26,9 +25,9 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 /**
  * Test class for the EmployeeAbsentReasonResource REST controller.
@@ -47,8 +46,12 @@ public class EmployeeAbsentReasonResourceIntTest {
     private static final String UPDATED_NAME = "BBBBB";
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBB";
-    private static final String DEFAULT_DEFAULT_DURATION = "AAAAA";
-    private static final String UPDATED_DEFAULT_DURATION = "BBBBB";
+
+    private static final Integer DEFAULT_DEFAULT_DURATION = 1;
+    private static final Integer UPDATED_DEFAULT_DURATION = 2;
+
+    private static final DurationUnit DEFAULT_DEFAULT_DURATION_UNIT = DurationUnit.HOURS;
+    private static final DurationUnit UPDATED_DEFAULT_DURATION_UNIT = DurationUnit.DAYS;
 
     @Inject
     private EmployeeAbsentReasonRepository employeeAbsentReasonRepository;
@@ -80,6 +83,7 @@ public class EmployeeAbsentReasonResourceIntTest {
         employeeAbsentReason.setName(DEFAULT_NAME);
         employeeAbsentReason.setDescription(DEFAULT_DESCRIPTION);
         employeeAbsentReason.setDefaultDuration(DEFAULT_DEFAULT_DURATION);
+        employeeAbsentReason.setDefaultDurationUnit(DEFAULT_DEFAULT_DURATION_UNIT);
     }
 
     @Test
@@ -102,6 +106,7 @@ public class EmployeeAbsentReasonResourceIntTest {
         assertThat(testEmployeeAbsentReason.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testEmployeeAbsentReason.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testEmployeeAbsentReason.getDefaultDuration()).isEqualTo(DEFAULT_DEFAULT_DURATION);
+        assertThat(testEmployeeAbsentReason.getDefaultDurationUnit()).isEqualTo(DEFAULT_DEFAULT_DURATION_UNIT);
     }
 
     @Test
@@ -118,7 +123,8 @@ public class EmployeeAbsentReasonResourceIntTest {
                 .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
                 .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-                .andExpect(jsonPath("$.[*].defaultDuration").value(hasItem(DEFAULT_DEFAULT_DURATION.toString())));
+                .andExpect(jsonPath("$.[*].defaultDuration").value(hasItem(DEFAULT_DEFAULT_DURATION)))
+                .andExpect(jsonPath("$.[*].defaultDurationUnit").value(hasItem(DEFAULT_DEFAULT_DURATION_UNIT.toString())));
     }
 
     @Test
@@ -135,7 +141,8 @@ public class EmployeeAbsentReasonResourceIntTest {
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.defaultDuration").value(DEFAULT_DEFAULT_DURATION.toString()));
+            .andExpect(jsonPath("$.defaultDuration").value(DEFAULT_DEFAULT_DURATION))
+            .andExpect(jsonPath("$.defaultDurationUnit").value(DEFAULT_DEFAULT_DURATION_UNIT.toString()));
     }
 
     @Test
@@ -160,6 +167,7 @@ public class EmployeeAbsentReasonResourceIntTest {
         updatedEmployeeAbsentReason.setName(UPDATED_NAME);
         updatedEmployeeAbsentReason.setDescription(UPDATED_DESCRIPTION);
         updatedEmployeeAbsentReason.setDefaultDuration(UPDATED_DEFAULT_DURATION);
+        updatedEmployeeAbsentReason.setDefaultDurationUnit(UPDATED_DEFAULT_DURATION_UNIT);
 
         restEmployeeAbsentReasonMockMvc.perform(put("/api/employee-absent-reasons")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -174,6 +182,7 @@ public class EmployeeAbsentReasonResourceIntTest {
         assertThat(testEmployeeAbsentReason.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testEmployeeAbsentReason.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testEmployeeAbsentReason.getDefaultDuration()).isEqualTo(UPDATED_DEFAULT_DURATION);
+        assertThat(testEmployeeAbsentReason.getDefaultDurationUnit()).isEqualTo(UPDATED_DEFAULT_DURATION_UNIT);
     }
 
     @Test

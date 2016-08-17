@@ -1,5 +1,6 @@
 package com.teammachine.staffrostering.domain;
 
+import com.teammachine.staffrostering.domain.enumeration.DurationUnit;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -31,7 +32,11 @@ public class EmployeeAbsentReason implements Serializable {
     private String description;
 
     @Column(name = "default_duration")
-    private String defaultDuration;
+    private Integer defaultDuration;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "default_duration_unit")
+    private DurationUnit defaultDurationUnit;
 
     public Long getId() {
         return id;
@@ -65,12 +70,20 @@ public class EmployeeAbsentReason implements Serializable {
         this.description = description;
     }
 
-    public String getDefaultDuration() {
+    public Integer getDefaultDuration() {
         return defaultDuration;
     }
 
-    public void setDefaultDuration(String defaultDuration) {
+    public void setDefaultDuration(Integer defaultDuration) {
         this.defaultDuration = defaultDuration;
+    }
+
+    public DurationUnit getDefaultDurationUnit() {
+        return defaultDurationUnit;
+    }
+
+    public void setDefaultDurationUnit(DurationUnit defaultDurationUnit) {
+        this.defaultDurationUnit = defaultDurationUnit;
     }
 
     @Override
@@ -101,6 +114,7 @@ public class EmployeeAbsentReason implements Serializable {
             ", name='" + name + "'" +
             ", description='" + description + "'" +
             ", defaultDuration='" + defaultDuration + "'" +
+            ", defaultDurationUnit='" + defaultDurationUnit + "'" +
             '}';
     }
 }

@@ -16,7 +16,12 @@
         },
         {
             "fieldName": "defaultDuration",
-            "fieldType": "String"
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "defaultDurationUnit",
+            "fieldType": "DurationUnit",
+            "fieldValues": "HOURS, DAYS, WEEKS, MONTHS, YEARS"
         }
     ],
     "changelogDate": "20160704161513",

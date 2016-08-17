@@ -67,7 +67,7 @@ class EmployeeAbsentReasonGatlingTest extends Simulation {
             .exec(http("Create new employeeAbsentReason")
             .post("/api/employee-absent-reasons")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "code":"SAMPLE_TEXT", "name":"SAMPLE_TEXT", "description":"SAMPLE_TEXT", "defaultDuration":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "code":"SAMPLE_TEXT", "name":"SAMPLE_TEXT", "description":"SAMPLE_TEXT", "defaultDuration":"0", "defaultDurationUnit":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_employeeAbsentReason_url"))).exitHereIfFailed
             .pause(10)

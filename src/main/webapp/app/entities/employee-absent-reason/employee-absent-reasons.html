@@ -23,7 +23,6 @@
                     <th><span translate="shiftworkApp.employeeAbsentReason.name">Name</span></th>
                     <th><span translate="shiftworkApp.employeeAbsentReason.description">Description</span></th>
                     <th><span translate="shiftworkApp.employeeAbsentReason.defaultDuration">Default Duration</span></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -32,7 +31,8 @@
                     <td>{{employeeAbsentReason.code}}</td>
                     <td>{{employeeAbsentReason.name}}</td>
                     <td>{{employeeAbsentReason.description}}</td>
-                    <td>{{employeeAbsentReason.defaultDuration}}</td>
+                    <td translate="{{'shiftworkApp.Duration.' + employeeAbsentReason.defaultDurationUnit}}"
+                        translate-values="{value: '{{employeeAbsentReason.defaultDuration}}'}">{{employeeAbsentReason.defaultDuration}} {{employeeAbsentReason.defaultDurationUnit}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

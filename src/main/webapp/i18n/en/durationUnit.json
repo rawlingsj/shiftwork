@@ -1,0 +1,20 @@
+{
+    "shiftworkApp": {
+        "DurationUnit" : {
+            "null": "",
+            "HOURS": "hours",
+            "DAYS": "days",
+            "WEEKS": "weeks",
+            "MONTHS": "months",
+            "YEARS": "years"
+        },
+        "Duration": {
+            "null": "",
+            "HOURS": "{{value}} hours",
+            "DAYS": "{{value}} days",
+            "WEEKS": "{{value}} weeks",
+            "MONTHS": "{{value}} months",
+            "YEARS": "{{value}} years"
+        }
+    }
+}

@@ -20,7 +20,8 @@
         <hr>
         <dt><span translate="shiftworkApp.employeeAbsentReason.defaultDuration">Default Duration</span></dt>
         <dd>
-            <span>{{vm.employeeAbsentReason.defaultDuration}}</span>
+            <span translate="{{'shiftworkApp.Duration.' + vm.employeeAbsentReason.defaultDurationUnit}}"
+                translate-values="{value: '{{vm.employeeAbsentReason.defaultDuration}}'}">{{vm.employeeAbsentReason.defaultDuration}} {{vm.employeeAbsentReason.defaultDurationUnit}}</span>
         </dd>
         <hr>
     </dl>
