@@ -2,11 +2,11 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.teammachine.staffrostering.domain.Employee;
+import com.teammachine.staffrostering.repository.EmployeeRepository;
 import com.teammachine.staffrostering.service.EmployeeService;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +29,9 @@ public class EmployeeResource {
 
     @Inject
     private EmployeeService employeeService;
+
+    @Inject
+    private EmployeeRepository employeeRepository;
 
     /**
      * POST  /employees : Create a new employee.
@@ -85,8 +88,11 @@ public class EmployeeResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployees(@RequestParam(name = "active", required = false) Boolean active) {
         log.debug("REST request to get all Employees");
+        if (active != null) {
+            return employeeRepository.findAllWithStatus(active);
+        }
         return employeeService.findAll();
     }
 
