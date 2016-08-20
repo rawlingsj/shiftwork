@@ -31,6 +31,7 @@
                 "taskSkillRequirement": "Task Skill Requirement",
                 "employeeAbsentReason": "Employee Absent Reason",
                 "employeeLeaveAbsence": "Employee Leave Absence",
+                "planningJob": "Planning Job",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

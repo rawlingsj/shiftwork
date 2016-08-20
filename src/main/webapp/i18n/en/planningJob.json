@@ -1,0 +1,27 @@
+{
+    "shiftworkApp": {
+        "planningJob" : {
+            "home": {
+                "title": "Planning Jobs",
+                "launchLabel": "Launch a new Planning Job",
+                "search": "Search for Planning Job"
+            },
+            "created": "A new Planning Job is launched with identifier {{ param }}",
+            "refreshed": "A Planning Job is refreshed with identifier {{ param }}",
+            "deleted": "A Planning Job is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Planning Job {{ id }}?"
+            },
+            "detail": {
+                "title": "Planning Job"
+            },
+            "jobId": "Job Id",
+            "status": "Status",
+            "parameterization": "Parameterization",
+            "action": {
+                "run": "Run",
+                "refresh": "Refresh"
+            }
+        }
+    }
+}

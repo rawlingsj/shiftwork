@@ -1,0 +1,28 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "parameterization",
+            "otherEntityName": "staffRosterParametrization",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "name",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "planningJob"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "jobId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "JobStatus",
+            "fieldValues": "PENDING,RUNNING,COMPLETED"
+        }
+    ],
+    "changelogDate": "20160820065126",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "planning_job",
+    "pagination": "no"
+}
