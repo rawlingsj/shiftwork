@@ -1,10 +1,12 @@
 package com.teammachine.staffrostering.planner.impl;
 
 import com.teammachine.staffrostering.domain.ShiftAssignment;
+import com.teammachine.staffrostering.domain.ShiftDate;
 import com.teammachine.staffrostering.domain.StaffRosterParametrization;
 import com.teammachine.staffrostering.planner.PlannerServiceJobResult;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlannerServiceJobResultImpl implements PlannerServiceJobResult {
 
@@ -27,7 +29,12 @@ public class PlannerServiceJobResultImpl implements PlannerServiceJobResult {
 
     @Override
     public List<ShiftAssignment> getShiftAssignments() {
-        return this.shiftAssignments;
+        ShiftDate planningWindowStart = parameterization.getPlanningWindowStart();
+        ShiftDate planningWindowEnd = parameterization.getPlanningWindowEnd();
+        return shiftAssignments.stream().filter(sa ->
+            sa.getShift().getShiftDate().getDayIndex() >= planningWindowStart.getDayIndex()
+                && sa.getShift().getShiftDate().getDayIndex() <= planningWindowEnd.getDayIndex()
+        ).collect(Collectors.toList());
     }
 
     public void setShiftAssignments(List<ShiftAssignment> shiftAssignments) {
