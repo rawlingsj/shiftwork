@@ -19,8 +19,11 @@
         vm.loadAll();
 
         vm.refresh = function(jobId) {
-            PlanningJob.update({id: jobId}, null);
-            vm.loadAll();
+            PlanningJob.update({id: jobId}, null, vm.loadAll);
+        };
+
+        vm.refreshAll = function() {
+            PlanningJob.update(null, vm.loadAll);
         };
     }
 })();

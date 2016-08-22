@@ -1,13 +1,12 @@
 package com.teammachine.staffrostering.domain;
 
+import com.teammachine.staffrostering.domain.enumeration.JobStatus;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.teammachine.staffrostering.domain.enumeration.JobStatus;
 
 /**
  * A PlanningJob.

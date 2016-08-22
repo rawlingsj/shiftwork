@@ -1,15 +1,18 @@
 package com.teammachine.staffrostering.planner;
 
-import com.teammachine.staffrostering.domain.PlanningJob;
 import com.teammachine.staffrostering.domain.StaffRosterParametrization;
-import com.teammachine.staffrostering.domain.enumeration.JobStatus;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface PlannerService {
 
-    PlanningJob runPlanningJob(StaffRosterParametrization staffRosterParametrization);
+    List<PlannerServiceJob> getAllPlanningJobs();
 
-    JobStatus getPlanningJobStatus(PlanningJob planningJob);
+    Optional<PlannerServiceJob> getPlanningJob(String jobId);
 
-    void terminateAndDeleteJob(PlanningJob planningJob);
+    Optional<PlannerServiceJob> runPlanningJob(StaffRosterParametrization staffRosterParametrization);
+
+    void terminateAndDeleteJob(String jobId);
 
 }

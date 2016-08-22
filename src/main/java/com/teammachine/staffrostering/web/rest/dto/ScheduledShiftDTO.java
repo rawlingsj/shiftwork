@@ -10,11 +10,8 @@ import java.util.Set;
 public class ScheduledShiftDTO {
 
     private ShiftType shiftType;
-
     private ShiftDate shiftDate;
-
     private Set<Task> tasks;
-
     private Set<Employee> coworkers;
 
     public ShiftType getShiftType() {

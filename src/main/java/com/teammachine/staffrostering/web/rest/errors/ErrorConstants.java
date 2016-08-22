@@ -14,6 +14,7 @@ public final class ErrorConstants {
     public static final String ERR_NO_SUCH_SHIFT_DATE = "noSuchShiftDate";
     public static final String ERR_NO_SUCH_EMPLOYEE = "noSuchEmployee";
     public static final String ERR_NO_SUCH_PARAMETRIZATION = "noSuchParametrization";
+    public static final String ERR_UNABLE_TO_RUN_PLANNING_JOB = "unableToRunPlanningJob";
 
     private ErrorConstants() {
     }
