@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class PlannerServiceRestTemplateFactory {
+public class PlannerEngineRestTemplateFactory {
 
     public RestTemplate getRestTemplate() {
         return  new RestTemplate();

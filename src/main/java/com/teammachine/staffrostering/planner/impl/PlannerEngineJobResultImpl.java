@@ -3,12 +3,12 @@ package com.teammachine.staffrostering.planner.impl;
 import com.teammachine.staffrostering.domain.ShiftAssignment;
 import com.teammachine.staffrostering.domain.ShiftDate;
 import com.teammachine.staffrostering.domain.StaffRosterParametrization;
-import com.teammachine.staffrostering.planner.PlannerServiceJobResult;
+import com.teammachine.staffrostering.planner.PlannerEngineJobResult;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PlannerServiceJobResultImpl implements PlannerServiceJobResult {
+public class PlannerEngineJobResultImpl implements PlannerEngineJobResult {
 
     private StaffRosterParametrization parameterization;
     private List<ShiftAssignment> shiftAssignments;

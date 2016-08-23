@@ -4,7 +4,7 @@ import com.teammachine.staffrostering.domain.ShiftAssignment;
 
 import java.util.List;
 
-public interface PlannerServiceJobResult {
+public interface PlannerEngineJobResult {
 
     int getHardConstraintMatches();
 

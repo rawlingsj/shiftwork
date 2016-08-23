@@ -1,14 +1,14 @@
 package com.teammachine.staffrostering.planner.impl;
 
 import com.teammachine.staffrostering.domain.enumeration.JobStatus;
-import com.teammachine.staffrostering.planner.PlannerServiceJob;
-import com.teammachine.staffrostering.planner.PlannerServiceJobResult;
+import com.teammachine.staffrostering.planner.PlannerEngineJob;
+import com.teammachine.staffrostering.planner.PlannerEngineJobResult;
 
-public class PlannerServiceJobImpl implements PlannerServiceJob {
+public class PlannerEngineJobImpl implements PlannerEngineJob {
 
     private String jobId;
     private JobStatus status;
-    private PlannerServiceJobResultImpl result;
+    private PlannerEngineJobResultImpl result;
 
     public String getJobId() {
         return jobId;
@@ -19,7 +19,7 @@ public class PlannerServiceJobImpl implements PlannerServiceJob {
     }
 
     @Override
-    public PlannerServiceJobResult getResult() {
+    public PlannerEngineJobResult getResult() {
         return result;
     }
 }

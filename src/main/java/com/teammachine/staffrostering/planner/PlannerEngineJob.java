@@ -2,12 +2,12 @@ package com.teammachine.staffrostering.planner;
 
 import com.teammachine.staffrostering.domain.enumeration.JobStatus;
 
-public interface PlannerServiceJob {
+public interface PlannerEngineJob {
 
     String getJobId();
 
     JobStatus getStatus();
 
-    PlannerServiceJobResult getResult();
+    PlannerEngineJobResult getResult();
 
 }
