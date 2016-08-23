@@ -21,7 +21,8 @@
             "parameterization": "Parameterization",
             "action": {
                 "run": "Run",
-                "refresh": "Refresh"
+                "refresh": "Refresh",
+                "save": "Save result"
             }
         }
     }

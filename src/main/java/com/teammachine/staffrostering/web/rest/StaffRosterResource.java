@@ -25,13 +25,13 @@ public class StaffRosterResource {
 
     @Inject
     private StaffRosterParametrizationRepository staffRosterParametrizationRepository;
-
     @Inject
     private ShiftAssignmentRepository shiftAssignmentRepository;
 
     @RequestMapping(value = "/staff-rosters",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+        method = RequestMethod.POST,
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity createStaffRoster(@RequestBody StaffRosterDTO staffRosterDTO) {
         log.debug("REST request to create StaffRoster : {}", staffRosterDTO);
@@ -42,7 +42,7 @@ public class StaffRosterResource {
         staffRosterParametrizationRepository.save(staffRosterDTO.getStaffRosterParametrization());
         staffRosterDTO.getShiftAssignments().stream().forEach(shiftAssignmentRepository::save);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert("staffRoster", staffRosterDTO.getStaffRosterParametrization().getId().toString()))
-                .body(staffRosterDTO);
+            .headers(HeaderUtil.createEntityUpdateAlert("staffRoster", staffRosterDTO.getStaffRosterParametrization().getId().toString()))
+            .body(staffRosterDTO);
     }
 }

@@ -50,6 +50,11 @@
                                 <span class="glyphicon glyphicon-refresh"></span>
                                 <span class="hidden-xs hidden-sm" translate="shiftworkApp.planningJob.action.refresh"></span>
                             </button>
+                            <button ng-click="vm.save(planningJob.id)"
+                                    class="btn btn-success btn-sm">
+                                <span class="glyphicon glyphicon-save"></span>
+                                <span class="hidden-xs hidden-sm" translate="shiftworkApp.planningJob.action.save"></span>
+                            </button>
                             <button type="submit"
                                     ui-sref="planning-job.delete({id:planningJob.id})"
                                     class="btn btn-danger btn-sm">
