@@ -8,7 +8,6 @@
                 "refreshAll": "Refresh all"
             },
             "created": "A new Planning Job is launched with identifier {{ param }}",
-            "refreshed": "A Planning Job is refreshed with identifier {{ param }}",
             "deleted": "A Planning Job is deleted with identifier {{ param }}",
             "delete": {
                 "question": "Are you sure you want to delete Planning Job {{ id }}?"

@@ -27,6 +27,7 @@
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('planningJob');
                     $translatePartialLoader.addPart('jobStatus');
+                    $translatePartialLoader.addPart('staffRoster');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]

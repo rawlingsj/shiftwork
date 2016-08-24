@@ -2,11 +2,23 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.PlanningJob;
+import com.teammachine.staffrostering.domain.ShiftAssignment;
+import com.teammachine.staffrostering.domain.StaffRosterParametrization;
 import com.teammachine.staffrostering.domain.enumeration.JobStatus;
+import com.teammachine.staffrostering.planner.PlannerEngine;
+import com.teammachine.staffrostering.planner.PlannerEngineJob;
+import com.teammachine.staffrostering.planner.PlannerEngineJobResult;
 import com.teammachine.staffrostering.repository.PlanningJobRepository;
+import com.teammachine.staffrostering.repository.StaffRosterParametrizationRepository;
+import com.teammachine.staffrostering.service.PlanningJobService;
+import com.teammachine.staffrostering.service.impl.PlanningJobServiceImpl;
+import com.teammachine.staffrostering.web.rest.errors.ErrorConstants;
+import com.teammachine.staffrostering.web.rest.errors.ExceptionTranslator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -22,10 +34,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -40,140 +57,272 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class PlanningJobResourceIntTest {
 
-    private static final String DEFAULT_JOB_ID = "AAAAA";
-    private static final String UPDATED_JOB_ID = "BBBBB";
+    private static final String JOB_ID = "xxxxx";
+    private static final JobStatus DEFAULT_STATUS = JobStatus.RUNNING;
+    private static final JobStatus UPDATED_STATUS = JobStatus.COMPLETED;
 
-    private static final JobStatus DEFAULT_STATUS = JobStatus.PENDING;
-    private static final JobStatus UPDATED_STATUS = JobStatus.RUNNING;
-
+    @Mock
+    private PlannerEngine plannerEngine;
     @Inject
     private PlanningJobRepository planningJobRepository;
-
+    @Inject
+    private StaffRosterParametrizationRepository staffRosterParametrizationRepository;
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+    @Inject
+    private ExceptionTranslator exceptionTranslator;
+
+    private PlanningJobService planningJobService;
 
     private MockMvc restPlanningJobMockMvc;
 
     private PlanningJob planningJob;
 
+    private StaffRosterParametrization staffRosterParametrization;
+
     @PostConstruct
     public void setup() {
         MockitoAnnotations.initMocks(this);
+        this.planningJobService = new PlanningJobServiceImpl();
+        ReflectionTestUtils.setField(planningJobService, "plannerEngine", plannerEngine);
+        ReflectionTestUtils.setField(planningJobService, "planningJobRepository", planningJobRepository);
         PlanningJobResource planningJobResource = new PlanningJobResource();
-        ReflectionTestUtils.setField(planningJobResource, "planningJobRepository", planningJobRepository);
+        ReflectionTestUtils.setField(planningJobResource, "planningJobService", planningJobService);
         this.restPlanningJobMockMvc = MockMvcBuilders.standaloneSetup(planningJobResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setControllerAdvice(exceptionTranslator)
+            .build();
     }
 
     @Before
-    public void initTest() {
+    public void init() {
+        staffRosterParametrization = new StaffRosterParametrization();
+        staffRosterParametrizationRepository.save(staffRosterParametrization);
+
         planningJob = new PlanningJob();
-        planningJob.setJobId(DEFAULT_JOB_ID);
+        planningJob.setParameterization(staffRosterParametrization);
+        planningJob.setJobId(JOB_ID);
         planningJob.setStatus(DEFAULT_STATUS);
     }
 
     @Test
     @Transactional
     public void createPlanningJob() throws Exception {
-        int databaseSizeBeforeCreate = planningJobRepository.findAll().size();
+        PlannerEngineJob plannerEngineJob = mock(PlannerEngineJob.class);
+        when(plannerEngineJob.getJobId()).thenReturn(JOB_ID);
+        when(plannerEngineJob.getStatus()).thenReturn(DEFAULT_STATUS);
+        when(plannerEngine.runPlanningJob(Matchers.eq(staffRosterParametrization))).thenReturn(Optional.of(plannerEngineJob));
 
-        // Create the PlanningJob
+        PlanningJob planningJob = new PlanningJob();
+        planningJob.setParameterization(staffRosterParametrization);
 
+        // Business method
         restPlanningJobMockMvc.perform(post("/api/planning-jobs")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(planningJob)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(planningJob)))
+            .andExpect(status().isCreated());
 
-        // Validate the PlanningJob in the database
+        // Asserts
         List<PlanningJob> planningJobs = planningJobRepository.findAll();
-        assertThat(planningJobs).hasSize(databaseSizeBeforeCreate + 1);
-        PlanningJob testPlanningJob = planningJobs.get(planningJobs.size() - 1);
-        assertThat(testPlanningJob.getJobId()).isEqualTo(DEFAULT_JOB_ID);
+        assertThat(planningJobs).hasSize(1);
+        PlanningJob testPlanningJob = planningJobs.get(0);
+        assertThat(testPlanningJob.getId()).isNotNull();
+        assertThat(testPlanningJob.getJobId()).isEqualTo(JOB_ID);
         assertThat(testPlanningJob.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testPlanningJob.getParameterization()).isEqualTo(staffRosterParametrization);
+    }
+
+    @Test
+    @Transactional
+    public void unableToRunPlanningJob() throws Exception {
+        when(plannerEngine.runPlanningJob(Matchers.eq(staffRosterParametrization))).thenReturn(Optional.empty());
+
+        // Business method
+        restPlanningJobMockMvc.perform(post("/api/planning-jobs")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(planningJob)))
+            // Asserts
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_UNABLE_TO_RUN_PLANNING_JOB))
+            .andExpect(jsonPath("$.params[*]").value(empty()));
     }
 
     @Test
     @Transactional
     public void getAllPlanningJobs() throws Exception {
-        // Initialize the database
         planningJobRepository.saveAndFlush(planningJob);
 
-        // Get all the planningJobs
-        restPlanningJobMockMvc.perform(get("/api/planning-jobs?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(planningJob.getId().intValue())))
-                .andExpect(jsonPath("$.[*].jobId").value(hasItem(DEFAULT_JOB_ID.toString())))
-                .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+        // Business method
+        restPlanningJobMockMvc.perform(get("/api/planning-jobs"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            // Asserts
+            .andExpect(jsonPath("$.[*].id").value(hasItem(planningJob.getId().intValue())))
+            .andExpect(jsonPath("$.[*].jobId").value(hasItem(JOB_ID)))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
 
     @Test
     @Transactional
-    public void getPlanningJob() throws Exception {
-        // Initialize the database
+    public void getPlanningJobWithResult() throws Exception {
         planningJobRepository.saveAndFlush(planningJob);
 
-        // Get the planningJob
+        PlannerEngineJob plannerEngineJob = mock(PlannerEngineJob.class);
+        PlannerEngineJobResult plannerEngineJobResult = mock(PlannerEngineJobResult.class);
+        when(plannerEngineJobResult.getHardConstraintMatches()).thenReturn(-101);
+        when(plannerEngineJobResult.getSoftConstraintMatches()).thenReturn(-102);
+        List<ShiftAssignment> shiftAssignments = Arrays.asList(
+            mockShiftAssignment(1),
+            mockShiftAssignment(2)
+        );
+        when(plannerEngineJobResult.getShiftAssignments()).thenReturn(shiftAssignments);
+        when(plannerEngineJob.getResult()).thenReturn(plannerEngineJobResult);
+        when(plannerEngine.getPlanningJob(JOB_ID)).thenReturn(Optional.of(plannerEngineJob));
+
+        // Business method
         restPlanningJobMockMvc.perform(get("/api/planning-jobs/{id}", planningJob.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            // Asserts
             .andExpect(jsonPath("$.id").value(planningJob.getId().intValue()))
-            .andExpect(jsonPath("$.jobId").value(DEFAULT_JOB_ID.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+            .andExpect(jsonPath("$.jobId").value(JOB_ID))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.parameterization.id").value(staffRosterParametrization.getId().intValue()))
+            .andExpect(jsonPath("$.shiftAssignments[*].id").value(contains(1, 2)));
+    }
+
+    private ShiftAssignment mockShiftAssignment(int id) {
+        ShiftAssignment shiftAssignment = new ShiftAssignment();
+        shiftAssignment.setId(Integer.valueOf(id).longValue());
+        return shiftAssignment;
     }
 
     @Test
     @Transactional
     public void getNonExistingPlanningJob() throws Exception {
-        // Get the planningJob
-        restPlanningJobMockMvc.perform(get("/api/planning-jobs/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+        int id = 1001;
+        // Business method
+        restPlanningJobMockMvc.perform(get("/api/planning-jobs/{id}", id))
+            // Asserts
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_NO_SUCH_PLANNING_JOB))
+            .andExpect(jsonPath("$.params[*]").value(contains(String.valueOf(id))));
     }
 
     @Test
     @Transactional
     public void updatePlanningJob() throws Exception {
-        // Initialize the database
         planningJobRepository.saveAndFlush(planningJob);
-        int databaseSizeBeforeUpdate = planningJobRepository.findAll().size();
 
-        // Update the planningJob
         PlanningJob updatedPlanningJob = new PlanningJob();
-        updatedPlanningJob.setId(planningJob.getId());
-        updatedPlanningJob.setJobId(UPDATED_JOB_ID);
+        updatedPlanningJob.setJobId(JOB_ID);
         updatedPlanningJob.setStatus(UPDATED_STATUS);
 
+        // Business method
         restPlanningJobMockMvc.perform(put("/api/planning-jobs")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedPlanningJob)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedPlanningJob)))
+            .andExpect(status().isOk());
 
-        // Validate the PlanningJob in the database
+        // Asserts
         List<PlanningJob> planningJobs = planningJobRepository.findAll();
-        assertThat(planningJobs).hasSize(databaseSizeBeforeUpdate);
-        PlanningJob testPlanningJob = planningJobs.get(planningJobs.size() - 1);
-        assertThat(testPlanningJob.getJobId()).isEqualTo(UPDATED_JOB_ID);
+        assertThat(planningJobs).hasSize(1);
+        PlanningJob testPlanningJob = planningJobs.get(0);
+        assertThat(testPlanningJob.getJobId()).isEqualTo(JOB_ID);
         assertThat(testPlanningJob.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test
     @Transactional
-    public void deletePlanningJob() throws Exception {
-        // Initialize the database
+    public void syncAllPlanningJobs() throws Exception {
         planningJobRepository.saveAndFlush(planningJob);
-        int databaseSizeBeforeDelete = planningJobRepository.findAll().size();
 
-        // Get the planningJob
-        restPlanningJobMockMvc.perform(delete("/api/planning-jobs/{id}", planningJob.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+        PlannerEngineJob plannerEngineJob = mock(PlannerEngineJob.class);
+        when(plannerEngineJob.getJobId()).thenReturn(JOB_ID);
+        when(plannerEngineJob.getStatus()).thenReturn(UPDATED_STATUS);
+        when(plannerEngine.getAllPlanningJobs()).thenReturn(Collections.singletonList(plannerEngineJob));
 
-        // Validate the database is empty
+        // Business method
+        restPlanningJobMockMvc.perform(put("/api/planning-jobs"))
+            .andExpect(status().isOk());
+
+        // Asserts
         List<PlanningJob> planningJobs = planningJobRepository.findAll();
-        assertThat(planningJobs).hasSize(databaseSizeBeforeDelete - 1);
+        assertThat(planningJobs).hasSize(1);
+        PlanningJob testPlanningJob = planningJobs.get(0);
+        assertThat(testPlanningJob.getId()).isEqualTo(planningJob.getId());
+        assertThat(testPlanningJob.getJobId()).isEqualTo(JOB_ID);
+        assertThat(testPlanningJob.getStatus()).isEqualTo(UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void syncPlanningJobStatus() throws Exception {
+        planningJobRepository.saveAndFlush(planningJob);
+
+        PlannerEngineJob plannerEngineJob = mock(PlannerEngineJob.class);
+        when(plannerEngineJob.getJobId()).thenReturn(JOB_ID);
+        when(plannerEngineJob.getStatus()).thenReturn(UPDATED_STATUS);
+        when(plannerEngine.getPlanningJob(JOB_ID)).thenReturn(Optional.of(plannerEngineJob));
+
+        // Business method
+        restPlanningJobMockMvc.perform(put("/api/planning-jobs/{id}", planningJob.getId())
+            .contentType(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk())
+            // Asserts
+            .andExpect(jsonPath("$.jobId").value(JOB_ID))
+            .andExpect(jsonPath("$.status").value(UPDATED_STATUS.toString()));
+
+        List<PlanningJob> planningJobs = planningJobRepository.findAll();
+        assertThat(planningJobs).hasSize(1);
+        PlanningJob testPlanningJob = planningJobs.get(0);
+        assertThat(testPlanningJob.getJobId()).isEqualTo(JOB_ID);
+        assertThat(testPlanningJob.getStatus()).isEqualTo(UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void syncPlanningJobStatusOfNonExistingPlanningJob() throws Exception {
+        int id = 1001;
+        // Business method
+        restPlanningJobMockMvc.perform(put("/api/planning-jobs/{id}", id))
+            // Asserts
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_NO_SUCH_PLANNING_JOB))
+            .andExpect(jsonPath("$.params[*]").value(contains(String.valueOf(id))));
+    }
+
+    @Test
+    @Transactional
+    public void deletePlanningJob() throws Exception {
+        planningJobRepository.saveAndFlush(planningJob);
+
+        // Business method
+        restPlanningJobMockMvc.perform(delete("/api/planning-jobs/{id}", planningJob.getId())
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
+
+        // Asserts
+        verify(plannerEngine).terminateAndDeleteJob(JOB_ID);
+        List<PlanningJob> planningJobs = planningJobRepository.findAll();
+        assertThat(planningJobs).isEmpty();
+    }
+
+    @Test
+    @Transactional
+    public void deleteNonExistingPlanningJob() throws Exception {
+        int id = 1001;
+        // Business method
+        restPlanningJobMockMvc.perform(delete("/api/planning-jobs/{id}", id))
+            // Asserts
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_NO_SUCH_PLANNING_JOB))
+            .andExpect(jsonPath("$.params[*]").value(contains(String.valueOf(id))));
     }
 }

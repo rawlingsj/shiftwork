@@ -33,7 +33,6 @@ public class PlanningJobResource {
 
     @RequestMapping(value = "/planning-jobs",
         method = RequestMethod.POST,
-        consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<PlanningJob> createPlanningJob(@RequestBody PlanningJob planningJob) throws URISyntaxException {
@@ -59,7 +58,6 @@ public class PlanningJobResource {
 
     @RequestMapping(value = "/planning-jobs",
         method = RequestMethod.PUT,
-        consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Void> syncPlanningJobStatuses(@RequestBody(required = false) Map<String, Object> plannerServiceJob) {
