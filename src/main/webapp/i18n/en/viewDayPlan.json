@@ -1,0 +1,10 @@
+{
+    "shiftworkApp": {
+        "viewDayPlan" : {
+            "home": {
+                "title": "Viewing Day Schedule"     
+            },
+			"name" : "Name"
+        }
+    }
+}

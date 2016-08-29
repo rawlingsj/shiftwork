@@ -29,6 +29,7 @@
                 "minMaxContractLine": "Min Max Contract Line",
                 "employees": "Employees",
                 "taskSkillRequirement": "Task Skill Requirement",
+				"viewDayPlan": "View Day Plan",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -95,7 +96,12 @@
         },
         "field": {
             "id": "ID"
-        }
+        },
+		"day" : {
+			"today" : "Today",
+			"yesterday" : "Yesterday",
+			"tomorrow" : "Tomorrow"
+		}
     },
     "entity": {
         "action": {
