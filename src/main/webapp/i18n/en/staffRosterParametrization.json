@@ -16,9 +16,15 @@
             "detail": {
                 "title": "Staff Roster Parametrization"
             },
+            "name": "Name",
+            "description": "Description",
+            "hardConstraintMatches": "Hard Constraint Matches",
+            "softConstraintMatches": "Soft Constraint Matches",
+            "lastRunTime": "Last Run Time",
             "firstShiftDate": "First Shift Date",
             "lastShiftDate": "Last Shift Date",
-            "planningWindowStart": "Planning Window Start"
+            "planningWindowStart": "Planning Window Start",
+            "planningWindowEnd": "Planning Window End"
         }
     }
 }

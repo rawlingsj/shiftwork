@@ -72,7 +72,7 @@ jhipster:
             enabled: false
             host: localhost
             port: 2003
-            prefix: shiftwork
+            prefix: staffservice
         logs: # report metrics in the logs
             enabled: false
             reportFrequency: 60 # in seconds

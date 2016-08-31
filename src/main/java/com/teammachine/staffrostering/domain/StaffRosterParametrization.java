@@ -5,6 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -21,17 +22,32 @@ public class StaffRosterParametrization implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "hard_constraint_matches")
+    private Integer hardConstraintMatches;
+
+    @Column(name = "soft_constraint_matches")
+    private Integer softConstraintMatches;
+
+    @Column(name = "last_run_time")
+    private ZonedDateTime lastRunTime;
+
+    @ManyToOne
     private ShiftDate firstShiftDate;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private ShiftDate lastShiftDate;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private ShiftDate planningWindowStart;
+
+    @ManyToOne
+    private ShiftDate planningWindowEnd;
 
     public Long getId() {
         return id;
@@ -39,6 +55,46 @@ public class StaffRosterParametrization implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getHardConstraintMatches() {
+        return hardConstraintMatches;
+    }
+
+    public void setHardConstraintMatches(Integer hardConstraintMatches) {
+        this.hardConstraintMatches = hardConstraintMatches;
+    }
+
+    public Integer getSoftConstraintMatches() {
+        return softConstraintMatches;
+    }
+
+    public void setSoftConstraintMatches(Integer softConstraintMatches) {
+        this.softConstraintMatches = softConstraintMatches;
+    }
+
+    public ZonedDateTime getLastRunTime() {
+        return lastRunTime;
+    }
+
+    public void setLastRunTime(ZonedDateTime lastRunTime) {
+        this.lastRunTime = lastRunTime;
     }
 
     public ShiftDate getFirstShiftDate() {
@@ -65,9 +121,12 @@ public class StaffRosterParametrization implements Serializable {
         this.planningWindowStart = shiftDate;
     }
 
-    public boolean isInPlanningWindow(ShiftDate shiftDate){
-        // TODO implement it
-        throw new UnsupportedOperationException("Not Implemented Yet!");
+    public ShiftDate getPlanningWindowEnd() {
+        return planningWindowEnd;
+    }
+
+    public void setPlanningWindowEnd(ShiftDate shiftDate) {
+        this.planningWindowEnd = shiftDate;
     }
 
     @Override
@@ -94,6 +153,11 @@ public class StaffRosterParametrization implements Serializable {
     public String toString() {
         return "StaffRosterParametrization{" +
             "id=" + id +
+            ", name='" + name + "'" +
+            ", description='" + description + "'" +
+            ", hardConstraintMatches='" + hardConstraintMatches + "'" +
+            ", softConstraintMatches='" + softConstraintMatches + "'" +
+            ", lastRunTime='" + lastRunTime + "'" +
             '}';
     }
 }

@@ -67,7 +67,7 @@ class StaffRosterParametrizationGatlingTest extends Simulation {
             .exec(http("Create new staffRosterParametrization")
             .post("/api/staff-roster-parametrizations")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null}""")).asJSON
+            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "description":"SAMPLE_TEXT", "hardConstraintMatches":"0", "softConstraintMatches":"0", "lastRunTime":"2020-01-01T00:00:00.000Z"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_staffRosterParametrization_url"))).exitHereIfFailed
             .pause(10)

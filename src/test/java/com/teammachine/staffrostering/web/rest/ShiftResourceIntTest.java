@@ -51,6 +51,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = ShiftworkApp.class)
 @WebAppConfiguration
 @IntegrationTest
+@Transactional
 public class ShiftResourceIntTest {
 
     private static final Integer DEFAULT_INDEX = 1;
@@ -127,7 +128,6 @@ public class ShiftResourceIntTest {
     }
 
     @Test
-    @Transactional
     public void createShift() throws Exception {
         int databaseSizeBeforeCreate = shiftRepository.findAll().size();
         int shiftAssignmentsSizeBeforeCreate = shiftAssignmentRepository.findAll().size();
@@ -147,9 +147,10 @@ public class ShiftResourceIntTest {
         assertThat(testShift.getShiftType()).isEqualTo(shiftType);
 
         //Validate the ShiftAssignments in the database
-        List<ShiftAssignment> shiftAssignments = shiftAssignmentRepository.findAllWithEagerRelationships().stream().sorted(Comparator.comparing(ShiftAssignment::getIndexInShift)).collect(Collectors.toList());
+        List<ShiftAssignment> allWithEagerRelationships = shiftAssignmentRepository.findAllWithEagerRelationships();
+        List<ShiftAssignment> shiftAssignments = allWithEagerRelationships.stream().sorted(Comparator.comparing(ShiftAssignment::getIndexInShift)).collect(Collectors.toList());
         assertThat(shiftAssignments).hasSize(shiftAssignmentsSizeBeforeCreate + DEFAULT_STAFF_REQUIRED);
-        ShiftAssignment testShiftAssignment = null;
+        ShiftAssignment testShiftAssignment;
         //#1
         testShiftAssignment = shiftAssignments.get(shiftAssignments.size() - DEFAULT_STAFF_REQUIRED);
         assertThat(testShiftAssignment.getIndexInShift()).isEqualTo(1);
@@ -163,7 +164,6 @@ public class ShiftResourceIntTest {
     }
 
     @Test
-    @Transactional
     public void getAllShifts() throws Exception {
         // Initialize the database
         shiftRepository.saveAndFlush(shift);
@@ -178,7 +178,6 @@ public class ShiftResourceIntTest {
     }
 
     @Test
-    @Transactional
     public void getShift() throws Exception {
         // Initialize the database
         shiftRepository.saveAndFlush(shift);
@@ -193,7 +192,6 @@ public class ShiftResourceIntTest {
     }
 
     @Test
-    @Transactional
     public void getNonExistingShift() throws Exception {
         // Get the shift
         restShiftMockMvc.perform(get("/api/shifts/{id}", Long.MAX_VALUE))
@@ -201,7 +199,6 @@ public class ShiftResourceIntTest {
     }
 
     @Test
-    @Transactional
     public void updateShift() throws Exception {
         // Initialize the database
         shiftRepository.saveAndFlush(shift);
@@ -227,7 +224,6 @@ public class ShiftResourceIntTest {
     }
 
     @Test
-    @Transactional
     public void deleteShift() throws Exception {
         // Initialize the database
         shiftRepository.saveAndFlush(shift);

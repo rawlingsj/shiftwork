@@ -19,15 +19,23 @@
             <thead>
                 <tr>
                     <th><span translate="global.field.id">ID</span></th>
+                    <th><span translate="shiftworkApp.staffRosterParametrization.name">Name</span></th>
+                    <th><span translate="shiftworkApp.staffRosterParametrization.description">Description</span></th>
                     <th><span translate="shiftworkApp.staffRosterParametrization.firstShiftDate">First Shift Date</span></th>
                     <th><span translate="shiftworkApp.staffRosterParametrization.lastShiftDate">Last Shift Date</span></th>
                     <th><span translate="shiftworkApp.staffRosterParametrization.planningWindowStart">Planning Window Start</span></th>
+                    <th><span translate="shiftworkApp.staffRosterParametrization.planningWindowEnd">Planning Window End</span></th>
+                    <th><span translate="shiftworkApp.staffRosterParametrization.hardConstraintMatches">Hard Constraint Matches</span></th>
+                    <th><span translate="shiftworkApp.staffRosterParametrization.softConstraintMatches">Soft Constraint Matches</span></th>
+                    <th><span translate="shiftworkApp.staffRosterParametrization.lastRunTime">Last Run Time</span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="staffRosterParametrization in vm.staffRosterParametrizations track by staffRosterParametrization.id">
                     <td><a ui-sref="staff-roster-parametrization-detail({id:staffRosterParametrization.id})">{{staffRosterParametrization.id}}</a></td>
+                    <td>{{staffRosterParametrization.name}}</td>
+                    <td>{{staffRosterParametrization.description}}</td>
                     <td>
                         <a ui-sref="shift-date-detail({id:staffRosterParametrization.firstShiftDate.id})">{{staffRosterParametrization.firstShiftDate.dateString}}</a>
                     </td>
@@ -37,6 +45,12 @@
                     <td>
                         <a ui-sref="shift-date-detail({id:staffRosterParametrization.planningWindowStart.id})">{{staffRosterParametrization.planningWindowStart.dateString}}</a>
                     </td>
+                    <td>
+                        <a ui-sref="shift-date-detail({id:staffRosterParametrization.planningWindowEnd.id})">{{staffRosterParametrization.planningWindowEnd.dateString}}</a>
+                    </td>
+                    <td>{{staffRosterParametrization.hardConstraintMatches}}</td>
+                    <td>{{staffRosterParametrization.softConstraintMatches}}</td>
+                    <td>{{staffRosterParametrization.lastRunTime | date:'medium'}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

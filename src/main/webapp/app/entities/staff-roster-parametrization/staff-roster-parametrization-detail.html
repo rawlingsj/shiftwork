@@ -3,6 +3,16 @@
     <h2><span translate="shiftworkApp.staffRosterParametrization.detail.title">Staff Roster Parametrization</span> {{vm.staffRosterParametrization.id}}</h2>
     <hr>
     <dl class="dl-horizontal">
+        <dt><span translate="shiftworkApp.staffRosterParametrization.name">Name</span></dt>
+        <dd>
+            <span>{{vm.staffRosterParametrization.name}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.staffRosterParametrization.description">Description</span></dt>
+        <dd>
+            <span>{{vm.staffRosterParametrization.description}}</span>
+        </dd>
+        <hr>
         <dt><span translate="shiftworkApp.staffRosterParametrization.firstShiftDate">First Shift Date</span></dt>
         <dd>
             <a ui-sref="shift-date-detail({id:vm.staffRosterParametrization.firstShiftDate.id})">{{vm.staffRosterParametrization.firstShiftDate.dateString}}</a>
@@ -16,6 +26,26 @@
         <dt><span translate="shiftworkApp.staffRosterParametrization.planningWindowStart">Planning Window Start</span></dt>
         <dd>
             <a ui-sref="shift-date-detail({id:vm.staffRosterParametrization.planningWindowStart.id})">{{vm.staffRosterParametrization.planningWindowStart.dateString}}</a>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.staffRosterParametrization.planningWindowEnd">Planning Window End</span></dt>
+        <dd>
+            <a ui-sref="shift-date-detail({id:vm.staffRosterParametrization.planningWindowEnd.id})">{{vm.staffRosterParametrization.planningWindowEnd.dateString}}</a>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.staffRosterParametrization.hardConstraintMatches">Hard Constraint Matches</span></dt>
+        <dd>
+            <span>{{vm.staffRosterParametrization.hardConstraintMatches}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.staffRosterParametrization.softConstraintMatches">Soft Constraint Matches</span></dt>
+        <dd>
+            <span>{{vm.staffRosterParametrization.softConstraintMatches}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="shiftworkApp.staffRosterParametrization.lastRunTime">Last Run Time</span></dt>
+        <dd>
+            <span>{{vm.staffRosterParametrization.lastRunTime | date:'medium'}}</span>
         </dd>
         <hr>
     </dl>

@@ -14,7 +14,7 @@
 
 spring:
     application:
-        name: shiftwork
+        name: staffservice
     jpa:
         open-in-view: false
         hibernate:
@@ -56,7 +56,7 @@ jhipster:
             key: acafa0b4d96800524404cd1bed1eaab2b7f50c08
     swagger:
         title: shiftwork API
-        description: shiftwork API documentation
+        description: staffservice API documentation
         version: 0.0.1
         termsOfServiceUrl:
         contactName:
