@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+   <changeSet author="LD (generated)" id="1471284027788-1">
+      <dropForeignKeyConstraint baseTableName="employee"
+                                constraintName="fk_employee_unavailableshiftdate_id"/>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1471284027788-2">
+      <dropForeignKeyConstraint baseTableName="employee"
+                                constraintName="fk_employee_unavailableshifttype_id"/>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1471284027788-3">
+      <dropUniqueConstraint constraintName="employee_unavailable_shift_date_id_key"
+                            tableName="employee"/>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1471284027788-4">
+      <dropUniqueConstraint constraintName="employee_unavailable_shift_type_id_key"
+                            tableName="employee"/>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1471284027788-5">
+      <dropColumn columnName="is_sick" tableName="employee"/>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1471284027788-6">
+      <dropColumn columnName="unavailable_shift_date_id" tableName="employee"/>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1471284027788-7">
+      <dropColumn columnName="unavailable_shift_type_id" tableName="employee"/>
+   </changeSet>
+    <changeSet author="LD (generated)" id="1471284027788-8">
+        <addColumn tableName="employee">
+            <column name="active" type="bit" defaultValue="1"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

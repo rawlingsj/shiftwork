@@ -1,0 +1,25 @@
+{
+    "shiftworkApp": {
+        "employeeAbsentReason" : {
+            "home": {
+                "title": "Employee Absent Reasons",
+                "createLabel": "Create a new Employee Absent Reason",
+                "createOrEditLabel": "Create or edit a Employee Absent Reason",
+                "search": "Search for Employee Absent Reason"
+            },
+            "created": "A new Employee Absent Reason is created with identifier {{ param }}",
+            "updated": "A Employee Absent Reason is updated with identifier {{ param }}",
+            "deleted": "A Employee Absent Reason is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Employee Absent Reason {{ id }}?"
+            },
+            "detail": {
+                "title": "Employee Absent Reason"
+            },
+            "code": "Code",
+            "name": "Name",
+            "description": "Description",
+            "defaultDuration": "Default Duration"
+        }
+    }
+}

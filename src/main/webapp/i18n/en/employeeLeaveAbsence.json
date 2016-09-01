@@ -1,0 +1,25 @@
+{
+    "shiftworkApp": {
+        "employeeLeaveAbsence" : {
+            "home": {
+                "title": "Employee Leave Absences",
+                "createLabel": "Create a new Employee Leave Absence",
+                "createOrEditLabel": "Create or edit a Employee Leave Absence",
+                "search": "Search for Employee Leave Absence"
+            },
+            "created": "A new Employee Leave Absence is created with identifier {{ param }}",
+            "updated": "A Employee Leave Absence is updated with identifier {{ param }}",
+            "deleted": "A Employee Leave Absence is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Employee Leave Absence {{ id }}?"
+            },
+            "detail": {
+                "title": "Employee Leave Absence"
+            },
+            "absentFrom": "Absent From",
+            "absentTo": "Absent To",
+            "reason": "Reason",
+            "employee": "Employee"
+        }
+    }
+}

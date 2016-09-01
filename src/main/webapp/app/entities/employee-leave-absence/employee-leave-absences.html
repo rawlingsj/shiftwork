@@ -1,0 +1,66 @@
+<div>
+    <h2 translate="shiftworkApp.employeeLeaveAbsence.home.title">Employee Leave Absences</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="employee-leave-absence.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="shiftworkApp.employeeLeaveAbsence.home.createLabel">
+                        Create new Employee Leave Absence
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span translate="global.field.id">ID</span></th>
+                    <th><span translate="shiftworkApp.employeeLeaveAbsence.absentFrom">Absent From</span></th>
+                    <th><span translate="shiftworkApp.employeeLeaveAbsence.absentTo">Absent To</span></th>
+                    <th><span translate="shiftworkApp.employeeLeaveAbsence.reason">Reason</span></th>
+                    <th><span translate="shiftworkApp.employeeLeaveAbsence.employee">Employee</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employeeLeaveAbsence in vm.employeeLeaveAbsences track by employeeLeaveAbsence.id">
+                    <td><a ui-sref="employee-leave-absence-detail({id:employeeLeaveAbsence.id})">{{employeeLeaveAbsence.id}}</a></td>
+                    <td>{{employeeLeaveAbsence.absentFrom | date:'medium'}}</td>
+                    <td>{{employeeLeaveAbsence.absentTo | date:'medium'}}</td>
+                    <td>
+                        <a ui-sref="employee-absent-reason-detail({id:employeeLeaveAbsence.reason.id})">{{employeeLeaveAbsence.reason.name}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="employee-detail({id:employeeLeaveAbsence.employee.id})">{{employeeLeaveAbsence.employee.name}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="employee-leave-absence-detail({id:employeeLeaveAbsence.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="employee-leave-absence.edit({id:employeeLeaveAbsence.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="employee-leave-absence.delete({id:employeeLeaveAbsence.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

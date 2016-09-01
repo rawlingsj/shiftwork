@@ -1,0 +1,32 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "reason",
+            "otherEntityName": "employeeAbsentReason",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "employee",
+            "otherEntityName": "employee",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "absentFrom",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldName": "absentTo",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20160704162605",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "employee_leave_absence",
+    "pagination": "no"
+}

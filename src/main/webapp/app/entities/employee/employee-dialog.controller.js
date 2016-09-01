@@ -5,9 +5,9 @@
         .module('shiftworkApp')
         .controller('EmployeeDialogController', EmployeeDialogController);
 
-    EmployeeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Employee', 'Contract', 'EmployeeDayOffRequest', 'EmployeeDayOnRequest', 'EmployeeShiftOffRequest', 'EmployeeShiftOnRequest', 'ShiftDate', 'ShiftType'];
+    EmployeeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Employee', 'Contract', 'EmployeeDayOffRequest', 'EmployeeDayOnRequest', 'EmployeeShiftOffRequest', 'EmployeeShiftOnRequest', 'EmployeeLeaveAbsence'];
 
-    function EmployeeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Employee, Contract, EmployeeDayOffRequest, EmployeeDayOnRequest, EmployeeShiftOffRequest, EmployeeShiftOnRequest, ShiftDate, ShiftType) {
+    function EmployeeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Employee, Contract, EmployeeDayOffRequest, EmployeeDayOnRequest, EmployeeShiftOffRequest, EmployeeShiftOnRequest, EmployeeLeaveAbsence) {
         var vm = this;
         vm.employee = entity;
         vm.contracts = Contract.query();
@@ -15,24 +15,7 @@
         vm.employeedayonrequests = EmployeeDayOnRequest.query();
         vm.employeeshiftoffrequests = EmployeeShiftOffRequest.query();
         vm.employeeshiftonrequests = EmployeeShiftOnRequest.query();
-        vm.unavailableshiftdates = ShiftDate.query({filter: 'employee-is-null'});
-        $q.all([vm.employee.$promise, vm.unavailableshiftdates.$promise]).then(function() {
-            if (!vm.employee.unavailableShiftDate || !vm.employee.unavailableShiftDate.id) {
-                return $q.reject();
-            }
-            return ShiftDate.get({id : vm.employee.unavailableShiftDate.id}).$promise;
-        }).then(function(unavailableShiftDate) {
-            vm.unavailableshiftdates.push(unavailableShiftDate);
-        });
-        vm.unavailableshifttypes = ShiftType.query({filter: 'employee-is-null'});
-        $q.all([vm.employee.$promise, vm.unavailableshifttypes.$promise]).then(function() {
-            if (!vm.employee.unavailableShiftType || !vm.employee.unavailableShiftType.id) {
-                return $q.reject();
-            }
-            return ShiftType.get({id : vm.employee.unavailableShiftType.id}).$promise;
-        }).then(function(unavailableShiftType) {
-            vm.unavailableshifttypes.push(unavailableShiftType);
-        });
+        vm.employeeleaveabsences = EmployeeLeaveAbsence.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

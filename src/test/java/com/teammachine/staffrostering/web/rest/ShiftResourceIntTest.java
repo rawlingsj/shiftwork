@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -110,8 +111,8 @@ public class ShiftResourceIntTest {
     private ShiftType createShiftType(String code) {
         ShiftType shiftType = new ShiftType();
         shiftType.setCode(code);
-        shiftType.setStartTime("06:30");
-        shiftType.setEndTime("14:30");
+        shiftType.setStartTime(LocalTime.of(6, 30));
+        shiftType.setEndTime(LocalTime.of(14, 30));
         shiftType.setTasks(ImmutableSet.of(createTask("a"), createTask("b")));
         shiftTypeRepository.saveAndFlush(shiftType);
         return shiftType;
