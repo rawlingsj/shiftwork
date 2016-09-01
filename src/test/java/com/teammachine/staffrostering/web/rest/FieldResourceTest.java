@@ -70,7 +70,6 @@ public class FieldResourceTest {
 	public void initTest() {
 		employee = new Employee();
 		employee.setCode(DEFAULT_CODE);
-		employee.setIsSick(DEFAULT_IS_SICK);
 		employee.setName(DEFAULT_NAME);
 	}
 

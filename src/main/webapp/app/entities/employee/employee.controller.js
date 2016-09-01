@@ -5,9 +5,9 @@
         .module('shiftworkApp')
         .controller('EmployeeController', EmployeeController);
 
-    EmployeeController.$inject = ['$scope', '$state', 'Employee', 'SearchFields', '$filter'];
+    EmployeeController.$inject = ['$scope', '$state', 'Employee', 'Typeahead', '$filter'];
 
-    function EmployeeController($scope, $state, Employee, SearchFields, $filter) {
+    function EmployeeController($scope, $state, Employee, Typeahead, $filter) {
         var vm = this;
         vm.employees = [];
 
@@ -23,7 +23,7 @@
 
         vm.getEmployee = function (keyword) {
             if (keyword) {
-                return SearchFields.search({value: keyword}).$promise;
+                return Typeahead.findEmployees(keyword);
             } else {
                 vm.resetFilter();
                 return [];
