@@ -1,14 +1,9 @@
 package com.teammachine.staffrostering.web.rest;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
+import com.teammachine.staffrostering.ShiftworkApp;
+import com.teammachine.staffrostering.domain.Employee;
+import com.teammachine.staffrostering.repository.EmployeeRepository;
+import com.teammachine.staffrostering.service.EmployeeService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,10 +20,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.teammachine.staffrostering.ShiftworkApp;
-import com.teammachine.staffrostering.domain.Employee;
-import com.teammachine.staffrostering.repository.EmployeeRepository;
-import com.teammachine.staffrostering.service.TypeaheadService;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ShiftworkApp.class)
@@ -51,7 +49,7 @@ public class FieldResourceTest {
 	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	@Inject
-	private TypeaheadService typeaheadService;
+	private EmployeeService employeeService;
 
 	private MockMvc restEmployeeMockMvc;
 
@@ -62,7 +60,7 @@ public class FieldResourceTest {
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		FieldResource fieldResource = new FieldResource();
-		ReflectionTestUtils.setField(fieldResource, "typeaheadService", typeaheadService);
+		ReflectionTestUtils.setField(fieldResource, "employeeService", employeeService);
 		this.restEmployeeMockMvc = MockMvcBuilders.standaloneSetup(fieldResource)
 				.setCustomArgumentResolvers(pageableArgumentResolver).setMessageConverters(jacksonMessageConverter)
 				.build();
@@ -85,10 +83,10 @@ public class FieldResourceTest {
 		// Get all the employees
 		restEmployeeMockMvc.perform(get("/api/fields/employees?like=shift")).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
+				.andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)))
 				.andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
 	}
-	
+
 	@Test
 	@Transactional
 	public void filterEmployeeWithNoLikeParam() throws Exception {
@@ -96,20 +94,22 @@ public class FieldResourceTest {
 		employeeRepository.saveAndFlush(employee);
 
 		// Get all the employees
-		restEmployeeMockMvc.perform(get("/api/fields/employees?like")).andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
-				.andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+		restEmployeeMockMvc.perform(get("/api/fields/employees?like="))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.[*]").value(hasSize(0)));
 	}
 
 	@Test
 	@Transactional
-	public void findEmpByNameOrCodeNoContent() throws Exception {
+	public void findEmployeeByNameOrCodeNoContent() throws Exception {
 		// Initialize the database
 		employeeRepository.saveAndFlush(employee);
 
 		// Get all the employees
-		restEmployeeMockMvc.perform(get("/api/fields/employees?like=test")).andExpect(status().isNoContent());
+		restEmployeeMockMvc.perform(get("/api/fields/employees?like=test"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.[*]").value(hasSize(0)));
 	}
-
 }

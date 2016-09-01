@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     angular
         .module('shiftworkApp')
@@ -6,11 +6,11 @@
 
     SearchFields.$inject = ['$resource'];
 
-    function SearchFields ($resource) {
-    	 var resourceUrl =  'api/fields/employees?like=:value';
+    function SearchFields($resource) {
+        var resourceUrl = 'api/fields/employees?like=:value';
 
-         return $resource(resourceUrl, {}, {
-            'search': {method:'GET',isArray:true}
-         });
+        return $resource(resourceUrl, {}, {
+            'search': {method: 'GET', isArray: true}
+        });
     }
 })();

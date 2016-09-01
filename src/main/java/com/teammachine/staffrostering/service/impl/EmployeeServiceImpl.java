@@ -1,19 +1,17 @@
 package com.teammachine.staffrostering.service.impl;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
+import com.teammachine.staffrostering.domain.Employee;
+import com.teammachine.staffrostering.domain.filters.specs.EmployeeSpecs;
+import com.teammachine.staffrostering.repository.EmployeeRepository;
+import com.teammachine.staffrostering.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.teammachine.staffrostering.domain.Employee;
-import com.teammachine.staffrostering.domain.filters.specs.EmployeeSpecs;
-import com.teammachine.staffrostering.repository.EmployeeRepository;
-import com.teammachine.staffrostering.service.EmployeeService;
+import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Service Implementation for managing Employee.
@@ -29,7 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	/**
 	 * Save a employee.
-	 * 
+	 *
 	 * @param employee
 	 *            the entity to save
 	 * @return the persisted entity
@@ -42,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	/**
 	 * Get all the employees.
-	 * 
+	 *
 	 * @return the list of entities
 	 */
 	@Transactional(readOnly = true)
@@ -68,7 +66,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	/**
 	 * Delete the employee by id.
-	 * 
+	 *
 	 * @param id
 	 *            the id of the entity
 	 */
@@ -78,9 +76,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	public List<Employee> findByCodeOrName(String like) {
-		log.debug("Request to filter employees with value: {}", like);
+		log.debug("Request to find employees by code or name with value: {}", like);
 		Specification<Employee> findBySearchItem = EmployeeSpecs.findByNameOrCode(like);
 		return employeeRepository.findAll(findBySearchItem);
 	}
-
 }

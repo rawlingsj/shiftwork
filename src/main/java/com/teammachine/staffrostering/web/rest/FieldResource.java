@@ -1,43 +1,49 @@
 package com.teammachine.staffrostering.web.rest;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
+import com.codahale.metrics.annotation.Timed;
+import com.teammachine.staffrostering.domain.Employee;
+import com.teammachine.staffrostering.service.EmployeeService;
+import com.teammachine.staffrostering.web.rest.dto.EmployeeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.codahale.metrics.annotation.Timed;
-import com.teammachine.staffrostering.domain.dto.EmployeeDTO;
-import com.teammachine.staffrostering.service.TypeaheadService;
+import javax.inject.Inject;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping({ "/api", "/api_basic" })
+@RequestMapping({"/api/fields"})
 public class FieldResource {
 
-	private final Logger log = LoggerFactory.getLogger(FieldResource.class);
+    private final Logger log = LoggerFactory.getLogger(FieldResource.class);
 
-	@Inject
-	private TypeaheadService typeaheadService;
+    @Inject
+    private EmployeeService employeeService;
 
-	@RequestMapping(value = "/fields/employees", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@Timed
-	public ResponseEntity<List<EmployeeDTO>> findByCodeOrName(@RequestParam("like") String like) {
+    @RequestMapping(value = "/employees", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<EmployeeDTO> findByCodeOrName(@RequestParam("like") String like) {
+        log.debug("Request to find employees by substring in code or name");
+        if (like.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return employeeService.findByCodeOrName(like).stream()
+            .map(this::asDTO)
+            .sorted(Comparator.comparing(e -> e.getName().toLowerCase()))
+            .collect(Collectors.toList());
+    }
 
-		log.debug("Filter employees by name or code entered");
-		List<EmployeeDTO> employeeDTOs = typeaheadService.processTypeaheadReqOfEmployee(like);
-		if (employeeDTOs.isEmpty()) {
-			return new ResponseEntity<List<EmployeeDTO>>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<>(employeeDTOs, HttpStatus.OK);
-
-	}
-
+    private EmployeeDTO asDTO(Employee employee) {
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        BeanUtils.copyProperties(employee, employeeDTO);
+        return employeeDTO;
+    }
 }
