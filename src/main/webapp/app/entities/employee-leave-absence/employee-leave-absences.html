@@ -12,7 +12,7 @@
                 </button>
             </div>
             <div class="col-xs-4 no-padding-left">
-                <input type="text" placeholder="Search for Employee" translate translate-attr-placeholder="shiftworkApp.employee.home.search"
+                <input type="text" placeholder="Search for Employee" translate translate-attr-placeholder="shiftworkApp.employeeLeaveAbsence.searchBy.employee"
                        ng-model="searchFields"
                        uib-typeahead="employee as employee.code+', '+employee.name for employee in vm.getEmployee($viewValue) | limitTo:10"
                        typeahead-loading="loadingemployees"

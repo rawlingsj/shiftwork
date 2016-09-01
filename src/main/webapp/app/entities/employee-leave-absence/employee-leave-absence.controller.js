@@ -46,7 +46,9 @@
         };
 
         vm.onTypeaheadCallback = function ($item, $model, $label) {
-            vm.employeeLeaveAbsences = $filter('filter')(vm.employeeLeaveAbsences, {employee: {id: $item.id}});
+            EmployeeLeaveAbsence.query({employee: $item.id}, function (result) {
+                vm.employeeLeaveAbsences = result;
+            });
         };
 
         vm.loadAll();
