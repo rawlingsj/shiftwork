@@ -67,7 +67,7 @@ public class ShiftDate implements Serializable {
     }
 
     public String getDateString() {
-        return date != null ? date.format(DateTimeFormatter.ISO_DATE) : null;
+        return date != null ? date.format(DateTimeFormatter.ISO_LOCAL_DATE) : null;
     }
 
     public DayOfWeek getDayOfWeek() {

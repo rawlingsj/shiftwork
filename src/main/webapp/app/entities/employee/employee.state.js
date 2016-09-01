@@ -72,8 +72,8 @@
                         entity: function () {
                             return {
                                 code: null,
-                                isSick: null,
                                 name: null,
+                                active: true,
                                 id: null
                             };
                         }
