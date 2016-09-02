@@ -1,0 +1,2645 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.2
+-- Dumped by pg_dump version 9.5.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: contract; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE contract (
+    id bigint NOT NULL,
+    code character varying(255),
+    description character varying(255),
+    weekend_definition_id bigint
+);
+
+
+ALTER TABLE contract OWNER TO staffservice;
+
+--
+-- Name: contract_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE contract_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE contract_id_seq OWNER TO staffservice;
+
+--
+-- Name: contract_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE contract_id_seq OWNED BY contract.id;
+
+
+--
+-- Name: contract_line; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE contract_line (
+    id bigint NOT NULL,
+    contract_line_type character varying(255),
+    enabled boolean,
+    weight integer,
+    minimum_enabled boolean,
+    minimum_value integer,
+    minimum_weight integer,
+    maximum_enabled boolean,
+    maximum_value integer,
+    maximum_weight integer,
+    boolean_or_minmax character varying(31) NOT NULL,
+    contract_id bigint
+);
+
+
+ALTER TABLE contract_line OWNER TO staffservice;
+
+--
+-- Name: contract_line_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE contract_line_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE contract_line_id_seq OWNER TO staffservice;
+
+--
+-- Name: contract_line_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE contract_line_id_seq OWNED BY contract_line.id;
+
+
+--
+-- Name: databasechangelog; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE databasechangelog (
+    id character varying(255) NOT NULL,
+    author character varying(255) NOT NULL,
+    filename character varying(255) NOT NULL,
+    dateexecuted timestamp without time zone NOT NULL,
+    orderexecuted integer NOT NULL,
+    exectype character varying(10) NOT NULL,
+    md5sum character varying(35),
+    description character varying(255),
+    comments character varying(255),
+    tag character varying(255),
+    liquibase character varying(20),
+    contexts character varying(255),
+    labels character varying(255)
+);
+
+
+ALTER TABLE databasechangelog OWNER TO staffservice;
+
+--
+-- Name: databasechangeloglock; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE databasechangeloglock (
+    id integer NOT NULL,
+    locked boolean NOT NULL,
+    lockgranted timestamp without time zone,
+    lockedby character varying(255)
+);
+
+
+ALTER TABLE databasechangeloglock OWNER TO staffservice;
+
+--
+-- Name: employee; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE employee (
+    id bigint NOT NULL,
+    code character varying(255),
+    name character varying(255),
+    contract_id bigint,
+    active boolean DEFAULT true
+);
+
+
+ALTER TABLE employee OWNER TO staffservice;
+
+--
+-- Name: employee_absent_reason; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE employee_absent_reason (
+    id bigint NOT NULL,
+    code character varying(255),
+    name character varying(255),
+    description character varying(255),
+    default_duration integer,
+    default_duration_unit character varying(16)
+);
+
+
+ALTER TABLE employee_absent_reason OWNER TO staffservice;
+
+--
+-- Name: employee_absent_reason_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE employee_absent_reason_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE employee_absent_reason_id_seq OWNER TO staffservice;
+
+--
+-- Name: employee_absent_reason_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE employee_absent_reason_id_seq OWNED BY employee_absent_reason.id;
+
+
+--
+-- Name: employee_day_off_request; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE employee_day_off_request (
+    id bigint NOT NULL,
+    weight integer,
+    shift_date_id bigint,
+    employee_id bigint
+);
+
+
+ALTER TABLE employee_day_off_request OWNER TO staffservice;
+
+--
+-- Name: employee_day_off_request_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE employee_day_off_request_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE employee_day_off_request_id_seq OWNER TO staffservice;
+
+--
+-- Name: employee_day_off_request_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE employee_day_off_request_id_seq OWNED BY employee_day_off_request.id;
+
+
+--
+-- Name: employee_day_on_request; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE employee_day_on_request (
+    id bigint NOT NULL,
+    weight integer,
+    shift_date_id bigint,
+    employee_id bigint
+);
+
+
+ALTER TABLE employee_day_on_request OWNER TO staffservice;
+
+--
+-- Name: employee_day_on_request_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE employee_day_on_request_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE employee_day_on_request_id_seq OWNER TO staffservice;
+
+--
+-- Name: employee_day_on_request_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE employee_day_on_request_id_seq OWNED BY employee_day_on_request.id;
+
+
+--
+-- Name: employee_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE employee_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE employee_id_seq OWNER TO staffservice;
+
+--
+-- Name: employee_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE employee_id_seq OWNED BY employee.id;
+
+
+--
+-- Name: employee_leave_absence; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE employee_leave_absence (
+    id bigint NOT NULL,
+    absent_from timestamp without time zone,
+    absent_to timestamp without time zone,
+    reason_id bigint,
+    employee_id bigint
+);
+
+
+ALTER TABLE employee_leave_absence OWNER TO staffservice;
+
+--
+-- Name: employee_leave_absence_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE employee_leave_absence_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE employee_leave_absence_id_seq OWNER TO staffservice;
+
+--
+-- Name: employee_leave_absence_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE employee_leave_absence_id_seq OWNED BY employee_leave_absence.id;
+
+
+--
+-- Name: employee_shift_off_request; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE employee_shift_off_request (
+    id bigint NOT NULL,
+    weight integer,
+    shift_id bigint,
+    employee_id bigint
+);
+
+
+ALTER TABLE employee_shift_off_request OWNER TO staffservice;
+
+--
+-- Name: employee_shift_off_request_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE employee_shift_off_request_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE employee_shift_off_request_id_seq OWNER TO staffservice;
+
+--
+-- Name: employee_shift_off_request_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE employee_shift_off_request_id_seq OWNED BY employee_shift_off_request.id;
+
+
+--
+-- Name: employee_shift_on_request; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE employee_shift_on_request (
+    id bigint NOT NULL,
+    weight integer,
+    shift_id bigint,
+    employee_id bigint
+);
+
+
+ALTER TABLE employee_shift_on_request OWNER TO staffservice;
+
+--
+-- Name: employee_shift_on_request_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE employee_shift_on_request_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE employee_shift_on_request_id_seq OWNER TO staffservice;
+
+--
+-- Name: employee_shift_on_request_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE employee_shift_on_request_id_seq OWNED BY employee_shift_on_request.id;
+
+
+--
+-- Name: employees; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE employees (
+    id bigint NOT NULL,
+    employee_id bigint
+);
+
+
+ALTER TABLE employees OWNER TO staffservice;
+
+--
+-- Name: employees_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE employees_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE employees_id_seq OWNER TO staffservice;
+
+--
+-- Name: employees_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE employees_id_seq OWNED BY employees.id;
+
+
+--
+-- Name: hibernate_sequence; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE hibernate_sequence
+    START WITH 1000
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hibernate_sequence OWNER TO staffservice;
+
+--
+-- Name: jhi_authority; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE jhi_authority (
+    name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE jhi_authority OWNER TO staffservice;
+
+--
+-- Name: jhi_persistent_audit_event; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE jhi_persistent_audit_event (
+    event_id bigint NOT NULL,
+    principal character varying(255) NOT NULL,
+    event_date timestamp without time zone,
+    event_type character varying(255)
+);
+
+
+ALTER TABLE jhi_persistent_audit_event OWNER TO staffservice;
+
+--
+-- Name: jhi_persistent_audit_event_event_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE jhi_persistent_audit_event_event_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE jhi_persistent_audit_event_event_id_seq OWNER TO staffservice;
+
+--
+-- Name: jhi_persistent_audit_event_event_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE jhi_persistent_audit_event_event_id_seq OWNED BY jhi_persistent_audit_event.event_id;
+
+
+--
+-- Name: jhi_persistent_audit_evt_data; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE jhi_persistent_audit_evt_data (
+    event_id bigint NOT NULL,
+    name character varying(255) NOT NULL,
+    value character varying(255)
+);
+
+
+ALTER TABLE jhi_persistent_audit_evt_data OWNER TO staffservice;
+
+--
+-- Name: jhi_persistent_token; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE jhi_persistent_token (
+    series character varying(255) NOT NULL,
+    user_id bigint,
+    token_value character varying(255) NOT NULL,
+    token_date date,
+    ip_address character varying(39),
+    user_agent character varying(255)
+);
+
+
+ALTER TABLE jhi_persistent_token OWNER TO staffservice;
+
+--
+-- Name: jhi_user; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE jhi_user (
+    id bigint NOT NULL,
+    login character varying(50) NOT NULL,
+    password_hash character varying(60),
+    first_name character varying(50),
+    last_name character varying(50),
+    email character varying(100) NOT NULL,
+    activated boolean NOT NULL,
+    lang_key character varying(5),
+    activation_key character varying(20),
+    reset_key character varying(20),
+    created_by character varying(50) NOT NULL,
+    created_date timestamp without time zone NOT NULL,
+    reset_date timestamp without time zone,
+    last_modified_by character varying(50),
+    last_modified_date timestamp without time zone
+);
+
+
+ALTER TABLE jhi_user OWNER TO staffservice;
+
+--
+-- Name: jhi_user_authority; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE jhi_user_authority (
+    user_id bigint NOT NULL,
+    authority_name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE jhi_user_authority OWNER TO staffservice;
+
+--
+-- Name: jhi_user_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE jhi_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE jhi_user_id_seq OWNER TO staffservice;
+
+--
+-- Name: jhi_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE jhi_user_id_seq OWNED BY jhi_user.id;
+
+
+--
+-- Name: pattern; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE pattern (
+    id bigint NOT NULL,
+    code character varying(255),
+    weight integer
+);
+
+
+ALTER TABLE pattern OWNER TO staffservice;
+
+--
+-- Name: pattern_contract_line; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE pattern_contract_line (
+    id bigint NOT NULL,
+    contract_id bigint,
+    pattern_id bigint
+);
+
+
+ALTER TABLE pattern_contract_line OWNER TO staffservice;
+
+--
+-- Name: pattern_contract_line_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE pattern_contract_line_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pattern_contract_line_id_seq OWNER TO staffservice;
+
+--
+-- Name: pattern_contract_line_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE pattern_contract_line_id_seq OWNED BY pattern_contract_line.id;
+
+
+--
+-- Name: pattern_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE pattern_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pattern_id_seq OWNER TO staffservice;
+
+--
+-- Name: pattern_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE pattern_id_seq OWNED BY pattern.id;
+
+
+--
+-- Name: shift; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE shift (
+    id bigint NOT NULL,
+    index integer,
+    staff_required integer,
+    shift_type_id bigint,
+    shift_date_id bigint
+);
+
+
+ALTER TABLE shift OWNER TO staffservice;
+
+--
+-- Name: shift_assignment; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE shift_assignment (
+    id bigint NOT NULL,
+    index_in_shift integer,
+    is_need_to_reassign boolean,
+    is_dropped boolean,
+    locked boolean,
+    shift_id bigint,
+    employee_id bigint
+);
+
+
+ALTER TABLE shift_assignment OWNER TO staffservice;
+
+--
+-- Name: shift_assignment_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE shift_assignment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE shift_assignment_id_seq OWNER TO staffservice;
+
+--
+-- Name: shift_assignment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE shift_assignment_id_seq OWNED BY shift_assignment.id;
+
+
+--
+-- Name: shift_assignment_task; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE shift_assignment_task (
+    task_id bigint NOT NULL,
+    shift_assignment_id bigint NOT NULL
+);
+
+
+ALTER TABLE shift_assignment_task OWNER TO staffservice;
+
+--
+-- Name: shift_date; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE shift_date (
+    id bigint NOT NULL,
+    day_index integer,
+    date date,
+    day_of_week character varying(255)
+);
+
+
+ALTER TABLE shift_date OWNER TO staffservice;
+
+--
+-- Name: shift_date_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE shift_date_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE shift_date_id_seq OWNER TO staffservice;
+
+--
+-- Name: shift_date_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE shift_date_id_seq OWNED BY shift_date.id;
+
+
+--
+-- Name: shift_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE shift_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE shift_id_seq OWNER TO staffservice;
+
+--
+-- Name: shift_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE shift_id_seq OWNED BY shift.id;
+
+
+--
+-- Name: shift_type; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE shift_type (
+    id bigint NOT NULL,
+    code character varying(255),
+    index integer,
+    description character varying(255),
+    night_shift boolean,
+    start_time character varying(8),
+    end_time character varying(8)
+);
+
+
+ALTER TABLE shift_type OWNER TO staffservice;
+
+--
+-- Name: shift_type_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE shift_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE shift_type_id_seq OWNER TO staffservice;
+
+--
+-- Name: shift_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE shift_type_id_seq OWNED BY shift_type.id;
+
+
+--
+-- Name: shift_type_task; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE shift_type_task (
+    task_id bigint NOT NULL,
+    shift_type_id bigint NOT NULL
+);
+
+
+ALTER TABLE shift_type_task OWNER TO staffservice;
+
+--
+-- Name: skill; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE skill (
+    id bigint NOT NULL,
+    code character varying(255)
+);
+
+
+ALTER TABLE skill OWNER TO staffservice;
+
+--
+-- Name: skill_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE skill_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE skill_id_seq OWNER TO staffservice;
+
+--
+-- Name: skill_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE skill_id_seq OWNED BY skill.id;
+
+
+--
+-- Name: skill_proficiency; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE skill_proficiency (
+    id bigint NOT NULL,
+    employee_id bigint
+);
+
+
+ALTER TABLE skill_proficiency OWNER TO staffservice;
+
+--
+-- Name: skill_proficiency_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE skill_proficiency_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE skill_proficiency_id_seq OWNER TO staffservice;
+
+--
+-- Name: skill_proficiency_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE skill_proficiency_id_seq OWNED BY skill_proficiency.id;
+
+
+--
+-- Name: skill_proficiency_skill_list; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE skill_proficiency_skill_list (
+    skill_lists_id bigint NOT NULL,
+    skill_proficiencies_id bigint NOT NULL
+);
+
+
+ALTER TABLE skill_proficiency_skill_list OWNER TO staffservice;
+
+--
+-- Name: staff_roster_parametrization; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE staff_roster_parametrization (
+    id bigint NOT NULL,
+    first_shift_date_id bigint,
+    last_shift_date_id bigint,
+    planning_window_start_id bigint,
+    name character varying(255),
+    description character varying(255),
+    hard_constraint_matches integer,
+    soft_constraint_matches integer,
+    last_run_time timestamp(6) without time zone,
+    planning_window_end_id bigint
+);
+
+
+ALTER TABLE staff_roster_parametrization OWNER TO staffservice;
+
+--
+-- Name: staff_roster_parametrization_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE staff_roster_parametrization_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE staff_roster_parametrization_id_seq OWNER TO staffservice;
+
+--
+-- Name: staff_roster_parametrization_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE staff_roster_parametrization_id_seq OWNED BY staff_roster_parametrization.id;
+
+
+--
+-- Name: task; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE task (
+    id bigint NOT NULL,
+    code character varying(255),
+    description character varying(255),
+    staff_needed integer,
+    task_type character varying(255),
+    importance character varying(255),
+    urgency character varying(255)
+);
+
+
+ALTER TABLE task OWNER TO staffservice;
+
+--
+-- Name: task_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE task_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE task_id_seq OWNER TO staffservice;
+
+--
+-- Name: task_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE task_id_seq OWNED BY task.id;
+
+
+--
+-- Name: task_skill_requirement; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE task_skill_requirement (
+    id bigint NOT NULL,
+    task_id bigint,
+    skill_id bigint
+);
+
+
+ALTER TABLE task_skill_requirement OWNER TO staffservice;
+
+--
+-- Name: task_skill_requirement_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE task_skill_requirement_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE task_skill_requirement_id_seq OWNER TO staffservice;
+
+--
+-- Name: task_skill_requirement_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE task_skill_requirement_id_seq OWNED BY task_skill_requirement.id;
+
+
+--
+-- Name: task_tpye; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE task_tpye (
+    id bigint NOT NULL
+);
+
+
+ALTER TABLE task_tpye OWNER TO staffservice;
+
+--
+-- Name: task_tpye_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE task_tpye_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE task_tpye_id_seq OWNER TO staffservice;
+
+--
+-- Name: task_tpye_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE task_tpye_id_seq OWNED BY task_tpye.id;
+
+
+--
+-- Name: weekend_day; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE weekend_day (
+    day_of_week character varying(255) NOT NULL,
+    weekend_definition_id bigint NOT NULL
+);
+
+
+ALTER TABLE weekend_day OWNER TO staffservice;
+
+--
+-- Name: weekend_definition; Type: TABLE; Schema: public; Owner: staffservice
+--
+
+CREATE TABLE weekend_definition (
+    id bigint NOT NULL,
+    description character varying(255)
+);
+
+
+ALTER TABLE weekend_definition OWNER TO staffservice;
+
+--
+-- Name: weekend_definition_id_seq; Type: SEQUENCE; Schema: public; Owner: staffservice
+--
+
+CREATE SEQUENCE weekend_definition_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE weekend_definition_id_seq OWNER TO staffservice;
+
+--
+-- Name: weekend_definition_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: staffservice
+--
+
+ALTER SEQUENCE weekend_definition_id_seq OWNED BY weekend_definition.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY contract ALTER COLUMN id SET DEFAULT nextval('contract_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY contract_line ALTER COLUMN id SET DEFAULT nextval('contract_line_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee ALTER COLUMN id SET DEFAULT nextval('employee_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_absent_reason ALTER COLUMN id SET DEFAULT nextval('employee_absent_reason_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_day_off_request ALTER COLUMN id SET DEFAULT nextval('employee_day_off_request_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_day_on_request ALTER COLUMN id SET DEFAULT nextval('employee_day_on_request_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_leave_absence ALTER COLUMN id SET DEFAULT nextval('employee_leave_absence_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_shift_off_request ALTER COLUMN id SET DEFAULT nextval('employee_shift_off_request_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_shift_on_request ALTER COLUMN id SET DEFAULT nextval('employee_shift_on_request_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employees ALTER COLUMN id SET DEFAULT nextval('employees_id_seq'::regclass);
+
+
+--
+-- Name: event_id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_persistent_audit_event ALTER COLUMN event_id SET DEFAULT nextval('jhi_persistent_audit_event_event_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_user ALTER COLUMN id SET DEFAULT nextval('jhi_user_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY pattern ALTER COLUMN id SET DEFAULT nextval('pattern_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY pattern_contract_line ALTER COLUMN id SET DEFAULT nextval('pattern_contract_line_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift ALTER COLUMN id SET DEFAULT nextval('shift_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_assignment ALTER COLUMN id SET DEFAULT nextval('shift_assignment_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_date ALTER COLUMN id SET DEFAULT nextval('shift_date_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_type ALTER COLUMN id SET DEFAULT nextval('shift_type_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY skill ALTER COLUMN id SET DEFAULT nextval('skill_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY skill_proficiency ALTER COLUMN id SET DEFAULT nextval('skill_proficiency_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY staff_roster_parametrization ALTER COLUMN id SET DEFAULT nextval('staff_roster_parametrization_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY task ALTER COLUMN id SET DEFAULT nextval('task_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY task_skill_requirement ALTER COLUMN id SET DEFAULT nextval('task_skill_requirement_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY task_tpye ALTER COLUMN id SET DEFAULT nextval('task_tpye_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY weekend_definition ALTER COLUMN id SET DEFAULT nextval('weekend_definition_id_seq'::regclass);
+
+
+--
+-- Data for Name: contract; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY contract (id, code, description, weekend_definition_id) FROM stdin;
+1017	uni	uniform	1016
+\.
+
+
+--
+-- Name: contract_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('contract_id_seq', 1, false);
+
+
+--
+-- Data for Name: contract_line; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY contract_line (id, contract_line_type, enabled, weight, minimum_enabled, minimum_value, minimum_weight, maximum_enabled, maximum_value, maximum_weight, boolean_or_minmax, contract_id) FROM stdin;
+1045	SINGLE_ASSIGNMENT_PER_DAY	t	1	\N	\N	\N	\N	\N	\N	B	1017
+1046	TOTAL_ASSIGNMENTS	\N	\N	t	3	1	t	5	1	M	1017
+1047	CONSECUTIVE_WORKING_DAYS	\N	\N	t	2	1	t	3	1	M	1017
+1048	CONSECUTIVE_FREE_DAYS	\N	\N	t	1	1	t	2	1	M	1017
+1049	CONSECUTIVE_WORKING_WEEKENDS	\N	\N	t	0	0	t	0	0	M	1017
+1050	TOTAL_WORKING_WEEKENDS_IN_FOUR_WEEKS	\N	\N	f	1	1	t	0	0	M	1017
+1051	COMPLETE_WEEKENDS	t	1	\N	\N	\N	\N	\N	\N	B	1017
+1052	IDENTICAL_SHIFT_TYPES_DURING_WEEKEND	t	1	\N	\N	\N	\N	\N	\N	B	1017
+1053	NO_NIGHT_SHIFT_BEFORE_FREE_WEEKEND	t	0	\N	\N	\N	\N	\N	\N	B	1017
+1054	ALTERNATIVE_SKILL_CATEGORY	f	0	\N	\N	\N	\N	\N	\N	B	1017
+\.
+
+
+--
+-- Name: contract_line_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('contract_line_id_seq', 1, false);
+
+
+--
+-- Data for Name: databasechangelog; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY databasechangelog (id, author, filename, dateexecuted, orderexecuted, exectype, md5sum, description, comments, tag, liquibase, contexts, labels) FROM stdin;
+00000000000000	jhipster	classpath:config/liquibase/changelog/00000000000000_initial_schema.xml	2016-09-02 19:15:41.125048	1	EXECUTED	7:eda8cd7fd15284e6128be97bd8edea82	createSequence		\N	3.4.2	\N	\N
+00000000000001	jhipster	classpath:config/liquibase/changelog/00000000000000_initial_schema.xml	2016-09-02 19:15:43.226168	2	EXECUTED	7:f98d94e7ee8094ce36ac73c2eb80493c	createTable, createIndex (x2), createTable (x2), addPrimaryKey, createTable, addForeignKeyConstraint (x3), loadData, dropDefaultValue, loadData (x2), createTable (x2), addPrimaryKey, createIndex (x2), addForeignKeyConstraint		\N	3.4.2	\N	\N
+20160422164634-1	jhipster	classpath:config/liquibase/changelog/20160422164634_added_entity_ShiftDate.xml	2016-09-02 19:15:43.325174	3	EXECUTED	7:d3ea8c36a8d9de83878148fdc8ed6774	createTable		\N	3.4.2	\N	\N
+20160422164636-1	jhipster	classpath:config/liquibase/changelog/20160422164636_added_entity_ShiftType.xml	2016-09-02 19:15:43.748198	4	EXECUTED	7:64f36935d92a3e9b0c29ef37a7046fac	createTable		\N	3.4.2	\N	\N
+20160422164639-1	jhipster	classpath:config/liquibase/changelog/20160422164639_added_entity_Skill.xml	2016-09-02 19:15:44.166222	5	EXECUTED	7:928d7ebfb90970057cf7513c516b7eb2	createTable		\N	3.4.2	\N	\N
+20160422164642-1	jhipster	classpath:config/liquibase/changelog/20160422164642_added_entity_Pattern.xml	2016-09-02 19:15:44.546244	6	EXECUTED	7:14d7b3afb79068f15d08c8bb42aad11c	createTable		\N	3.4.2	\N	\N
+20160422164644-1	jhipster	classpath:config/liquibase/changelog/20160422164644_added_entity_WeekendDefinition.xml	2016-09-02 19:15:44.638249	7	EXECUTED	7:b8f3e3f354a4727649b305390468f48c	createTable		\N	3.4.2	\N	\N
+20160422164645-1	jhipster	classpath:config/liquibase/changelog/20160422164645_added_entity_WeekendDay.xml	2016-09-02 19:15:44.715253	8	EXECUTED	7:950bad5da8e915712802f18217952901	createTable		\N	3.4.2	\N	\N
+20160422164645-2	jhipster	classpath:config/liquibase/changelog/20160422164645_added_entity_WeekendDay.xml	2016-09-02 19:15:44.770256	9	EXECUTED	7:4d029604d011a2c0e7771ecf9ced2ec9	addPrimaryKey		\N	3.4.2	\N	\N
+20160422164626-1	jhipster	classpath:config/liquibase/changelog/20160422164626_added_entity_StaffRosterParametrization.xml	2016-09-02 19:15:44.898264	10	EXECUTED	7:c5c9b3561fa007013d0b8e07d7dafcf9	createTable		\N	3.4.2	\N	\N
+20160422164633-1	jhipster	classpath:config/liquibase/changelog/20160422164633_added_entity_Shift.xml	2016-09-02 19:15:45.037272	11	EXECUTED	7:4accf211bcf2a1d084705d6b78eb8ddd	createTable		\N	3.4.2	\N	\N
+20160422164640-1	jhipster	classpath:config/liquibase/changelog/20160422164640_added_entity_Contract.xml	2016-09-02 19:15:45.222282	12	EXECUTED	7:c8a7848f52826cb65035b2c01fa5b400	createTable		\N	3.4.2	\N	\N
+20160422164643-1	jhipster	classpath:config/liquibase/changelog/20160422164643_added_entity_PatternContractLine.xml	2016-09-02 19:15:46.130334	13	EXECUTED	7:0df81bec1802f35b5dca14d15f6ca22f	createTable		\N	3.4.2	\N	\N
+20160422164627-1	jhipster	classpath:config/liquibase/changelog/20160422164627_added_entity_Employee.xml	2016-09-02 19:15:46.908379	14	EXECUTED	7:1d44faba78c1821c8088cca805e69339	createTable		\N	3.4.2	\N	\N
+20160422164628-1	jhipster	classpath:config/liquibase/changelog/20160422164628_added_entity_SkillProficiency.xml	2016-09-02 19:15:47.197395	15	EXECUTED	7:a5deeca7ca10e3b5d3bb7676c85508a5	createTable (x2), addPrimaryKey		\N	3.4.2	\N	\N
+20160422164629-1	jhipster	classpath:config/liquibase/changelog/20160422164629_added_entity_EmployeeDayOffRequest.xml	2016-09-02 19:15:47.299401	16	EXECUTED	7:d1326672abdaa6416c1b1d77b47ede80	createTable		\N	3.4.2	\N	\N
+20160422164630-1	jhipster	classpath:config/liquibase/changelog/20160422164630_added_entity_EmployeeDayOnRequest.xml	2016-09-02 19:15:47.422408	17	EXECUTED	7:03c85f9c03ebb2867c8adf11fb295d06	createTable		\N	3.4.2	\N	\N
+20160422164631-1	jhipster	classpath:config/liquibase/changelog/20160422164631_added_entity_EmployeeShiftOnRequest.xml	2016-09-02 19:15:47.498412	18	EXECUTED	7:75aea10b9f809a3f02ffea1b88fa8b03	createTable		\N	3.4.2	\N	\N
+20160422164632-1	jhipster	classpath:config/liquibase/changelog/20160422164632_added_entity_EmployeeShiftOffRequest.xml	2016-09-02 19:15:47.707424	19	EXECUTED	7:58967fbd7374e6daacac7c520841ff84	createTable		\N	3.4.2	\N	\N
+20160422164635-1	jhipster	classpath:config/liquibase/changelog/20160422164635_added_entity_ShiftAssignment.xml	2016-09-02 19:15:48.030443	20	EXECUTED	7:b18b6a81c1634d8fd1cd476a32af3637	createTable		\N	3.4.2	\N	\N
+20160422164637-1	jhipster	classpath:config/liquibase/changelog/20160422164637_added_entity_ShiftTypeTask.xml	2016-09-02 19:15:48.124448	21	EXECUTED	7:15249a157d83471092e8b842d83f5371	createTable		\N	3.4.2	\N	\N
+20160422164638-1	jhipster	classpath:config/liquibase/changelog/20160422164638_added_entity_Task.xml	2016-09-02 19:15:48.206453	22	EXECUTED	7:91cdc108d13518b0fa3a81f204ef6a0b	createTable		\N	3.4.2	\N	\N
+20160422170652-1	jhipster	classpath:config/liquibase/changelog/20160422170652_added_entity_TaskTpye.xml	2016-09-02 19:15:48.240455	23	EXECUTED	7:a622c1340d5c5ac57ff7f78b071c41fc	createTable		\N	3.4.2	\N	\N
+20160422164641-1	jhipster	classpath:config/liquibase/changelog/20160422164641_added_entity_ContractLine.xml	2016-09-02 19:15:48.296458	24	EXECUTED	7:fa08f6103a7bba85baa43005cca0ad5c	createTable		\N	3.4.2	\N	\N
+20160423132927-1	jhipster	classpath:config/liquibase/changelog/20160423132927_added_entity_Employees.xml	2016-09-02 19:15:48.355461	25	EXECUTED	7:75a049c6fad14cf48f5f065397d8763f	createTable		\N	3.4.2	\N	\N
+20160611023039-1	jhipster	classpath:config/liquibase/changelog/20160611023039_added_entity_TaskSkillRequirement.xml	2016-09-02 19:15:48.444466	26	EXECUTED	7:c5167d1b8d854ea63d15813137db6bcd	createTable		\N	3.4.2	\N	\N
+20160704161513-1	jhipster	classpath:config/liquibase/changelog/20160704161513_added_entity_EmployeeAbsentReason.xml	2016-09-02 19:15:48.515471	27	EXECUTED	7:ccbb1ea79e286dea29a670958a288bd5	createTable		\N	3.4.2	\N	\N
+20160704162605-1	jhipster	classpath:config/liquibase/changelog/20160704162605_added_entity_EmployeeLeaveAbsence.xml	2016-09-02 19:15:48.567474	28	EXECUTED	7:6222171616bcf45a35a753b3978fdb63	createTable, dropDefaultValue (x2)		\N	3.4.2	\N	\N
+20160422164645-2	jhipster	classpath:config/liquibase/changelog/20160422164645_added_entity_constraints_WeekendDay.xml	2016-09-02 19:15:48.573474	29	EXECUTED	7:ae73adaa0d55fc197e4ed15e960cdf7f	addForeignKeyConstraint		\N	3.4.2	\N	\N
+20160422164626-2	jhipster	classpath:config/liquibase/changelog/20160422164626_added_entity_constraints_StaffRosterParametrization.xml	2016-09-02 19:15:48.598475	30	EXECUTED	7:0509dcd24321406cdcc4d95ef4796eae	addForeignKeyConstraint (x3)		\N	3.4.2	\N	\N
+20160422164633-2	jhipster	classpath:config/liquibase/changelog/20160422164633_added_entity_constraints_Shift.xml	2016-09-02 19:15:48.609476	31	EXECUTED	7:4e5fd5be41b3af4e09fe99bc689f9f05	addForeignKeyConstraint (x2)		\N	3.4.2	\N	\N
+20160422164640-2	jhipster	classpath:config/liquibase/changelog/20160422164640_added_entity_constraints_Contract.xml	2016-09-02 19:15:48.614476	32	EXECUTED	7:040159d7bebf205b5408a947df90f994	addForeignKeyConstraint		\N	3.4.2	\N	\N
+20160422164641-2	jhipster	classpath:config/liquibase/changelog/20160422164641_added_entity_constraints_ContractLine.xml	2016-09-02 19:15:48.618476	33	EXECUTED	7:bcf774db3b5eb45f0b3fadde2ad162f6	addForeignKeyConstraint		\N	3.4.2	\N	\N
+20160422164643-2	jhipster	classpath:config/liquibase/changelog/20160422164643_added_entity_constraints_PatternContractLine.xml	2016-09-02 19:15:48.624477	34	EXECUTED	7:b61d0009c3ceb0854852101481cf8858	addForeignKeyConstraint (x2)		\N	3.4.2	\N	\N
+20160422164627-2	jhipster	classpath:config/liquibase/changelog/20160422164627_added_entity_constraints_Employee.xml	2016-09-02 19:15:48.652478	35	EXECUTED	7:304f458a46b4b628ce78ac2414681ef6	addForeignKeyConstraint (x3)		\N	3.4.2	\N	\N
+20160422164628-2	jhipster	classpath:config/liquibase/changelog/20160422164628_added_entity_constraints_SkillProficiency.xml	2016-09-02 19:15:48.67548	36	EXECUTED	7:dd8f22c8a1abd253d01d7a10fb88cf4d	addForeignKeyConstraint (x3)		\N	3.4.2	\N	\N
+20160422164629-2	jhipster	classpath:config/liquibase/changelog/20160422164629_added_entity_constraints_EmployeeDayOffRequest.xml	2016-09-02 19:15:48.68448	37	EXECUTED	7:776ba98db0951cf46bfab46b2b9d2a7f	addForeignKeyConstraint (x2)		\N	3.4.2	\N	\N
+20160422164630-2	jhipster	classpath:config/liquibase/changelog/20160422164630_added_entity_constraints_EmployeeDayOnRequest.xml	2016-09-02 19:15:48.692481	38	EXECUTED	7:b1d5a614f955699746b21bc8ca362556	addForeignKeyConstraint (x2)		\N	3.4.2	\N	\N
+20160422164631-2	jhipster	classpath:config/liquibase/changelog/20160422164631_added_entity_constraints_EmployeeShiftOnRequest.xml	2016-09-02 19:15:48.699481	39	EXECUTED	7:b03011a2448c4e3d31dfcdbf6d4d61b0	addForeignKeyConstraint (x2)		\N	3.4.2	\N	\N
+20160422164632-2	jhipster	classpath:config/liquibase/changelog/20160422164632_added_entity_constraints_EmployeeShiftOffRequest.xml	2016-09-02 19:15:48.709482	40	EXECUTED	7:58b4203164db43fe9ae5d5f5c34d46a9	addForeignKeyConstraint (x2)		\N	3.4.2	\N	\N
+20160422164635-2	jhipster	classpath:config/liquibase/changelog/20160422164635_added_entity_constraints_ShiftAssignment.xml	2016-09-02 19:15:48.717482	41	EXECUTED	7:dfcfd502a23d4d9142ad03fa35d66277	addForeignKeyConstraint (x2)		\N	3.4.2	\N	\N
+20160422164637-2	jhipster	classpath:config/liquibase/changelog/20160422164637_added_entity_constraints_ShiftTypeTask.xml	2016-09-02 19:15:48.754484	42	EXECUTED	7:d14112e987bc31a042bbc30469c323e0	addForeignKeyConstraint (x2)		\N	3.4.2	\N	\N
+20160422164638-2	jhipster	classpath:config/liquibase/changelog/20160422164638_added_entity_constraints_Task.xml	2016-09-02 19:15:48.757484	43	EXECUTED	7:d41d8cd98f00b204e9800998ecf8427e	Empty		\N	3.4.2	\N	\N
+20160423132927-2	jhipster	classpath:config/liquibase/changelog/20160423132927_added_entity_constraints_Employees.xml	2016-09-02 19:15:48.761485	44	EXECUTED	7:598559f9125cd8fe9845021aa3e2d454	addForeignKeyConstraint		\N	3.4.2	\N	\N
+20160611023039-2	jhipster	classpath:config/liquibase/changelog/20160611023039_added_entity_constraints_TaskSkillRequirement.xml	2016-09-02 19:15:48.768485	45	EXECUTED	7:889bc55dfe220f4b2925322397c18df3	addForeignKeyConstraint (x2)		\N	3.4.2	\N	\N
+20160704162605-2	jhipster	classpath:config/liquibase/changelog/20160704162605_added_entity_constraints_EmployeeLeaveAbsence.xml	2016-09-02 19:15:48.781486	46	EXECUTED	7:8a64be05d6d924dbe11d01706e89a7f2	addForeignKeyConstraint (x2)		\N	3.4.2	\N	\N
+1468256837442-1	LD (generated)	classpath:config/liquibase/changelog/20160711170704_changelog.xml	2016-09-02 19:15:48.788486	47	EXECUTED	7:6b023db8c25532848edf75fad32623f7	dropUniqueConstraint		\N	3.4.2	\N	\N
+1468256837442-2	LD (generated)	classpath:config/liquibase/changelog/20160711170704_changelog.xml	2016-09-02 19:15:48.792486	48	EXECUTED	7:aed90da8f52e44d96ba510a94b43afea	dropUniqueConstraint		\N	3.4.2	\N	\N
+1468256837442-3	LD (generated)	classpath:config/liquibase/changelog/20160711170704_changelog.xml	2016-09-02 19:15:48.797487	49	EXECUTED	7:aa429286629864b46e212080bf6a1d77	dropUniqueConstraint		\N	3.4.2	\N	\N
+1468256837442-4	LD (generated)	classpath:config/liquibase/changelog/20160711170704_changelog.xml	2016-09-02 19:15:48.801487	50	EXECUTED	7:81a3b250dfdb3fba3a64873b8c05abf1	dropUniqueConstraint		\N	3.4.2	\N	\N
+1468436112501-1	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:48.808487	51	EXECUTED	7:f511ea34d8514e0d0d193a5d5df18bec	createTable		\N	3.4.2	\N	\N
+1468436112501-2	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:48.85349	52	EXECUTED	7:632048b7c8b69bd9709888fa518f4da5	addPrimaryKey		\N	3.4.2	\N	\N
+1468436112501-3	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:48.85749	53	EXECUTED	7:023de505deebfa0c589b44fcd0eff06c	addForeignKeyConstraint		\N	3.4.2	\N	\N
+1468436112501-4	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:48.86249	54	EXECUTED	7:5a8fe53bae6a105cbf923d820270de46	addForeignKeyConstraint		\N	3.4.2	\N	\N
+1468436112501-5	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:48.872491	55	EXECUTED	7:ff3f82e0c1de3d7a43d0639600252321	dropForeignKeyConstraint, dropUniqueConstraint, addForeignKeyConstraint		\N	3.4.2	\N	\N
+1468436112501-6	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:48.888492	56	EXECUTED	7:18149fdff61696523d4fd6eb873846c2	dropForeignKeyConstraint, dropUniqueConstraint, addForeignKeyConstraint		\N	3.4.2	\N	\N
+1468436112501-7	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:48.893492	57	EXECUTED	7:54b80b74952811a94b73c67ac5f377d9	dropUniqueConstraint		\N	3.4.2	\N	\N
+1468436112501-8	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:48.896492	58	EXECUTED	7:033b2dde5ea2939267db3457f174a0bf	addNotNullConstraint		\N	3.4.2	\N	\N
+1468436112501-9	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:48.900493	59	EXECUTED	7:358e642b7bcd70de62a2e24bc536f360	addNotNullConstraint		\N	3.4.2	\N	\N
+1468436112501-10	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:49.0325	60	EXECUTED	7:d9c54f07e32e01730125a64f67376b12	dropPrimaryKey, addPrimaryKey		\N	3.4.2	\N	\N
+1468436112501-11	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:49.0385	61	EXECUTED	7:9ba3bc749a68045d263b84ab17ce56db	dropColumn		\N	3.4.2	\N	\N
+1468436112501-12	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:49.051501	62	MARK_RAN	7:2b141be8d03863637bd3cfc4105361c9	dropSequence		\N	3.4.2	\N	\N
+1468436112501-13	LD (generated)	classpath:config/liquibase/changelog/20160713185503_changelog.xml	2016-09-02 19:15:49.065502	63	EXECUTED	7:49c45f4468ab6ff23a24dbdb6fe4ffd0	dropColumn		\N	3.4.2	\N	\N
+1469268804695-1	LD (generated)	classpath:config/liquibase/changelog/20160723101306_changelog.xml	2016-09-02 19:15:49.068502	64	EXECUTED	7:7a4b92fa3063d03a3ba448ed6b24ee2c	addColumn		\N	3.4.2	\N	\N
+1469268804695-2	LD (generated)	classpath:config/liquibase/changelog/20160723101306_changelog.xml	2016-09-02 19:15:49.107504	65	EXECUTED	7:878096b9c510a8a29143a38f4c9b9928	addColumn		\N	3.4.2	\N	\N
+1469268804695-3	LD (generated)	classpath:config/liquibase/changelog/20160723101306_changelog.xml	2016-09-02 19:15:49.109505	66	EXECUTED	7:4847c03026ee613d609f862b5d04c8f4	addColumn		\N	3.4.2	\N	\N
+1469268804695-4	LD (generated)	classpath:config/liquibase/changelog/20160723101306_changelog.xml	2016-09-02 19:15:49.113505	67	EXECUTED	7:0e6bd34ff3c37d7fab163a00a2a27335	addColumn		\N	3.4.2	\N	\N
+1469268804695-5	LD (generated)	classpath:config/liquibase/changelog/20160723101306_changelog.xml	2016-09-02 19:15:49.117505	68	EXECUTED	7:1f9c8b9fc4e95fa745f54234034c4c74	addColumn		\N	3.4.2	\N	\N
+1469268804695-6	LD (generated)	classpath:config/liquibase/changelog/20160723101306_changelog.xml	2016-09-02 19:15:49.121505	69	EXECUTED	7:d3d356a3cb0be61043a7f8cc0d095709	addColumn		\N	3.4.2	\N	\N
+1469268804695-7	LD (generated)	classpath:config/liquibase/changelog/20160723101306_changelog.xml	2016-09-02 19:15:49.125505	70	EXECUTED	7:1e53d82dd53b652e91ac11c3e9a71de1	addForeignKeyConstraint		\N	3.4.2	\N	\N
+1469268804695-8	LD (generated)	classpath:config/liquibase/changelog/20160723101306_changelog.xml	2016-09-02 19:15:49.131506	71	EXECUTED	7:2691fc94f064ea65ddb79b907cfb77cb	dropUniqueConstraint		\N	3.4.2	\N	\N
+1469268804695-9	LD (generated)	classpath:config/liquibase/changelog/20160723101306_changelog.xml	2016-09-02 19:15:49.135506	72	EXECUTED	7:31d81b794e5d79559004e3735577afd1	dropUniqueConstraint		\N	3.4.2	\N	\N
+1469268804695-10	LD (generated)	classpath:config/liquibase/changelog/20160723101306_changelog.xml	2016-09-02 19:15:49.139506	73	EXECUTED	7:fef29fe27a03c89aab19d3903f80b539	dropUniqueConstraint		\N	3.4.2	\N	\N
+1471284027788-1	LD (generated)	classpath:config/liquibase/changelog/20160815180017_changelog.xml	2016-09-02 19:15:49.141506	74	EXECUTED	7:c75aba5cb035caf89b70b33059204a09	dropForeignKeyConstraint		\N	3.4.2	\N	\N
+1471284027788-2	LD (generated)	classpath:config/liquibase/changelog/20160815180017_changelog.xml	2016-09-02 19:15:49.143506	75	EXECUTED	7:1baa9a8b18e876f103c1f4a56638227f	dropForeignKeyConstraint		\N	3.4.2	\N	\N
+1471284027788-3	LD (generated)	classpath:config/liquibase/changelog/20160815180017_changelog.xml	2016-09-02 19:15:49.146507	76	EXECUTED	7:af60d29b88e15ea3b86741cbecd17c8b	dropUniqueConstraint		\N	3.4.2	\N	\N
+1471284027788-4	LD (generated)	classpath:config/liquibase/changelog/20160815180017_changelog.xml	2016-09-02 19:15:49.149507	77	EXECUTED	7:ff5c895636f25af4be00d1de6a590975	dropUniqueConstraint		\N	3.4.2	\N	\N
+1471284027788-5	LD (generated)	classpath:config/liquibase/changelog/20160815180017_changelog.xml	2016-09-02 19:15:49.151507	78	EXECUTED	7:7d7f04ea3d560f8c8389554e2e6fe607	dropColumn		\N	3.4.2	\N	\N
+1471284027788-6	LD (generated)	classpath:config/liquibase/changelog/20160815180017_changelog.xml	2016-09-02 19:15:49.152507	79	EXECUTED	7:ac7ae78e7b369dc34e0c4280c9a248da	dropColumn		\N	3.4.2	\N	\N
+1471284027788-7	LD (generated)	classpath:config/liquibase/changelog/20160815180017_changelog.xml	2016-09-02 19:15:49.154507	80	EXECUTED	7:bf6b44e9942e97ca77f610368e8839e4	dropColumn		\N	3.4.2	\N	\N
+1471284027788-8	LD (generated)	classpath:config/liquibase/changelog/20160815180017_changelog.xml	2016-09-02 19:15:49.217511	81	EXECUTED	7:8ea647c1b85f741c4320d2b3380bd799	addColumn		\N	3.4.2	\N	\N
+\.
+
+
+--
+-- Data for Name: databasechangeloglock; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY databasechangeloglock (id, locked, lockgranted, lockedby) FROM stdin;
+1	f	\N	\N
+\.
+
+
+--
+-- Data for Name: employee; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY employee (id, code, name, contract_id, active) FROM stdin;
+1019	001	Employee 001	1017	t
+1020	002	Employee 002	1017	t
+1021	003	Employee 003	1017	t
+1022	004	Employee 004	1017	t
+1023	005	Employee 005	1017	t
+1024	0006	Employee 006	1017	t
+\.
+
+
+--
+-- Data for Name: employee_absent_reason; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY employee_absent_reason (id, code, name, description, default_duration, default_duration_unit) FROM stdin;
+1018	maternity leave	Maternity Leave	Maternity Leave	6	MONTHS
+\.
+
+
+--
+-- Name: employee_absent_reason_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('employee_absent_reason_id_seq', 1, false);
+
+
+--
+-- Data for Name: employee_day_off_request; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY employee_day_off_request (id, weight, shift_date_id, employee_id) FROM stdin;
+\.
+
+
+--
+-- Name: employee_day_off_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('employee_day_off_request_id_seq', 1, false);
+
+
+--
+-- Data for Name: employee_day_on_request; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY employee_day_on_request (id, weight, shift_date_id, employee_id) FROM stdin;
+\.
+
+
+--
+-- Name: employee_day_on_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('employee_day_on_request_id_seq', 1, false);
+
+
+--
+-- Name: employee_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('employee_id_seq', 1, false);
+
+
+--
+-- Data for Name: employee_leave_absence; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY employee_leave_absence (id, absent_from, absent_to, reason_id, employee_id) FROM stdin;
+1025	2016-08-29 00:00:00	2017-02-01 00:00:00	1018	1024
+\.
+
+
+--
+-- Name: employee_leave_absence_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('employee_leave_absence_id_seq', 1, false);
+
+
+--
+-- Data for Name: employee_shift_off_request; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY employee_shift_off_request (id, weight, shift_id, employee_id) FROM stdin;
+\.
+
+
+--
+-- Name: employee_shift_off_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('employee_shift_off_request_id_seq', 1, false);
+
+
+--
+-- Data for Name: employee_shift_on_request; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY employee_shift_on_request (id, weight, shift_id, employee_id) FROM stdin;
+\.
+
+
+--
+-- Name: employee_shift_on_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('employee_shift_on_request_id_seq', 1, false);
+
+
+--
+-- Data for Name: employees; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY employees (id, employee_id) FROM stdin;
+\.
+
+
+--
+-- Name: employees_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('employees_id_seq', 1, false);
+
+
+--
+-- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('hibernate_sequence', 1078, true);
+
+
+--
+-- Data for Name: jhi_authority; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY jhi_authority (name) FROM stdin;
+ROLE_ADMIN
+ROLE_USER
+\.
+
+
+--
+-- Data for Name: jhi_persistent_audit_event; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY jhi_persistent_audit_event (event_id, principal, event_date, event_type) FROM stdin;
+1000	admin	2016-09-02 19:18:50.216	AUTHENTICATION_FAILURE
+1002	admin	2016-09-02 19:18:51.466	AUTHENTICATION_FAILURE
+1003	admin	2016-09-02 19:18:58.779	AUTHENTICATION_FAILURE
+1004	admin	2016-09-02 19:19:03.177	AUTHENTICATION_SUCCESS
+1061	admin	2016-09-02 19:37:28.937	AUTHENTICATION_SUCCESS
+1065	admin	2016-09-02 19:37:29.33	AUTHENTICATION_SUCCESS
+1071	admin	2016-09-02 19:37:29.922	AUTHENTICATION_SUCCESS
+1075	admin	2016-09-02 19:37:30.315	AUTHENTICATION_SUCCESS
+1001	admin	2016-09-02 19:18:50.244	AUTHENTICATION_FAILURE
+1057	admin	2016-09-02 19:37:24.919	AUTHENTICATION_SUCCESS
+1058	admin	2016-09-02 19:37:28.6	AUTHENTICATION_SUCCESS
+1059	admin	2016-09-02 19:37:28.72	AUTHENTICATION_SUCCESS
+1060	admin	2016-09-02 19:37:28.842	AUTHENTICATION_SUCCESS
+1062	admin	2016-09-02 19:37:29.035	AUTHENTICATION_SUCCESS
+1063	admin	2016-09-02 19:37:29.135	AUTHENTICATION_SUCCESS
+1064	admin	2016-09-02 19:37:29.233	AUTHENTICATION_SUCCESS
+1066	admin	2016-09-02 19:37:29.436	AUTHENTICATION_SUCCESS
+1067	admin	2016-09-02 19:37:29.534	AUTHENTICATION_SUCCESS
+1068	admin	2016-09-02 19:37:29.635	AUTHENTICATION_SUCCESS
+1069	admin	2016-09-02 19:37:29.731	AUTHENTICATION_SUCCESS
+1070	admin	2016-09-02 19:37:29.827	AUTHENTICATION_SUCCESS
+1072	admin	2016-09-02 19:37:30.017	AUTHENTICATION_SUCCESS
+1073	admin	2016-09-02 19:37:30.113	AUTHENTICATION_SUCCESS
+1074	admin	2016-09-02 19:37:30.22	AUTHENTICATION_SUCCESS
+1076	admin	2016-09-02 19:37:30.422	AUTHENTICATION_SUCCESS
+1077	admin	2016-09-02 19:37:41.143	AUTHENTICATION_SUCCESS
+1078	admin	2016-09-02 19:37:42.957	AUTHENTICATION_SUCCESS
+\.
+
+
+--
+-- Name: jhi_persistent_audit_event_event_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('jhi_persistent_audit_event_event_id_seq', 1, false);
+
+
+--
+-- Data for Name: jhi_persistent_audit_evt_data; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY jhi_persistent_audit_evt_data (event_id, name, value) FROM stdin;
+1001	sessionId	D9C5F024E9C26FB8896968EAF1509FD8
+1001	type	org.springframework.security.authentication.BadCredentialsException
+1001	message	Bad credentials
+1001	remoteAddress	0:0:0:0:0:0:0:1
+1057	remoteAddress	127.0.0.1
+1060	remoteAddress	127.0.0.1
+1062	remoteAddress	127.0.0.1
+1067	remoteAddress	127.0.0.1
+1070	remoteAddress	127.0.0.1
+1072	remoteAddress	127.0.0.1
+1077	remoteAddress	127.0.0.1
+1000	sessionId	D9C5F024E9C26FB8896968EAF1509FD8
+1000	type	org.springframework.security.authentication.BadCredentialsException
+1000	message	Bad credentials
+1000	remoteAddress	0:0:0:0:0:0:0:1
+1002	sessionId	FC80B7EEC9F4BE70AA2F5C63465FA27D
+1002	type	org.springframework.security.authentication.BadCredentialsException
+1002	message	Bad credentials
+1002	remoteAddress	0:0:0:0:0:0:0:1
+1003	sessionId	FE650E9D7F3205BAEC35A395D751988C
+1003	type	org.springframework.security.authentication.BadCredentialsException
+1003	message	Bad credentials
+1003	remoteAddress	0:0:0:0:0:0:0:1
+1004	sessionId	E24346E3723F0C34F5FAB8F18969AE22
+1004	remoteAddress	0:0:0:0:0:0:0:1
+1058	remoteAddress	127.0.0.1
+1059	remoteAddress	127.0.0.1
+1061	remoteAddress	127.0.0.1
+1063	remoteAddress	127.0.0.1
+1064	remoteAddress	127.0.0.1
+1065	remoteAddress	127.0.0.1
+1066	remoteAddress	127.0.0.1
+1068	remoteAddress	127.0.0.1
+1069	remoteAddress	127.0.0.1
+1071	remoteAddress	127.0.0.1
+1073	remoteAddress	127.0.0.1
+1074	remoteAddress	127.0.0.1
+1075	remoteAddress	127.0.0.1
+1076	remoteAddress	127.0.0.1
+1078	remoteAddress	127.0.0.1
+\.
+
+
+--
+-- Data for Name: jhi_persistent_token; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY jhi_persistent_token (series, user_id, token_value, token_date, ip_address, user_agent) FROM stdin;
+H4ohFgJinGxj0zwVpfKvQg==	3	WoPEqBf7RRaiUXb75LkmbQ==	2016-09-02	0:0:0:0:0:0:0:1	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36
+\.
+
+
+--
+-- Data for Name: jhi_user; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY jhi_user (id, login, password_hash, first_name, last_name, email, activated, lang_key, activation_key, reset_key, created_by, created_date, reset_date, last_modified_by, last_modified_date) FROM stdin;
+1	system	$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG	System	System	system@localhost	t	en	\N	\N	system	2016-09-02 19:15:41.139049	\N	\N	\N
+2	anonymousUser	$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO	Anonymous	User	anonymous@localhost	t	en	\N	\N	system	2016-09-02 19:15:41.139049	\N	\N	\N
+3	admin	$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC	Administrator	Administrator	admin@localhost	t	en	\N	\N	system	2016-09-02 19:15:41.139049	\N	\N	\N
+4	user	$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K	User	User	user@localhost	t	en	\N	\N	system	2016-09-02 19:15:41.139049	\N	\N	\N
+\.
+
+
+--
+-- Data for Name: jhi_user_authority; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY jhi_user_authority (user_id, authority_name) FROM stdin;
+1	ROLE_ADMIN
+1	ROLE_USER
+3	ROLE_ADMIN
+3	ROLE_USER
+4	ROLE_USER
+\.
+
+
+--
+-- Name: jhi_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('jhi_user_id_seq', 1, false);
+
+
+--
+-- Data for Name: pattern; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY pattern (id, code, weight) FROM stdin;
+\.
+
+
+--
+-- Data for Name: pattern_contract_line; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY pattern_contract_line (id, contract_id, pattern_id) FROM stdin;
+\.
+
+
+--
+-- Name: pattern_contract_line_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('pattern_contract_line_id_seq', 1, false);
+
+
+--
+-- Name: pattern_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('pattern_id_seq', 1, false);
+
+
+--
+-- Data for Name: shift; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY shift (id, index, staff_required, shift_type_id, shift_date_id) FROM stdin;
+1032	1	2	1008	1005
+1035	2	2	1011	1005
+1038	3	1	1012	1005
+1040	4	2	1008	1006
+1043	5	2	1011	1006
+1046	6	1	1012	1006
+1048	7	2	1008	1007
+1051	8	2	1011	1007
+1054	9	1	1012	1007
+\.
+
+
+--
+-- Data for Name: shift_assignment; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY shift_assignment (id, index_in_shift, is_need_to_reassign, is_dropped, locked, shift_id, employee_id) FROM stdin;
+1033	1	f	f	f	1032	1019
+1034	2	f	f	f	1032	1020
+1036	1	f	f	f	1035	1021
+1037	2	f	f	f	1035	1022
+1039	1	f	f	f	1038	1023
+1041	1	f	f	f	1040	1019
+1042	2	f	f	f	1040	1020
+1044	1	f	f	f	1043	1021
+1045	2	f	f	f	1043	1022
+1047	1	f	f	f	1046	1023
+1049	1	f	f	f	1048	1019
+1050	2	f	f	f	1048	1020
+1052	1	f	f	f	1051	1021
+1053	2	f	f	f	1051	1022
+1055	1	f	f	f	1054	1023
+\.
+
+
+--
+-- Name: shift_assignment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('shift_assignment_id_seq', 1, false);
+
+
+--
+-- Data for Name: shift_assignment_task; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY shift_assignment_task (task_id, shift_assignment_id) FROM stdin;
+1010	1033
+1010	1034
+1009	1036
+1010	1036
+1009	1037
+1010	1037
+1009	1039
+1010	1041
+1010	1042
+1009	1044
+1010	1044
+1009	1045
+1010	1045
+1009	1047
+1010	1049
+1010	1050
+1009	1052
+1010	1052
+1009	1053
+1010	1053
+1009	1055
+\.
+
+
+--
+-- Data for Name: shift_date; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY shift_date (id, day_index, date, day_of_week) FROM stdin;
+1005	1	2016-08-29	MONDAY
+1006	2	2016-08-30	TUESDAY
+1007	3	2016-08-31	WEDNESDAY
+\.
+
+
+--
+-- Name: shift_date_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('shift_date_id_seq', 1, false);
+
+
+--
+-- Name: shift_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('shift_id_seq', 1, false);
+
+
+--
+-- Data for Name: shift_type; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY shift_type (id, code, index, description, night_shift, start_time, end_time) FROM stdin;
+1008	E	1	Early	f	06:30:00	14:30:00
+1011	L	2	Late	f	14:30:00	22:30:00
+1012	N	3	Night	t	22:30:00	06:30:00
+\.
+
+
+--
+-- Name: shift_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('shift_type_id_seq', 1, false);
+
+
+--
+-- Data for Name: shift_type_task; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY shift_type_task (task_id, shift_type_id) FROM stdin;
+1010	1008
+1009	1011
+1010	1011
+1009	1012
+\.
+
+
+--
+-- Data for Name: skill; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY skill (id, code) FROM stdin;
+1013	Nurse
+\.
+
+
+--
+-- Name: skill_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('skill_id_seq', 1, false);
+
+
+--
+-- Data for Name: skill_proficiency; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY skill_proficiency (id, employee_id) FROM stdin;
+1026	1019
+1027	1020
+1029	1021
+1028	1022
+1030	1023
+1031	1024
+\.
+
+
+--
+-- Name: skill_proficiency_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('skill_proficiency_id_seq', 1, false);
+
+
+--
+-- Data for Name: skill_proficiency_skill_list; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY skill_proficiency_skill_list (skill_lists_id, skill_proficiencies_id) FROM stdin;
+1013	1026
+1013	1027
+1013	1028
+1013	1029
+1013	1030
+1013	1031
+\.
+
+
+--
+-- Data for Name: staff_roster_parametrization; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY staff_roster_parametrization (id, first_shift_date_id, last_shift_date_id, planning_window_start_id, name, description, hard_constraint_matches, soft_constraint_matches, last_run_time, planning_window_end_id) FROM stdin;
+1056	1005	1007	1005	Plan	\N	0	-4	2016-09-02 19:37:42.974	1007
+\.
+
+
+--
+-- Name: staff_roster_parametrization_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('staff_roster_parametrization_id_seq', 1, false);
+
+
+--
+-- Data for Name: task; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY task (id, code, description, staff_needed, task_type, importance, urgency) FROM stdin;
+1009	analyze_blood	Analyze blood samples	1	FULL	IMPORTANT	NOT_URGENT
+1010	take_blood	Take blood samples	1	FULL	IMPORTANT	URGENT
+\.
+
+
+--
+-- Name: task_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('task_id_seq', 1, false);
+
+
+--
+-- Data for Name: task_skill_requirement; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY task_skill_requirement (id, task_id, skill_id) FROM stdin;
+1014	1009	1013
+1015	1010	1013
+\.
+
+
+--
+-- Name: task_skill_requirement_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('task_skill_requirement_id_seq', 1, false);
+
+
+--
+-- Data for Name: task_tpye; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY task_tpye (id) FROM stdin;
+\.
+
+
+--
+-- Name: task_tpye_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('task_tpye_id_seq', 1, false);
+
+
+--
+-- Data for Name: weekend_day; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY weekend_day (day_of_week, weekend_definition_id) FROM stdin;
+SUNDAY	1016
+SATURDAY	1016
+\.
+
+
+--
+-- Data for Name: weekend_definition; Type: TABLE DATA; Schema: public; Owner: staffservice
+--
+
+COPY weekend_definition (id, description) FROM stdin;
+1016	Saturday and Sunday
+\.
+
+
+--
+-- Name: weekend_definition_id_seq; Type: SEQUENCE SET; Schema: public; Owner: staffservice
+--
+
+SELECT pg_catalog.setval('weekend_definition_id_seq', 1, false);
+
+
+--
+-- Name: employees_employee_id_key; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT employees_employee_id_key UNIQUE (employee_id);
+
+
+--
+-- Name: jhi_persistent_audit_evt_data_pkey; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_persistent_audit_evt_data
+    ADD CONSTRAINT jhi_persistent_audit_evt_data_pkey PRIMARY KEY (event_id, name);
+
+
+--
+-- Name: jhi_user_authority_pkey; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_user_authority
+    ADD CONSTRAINT jhi_user_authority_pkey PRIMARY KEY (user_id, authority_name);
+
+
+--
+-- Name: jhi_user_email_key; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_user
+    ADD CONSTRAINT jhi_user_email_key UNIQUE (email);
+
+
+--
+-- Name: jhi_user_login_key; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_user
+    ADD CONSTRAINT jhi_user_login_key UNIQUE (login);
+
+
+--
+-- Name: pattern_contract_line_contract_id_key; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY pattern_contract_line
+    ADD CONSTRAINT pattern_contract_line_contract_id_key UNIQUE (contract_id);
+
+
+--
+-- Name: pattern_contract_line_pattern_id_key; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY pattern_contract_line
+    ADD CONSTRAINT pattern_contract_line_pattern_id_key UNIQUE (pattern_id);
+
+
+--
+-- Name: pk_contract; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY contract
+    ADD CONSTRAINT pk_contract PRIMARY KEY (id);
+
+
+--
+-- Name: pk_contract_line; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY contract_line
+    ADD CONSTRAINT pk_contract_line PRIMARY KEY (id);
+
+
+--
+-- Name: pk_databasechangeloglock; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY databasechangeloglock
+    ADD CONSTRAINT pk_databasechangeloglock PRIMARY KEY (id);
+
+
+--
+-- Name: pk_employee; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee
+    ADD CONSTRAINT pk_employee PRIMARY KEY (id);
+
+
+--
+-- Name: pk_employee_absent_reason; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_absent_reason
+    ADD CONSTRAINT pk_employee_absent_reason PRIMARY KEY (id);
+
+
+--
+-- Name: pk_employee_day_off_request; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_day_off_request
+    ADD CONSTRAINT pk_employee_day_off_request PRIMARY KEY (id);
+
+
+--
+-- Name: pk_employee_day_on_request; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_day_on_request
+    ADD CONSTRAINT pk_employee_day_on_request PRIMARY KEY (id);
+
+
+--
+-- Name: pk_employee_leave_absence; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_leave_absence
+    ADD CONSTRAINT pk_employee_leave_absence PRIMARY KEY (id);
+
+
+--
+-- Name: pk_employee_shift_off_request; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_shift_off_request
+    ADD CONSTRAINT pk_employee_shift_off_request PRIMARY KEY (id);
+
+
+--
+-- Name: pk_employee_shift_on_request; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_shift_on_request
+    ADD CONSTRAINT pk_employee_shift_on_request PRIMARY KEY (id);
+
+
+--
+-- Name: pk_employees; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT pk_employees PRIMARY KEY (id);
+
+
+--
+-- Name: pk_jhi_authority; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_authority
+    ADD CONSTRAINT pk_jhi_authority PRIMARY KEY (name);
+
+
+--
+-- Name: pk_jhi_persistent_audit_event; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_persistent_audit_event
+    ADD CONSTRAINT pk_jhi_persistent_audit_event PRIMARY KEY (event_id);
+
+
+--
+-- Name: pk_jhi_persistent_token; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_persistent_token
+    ADD CONSTRAINT pk_jhi_persistent_token PRIMARY KEY (series);
+
+
+--
+-- Name: pk_jhi_user; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_user
+    ADD CONSTRAINT pk_jhi_user PRIMARY KEY (id);
+
+
+--
+-- Name: pk_pattern; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY pattern
+    ADD CONSTRAINT pk_pattern PRIMARY KEY (id);
+
+
+--
+-- Name: pk_pattern_contract_line; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY pattern_contract_line
+    ADD CONSTRAINT pk_pattern_contract_line PRIMARY KEY (id);
+
+
+--
+-- Name: pk_shift; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift
+    ADD CONSTRAINT pk_shift PRIMARY KEY (id);
+
+
+--
+-- Name: pk_shift_assignment; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_assignment
+    ADD CONSTRAINT pk_shift_assignment PRIMARY KEY (id);
+
+
+--
+-- Name: pk_shift_date; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_date
+    ADD CONSTRAINT pk_shift_date PRIMARY KEY (id);
+
+
+--
+-- Name: pk_shift_type; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_type
+    ADD CONSTRAINT pk_shift_type PRIMARY KEY (id);
+
+
+--
+-- Name: pk_skill; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY skill
+    ADD CONSTRAINT pk_skill PRIMARY KEY (id);
+
+
+--
+-- Name: pk_skill_proficiency; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY skill_proficiency
+    ADD CONSTRAINT pk_skill_proficiency PRIMARY KEY (id);
+
+
+--
+-- Name: pk_staff_roster_parametrization; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY staff_roster_parametrization
+    ADD CONSTRAINT pk_staff_roster_parametrization PRIMARY KEY (id);
+
+
+--
+-- Name: pk_task; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY task
+    ADD CONSTRAINT pk_task PRIMARY KEY (id);
+
+
+--
+-- Name: pk_task_skill_requirement; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY task_skill_requirement
+    ADD CONSTRAINT pk_task_skill_requirement PRIMARY KEY (id);
+
+
+--
+-- Name: pk_task_tpye; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY task_tpye
+    ADD CONSTRAINT pk_task_tpye PRIMARY KEY (id);
+
+
+--
+-- Name: pk_weekend_day; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY weekend_day
+    ADD CONSTRAINT pk_weekend_day PRIMARY KEY (day_of_week, weekend_definition_id);
+
+
+--
+-- Name: pk_weekend_definition; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY weekend_definition
+    ADD CONSTRAINT pk_weekend_definition PRIMARY KEY (id);
+
+
+--
+-- Name: shift_assignment_task_pkey; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_assignment_task
+    ADD CONSTRAINT shift_assignment_task_pkey PRIMARY KEY (shift_assignment_id, task_id);
+
+
+--
+-- Name: shift_type_task_pkey; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_type_task
+    ADD CONSTRAINT shift_type_task_pkey PRIMARY KEY (shift_type_id, task_id);
+
+
+--
+-- Name: skill_proficiency_skill_list_pkey; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY skill_proficiency_skill_list
+    ADD CONSTRAINT skill_proficiency_skill_list_pkey PRIMARY KEY (skill_proficiencies_id, skill_lists_id);
+
+
+--
+-- Name: task_skill_requirement_task_id_key; Type: CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY task_skill_requirement
+    ADD CONSTRAINT task_skill_requirement_task_id_key UNIQUE (task_id);
+
+
+--
+-- Name: idx_persistent_audit_event; Type: INDEX; Schema: public; Owner: staffservice
+--
+
+CREATE INDEX idx_persistent_audit_event ON jhi_persistent_audit_event USING btree (principal, event_date);
+
+
+--
+-- Name: idx_persistent_audit_evt_data; Type: INDEX; Schema: public; Owner: staffservice
+--
+
+CREATE INDEX idx_persistent_audit_evt_data ON jhi_persistent_audit_evt_data USING btree (event_id);
+
+
+--
+-- Name: idx_user_email; Type: INDEX; Schema: public; Owner: staffservice
+--
+
+CREATE UNIQUE INDEX idx_user_email ON jhi_user USING btree (email);
+
+
+--
+-- Name: idx_user_login; Type: INDEX; Schema: public; Owner: staffservice
+--
+
+CREATE UNIQUE INDEX idx_user_login ON jhi_user USING btree (login);
+
+
+--
+-- Name: fk_authority_name; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_user_authority
+    ADD CONSTRAINT fk_authority_name FOREIGN KEY (authority_name) REFERENCES jhi_authority(name);
+
+
+--
+-- Name: fk_contract_weekenddefinition_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY contract
+    ADD CONSTRAINT fk_contract_weekenddefinition_id FOREIGN KEY (weekend_definition_id) REFERENCES weekend_definition(id);
+
+
+--
+-- Name: fk_contractline_contract_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY contract_line
+    ADD CONSTRAINT fk_contractline_contract_id FOREIGN KEY (contract_id) REFERENCES contract(id);
+
+
+--
+-- Name: fk_employee_contract_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee
+    ADD CONSTRAINT fk_employee_contract_id FOREIGN KEY (contract_id) REFERENCES contract(id);
+
+
+--
+-- Name: fk_employeedayoffrequest_employee_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_day_off_request
+    ADD CONSTRAINT fk_employeedayoffrequest_employee_id FOREIGN KEY (employee_id) REFERENCES employee(id);
+
+
+--
+-- Name: fk_employeedayoffrequest_shiftdate_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_day_off_request
+    ADD CONSTRAINT fk_employeedayoffrequest_shiftdate_id FOREIGN KEY (shift_date_id) REFERENCES shift_date(id);
+
+
+--
+-- Name: fk_employeedayonrequest_employee_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_day_on_request
+    ADD CONSTRAINT fk_employeedayonrequest_employee_id FOREIGN KEY (employee_id) REFERENCES employee(id);
+
+
+--
+-- Name: fk_employeedayonrequest_shiftdate_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_day_on_request
+    ADD CONSTRAINT fk_employeedayonrequest_shiftdate_id FOREIGN KEY (shift_date_id) REFERENCES shift_date(id);
+
+
+--
+-- Name: fk_employeeleaveabsence_employee_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_leave_absence
+    ADD CONSTRAINT fk_employeeleaveabsence_employee_id FOREIGN KEY (employee_id) REFERENCES employee(id);
+
+
+--
+-- Name: fk_employeeleaveabsence_reason_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_leave_absence
+    ADD CONSTRAINT fk_employeeleaveabsence_reason_id FOREIGN KEY (reason_id) REFERENCES employee_absent_reason(id);
+
+
+--
+-- Name: fk_employees_employee_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT fk_employees_employee_id FOREIGN KEY (employee_id) REFERENCES employee(id);
+
+
+--
+-- Name: fk_employeeshiftoffrequest_employee_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_shift_off_request
+    ADD CONSTRAINT fk_employeeshiftoffrequest_employee_id FOREIGN KEY (employee_id) REFERENCES employee(id);
+
+
+--
+-- Name: fk_employeeshiftoffrequest_shift_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_shift_off_request
+    ADD CONSTRAINT fk_employeeshiftoffrequest_shift_id FOREIGN KEY (shift_id) REFERENCES shift(id);
+
+
+--
+-- Name: fk_employeeshiftonrequest_employee_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_shift_on_request
+    ADD CONSTRAINT fk_employeeshiftonrequest_employee_id FOREIGN KEY (employee_id) REFERENCES employee(id);
+
+
+--
+-- Name: fk_employeeshiftonrequest_shift_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY employee_shift_on_request
+    ADD CONSTRAINT fk_employeeshiftonrequest_shift_id FOREIGN KEY (shift_id) REFERENCES shift(id);
+
+
+--
+-- Name: fk_evt_pers_audit_evt_data; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_persistent_audit_evt_data
+    ADD CONSTRAINT fk_evt_pers_audit_evt_data FOREIGN KEY (event_id) REFERENCES jhi_persistent_audit_event(event_id);
+
+
+--
+-- Name: fk_patterncontractline_contract_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY pattern_contract_line
+    ADD CONSTRAINT fk_patterncontractline_contract_id FOREIGN KEY (contract_id) REFERENCES contract(id);
+
+
+--
+-- Name: fk_patterncontractline_pattern_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY pattern_contract_line
+    ADD CONSTRAINT fk_patterncontractline_pattern_id FOREIGN KEY (pattern_id) REFERENCES pattern(id);
+
+
+--
+-- Name: fk_shift_assignment_task_shiftassignment_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_assignment_task
+    ADD CONSTRAINT fk_shift_assignment_task_shiftassignment_id FOREIGN KEY (task_id) REFERENCES task(id);
+
+
+--
+-- Name: fk_shift_assignment_task_task_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_assignment_task
+    ADD CONSTRAINT fk_shift_assignment_task_task_id FOREIGN KEY (shift_assignment_id) REFERENCES shift_assignment(id);
+
+
+--
+-- Name: fk_shift_shiftdate_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift
+    ADD CONSTRAINT fk_shift_shiftdate_id FOREIGN KEY (shift_date_id) REFERENCES shift_date(id);
+
+
+--
+-- Name: fk_shift_shifttype_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift
+    ADD CONSTRAINT fk_shift_shifttype_id FOREIGN KEY (shift_type_id) REFERENCES shift_type(id);
+
+
+--
+-- Name: fk_shiftassignment_employee_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_assignment
+    ADD CONSTRAINT fk_shiftassignment_employee_id FOREIGN KEY (employee_id) REFERENCES employee(id);
+
+
+--
+-- Name: fk_shiftassignment_shift_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_assignment
+    ADD CONSTRAINT fk_shiftassignment_shift_id FOREIGN KEY (shift_id) REFERENCES shift(id);
+
+
+--
+-- Name: fk_shifttypetask_shifttype_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_type_task
+    ADD CONSTRAINT fk_shifttypetask_shifttype_id FOREIGN KEY (shift_type_id) REFERENCES shift_type(id);
+
+
+--
+-- Name: fk_shifttypetask_task_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY shift_type_task
+    ADD CONSTRAINT fk_shifttypetask_task_id FOREIGN KEY (task_id) REFERENCES task(id);
+
+
+--
+-- Name: fk_skill_proficiency_skill_list_skill_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY skill_proficiency_skill_list
+    ADD CONSTRAINT fk_skill_proficiency_skill_list_skill_id FOREIGN KEY (skill_proficiencies_id) REFERENCES skill_proficiency(id);
+
+
+--
+-- Name: fk_skill_proficiency_skill_list_skillproficiency_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY skill_proficiency_skill_list
+    ADD CONSTRAINT fk_skill_proficiency_skill_list_skillproficiency_id FOREIGN KEY (skill_lists_id) REFERENCES skill(id);
+
+
+--
+-- Name: fk_skillproficiency_employee_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY skill_proficiency
+    ADD CONSTRAINT fk_skillproficiency_employee_id FOREIGN KEY (employee_id) REFERENCES employee(id);
+
+
+--
+-- Name: fk_staffrosterparametrization_firstshiftdate_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY staff_roster_parametrization
+    ADD CONSTRAINT fk_staffrosterparametrization_firstshiftdate_id FOREIGN KEY (first_shift_date_id) REFERENCES shift_date(id);
+
+
+--
+-- Name: fk_staffrosterparametrization_lastshiftdate_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY staff_roster_parametrization
+    ADD CONSTRAINT fk_staffrosterparametrization_lastshiftdate_id FOREIGN KEY (last_shift_date_id) REFERENCES shift_date(id);
+
+
+--
+-- Name: fk_staffrosterparametrization_planningwindowend_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY staff_roster_parametrization
+    ADD CONSTRAINT fk_staffrosterparametrization_planningwindowend_id FOREIGN KEY (planning_window_end_id) REFERENCES shift_date(id);
+
+
+--
+-- Name: fk_staffrosterparametrization_planningwindowstart_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY staff_roster_parametrization
+    ADD CONSTRAINT fk_staffrosterparametrization_planningwindowstart_id FOREIGN KEY (planning_window_start_id) REFERENCES shift_date(id);
+
+
+--
+-- Name: fk_taskskillrequirement_skill_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY task_skill_requirement
+    ADD CONSTRAINT fk_taskskillrequirement_skill_id FOREIGN KEY (skill_id) REFERENCES skill(id);
+
+
+--
+-- Name: fk_taskskillrequirement_task_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY task_skill_requirement
+    ADD CONSTRAINT fk_taskskillrequirement_task_id FOREIGN KEY (task_id) REFERENCES task(id);
+
+
+--
+-- Name: fk_user_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_user_authority
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES jhi_user(id);
+
+
+--
+-- Name: fk_user_persistent_token; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY jhi_persistent_token
+    ADD CONSTRAINT fk_user_persistent_token FOREIGN KEY (user_id) REFERENCES jhi_user(id);
+
+
+--
+-- Name: fk_weekendday_weekenddefinition_id; Type: FK CONSTRAINT; Schema: public; Owner: staffservice
+--
+
+ALTER TABLE ONLY weekend_day
+    ADD CONSTRAINT fk_weekendday_weekenddefinition_id FOREIGN KEY (weekend_definition_id) REFERENCES weekend_definition(id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
