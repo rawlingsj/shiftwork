@@ -4,7 +4,7 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myTaskSkillRequirementLabel" translate="shiftworkApp.taskSkillRequirement.home.createOrEditLabel">Create or edit a Task Skill Requirement</h4>
+        <h4 class="modal-title" id="myTaskSkillRequirementLabel" translate="shiftworkApp.taskSkillRequirement.home.createOrEditLabel">Create or edit a Task Skill Requirement OK</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
@@ -16,7 +16,7 @@
 
         <div class="form-group">
             <label translate="shiftworkApp.taskSkillRequirement.task" for="field_task">Task</label>
-            <select class="form-control" id="field_task" name="task" ng-model="vm.taskSkillRequirement.task" ng-options="task as task.id for task in vm.tasks | orderBy:'id' track by task.id">
+            <select class="form-control" id="field_task" name="task" ng-model="vm.taskSkillRequirement.task" ng-options="task as task.code for task in vm.tasks | orderBy:'id' track by task.id">
                 <option value=""></option>
             </select>
         </div>
