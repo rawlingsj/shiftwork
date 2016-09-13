@@ -1,26 +1,18 @@
+<link rel="stylesheet" type="text/css" href="app/entities/view-day-plan/view-day-plan.css">
 <div>
+
     <h2 translate="shiftworkApp.viewDayPlan.home.title">Viewing Day Schedule</h2>
 	<a ng-hide="vm.datePickerOpenStatus.date" ng-click="vm.openCalendar('date')">
 		{{ vm.shiftDateFormatted }}
 	</a>
 	<div class="form-group">
 		<div class="input-group">
-			<input ng-show="vm.datePickerOpenStatus.date" id="field_date" type="text" class="form-control" name="date" uib-datepicker-popup="{{dateformat}}" ng-model="vm.shiftDate" ng-change="vm.shiftDateChanged()" is-open="vm.datePickerOpenStatus.date"/>
+			<input ng-show="vm.datePickerOpenStatus.date" id="shift_date" type="text" class="form-control" name="date" uib-datepicker-popup="{{dateformat}}" ng-model="vm.shiftDate" ng-change="vm.shiftDateChanged()" is-open="vm.datePickerOpenStatus.date"/>
 		</div>
 	</div>
     <br/>
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-			<thead>
-				 <th><span translate="shiftworkApp.viewDayPlan.name">Name</span></th>
-			</thead>
-            <tbody>
-                <tr ng-repeat="shift in vm.shiftAssignments track by shift.employee.code">
-                    
-                    <td>{{ shift.employee.name }}</td>
-                   
-                </tr>
-            </tbody>
-        </table>
-    </div>
+	
+	<div id="shiftTimeline" ng-show="vm.shiftAssignments.length > 0"></div>
+	<p id="noRecordsMsg" ng-show="vm.shiftAssignments.length < 1" translate="shiftworkApp.viewDayPlan.noRecordsFoundMsg">No Records Found, Select Any Other Date</p>
+	
 </div>

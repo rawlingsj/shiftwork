@@ -30,6 +30,7 @@
                 "employees": "Employees",
                 "taskSkillRequirement": "Task Skill Requirement",
 				"viewDayPlan": "View Day Plan",
+				"viewMySchedule": "View My Schedule",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -4,7 +4,8 @@
             "home": {
                 "title": "Viewing Day Schedule"     
             },
-			"name" : "Name"
+			"name" : "Name",
+			"noRecordsFoundMsg" : "No Records Found, Select Any Other Date"
         }
     }
 }
