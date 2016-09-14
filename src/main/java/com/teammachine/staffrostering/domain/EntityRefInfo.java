@@ -7,7 +7,7 @@ public class EntityRefInfo {
     private String code;
 
     private String name;
-    
+
     public EntityRefInfo() {
         //for jackson deserialization
     }
@@ -18,8 +18,7 @@ public class EntityRefInfo {
     }
 
     public EntityRefInfo(long id, String code, String name) {
-        this.id = id;
-        this.code = code;
+        this(id, code);
         this.name = name;
     }
 
