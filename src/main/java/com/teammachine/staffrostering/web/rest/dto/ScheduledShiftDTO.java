@@ -1,11 +1,9 @@
 package com.teammachine.staffrostering.web.rest.dto;
 
-import com.teammachine.staffrostering.domain.Employee;
-import com.teammachine.staffrostering.domain.ShiftDate;
-import com.teammachine.staffrostering.domain.ShiftType;
-import com.teammachine.staffrostering.domain.Task;
+import com.teammachine.staffrostering.domain.*;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ScheduledShiftDTO {
 
@@ -41,8 +39,13 @@ public class ScheduledShiftDTO {
         this.tasks = tasks;
     }
 
-    public Set<Employee> getCoworkers() {
-        return coworkers;
+    public Set<EntityRefInfo> getCoworkers() {
+        if (coworkers != null) {
+            return coworkers.stream()
+                .map(employee -> new EntityRefInfo(employee.getId(), employee.getCode(), employee.getName()))
+                .collect(Collectors.toSet());
+        }
+        return null;
     }
 
     public void setCoworkers(Set<Employee> coworkers) {
