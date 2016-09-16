@@ -9,6 +9,8 @@ import java.util.Set;
 
 public class ScheduledShiftDTO {
 
+    private Long id;
+
     private ShiftType shiftType;
 
     private ShiftDate shiftDate;
@@ -16,6 +18,14 @@ public class ScheduledShiftDTO {
     private Set<Task> tasks;
 
     private Set<Employee> coworkers;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public ShiftType getShiftType() {
         return shiftType;
