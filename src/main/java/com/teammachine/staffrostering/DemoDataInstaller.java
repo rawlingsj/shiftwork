@@ -1,5 +1,6 @@
 package com.teammachine.staffrostering;
 
+import com.teammachine.staffrostering.config.Constants;
 import com.teammachine.staffrostering.domain.*;
 import com.teammachine.staffrostering.domain.enumeration.*;
 import com.teammachine.staffrostering.repository.*;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.stereotype.Component;
@@ -30,6 +32,7 @@ import java.util.stream.Collectors;
  * Enabled only if environment variable "createDemoData" is specified at start time.
  */
 @Component
+@Profile(Constants.SPRING_PROFILE_DEVELOPMENT)
 @Conditional(DemoDataInstaller.CreateDemoDataCondition.class)
 class DemoDataInstaller {
 
