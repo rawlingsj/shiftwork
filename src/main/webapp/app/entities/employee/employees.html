@@ -18,7 +18,7 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr>
-                    <th><span translate="global.field.id">ID</span></th>
+                    <th ng-show="false"><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.employee.code">Code</span></th>
                     <th><span translate="shiftworkApp.employee.name">Name</span></th>
                     <th><span translate="shiftworkApp.employee.active">Active</span></th>
@@ -28,7 +28,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="employee in vm.employees track by employee.id">
-                    <td><a ui-sref="employee-detail({id:employee.id})">{{employee.id}}</a></td>
+                    <td ng-show="false"><a ui-sref="employee-detail({id:employee.id})">{{employee.id}}</a></td>
                     <td>{{employee.code}}</td>
                     <td>{{employee.name}}</td>
                     <td>{{employee.active}}</td>

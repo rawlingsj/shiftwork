@@ -18,7 +18,7 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr>
-                    <th><span translate="global.field.id">ID</span></th>
+                    <th ng-show="false"><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.shiftType.code">Code</span></th>
                     <th><span translate="shiftworkApp.shiftType.index">Index</span></th>
                     <th><span translate="shiftworkApp.shiftType.description">Description</span></th>
@@ -31,7 +31,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="shiftType in vm.shiftTypes track by shiftType.id">
-                    <td><a ui-sref="shift-type-detail({id:shiftType.id})">{{shiftType.id}}</a></td>
+                    <td ng-show="false"><a ui-sref="shift-type-detail({id:shiftType.id})">{{shiftType.id}}</a></td>
                     <td>{{shiftType.code}}</td>
                     <td>{{shiftType.index}}</td>
                     <td>{{shiftType.description}}</td>
