@@ -14,11 +14,15 @@
                     ng-model="vm.task.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="shiftworkApp.task.code" for="field_code">Code</label>
+            <label class="control-label" translate="shiftworkApp.task.code" for="field_code">Code--</label>
             <input type="text" class="form-control" name="code" id="field_code"
-                    ng-model="vm.task.code"
+                    ng-model="vm.task.code"  ng-change="vm.verifyDuplicate(vm.task.code)"
                      />
         </div>
+        <div class='alert alert-danger' 
+                    ng-show='duplicateMsg'>
+                    The code entered is invalid, It has already been used!
+       </div>
         <div class="form-group">
             <label class="control-label" translate="shiftworkApp.task.description" for="field_description">Description</label>
             <input type="text" class="form-control" name="description" id="field_description"
@@ -69,7 +73,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving || duplicateMsg" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>

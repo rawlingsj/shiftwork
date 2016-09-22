@@ -10,6 +10,16 @@
     function TaskDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Task) {
         var vm = this;
         vm.task = entity;
+        $scope.duplicateMsg = false;
+        $scope.tasks = [];
+        vm.loadAll = function() {
+            Task.query(function(result) {
+                $scope.tasks = result;
+                console.log('len1: ' + $scope.tasks.length);
+            });
+        };
+
+        vm.loadAll();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
@@ -37,5 +47,17 @@
         vm.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
+
+        vm.verifyDuplicate = function(code) {
+            $scope.duplicateMsg = false;
+            angular.forEach($scope.tasks, function(task, key){
+                 console.log(key + ': ' + task.code);
+                 if(task.code === code) {
+                    console.log('existed');
+                    $scope.duplicateMsg = true;
+                    return true;
+                 }
+            });
+        }
     }
 })();
