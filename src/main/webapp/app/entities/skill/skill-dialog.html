@@ -16,10 +16,12 @@
         <div class="form-group">
             <label class="control-label" translate="shiftworkApp.skill.code" for="field_code">Code</label>
             <input type="text" class="form-control" name="code" id="field_code"
-                    ng-model="vm.skill.code"
-                     />
+                    ng-model="vm.skill.code" ng-change="vm.verifyDuplicate(vm.skill.code)"/>
         </div>
-
+        <div class='alert alert-danger' 
+                    ng-show='vm.duplicateMsg'>
+                    The code entered is invalid, It has already been used!
+       </div> 
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

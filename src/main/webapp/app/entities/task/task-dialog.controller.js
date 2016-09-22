@@ -10,12 +10,12 @@
     function TaskDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Task) {
         var vm = this;
         vm.task = entity;
-        $scope.duplicateMsg = false;
-        $scope.tasks = [];
+        vm.duplicateMsg = false;
+        vm.editId = $stateParams.id === null ? 0 : parseInt($stateParams.id);
+        vm.tasks = [];
         vm.loadAll = function() {
             Task.query(function(result) {
-                $scope.tasks = result;
-                console.log('len1: ' + $scope.tasks.length);
+                vm.tasks = result;
             });
         };
 
@@ -49,15 +49,22 @@
         };
 
         vm.verifyDuplicate = function(code) {
-            $scope.duplicateMsg = false;
-            angular.forEach($scope.tasks, function(task, key){
-                 console.log(key + ': ' + task.code);
-                 if(task.code === code) {
-                    console.log('existed');
-                    $scope.duplicateMsg = true;
-                    return true;
-                 }
+            vm.duplicateMsg = false;
+            angular.forEach(vm.tasks, function(task, key){
+                if(task.code === code) {
+                    if( vm.editId === 0) {
+                        console.log('existed');
+                        vm.duplicateMsg = true;
+                        return vm.duplicateMsg;
+                    }
+                    else if(vm.editId != task.id) {
+                        console.log('existed');
+                        vm.duplicateMsg = true;
+                        return vm.duplicateMsg;                       
+                    }
+                }
             });
+            return vm.duplicateMsg;
         }
     }
 })();

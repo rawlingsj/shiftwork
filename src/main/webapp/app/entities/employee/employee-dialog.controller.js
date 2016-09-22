@@ -16,6 +16,16 @@
         vm.employeeshiftoffrequests = EmployeeShiftOffRequest.query();
         vm.employeeshiftonrequests = EmployeeShiftOnRequest.query();
         vm.employeeleaveabsences = EmployeeLeaveAbsence.query();
+        vm.duplicateMsg = false;
+        vm.editId = $stateParams.id === null ? 0 : parseInt($stateParams.id);
+        vm.employees = [];
+        vm.loadAll = function() {
+            Employee.query(function(result) {
+                vm.employees = result;
+            });
+        };
+
+        vm.loadAll();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
@@ -43,5 +53,24 @@
         vm.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
+
+        vm.verifyDuplicate = function(code) {
+            vm.duplicateMsg = false;
+            angular.forEach(vm.employees, function(employee, key){
+                if(employee.code === code) {
+                    if( vm.editId === 0) {
+                        console.log('existed');
+                        vm.duplicateMsg = true;
+                        return vm.duplicateMsg;
+                    }
+                    else if(vm.editId != employee.id) {
+                        console.log('existed');
+                        vm.duplicateMsg = true;
+                        return vm.duplicateMsg;                       
+                    }
+                }
+            });
+            return vm.duplicateMsg;
+        }       
     }
 })();
