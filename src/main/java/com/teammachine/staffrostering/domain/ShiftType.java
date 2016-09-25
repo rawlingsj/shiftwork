@@ -4,11 +4,12 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A ShiftType.
@@ -36,13 +37,11 @@ public class ShiftType implements Serializable {
     @Column(name = "night_shift")
     private Boolean nightShift;
 
-    @Pattern(regexp = "^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$")
     @Column(name = "start_time")
-    private String startTime;
+    private LocalTime startTime;
 
-    @Pattern(regexp = "^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$")
     @Column(name = "end_time")
-    private String endTime;
+    private LocalTime endTime;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -91,28 +90,28 @@ public class ShiftType implements Serializable {
         this.nightShift = nightShift;
     }
 
-    public String getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
     public String getStartTimeString() {
-        return startTime;
+        return startTime != null ? startTime.format(DateTimeFormatter.ISO_LOCAL_TIME) : null;
     }
 
     public String getEndTimeString() {
-        return endTime;
+        return endTime != null ? endTime.format(DateTimeFormatter.ISO_LOCAL_TIME) : null;
     }
 
     public Set<Task> getTasks() {

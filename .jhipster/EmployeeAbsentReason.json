@@ -1,0 +1,32 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "code",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "defaultDuration",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "defaultDurationUnit",
+            "fieldType": "DurationUnit",
+            "fieldValues": "HOURS, DAYS, WEEKS, MONTHS, YEARS"
+        }
+    ],
+    "changelogDate": "20160704161513",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "employee_absent_reason",
+    "pagination": "no"
+}

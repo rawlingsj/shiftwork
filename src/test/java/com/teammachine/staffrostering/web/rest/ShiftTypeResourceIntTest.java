@@ -3,17 +3,15 @@ package com.teammachine.staffrostering.web.rest;
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.ShiftType;
 import com.teammachine.staffrostering.repository.ShiftTypeRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -23,9 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.time.LocalTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -51,10 +51,10 @@ public class ShiftTypeResourceIntTest {
 
     private static final Boolean DEFAULT_NIGHT_SHIFT = false;
     private static final Boolean UPDATED_NIGHT_SHIFT = true;
-    private static final String DEFAULT_START_TIME = "06:30:00";
-    private static final String UPDATED_START_TIME = "06:00:00";
-    private static final String DEFAULT_END_TIME = "14:30:00";
-    private static final String UPDATED_END_TIME = "14:00:00";
+    private static final LocalTime DEFAULT_START_TIME = LocalTime.of(6, 30, 0);
+    private static final LocalTime UPDATED_START_TIME = LocalTime.of(6, 0, 0);
+    private static final LocalTime DEFAULT_END_TIME = LocalTime.of(14, 30, 0);
+    private static final LocalTime UPDATED_END_TIME = LocalTime.of(14, 0, 0);
 
     @Inject
     private ShiftTypeRepository shiftTypeRepository;

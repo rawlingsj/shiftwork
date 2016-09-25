@@ -2,8 +2,22 @@
     "shiftworkApp": {
         "viewMySchedule" : {
             "home": {
-                "title": "View My Schedule"     
+                "title": "View My Schedule",
+				"search": "Search for Employee"				
             }
-        }
+        },
+		"viewMyScheduleDetail" : {
+			"home" : {
+				"title" : "Shift Details"
+			},
+			"shiftType" : "Shift Type",
+			"shiftDate" : "Shift Date",
+			"shiftStartTime" : "Shift Start Time",
+			"shiftEndTime" : "Shift End Time",
+			"coworkers" : "Co-Workers",
+			"taskDescription" : "Task Description",
+			"taskImportance" : "Task Importance",
+			"taskUrgency" : "Task Urgency"
+		}
     }
 }

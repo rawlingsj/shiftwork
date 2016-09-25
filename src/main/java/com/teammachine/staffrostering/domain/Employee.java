@@ -27,11 +27,11 @@ public class Employee implements Serializable {
     @Column(name = "code")
     private String code;
 
-    @Column(name = "is_sick")
-    private Boolean isSick;
-
     @Column(name = "name")
     private String name;
+
+    @Column(name = "active")
+    private Boolean active;
 
     @ManyToOne
     private Contract contract;
@@ -56,13 +56,10 @@ public class Employee implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<EmployeeShiftOnRequest> shiftOnRequests = new HashSet<>();
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private ShiftDate unavailableShiftDate;
-
-    @OneToOne
-    @JoinColumn(unique = true)
-    private ShiftType unavailableShiftType;
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<EmployeeLeaveAbsence> employeeLeaveAbsences = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -80,20 +77,20 @@ public class Employee implements Serializable {
         this.code = code;
     }
 
-    public Boolean isIsSick() {
-        return isSick;
-    }
-
-    public void setIsSick(Boolean isSick) {
-        this.isSick = isSick;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Contract getContract() {
@@ -136,20 +133,12 @@ public class Employee implements Serializable {
         this.shiftOnRequests = employeeShiftOnRequests;
     }
 
-    public ShiftDate getUnavailableShiftDate() {
-        return unavailableShiftDate;
+    public Set<EmployeeLeaveAbsence> getEmployeeLeaveAbsences() {
+        return employeeLeaveAbsences;
     }
 
-    public void setUnavailableShiftDate(ShiftDate shiftDate) {
-        this.unavailableShiftDate = shiftDate;
-    }
-
-    public ShiftType getUnavailableShiftType() {
-        return unavailableShiftType;
-    }
-
-    public void setUnavailableShiftType(ShiftType shiftType) {
-        this.unavailableShiftType = shiftType;
+    public void setEmployeeLeaveAbsences(Set<EmployeeLeaveAbsence> employeeLeaveAbsences) {
+        this.employeeLeaveAbsences = employeeLeaveAbsences;
     }
 
     @Override
@@ -177,8 +166,8 @@ public class Employee implements Serializable {
         return "Employee{" +
             "id=" + id +
             ", code='" + code + "'" +
-            ", isSick='" + isSick + "'" +
             ", name='" + name + "'" +
+            ", active='" + active + "'" +
             '}';
     }
 }

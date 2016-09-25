@@ -1,0 +1,45 @@
+
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">&times;</button>
+	<h4 class="modal-title" id="shiftDetails" translate="shiftworkApp.viewMyScheduleDetail.home.title">Shift Details</h4>
+</div>
+	
+<div>
+    <hr>
+    <dl class="dl-horizontal">
+		<dt><span translate="shiftworkApp.viewMyScheduleDetail.shiftDate">Shift Date</span></dt>
+        <dd>
+            <span>{{ vm.shiftDetails.shiftDate.date }}</span>
+        </dd>
+		<dt><span translate="shiftworkApp.viewMyScheduleDetail.shiftStartTime">Shift Start Time</span></dt>
+        <dd>
+            <span>{{ vm.shiftDetails.shiftType.startTime }}</span>
+        </dd>
+		<dt><span translate="shiftworkApp.viewMyScheduleDetail.shiftEndTime">Shift End Time</span></dt>
+        <dd>
+            <span>{{ vm.shiftDetails.shiftType.endTime }}</span>
+        </dd>
+        <dt><span translate="shiftworkApp.viewMyScheduleDetail.shiftType">Shift Type</span></dt>
+        <dd>
+            <span>{{ vm.shiftDetails.shiftType.description }}</span>
+        </dd>
+		<dt><span translate="shiftworkApp.viewMyScheduleDetail.coworkers">Co-Workers</span></dt>
+        <dd ng-repeat="coworker in vm.shiftDetails.coworkers">
+            <span>{{ coworker.name }}</span>
+        </dd>
+		<dt><span translate="shiftworkApp.viewMyScheduleDetail.taskDescription">Task Description</span></dt>
+        <dd>
+            <span>{{ vm.taskDetails.description }}</span>
+        </dd>
+		<dt><span translate="shiftworkApp.viewMyScheduleDetail.taskImportance">Task Importance</span></dt>
+        <dd>
+            <span>{{ vm.taskDetails.importance }}</span>
+        </dd>
+		<dt><span translate="shiftworkApp.viewMyScheduleDetail.taskUrgency">Task Uregency</span></dt>
+        <dd>
+            <span>{{ vm.taskDetails.urgency }}</span>
+        </dd>
+        <hr>
+    </dl>
+	
+</div>

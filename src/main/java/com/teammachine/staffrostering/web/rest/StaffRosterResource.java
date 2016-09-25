@@ -39,9 +39,8 @@ public class StaffRosterResource {
             return ResponseEntity.badRequest().build();
         }
         staffRosterDTO.getStaffRosterParametrization().setLastRunTime(ZonedDateTime.now());
-        staffRosterParametrizationRepository.saveAndFlush(staffRosterDTO.getStaffRosterParametrization());
-        shiftAssignmentRepository.save(staffRosterDTO.getShiftAssignments());
-        shiftAssignmentRepository.flush();
+        staffRosterParametrizationRepository.save(staffRosterDTO.getStaffRosterParametrization());
+        staffRosterDTO.getShiftAssignments().stream().forEach(shiftAssignmentRepository::save);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("staffRoster", staffRosterDTO.getStaffRosterParametrization().getId().toString()))
                 .body(staffRosterDTO);

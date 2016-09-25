@@ -41,10 +41,10 @@
             <label class="control-label" translate="shiftworkApp.shiftType.startTime" for="field_startTime">Start Time</label>
             <input type="text" class="form-control" name="startTime" id="field_startTime"
                     ng-model="vm.shiftType.startTime"
-                    ng-pattern="/^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$/" />
+                    ng-pattern="/^([0-1][0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$/" />
             <div ng-show="editForm.startTime.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.startTime.$error.pattern" translate="entity.validation.time" translate-value-pattern="^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$">
+                    ng-show="editForm.startTime.$error.pattern" translate="entity.validation.time">
                     This field should be a time.
                 </p>
             </div>
@@ -53,7 +53,7 @@
             <label class="control-label" translate="shiftworkApp.shiftType.endTime" for="field_endTime">End Time</label>
             <input type="text" class="form-control" name="endTime" id="field_endTime"
                     ng-model="vm.shiftType.endTime"
-                    ng-pattern="/^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$/" />
+                    ng-pattern="/^([0-1][0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])?$/" />
             <div ng-show="editForm.endTime.$invalid">
                 <p class="help-block"
                     ng-show="editForm.endTime.$error.pattern" translate="entity.validation.time">

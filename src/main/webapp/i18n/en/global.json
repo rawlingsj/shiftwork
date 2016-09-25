@@ -31,6 +31,8 @@
                 "taskSkillRequirement": "Task Skill Requirement",
 				"viewDayPlan": "View Day Plan",
 				"viewMySchedule": "View My Schedule",
+                "employeeAbsentReason": "Employee Absent Reason",
+                "employeeLeaveAbsence": "Employee Leave Absence",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -136,6 +138,19 @@
             "time": "This field should be a time."
         }
     },
+	"calendar" : {
+		"action" : {
+			"previous" : "Previous",
+			"today" : "Today",
+			"next" : "Next"
+		},
+		"view" : {
+			"day" : "Day",
+			"month" : "Month",
+			"week" : "Week",
+			"year" : "Year"
+		}
+	},
     "error": {
         "server.not.reachable": "Server not reachable",
         "NotNull": "Field {{ fieldName }} cannot be empty!",
