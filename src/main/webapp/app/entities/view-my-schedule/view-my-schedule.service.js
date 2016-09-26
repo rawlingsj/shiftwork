@@ -8,7 +8,7 @@
     ViewMySchedule.$inject = ['$resource', 'DateUtils'];
 
     function ViewMySchedule ($resource, DateUtils) {
-        var resourceUrl =  'api/schedules/:id';
+        var resourceUrl =  'api/employeeshifts';
 
 		return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
