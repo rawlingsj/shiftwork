@@ -55,7 +55,7 @@ public class EmployeeDayOnRequest implements Serializable {
     }
 
     public EntityRefInfo getEmployee() {
-        return employee != null ? new EntityRefInfo(employee.getId(), employee.getCode()) : null;
+        return employee != null ? new EntityRefInfo(employee.getId(), employee.getCode(), employee.getName()) : null;
     }
 
     public void setEmployee(Employee employee) {

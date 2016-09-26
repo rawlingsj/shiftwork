@@ -28,6 +28,10 @@ public interface ShiftAssignmentRepository extends JpaRepository<ShiftAssignment
     List<ShiftAssignment> findAllForShiftDate(@Param("shiftDate") ShiftDate shiftDate);
 
     @Query("select distinct shiftAssignment from ShiftAssignment shiftAssignment left join fetch shiftAssignment.taskList " +
+        "where shiftAssignment.shift.shiftDate.date = :date")
+    List<ShiftAssignment> findAllOnDate(@Param("date") LocalDate date);
+
+    @Query("select distinct shiftAssignment from ShiftAssignment shiftAssignment left join fetch shiftAssignment.taskList " +
         "where shiftAssignment.shift in (:shifts)")
     List<ShiftAssignment> findAllForShifts(@Param("shifts") Set<Shift> shifts);
 
