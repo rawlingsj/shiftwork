@@ -38,11 +38,14 @@
 				data : null
 			},
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+				if($stateParams.data == null) {
+					$state.go("view-my-schedule");
+					return;
+				}
                 $uibModal.open({
                     templateUrl: 'app/entities/view-my-schedule/view-my-schedule-detail.html',
                     controller: 'ViewMyScheduleDetailController',
                     controllerAs: 'vm',
-                    backdrop: 'static',
                     size: 'lg'
                 }).result.then(function() {
                     $state.go('view-my-schedule', null, { reload: true });
@@ -51,30 +54,6 @@
                 });
             }]
         });
-		/* .state('view-my-schedule-detail', {
-            parent: 'entity',
-            url: '/view-my-schedule-detail',
-			params : {
-				data : null
-			},
-            data: {
-                authorities: ['ROLE_USER'],
-                pageTitle: 'shiftworkApp.viewMySchedule.detail.title'
-            },
-            views: {
-                'content@': {
-                    templateUrl: 'app/entities/view-my-schedule/view-my-schedule-detail.html',
-                    controller: 'ViewMyScheduleDetailController',
-                    controllerAs: 'vm'
-                }
-            },
-            resolve: {
-                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('viewMySchedule');
-                    return $translate.refresh();
-                }]
-            }
-        }); */
     }
 
 })();

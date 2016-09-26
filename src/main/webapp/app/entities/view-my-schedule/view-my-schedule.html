@@ -14,7 +14,6 @@
             </div>
         </div>
     </div>
-	<br/>
 	<div ng-show="vm.currentEmployeeId">
 		<h2 class="text-center">{{ vm.calendarTitle }}</h2>
 		<div class="col-md-6 text-center">
@@ -25,7 +24,7 @@
 			  mwl-date-modifier
 			  date="vm.viewDate"
 			  decrement="vm.calendarView"
-			  ng-click="vm.monthChanged()">
+			  ng-click="vm.viewDateChanged()">
 			  <span translate="calendar.action.previous">Previous</span>
 			</button>
 			<button
@@ -33,7 +32,7 @@
 			  mwl-date-modifier
 			  date="vm.viewDate"
 			  set-to-today
-			  ng-click="vm.monthChanged()">
+			  ng-click="vm.viewDateChanged()">
 			  <span translate="calendar.action.today">Today</span>
 			</button>
 			<button
@@ -41,7 +40,7 @@
 			  mwl-date-modifier
 			  date="vm.viewDate"
 			  increment="vm.calendarView"
-			  ng-click="vm.monthChanged()">
+			  ng-click="vm.viewDateChanged()">
 			  <span translate="calendar.action.next">Next</span>
 			</button>
 			
@@ -68,10 +67,9 @@
 				on-event-click="vm.showTaskDetail(calendarEvent)"
 				on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
 				cell-is-open="vm.isCellOpen"
-				day-view-start="06:00"
-				day-view-end="22:59"
-				day-view-split="30"
-				cell-modifier="vm.modifyCell(calendarCell)">
+				day-view-start="00:00"
+				day-view-end="23:59"
+				day-view-split="30">
 			</mwl-calendar>
 		</div>
 	</div>
