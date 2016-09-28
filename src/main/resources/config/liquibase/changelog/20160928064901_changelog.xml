@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+   <changeSet author="LD (generated)" id="1475045352344-1">
+      <addColumn tableName="shift_type">
+         <column name="background_color" type="varchar(255)"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1475045352344-2">
+      <addColumn tableName="task">
+         <column name="background_color" type="varchar(255)"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1475045352344-3">
+      <addColumn tableName="shift_type">
+         <column name="icon" type="varchar(255)"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1475045352344-4">
+      <addColumn tableName="task">
+         <column name="icon" type="varchar(255)"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1475045352344-5">
+      <addColumn tableName="shift_type">
+         <column name="text_color" type="varchar(255)"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1475045352344-6">
+      <addColumn tableName="task">
+         <column name="text_color" type="varchar(255)"/>
+      </addColumn>
+   </changeSet>
+</databaseChangeLog>

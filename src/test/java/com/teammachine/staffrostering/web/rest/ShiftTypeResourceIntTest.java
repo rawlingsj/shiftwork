@@ -2,6 +2,7 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.ShiftType;
+import com.teammachine.staffrostering.domain.Style;
 import com.teammachine.staffrostering.repository.ShiftTypeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,15 +47,27 @@ public class ShiftTypeResourceIntTest {
 
     private static final Integer DEFAULT_INDEX = 1;
     private static final Integer UPDATED_INDEX = 2;
+
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBB";
 
     private static final Boolean DEFAULT_NIGHT_SHIFT = false;
     private static final Boolean UPDATED_NIGHT_SHIFT = true;
+
     private static final LocalTime DEFAULT_START_TIME = LocalTime.of(6, 30, 0);
     private static final LocalTime UPDATED_START_TIME = LocalTime.of(6, 0, 0);
+
     private static final LocalTime DEFAULT_END_TIME = LocalTime.of(14, 30, 0);
     private static final LocalTime UPDATED_END_TIME = LocalTime.of(14, 0, 0);
+
+    private static final String DEFAULT_BACKGROUND_COLOR = "white";
+    private static final String UPDATED_BACKGROUND_COLOR = "black";
+
+    private static final String DEFAULT_TEXT_COLOR = "white";
+    private static final String UPDATED_TEXT_COLOR = "black";
+
+    private static final String DEFAULT_ICON = "fa-icon-o";
+    private static final String UPDATED_ICON = "fa-icon-c";
 
     @Inject
     private ShiftTypeRepository shiftTypeRepository;
@@ -88,6 +101,7 @@ public class ShiftTypeResourceIntTest {
         shiftType.setNightShift(DEFAULT_NIGHT_SHIFT);
         shiftType.setStartTime(DEFAULT_START_TIME);
         shiftType.setEndTime(DEFAULT_END_TIME);
+        shiftType.setStyle(new Style(DEFAULT_BACKGROUND_COLOR, DEFAULT_TEXT_COLOR, DEFAULT_ICON));
     }
 
     @Test
@@ -98,9 +112,9 @@ public class ShiftTypeResourceIntTest {
         // Create the ShiftType
 
         restShiftTypeMockMvc.perform(post("/api/shift-types")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(shiftType)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(shiftType)))
+            .andExpect(status().isCreated());
 
         // Validate the ShiftType in the database
         List<ShiftType> shiftTypes = shiftTypeRepository.findAll();
@@ -112,6 +126,9 @@ public class ShiftTypeResourceIntTest {
         assertThat(testShiftType.isNightShift()).isEqualTo(DEFAULT_NIGHT_SHIFT);
         assertThat(testShiftType.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testShiftType.getEndTime()).isEqualTo(DEFAULT_END_TIME);
+        assertThat(testShiftType.getStyle().getBackgroundColor()).isEqualTo(DEFAULT_BACKGROUND_COLOR);
+        assertThat(testShiftType.getStyle().getTextColor()).isEqualTo(DEFAULT_TEXT_COLOR);
+        assertThat(testShiftType.getStyle().getIcon()).isEqualTo(DEFAULT_ICON);
     }
 
     @Test
@@ -122,15 +139,18 @@ public class ShiftTypeResourceIntTest {
 
         // Get all the shiftTypes
         restShiftTypeMockMvc.perform(get("/api/shift-types?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(shiftType.getId().intValue())))
-                .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
-                .andExpect(jsonPath("$.[*].index").value(hasItem(DEFAULT_INDEX)))
-                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-                .andExpect(jsonPath("$.[*].nightShift").value(hasItem(DEFAULT_NIGHT_SHIFT.booleanValue())))
-                .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
-                .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(shiftType.getId().intValue())))
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)))
+            .andExpect(jsonPath("$.[*].index").value(hasItem(DEFAULT_INDEX)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].nightShift").value(hasItem(DEFAULT_NIGHT_SHIFT)))
+            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())))
+            .andExpect(jsonPath("$.[*].style.backgroundColor").value(hasItem(DEFAULT_BACKGROUND_COLOR)))
+            .andExpect(jsonPath("$.[*].style.textColor").value(hasItem(DEFAULT_TEXT_COLOR)))
+            .andExpect(jsonPath("$.[*].style.icon").value(hasItem(DEFAULT_ICON)));
     }
 
     @Test
@@ -144,12 +164,15 @@ public class ShiftTypeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(shiftType.getId().intValue()))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE))
             .andExpect(jsonPath("$.index").value(DEFAULT_INDEX))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.nightShift").value(DEFAULT_NIGHT_SHIFT.booleanValue()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+            .andExpect(jsonPath("$.nightShift").value(DEFAULT_NIGHT_SHIFT))
             .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
-            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()));
+            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()))
+            .andExpect(jsonPath("$.style.backgroundColor").value(DEFAULT_BACKGROUND_COLOR))
+            .andExpect(jsonPath("$.style.textColor").value(DEFAULT_TEXT_COLOR))
+            .andExpect(jsonPath("$.style.icon").value(DEFAULT_ICON));
     }
 
     @Test
@@ -157,7 +180,7 @@ public class ShiftTypeResourceIntTest {
     public void getNonExistingShiftType() throws Exception {
         // Get the shiftType
         restShiftTypeMockMvc.perform(get("/api/shift-types/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -176,11 +199,13 @@ public class ShiftTypeResourceIntTest {
         updatedShiftType.setNightShift(UPDATED_NIGHT_SHIFT);
         updatedShiftType.setStartTime(UPDATED_START_TIME);
         updatedShiftType.setEndTime(UPDATED_END_TIME);
+        updatedShiftType.setStyle(new Style(UPDATED_BACKGROUND_COLOR, UPDATED_TEXT_COLOR, UPDATED_ICON));
+
 
         restShiftTypeMockMvc.perform(put("/api/shift-types")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedShiftType)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedShiftType)))
+            .andExpect(status().isOk());
 
         // Validate the ShiftType in the database
         List<ShiftType> shiftTypes = shiftTypeRepository.findAll();
@@ -192,6 +217,9 @@ public class ShiftTypeResourceIntTest {
         assertThat(testShiftType.isNightShift()).isEqualTo(UPDATED_NIGHT_SHIFT);
         assertThat(testShiftType.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testShiftType.getEndTime()).isEqualTo(UPDATED_END_TIME);
+        assertThat(testShiftType.getStyle().getBackgroundColor()).isEqualTo(UPDATED_BACKGROUND_COLOR);
+        assertThat(testShiftType.getStyle().getTextColor()).isEqualTo(UPDATED_TEXT_COLOR);
+        assertThat(testShiftType.getStyle().getIcon()).isEqualTo(UPDATED_ICON);
     }
 
     @Test
@@ -203,8 +231,8 @@ public class ShiftTypeResourceIntTest {
 
         // Get the shiftType
         restShiftTypeMockMvc.perform(delete("/api/shift-types/{id}", shiftType.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
         List<ShiftType> shiftTypes = shiftTypeRepository.findAll();

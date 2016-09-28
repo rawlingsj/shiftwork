@@ -47,6 +47,9 @@ public class Task implements Serializable {
     @Column(name = "urgency")
     private TaskUrgency urgency;
 
+    @Embedded
+    private Style style;
+
     public Long getId() {
         return id;
     }
@@ -134,5 +137,13 @@ public class Task implements Serializable {
             ", importance='" + importance + "'" +
             ", urgency='" + urgency + "'" +
             '}';
+    }
+
+    public void setStyle(Style style) {
+        this.style = style;
+    }
+
+    public Style getStyle() {
+        return style;
     }
 }
