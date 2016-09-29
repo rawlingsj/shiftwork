@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.*;
 import com.teammachine.staffrostering.repository.*;
+import com.teammachine.staffrostering.web.rest.dto.ScheduledShiftDTOFactory;
 import com.teammachine.staffrostering.web.rest.errors.ErrorConstants;
 import com.teammachine.staffrostering.web.rest.errors.ExceptionTranslator;
 import org.junit.Before;
@@ -29,10 +30,10 @@ import java.time.Month;
 import java.time.ZoneId;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ShiftworkApp.class)
@@ -72,7 +73,12 @@ public class EmployeeShiftResourceTest {
     @Inject
     private ExceptionTranslator exceptionTranslator;
 
+    @Inject
+    private ScheduledShiftDTOFactory scheduledShiftDTOFactory;
+
     private MockMvc restShiftAssignmentMockMvc;
+
+    private ShiftType shiftTypeE, shiftTypeL, shiftTypeN;
 
     private ShiftDate shiftDate_25, shiftDate_26, shiftDate_27;
 
@@ -84,6 +90,7 @@ public class EmployeeShiftResourceTest {
         EmployeeShiftResource employeeScheduleResource = new EmployeeShiftResource();
         ReflectionTestUtils.setField(employeeScheduleResource, "employeeRepository", employeeRepository);
         ReflectionTestUtils.setField(employeeScheduleResource, "shiftAssignmentRepository", shiftAssignmentRepository);
+        ReflectionTestUtils.setField(employeeScheduleResource, "scheduledShiftDTOFactory", scheduledShiftDTOFactory);
         this.restShiftAssignmentMockMvc = MockMvcBuilders.standaloneSetup(employeeScheduleResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter)
@@ -93,6 +100,11 @@ public class EmployeeShiftResourceTest {
 
     @Before
     public void before() {
+        // create shifttypes
+        shiftTypeE = createShiftType("E", 1);
+        shiftTypeL = createShiftType("L", 2);
+        shiftTypeN = createShiftType("N", 3);
+
         // create shiftDates
         shiftDate_25 = createShiftDate(1, DATE_2016_07_25);
         shiftDate_26 = createShiftDate(2, DATE_2016_07_26);
@@ -132,32 +144,68 @@ public class EmployeeShiftResourceTest {
 
     @Test
     public void getShifts() throws Exception {
-        ShiftType shiftType = createShiftType("E", 1);
         Task task_1 = createTask("1");
         Task task_2 = createTask("2");
-        Shift shift_25 = createShift(shiftDate_25, shiftType);
-        Shift shift_26 = createShift(shiftDate_26, shiftType);
-        Shift shift_27 = createShift(shiftDate_27, shiftType);
-        createShiftAssignment(shift_25, employee_001, task_1, task_2);
-        createShiftAssignment(shift_25, employee_002, task_1);
-        createShiftAssignment(shift_26, employee_001, task_1);
-        createShiftAssignment(shift_26, employee_003, task_2);
-        createShiftAssignment(shift_27, employee_002, task_1, task_2);
-        createShiftAssignment(shift_27, employee_003, task_1);
-        createShiftAssignment(shift_27, employee_001, task_1);
+        Task task_3 = createTask("3");
+        Shift shift_E25 = createShift(shiftDate_25, shiftTypeE);
+        Shift shift_E26 = createShift(shiftDate_26, shiftTypeE);
+        Shift shift_L27 = createShift(shiftDate_27, shiftTypeL);
+        Shift shift_N27 = createShift(shiftDate_27, shiftTypeN);
+
+        // no tasks with coworkers
+        createShiftAssignment(shift_E25, employee_001, task_1);
+        createShiftAssignment(shift_E25, employee_002, task_2, task_3);
+
+        // no assignments
+        createShiftAssignment(shift_E26, employee_003, task_1, task_2, task_3);
+
+        // one task to share (coworker#3, task#1)
+        createShiftAssignment(shift_L27, employee_001, task_1);
+        createShiftAssignment(shift_L27, employee_002, task_2);
+        createShiftAssignment(shift_L27, employee_003, task_1, task_2, task_3);
+
+        // two tasks to share(task#1 - coworkers#2, task#2 - coworkers#2,#3)
+        createShiftAssignment(shift_N27, employee_001, task_1, task_2, task_3);
+        createShiftAssignment(shift_N27, employee_002, task_1, task_2);
+        createShiftAssignment(shift_N27, employee_003, task_2);
 
         restShiftAssignmentMockMvc.perform(get("/api/employeeshifts")
             .param("employee", employee_001.getId().toString())
             .param("fromDate", asRequestParam(DATE_2016_07_25))
-            .param("toDate", asRequestParam(DATE_2016_07_26)))
+            .param("toDate", asRequestParam(DATE_2016_07_27)))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.[*].shiftType.id").value(contains(shiftType.getId().intValue(), shiftType.getId().intValue())))
-            .andExpect(jsonPath("$.[*].shiftDate.id").value(contains(shiftDate_25.getId().intValue(), shiftDate_26.getId().intValue())))
-            .andExpect(jsonPath("$.[0].tasks[*].id").value(contains(task_1.getId().intValue(), task_2.getId().intValue())))
-            .andExpect(jsonPath("$.[1].tasks[*].id").value(contains(task_1.getId().intValue())))
-            .andExpect(jsonPath("$.[0].coworkers[*].id").value(contains(employee_002.getId().intValue())))
-            .andExpect(jsonPath("$.[1].coworkers[*]").isEmpty());
+            // 25E
+            .andExpect(jsonPath("$.[0].shiftType.id").value(shiftTypeE.getId().intValue()))
+            .andExpect(jsonPath("$.[0].shiftDate.id").value(shiftDate_25.getId().intValue()))
+            .andExpect(jsonPath("$.[0].tasks[*]").value(hasSize(1)))
+            .andExpect(jsonPath("$.[0].tasks[0].id").value(task_1.getId().intValue()))
+            .andExpect(jsonPath("$.[0].tasks[0].code").value(task_1.getCode()))
+            .andExpect(jsonPath("$.[0].tasks[0].coworkers[*]").isEmpty())
+            //27L
+            .andExpect(jsonPath("$.[1].shiftType.id").value(shiftTypeL.getId().intValue()))
+            .andExpect(jsonPath("$.[1].shiftDate.id").value(shiftDate_27.getId().intValue()))
+            .andExpect(jsonPath("$.[1].tasks[*]").value(hasSize(1)))
+            .andExpect(jsonPath("$.[1].tasks[0].id").value(task_1.getId().intValue()))
+            .andExpect(jsonPath("$.[1].tasks[0].code").value(task_1.getCode()))
+            .andExpect(jsonPath("$.[1].tasks[0].coworkers[*]").value(hasSize(1)))
+            .andExpect(jsonPath("$.[1].tasks[0].coworkers[0].id").value(employee_003.getId().intValue()))
+            //27N
+            .andExpect(jsonPath("$.[2].shiftType.id").value(shiftTypeN.getId().intValue()))
+            .andExpect(jsonPath("$.[2].shiftDate.id").value(shiftDate_27.getId().intValue()))
+            .andExpect(jsonPath("$.[2].tasks[*]").value(hasSize(3)))
+            .andExpect(jsonPath("$.[2].tasks[0].id").value(task_1.getId().intValue()))
+            .andExpect(jsonPath("$.[2].tasks[0].code").value(task_1.getCode()))
+            .andExpect(jsonPath("$.[2].tasks[0].coworkers[*]").value(hasSize(1)))
+            .andExpect(jsonPath("$.[2].tasks[0].coworkers[*].id").value(contains(employee_002.getId().intValue())))
+            .andExpect(jsonPath("$.[2].tasks[1].id").value(task_2.getId().intValue()))
+            .andExpect(jsonPath("$.[2].tasks[1].code").value(task_2.getCode()))
+            .andExpect(jsonPath("$.[2].tasks[1].coworkers[*]").value(hasSize(2)))
+            .andExpect(jsonPath("$.[2].tasks[1].coworkers[*].id").value(containsInAnyOrder(employee_002.getId().intValue(), employee_003.getId().intValue())))
+            .andExpect(jsonPath("$.[2].tasks[2].id").value(task_3.getId().intValue()))
+            .andExpect(jsonPath("$.[2].tasks[2].code").value(task_3.getCode()))
+            .andExpect(jsonPath("$.[2].tasks[2].coworkers[*]").isEmpty())
+        ;
     }
 
     private ShiftDate createShiftDate(int index, LocalDate date) {
