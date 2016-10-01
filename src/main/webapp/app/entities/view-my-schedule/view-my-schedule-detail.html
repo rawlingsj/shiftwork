@@ -26,7 +26,7 @@
 			</dd>
 			<dt><span translate="shiftworkApp.viewMyScheduleDetail.coworkers">Co-Workers</span></dt>
 			<dd ng-repeat="coworker in vm.shiftDetails.coworkers">
-				<span>{{ coworker.name }}</span>
+				<span>{{ coworker.name }} ({{ coworker.id }})</span>
 			</dd>
 			<dt><span translate="shiftworkApp.viewMyScheduleDetail.taskDescription">Task Description</span></dt>
 			<dd>
@@ -36,7 +36,7 @@
 			<dd>
 				<span>{{ vm.taskDetails.importance }}</span>
 			</dd>
-			<dt><span translate="shiftworkApp.viewMyScheduleDetail.taskUrgency">Task Uregency</span></dt>
+			<dt><span translate="shiftworkApp.viewMyScheduleDetail.taskUrgency">Task Urgency</span></dt>
 			<dd>
 				<span>{{ vm.taskDetails.urgency }}</span>
 			</dd>

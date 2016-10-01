@@ -4,7 +4,9 @@
             "home": {
                 "title": "View My Schedule",
 				"search": "Search for Employee"				
-            }
+            },
+			"shiftDescription" : "On ##_DATE_## you will be working a ##_SHIFT_TYPE_## shift. <br/> You have the following tasks : ",
+			"taskDescription" : "you will be working with ##_CO_WORKERS_##"
         },
 		"viewMyScheduleDetail" : {
 			"home" : {

@@ -1,3 +1,22 @@
+<style type="text/css">
+    .empShiftCalendar .day-shift {
+        background-color : rgb(255, 255, 167);
+    }
+	.empShiftCalendar .night-shift {
+		background-color : #7979d4;
+	}
+	.empShiftCalendar .taskDescription {
+		list-style: initial;
+		margin-left: 20px;
+	}
+	.empShiftCalendar .cal-slide-content a.event-item {
+		color: #fff;
+		font-weight: 400;
+		text-decoration: none;
+		cursor: default;
+	}
+</style>
+
 <div>
     <h2 translate="shiftworkApp.viewMySchedule.home.title">View My Schedule</h2>
 	<jhi-alert></jhi-alert>
@@ -60,17 +79,20 @@
 	
 		<div>
 			<mwl-calendar
+				class="empShiftCalendar"
 				events="vm.events"
 				view="vm.calendarView"
 				view-title="vm.calendarTitle"
 				view-date="vm.viewDate"
-				on-event-click="vm.showTaskDetail(calendarEvent)"
 				on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
 				cell-is-open="vm.isCellOpen"
+				on-view-change-click="false"
 				day-view-start="00:00"
 				day-view-end="23:59"
-				day-view-split="30">
+				day-view-split="30"
+				cell-modifier="vm.cellModifier( calendarCell )">
 			</mwl-calendar>
+			<!-- on-event-click="vm.showTaskDetail(calendarEvent)" -->
 		</div>
 	</div>
 </div>
