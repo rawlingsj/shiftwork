@@ -30,29 +30,6 @@
                     return $translate.refresh();
                 }]
             }
-        })
-		.state('view-my-schedule-detail', {
-            parent: 'view-my-schedule',
-            url: '/view-my-schedule-detail',
-			params : {
-				data : null
-			},
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-				if($stateParams.data == null) {
-					$state.go("view-my-schedule");
-					return;
-				}
-                $uibModal.open({
-                    templateUrl: 'app/entities/view-my-schedule/view-my-schedule-detail.html',
-                    controller: 'ViewMyScheduleDetailController',
-                    controllerAs: 'vm',
-                    size: 'lg'
-                }).result.then(function() {
-                    $state.go('view-my-schedule', null, { reload: true });
-                }, function() {
-                    $state.go('view-my-schedule');
-                });
-            }]
         });
     }
 
