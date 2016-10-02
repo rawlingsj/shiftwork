@@ -26,7 +26,6 @@ public class ShiftType implements Serializable {
     private Long id;
 
     @Column(name = "code")
-    @Pattern(regexp = "[a-zA-Z0-9]*")
     private String code;
 
     @Column(name = "index")
