@@ -17,11 +17,17 @@
             <label class="control-label" translate="shiftworkApp.shiftType.code" for="field_code">Code</label>
             <input type="text" class="form-control" name="code" id="field_code"
                     ng-model="vm.shiftType.code" ng-change="vm.verifyDuplicate(vm.shiftType.code)"
-                     />
+                    ng-pattern="/^[a-zA-Z0-9]*$/" />
+              <div ng-show="editForm.code.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.code.$error.pattern" translate="entity.validation.code">
+                    Please use numbers letters only.
+                </p>
+            </div>      
         </div>
         <div class='alert alert-danger' 
                     ng-show='vm.duplicateMsg'>
-                    The code entered is invalid, It has already been used!
+                    The code entered is invalid, It has already been used.
        </div>         
         <div class="form-group">
             <label class="control-label" translate="shiftworkApp.shiftType.index" for="field_index">Index</label>

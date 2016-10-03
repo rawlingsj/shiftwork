@@ -128,7 +128,8 @@
             "pattern": "This field should follow pattern {{ pattern }}.",
             "number": "This field should be a number.",
             "datetimelocal": "This field should be a date and time.",
-            "time": "This field should be a time."
+            "time": "This field should be a time.",
+            "code": "Please use numbers/letters only."
         }
     },
     "error": {
