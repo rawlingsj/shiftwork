@@ -1,15 +1,22 @@
 <div>
-    <h2 translate="shiftworkApp.employee.home.title">Employees</h2>
-    <jhi-alert></jhi-alert>
-    <div class="container-fluid">
-        <div class="row">
+	<h2 translate="shiftworkApp.employee.home.title">Employees</h2>
+	<jhi-alert></jhi-alert>
+	<div class="container-fluid">
+		<div class="row">
             <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="employee.new" >
+                <button class="btn btn-primary" ui-sref="employee.new">
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span  translate="shiftworkApp.employee.home.createLabel">
-                        Create new Employee
-                    </span>
+                    <span translate="shiftworkApp.employee.home.createLabel"> Create new Employee </span>
                 </button>
+            </div>
+            <div class="col-xs-4 no-padding-left">
+                <input type="text" placeholder="Search for Employee" translate translate-attr-placeholder="shiftworkApp.employee.home.search"
+                       ng-model="searchFields"
+                       uib-typeahead="employee as employee.code+', '+employee.name for employee in vm.getEmployee($viewValue) | limitTo:10"
+                       typeahead-loading="loadingemployees"
+                       typeahead-no-results="noResults" typeahead-min-length="0"
+                       typeahead-on-select="vm.onTypeaheadCallback($item, $model, $label)"
+                       class="form-control"/>
             </div>
         </div>
     </div>
