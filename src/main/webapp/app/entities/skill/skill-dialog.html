@@ -19,9 +19,9 @@
                     ng-model="vm.skill.code" ng-change="vm.verifyDuplicate(vm.skill.code)"
                      ng-pattern="/^[a-zA-Z0-9]*$/" />
               <div ng-show="editForm.code.$invalid">
-                <p class="help-block"
+                 <p class="alert alert-danger"
                     ng-show="editForm.code.$error.pattern" translate="entity.validation.code">
-                    Please use numbers letters only.
+                    This field should contain only numbers or letters.
                 </p>
             </div>                     
         </div>

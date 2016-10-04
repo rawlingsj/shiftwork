@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
-
+import javax.validation.constraints.Pattern;
 /**
  * A Skill.
  */
@@ -25,6 +25,7 @@ public class Skill implements Serializable {
     private Long id;
 
     @Column(name = "code")
+    @Pattern(regexp = "/^[a-zA-Z0-9]*$/", message = "code validation failed.")     
     private String code;
 
     @ManyToMany(mappedBy = "skillList")

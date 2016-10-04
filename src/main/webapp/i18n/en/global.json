@@ -129,7 +129,8 @@
             "number": "This field should be a number.",
             "datetimelocal": "This field should be a date and time.",
             "time": "This field should be a time.",
-            "code": "Please use numbers/letters only."
+            "code": "This field should contain only numbers or letters.",
+			"codeexists": "The code entered is invalid, It has already been used."
         }
     },
     "error": {

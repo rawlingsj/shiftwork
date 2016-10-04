@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.validation.constraints.Pattern;
 
 /**
  * A EmployeeAbsentReason.
@@ -23,6 +24,7 @@ public class EmployeeAbsentReason implements Serializable {
     private Long id;
 
     @Column(name = "code")
+    @Pattern(regexp = "/^[a-zA-Z0-9]*$/", message = "code validation failed.")     
     private String code;
 
     @Column(name = "name")

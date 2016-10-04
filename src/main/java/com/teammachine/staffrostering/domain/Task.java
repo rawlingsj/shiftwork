@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.validation.constraints.Pattern;
 
 /**
  * A Task.
@@ -26,6 +27,7 @@ public class Task implements Serializable {
     private Long id;
 
     @Column(name = "code")
+    @Pattern(regexp = "/^[a-zA-Z0-9]*$/", message = "code validation failed.")             
     private String code;
 
     @Column(name = "description")

@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.validation.constraints.Pattern;
 
 /**
  * A ShiftType.
@@ -26,6 +27,7 @@ public class ShiftType implements Serializable {
     private Long id;
 
     @Column(name = "code")
+    @Pattern(regexp = "/^[a-zA-Z0-9]*$/", message = "code validation failed.")    
     private String code;
 
     @Column(name = "index")
