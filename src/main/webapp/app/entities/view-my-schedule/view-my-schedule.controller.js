@@ -80,14 +80,25 @@
 				
 				for (var taskIndex = 0; taskIndex < empTasks.length; taskIndex++) {
 
-					taskDescription += "<li class='taskDescription'><strong>" + empTasks[taskIndex].description + "</strong>, ";
+					taskDescription += "<li class='taskDescription'><strong>" + empTasks[taskIndex].description + "</strong>";
 					
-					var coworkers = empTasks[taskIndex].coworkers.map(function(coworker){return coworker.name}).join(", ");
-					var lastCommaIndex = coworkers.lastIndexOf(",");
-					coworkers = coworkers.substr(0, lastCommaIndex) + " & " + coworkers.substr(lastCommaIndex+2);
+					if(empTasks[taskIndex].coworkers.length > 0) {
+						
+						var coworkers = empTasks[taskIndex].coworkers.map(function(coworker){return coworker.name});
 					
-					taskDescription += $translate.instant("shiftworkApp.viewMySchedule.taskDescription")
-					.replace("##_CO_WORKERS_##", coworkers);
+						if(coworkers.length > 1) {
+							coworkers = coworkers.join(",");
+							var lastCommaIndex = coworkers.lastIndexOf(",");
+							coworkers = coworkers.substr(0, lastCommaIndex) + " & " + coworkers.substr(lastCommaIndex+1);
+						}
+						else {
+							coworkers = coworkers.join("");
+						}
+							
+						taskDescription += ", " + $translate.instant("shiftworkApp.viewMySchedule.taskDescription")
+						.replace("##_CO_WORKERS_##", coworkers);
+					
+					}
 					
 					taskDescription += "</li>";
 						
