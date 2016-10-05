@@ -3,11 +3,11 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.teammachine.staffrostering.domain.Employee;
-import com.teammachine.staffrostering.domain.Shift;
 import com.teammachine.staffrostering.domain.ShiftAssignment;
 import com.teammachine.staffrostering.repository.EmployeeRepository;
 import com.teammachine.staffrostering.repository.ShiftAssignmentRepository;
 import com.teammachine.staffrostering.web.rest.dto.ScheduledShiftDTO;
+import com.teammachine.staffrostering.web.rest.dto.ScheduledShiftDTOFactory;
 import com.teammachine.staffrostering.web.rest.errors.CustomParameterizedException;
 import com.teammachine.staffrostering.web.rest.errors.ErrorConstants;
 import org.slf4j.Logger;
@@ -23,8 +23,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping({"/api", "/api_basic"})
@@ -36,6 +36,8 @@ public class EmployeeShiftResource {
     private EmployeeRepository employeeRepository;
     @Inject
     private ShiftAssignmentRepository shiftAssignmentRepository;
+    @Inject
+    private ScheduledShiftDTOFactory scheduledShiftDTOFactory;
 
     @RequestMapping(value = "/employeeshifts",
         method = RequestMethod.GET,
@@ -46,19 +48,17 @@ public class EmployeeShiftResource {
                                                      @RequestParam(value = "toDate") Long toDate) {
         log.debug("REST request to get employee schedule");
         Employee employee = findEmployeeOrThrowException(employeeId);
-        LocalDate fromLocalDate = ZonedDateTime.ofInstant(Instant.ofEpochMilli(fromDate), ZoneId.systemDefault()).toLocalDate();
-        LocalDate toLocalDate = ZonedDateTime.ofInstant(Instant.ofEpochMilli(toDate), ZoneId.systemDefault()).toLocalDate();
+        LocalDate fromLocalDate = convertToLocalDate(fromDate);
+        LocalDate toLocalDate = convertToLocalDate(toDate);
         List<ShiftAssignment> shiftAssignments = shiftAssignmentRepository.findForEmployee(employee, fromLocalDate, toLocalDate);
         if (shiftAssignments.isEmpty()) {
             return Collections.emptyList();
         }
-        Map<Shift, List<ShiftAssignment>> relatedShiftAssignments = getShiftAssignmentPerShiftMap(
-            shiftAssignments.stream().map(ShiftAssignment::getShift).collect(Collectors.toSet())
-        );
-        return shiftAssignments.stream()
-            .map(shiftAssignment -> createDTO(shiftAssignment, relatedShiftAssignments.get(shiftAssignment.getShift())))
-            .sorted(Comparator.comparing(dto -> dto.getShiftDate().getDate()))
-            .collect(Collectors.toList());
+        return scheduledShiftDTOFactory.createScheduledShiftDTOs(shiftAssignments);
+    }
+
+    private LocalDate convertToLocalDate(Long epochMilli) {
+        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(epochMilli), ZoneId.systemDefault()).toLocalDate();
     }
 
     private Employee findEmployeeOrThrowException(Long employeeId) {
@@ -67,33 +67,5 @@ public class EmployeeShiftResource {
             throw new CustomParameterizedException(ErrorConstants.ERR_NO_SUCH_EMPLOYEE, "" + employeeId);
         }
         return employee;
-    }
-
-    private Map<Shift, List<ShiftAssignment>> getShiftAssignmentPerShiftMap(Set<Shift> shift) {
-        return shiftAssignmentRepository.findAllForShifts(shift).stream()
-            .collect(Collectors.toMap(
-                ShiftAssignment::getShift,
-                Collections::singletonList, (sha1, sha2) -> {
-                    List<ShiftAssignment> result = new ArrayList<>(sha1);
-                    result.addAll(sha2);
-                    return result;
-                }));
-    }
-
-    private ScheduledShiftDTO createDTO(ShiftAssignment shiftAssignment, List<ShiftAssignment> relatedShiftAssignments) {
-        ScheduledShiftDTO dto = new ScheduledShiftDTO();
-        dto.setId(shiftAssignment.getId());
-        dto.setShiftDate(shiftAssignment.getShift().getShiftDate());
-        dto.setShiftType(shiftAssignment.getShift().getShiftType());
-        dto.setTasks(shiftAssignment.getTaskList());
-        if (relatedShiftAssignments != null) {
-            Set<Employee> coworkers = relatedShiftAssignments.stream()
-                .filter(sha -> !sha.getEmployee().equals(shiftAssignment.getEmployee()))
-                .filter(sha -> sha.getTaskList().stream().anyMatch(task -> shiftAssignment.getTaskList().contains(task)))
-                .map(ShiftAssignment::getEmployee)
-                .collect(Collectors.toSet());
-            dto.setCoworkers(coworkers);
-        }
-        return dto;
     }
 }
