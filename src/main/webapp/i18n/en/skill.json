@@ -17,7 +17,8 @@
                 "title": "Skill"
             },
             "code": "Code",
-            "skillProficiencies": "Skill Proficiencies"
+            "skillProficiencies": "Skill Proficiencies",
+            "rotationPeriod": "Max period without allocation"
         }
     }
 }

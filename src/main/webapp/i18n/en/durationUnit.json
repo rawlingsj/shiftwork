@@ -2,19 +2,19 @@
     "shiftworkApp": {
         "DurationUnit" : {
             "null": "",
-            "HOURS": "hours",
-            "DAYS": "days",
-            "WEEKS": "weeks",
-            "MONTHS": "months",
-            "YEARS": "years"
+            "HOURS": "hour(s)",
+            "DAYS": "day(s)",
+            "WEEKS": "week(s)",
+            "MONTHS": "month(s)",
+            "YEARS": "year(s)"
         },
         "Duration": {
             "null": "",
-            "HOURS": "{{value}} hours",
-            "DAYS": "{{value}} days",
-            "WEEKS": "{{value}} weeks",
-            "MONTHS": "{{value}} months",
-            "YEARS": "{{value}} years"
+            "HOURS": "{{value}} hour(s)",
+            "DAYS": "{{value}} day(s)",
+            "WEEKS": "{{value}} week(s)",
+            "MONTHS": "{{value}} month(s)",
+            "YEARS": "{{value}} year(s)"
         }
     }
 }

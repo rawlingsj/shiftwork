@@ -1,13 +1,15 @@
 package com.teammachine.staffrostering.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teammachine.staffrostering.domain.enumeration.DurationUnit;
+import com.teammachine.staffrostering.domain.validators.AcceptDurationUnits;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.Period;
 import java.util.Objects;
 
 /**
@@ -24,13 +26,18 @@ public class Skill implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
     @Column(name = "code")
     private String code;
 
-    @ManyToMany(mappedBy = "skillList")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<SkillProficiency> skillProficiencies = new HashSet<>();
+    @NotNull
+    @Column(name = "rotation_period_value")
+    private Integer rotationPeriodValue;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rotation_period_unit")
+    @AcceptDurationUnits(units = {DurationUnit.DAYS, DurationUnit.MONTHS, DurationUnit.YEARS})
+    private DurationUnit rotationPeriodUnit;
 
     public Long getId() {
         return id;
@@ -48,12 +55,37 @@ public class Skill implements Serializable {
         this.code = code;
     }
 
-    public Set<SkillProficiency> getSkillProficiencies() {
-        return skillProficiencies;
+    public Integer getRotationPeriodValue() {
+        return rotationPeriodValue;
     }
 
-    public void setSkillProficiencies(Set<SkillProficiency> skillProficiencies) {
-        this.skillProficiencies = skillProficiencies;
+    public void setRotationPeriodValue(int rotationPeriodValue) {
+        this.rotationPeriodValue = rotationPeriodValue;
+    }
+
+    public DurationUnit getRotationPeriodUnit() {
+        return rotationPeriodUnit;
+    }
+
+    public void setRotationPeriodUnit(DurationUnit rotationPeriodUnit) {
+        this.rotationPeriodUnit = rotationPeriodUnit;
+    }
+
+    public Period getRotationPeriod() {
+        if (rotationPeriodUnit != null && rotationPeriodValue != null) {
+            switch (this.rotationPeriodUnit) {
+                case DAYS:
+                    return Period.ofDays(this.rotationPeriodValue);
+                case MONTHS:
+                    return Period.ofMonths(this.rotationPeriodValue);
+                case YEARS:
+                    return Period.ofYears(this.rotationPeriodValue);
+                default:
+                    throw new IllegalStateException("Only days, months, years are supported");
+            }
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -65,7 +97,7 @@ public class Skill implements Serializable {
             return false;
         }
         Skill skill = (Skill) o;
-        if(skill.id == null || id == null) {
+        if (skill.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, skill.id);

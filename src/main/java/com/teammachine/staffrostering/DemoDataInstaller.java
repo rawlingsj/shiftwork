@@ -81,7 +81,7 @@ class DemoDataInstaller {
     private EmployeeLeaveAbsenceRepository employeeLeaveAbsenceRepository;
 
     @PostConstruct
-    private void install() {
+    void install() {
         logger.info("----- Installation of demo data -----");
 
         // Weekend definition
@@ -133,9 +133,9 @@ class DemoDataInstaller {
         logger.info("* tasks");
 
         // skills
-        Skill skill1 = createSkill("Skill1");
-        Skill skill2 = createSkill("Skill2");
-        Skill skill3 = createSkill("Skill3");
+        Skill skill1 = createSkill("Skill1", 14, DurationUnit.DAYS);
+        Skill skill2 = createSkill("Skill2", 1, DurationUnit.MONTHS);
+        Skill skill3 = createSkill("Skill3", 1, DurationUnit.YEARS);
         logger.info("* skills");
 
         // task skill requirements
@@ -259,9 +259,11 @@ class DemoDataInstaller {
         contractLineRepository.save(minMaxContractLine);
     }
 
-    private Skill createSkill(String code) {
+    private Skill createSkill(String code, int rotationPeriod, DurationUnit rotationPeriodUnit) {
         Skill skill = new Skill();
         skill.setCode(code);
+        skill.setRotationPeriodValue(rotationPeriod);
+        skill.setRotationPeriodUnit(rotationPeriodUnit);
         skillRepository.save(skill);
         return skill;
     }

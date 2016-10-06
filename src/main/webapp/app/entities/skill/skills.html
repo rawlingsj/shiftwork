@@ -20,6 +20,7 @@
                 <tr>
                     <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.skill.code">Code</span></th>
+                    <th><span translate="shiftworkApp.skill.rotationPeriod">Code</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -27,6 +28,8 @@
                 <tr ng-repeat="skill in vm.skills track by skill.id">
                     <td><a ui-sref="skill-detail({id:skill.id})">{{skill.id}}</a></td>
                     <td>{{skill.code}}</td>
+                    <td translate="{{'shiftworkApp.Duration.' + skill.rotationPeriodUnit}}"
+                        translate-values="{value: '{{skill.rotationPeriodValue}}'}">{{skill.rotationPeriodValue}} {{skill.rotationPeriodUnit}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

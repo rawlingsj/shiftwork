@@ -2,18 +2,17 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.Skill;
+import com.teammachine.staffrostering.domain.enumeration.DurationUnit;
 import com.teammachine.staffrostering.repository.SkillRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -23,9 +22,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.time.Period;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -42,7 +43,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class SkillResourceIntTest {
 
     private static final String DEFAULT_CODE = "AAAAA";
+    private static final int DEFAULT_ROTATION_PERIOD_VALUE = 2;
+    private static final DurationUnit DEFAULT_ROTATION_PERIOD_UNIT = DurationUnit.MONTHS;
+    private static final Period DEFAULT_ROTATION_PERIOD = Period.ofMonths(DEFAULT_ROTATION_PERIOD_VALUE);
+
     private static final String UPDATED_CODE = "BBBBB";
+    private static final int UPDATED_ROTATION_PERIOD_VALUE = 20;
+    private static final DurationUnit UPDATED_ROTATION_PERIOD_UNIT = DurationUnit.DAYS;
+    private static final Period UPDATED_ROTATION_PERIOD = Period.ofDays(UPDATED_ROTATION_PERIOD_VALUE);
 
     @Inject
     private SkillRepository skillRepository;
@@ -71,6 +79,8 @@ public class SkillResourceIntTest {
     public void initTest() {
         skill = new Skill();
         skill.setCode(DEFAULT_CODE);
+        skill.setRotationPeriodValue(DEFAULT_ROTATION_PERIOD_VALUE);
+        skill.setRotationPeriodUnit(DEFAULT_ROTATION_PERIOD_UNIT);
     }
 
     @Test
@@ -79,7 +89,6 @@ public class SkillResourceIntTest {
         int databaseSizeBeforeCreate = skillRepository.findAll().size();
 
         // Create the Skill
-
         restSkillMockMvc.perform(post("/api/skills")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(skill)))
@@ -90,6 +99,9 @@ public class SkillResourceIntTest {
         assertThat(skills).hasSize(databaseSizeBeforeCreate + 1);
         Skill testSkill = skills.get(skills.size() - 1);
         assertThat(testSkill.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testSkill.getRotationPeriodValue()).isEqualTo(DEFAULT_ROTATION_PERIOD_VALUE);
+        assertThat(testSkill.getRotationPeriodUnit()).isEqualTo(DEFAULT_ROTATION_PERIOD_UNIT);
+        assertThat(testSkill.getRotationPeriod()).isEqualTo(DEFAULT_ROTATION_PERIOD);
     }
 
     @Test
@@ -103,7 +115,10 @@ public class SkillResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(skill.getId().intValue())))
-                .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())));
+                .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)))
+                .andExpect(jsonPath("$.[*].rotationPeriodValue").value(hasItem(DEFAULT_ROTATION_PERIOD_VALUE)))
+                .andExpect(jsonPath("$.[*].rotationPeriodUnit").value(hasItem(DEFAULT_ROTATION_PERIOD_UNIT.toString())))
+                .andExpect(jsonPath("$.[*].rotationPeriod").value(hasItem(DEFAULT_ROTATION_PERIOD.toString())));
     }
 
     @Test
@@ -117,7 +132,10 @@ public class SkillResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(skill.getId().intValue()))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()));
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE))
+            .andExpect(jsonPath("$.rotationPeriodValue").value(DEFAULT_ROTATION_PERIOD_VALUE))
+            .andExpect(jsonPath("$.rotationPeriodUnit").value(DEFAULT_ROTATION_PERIOD_UNIT.toString()))
+            .andExpect(jsonPath("$.rotationPeriod").value(DEFAULT_ROTATION_PERIOD.toString()));
     }
 
     @Test
@@ -139,6 +157,8 @@ public class SkillResourceIntTest {
         Skill updatedSkill = new Skill();
         updatedSkill.setId(skill.getId());
         updatedSkill.setCode(UPDATED_CODE);
+        updatedSkill.setRotationPeriodValue(UPDATED_ROTATION_PERIOD_VALUE);
+        updatedSkill.setRotationPeriodUnit(UPDATED_ROTATION_PERIOD_UNIT);
 
         restSkillMockMvc.perform(put("/api/skills")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -150,6 +170,9 @@ public class SkillResourceIntTest {
         assertThat(skills).hasSize(databaseSizeBeforeUpdate);
         Skill testSkill = skills.get(skills.size() - 1);
         assertThat(testSkill.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testSkill.getRotationPeriodValue()).isEqualTo(UPDATED_ROTATION_PERIOD_VALUE);
+        assertThat(testSkill.getRotationPeriodUnit()).isEqualTo(UPDATED_ROTATION_PERIOD_UNIT);
+        assertThat(testSkill.getRotationPeriod()).isEqualTo(UPDATED_ROTATION_PERIOD);
     }
 
     @Test

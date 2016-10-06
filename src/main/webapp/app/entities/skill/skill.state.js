@@ -26,6 +26,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('skill');
+                    $translatePartialLoader.addPart('durationUnit');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
@@ -48,6 +49,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('skill');
+                    $translatePartialLoader.addPart('durationUnit');
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Skill', function($stateParams, Skill) {
