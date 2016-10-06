@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * A EmployeeAbsentReason.
@@ -23,8 +24,9 @@ public class EmployeeAbsentReason implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "code validation failed.")   
     @Column(name = "code")
-    @Pattern(regexp = "/^[a-zA-Z0-9]*$/", message = "code validation failed.")     
     private String code;
 
     @Column(name = "name")

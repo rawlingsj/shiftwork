@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * A Employee.
@@ -25,8 +26,9 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "code validation failed.")   
     @Column(name = "code")
-    @Pattern(regexp = "/^[a-zA-Z0-9]*$/", message = "code validation failed.")     
     private String code;
 
     @Column(name = "name")
