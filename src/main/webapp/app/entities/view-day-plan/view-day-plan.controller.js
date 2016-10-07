@@ -5,22 +5,22 @@
 	.module('shiftworkApp')
 	.controller('ViewDayPlanController', ViewDayPlanController);
 
-	ViewDayPlanController.$inject = ['$scope', '$state', 'ViewDayPlan', '$translate'];
+	ViewDayPlanController.$inject = ['$scope', '$state', 'ViewDayPlan', '$translate', '$timeout'];
 
-	function ViewDayPlanController($scope, $state, ViewDayPlan, $translate) {
+	function ViewDayPlanController($scope, $state, ViewDayPlan, $translate, $timeout) {
 
 		var vm = this;
 
-		vm.shiftAssignments = new Array();
-		
+		vm.shiftAssignments = new Array();		
 		vm.loadShiftAssignments = function (shiftDay) {
 			ViewDayPlan.query({
-				fromShiftDate : shiftDay,
-				toShiftDate : shiftDay
+				shiftDate : shiftDay
 			}, function (result) {
 				vm.shiftAssignments = result;
-				vm.formatShiftDataForTimeline();
-				vm.generateTimeLine();
+				$timeout(function() {
+					vm.formatShiftDataForTimeline();
+					vm.generateTimeLine();
+				});
 			});
 		};
 		
@@ -98,7 +98,7 @@
 				.append("svg")
 				.attr("width",parentWidth)
 				.attr("preserveAspectRatio", "xMinYMin meet")
-				.attr("viewBox", "0 0 " + (parentWidth) + " " + (450))
+				//.attr("viewBox", "0 0 " + (parentWidth) + " " + (450))
 				.datum(vm.timelineData)
 				.call(chart);
 				
@@ -119,37 +119,61 @@
 			vm.timelineData = new Array();
 			var dateObjects = new Array();
 
-			for (var index = 0; index < vm.shiftAssignments.length; index++) {
+			for (var index = 0; index < vm.shiftAssignments.length && index<5; index++) {
 
 				var empShiftData = {};
 				empShiftData.label = vm.shiftAssignments[index].employee.name;
 				empShiftData.times = new Array();
 
-				for (var shiftIndex = 0; shiftIndex < vm.shiftAssignments[index].shift.length; shiftIndex++) {
+				var shiftType = vm.shiftAssignments[index].shift.shiftType;
+				var shiftStartDate = new Date(vm.shiftAssignments[index].shift.shiftDate.date);
+				var shiftEndDate = new Date(vm.shiftAssignments[index].shift.shiftDate.date);
+				
+				var shiftStartHour = shiftType.startTime.split(":")[0];
+				var shiftStartMinutes = shiftType.startTime.split(":")[1];
+				var shiftEndHour = shiftType.endTime.split(":")[0];
+				var shiftEndMinutes = shiftType.endTime.split(":")[1];
+				
+				if(shiftEndHour < shiftStartHour) {
+					shiftEndDate.setDate(shiftStartDate.getDate()+1);
+				}
+				
+				var shiftStartDateTime = new Date((new Date(shiftStartDate.setHours(shiftStartHour))).setMinutes(shiftStartMinutes));
+				var shiftEndDateTime = new Date((new Date(shiftEndDate.setHours(shiftEndHour))).setMinutes(shiftEndMinutes));
+				
+				var totalShiftTimeInMs = shiftEndDateTime - shiftStartDateTime;
+				
+				var task1StartTime = shiftStartDateTime.getTime();
+				var task1EndTime = task1StartTime + (totalShiftTimeInMs * 0.25);
+				
+				var task2StartTime = task1EndTime;
+				var task2EndTime = shiftEndDateTime.getTime();
+				
+				var empTasks = vm.shiftAssignments[index].taskList;
+				
+				var nightShift = shiftType.nightShift;
 
-					var empTasks = vm.shiftAssignments[index].shift[shiftIndex].shiftType.tasks;
-					var oddShift = ((shiftIndex + 1) % 2 == 0);
+				for (var taskIndex = 0; taskIndex < empTasks.length; taskIndex++) {
 
-					for (var taskIndex = 0; taskIndex < empTasks.length; taskIndex++) {
+					var startTime = ((taskIndex+1)%2 == 0) ? task1StartTime : task2StartTime;
+					var endTime = ((taskIndex+1)%2 == 0) ? task1EndTime : task2EndTime;
+					
+					empShiftData.times.push({
+						"id" : ("border" + "_" + (nightShift ? "black" : "red")),
+						"starting_time" : startTime,
+						"ending_time" : endTime
+					});
 
-						empShiftData.times.push({
-							"id" : ("border" + "_" + (oddShift ? "red" : "black")),
-							"starting_time" : empTasks[taskIndex].startTime,
-							"ending_time" : empTasks[taskIndex].endTime
-						});
-
-						dateObjects.push(new Date(empTasks[taskIndex].startTime));
-						dateObjects.push(new Date(empTasks[taskIndex].endTime));
-					}
-
+					dateObjects.push(new Date(startTime));
+					dateObjects.push(new Date(endTime));
 				}
 
-				vm.timelineData.push(empShiftData);
+				vm.timelineData.push(empShiftData);	
 
 			}
 
-			vm.maxShiftTime = new Date(Math.max.apply(null, dateObjects)).getTime();
-			vm.minShiftTime = new Date(Math.min.apply(null, dateObjects)).getTime();
+			vm.maxShiftTime = new Date(Math.max.apply(null, dateObjects)).getTime() + 1 * 60 * 60 * 1000;
+			vm.minShiftTime = new Date(Math.min.apply(null, dateObjects)).getTime() - 1 * 60 * 60 * 1000;
 
 		};
 	}

@@ -7,7 +7,7 @@
     ViewDayPlan.$inject = ['$resource', 'DateUtils'];
 
     function ViewDayPlan ($resource, DateUtils) {
-        var resourceUrl =  'api/shift-assignments/:id';
+        var resourceUrl =  'api/schedules';
 
         //return $resource(resourceUrl, { shiftDate : 'shiftDate' }, {
 		return $resource(resourceUrl, {}, {
