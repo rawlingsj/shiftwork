@@ -24,11 +24,11 @@
                     This field should contain only numbers or letters.
                 </p>
             </div>
+            <div class='alert alert-danger' 
+                        ng-show='vm.duplicateMsg'>
+                        The code entered is invalid, It has already been used.
+            </div>              
         </div>
-        <div class='alert alert-danger' 
-                    ng-show='vm.duplicateMsg'>
-                    The code entered is invalid, It has already been used.
-       </div>         
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

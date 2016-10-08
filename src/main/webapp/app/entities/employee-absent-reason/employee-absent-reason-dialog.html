@@ -26,11 +26,11 @@
                     This field should contain only numbers or letters.
                 </p>
             </div>
+            <div class='alert alert-danger' 
+                        ng-show='vm.duplicateMsg'>
+                        The code entered is invalid, It has already been used.
+            </div>             
         </div>
-        <div class='alert alert-danger' 
-                    ng-show='vm.duplicateMsg'>
-                    The code entered is invalid, It has already been used.
-       </div>      
         <div class="form-group">
             <label class="control-label" translate="shiftworkApp.employeeAbsentReason.name" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
