@@ -12,13 +12,16 @@
 	top: 10px;
 	left: 0;
 }
-#border_black {
+#shiftTimeline .border_black {
 	stroke: #000;
 	stroke-width : 2;
 }
-#border_red {
+#shiftTimeline .border_red {
 	stroke: red;
 	stroke-width : 2;
+}
+#shiftTimeline g text {
+	cursor : default;
 }
 .axis path,
 .axis line {
@@ -30,4 +33,14 @@
 .axis text {
   font-family: sans-serif;
   font-size: 10px;
+}
+#hoverRes .coloredDiv {
+	height: 20px; 
+	width: 20px; 
+	float: left;
+}
+
+#hoverRes #taskDescription {
+	padding-left: 30px;
+	margin-top: 15px;
 }

@@ -5,7 +5,10 @@
                 "title": "Viewing Day Schedule"     
             },
 			"name" : "Name",
-			"noRecordsFoundMsg" : "No Records Found, Select Any Other Date"
+			"noRecordsFoundMsg" : "No Records Found, Select Any Other Date",
+			"to" : "to",
+			"taskName" : "Task Name",
+			"taskTiming" : "Task Timing"
         }
     }
 }

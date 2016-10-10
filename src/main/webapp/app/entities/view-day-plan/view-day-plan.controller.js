@@ -11,21 +11,21 @@
 
 		var vm = this;
 
-		vm.shiftAssignments = new Array();		
+		vm.shiftAssignments = new Array();
 		vm.loadShiftAssignments = function (shiftDay) {
 			ViewDayPlan.query({
 				shiftDate : shiftDay
 			}, function (result) {
 				vm.shiftAssignments = result;
-				$timeout(function() {
+				$timeout(function () {
 					vm.formatShiftDataForTimeline();
 					vm.generateTimeLine();
 				});
 			});
 		};
-		
+
 		vm.loadShiftAssignments(Date.now());
-		
+
 		moment.updateLocale('yesterday-today-tomorrow', { // Update moment locale to display (Yesterday, Today And Tomorrow)
 			calendar : {
 				lastDay : '[' + $translate.instant("global.day.yesterday") + ']',
@@ -45,7 +45,7 @@
 		vm.shiftDateFormatted = moment(vm.shiftDate).calendar();
 
 		vm.shiftDateChanged = function () {
-			
+
 			if (!vm.shiftDate) { // handle clear button
 				vm.shiftDate = new Date();
 			}
@@ -68,7 +68,7 @@
 			var chartElem = d3.select("#shiftTimeline");
 			chartElem.html(""); // Remove previous timeline if any
 			var parentWidth = $(parentElem).width();
-			
+
 			var chart = d3.timeline()
 				.beginning(vm.minShiftTime) //adding beginning and ending times to speed up rendering a little
 				.ending(vm.maxShiftTime)
@@ -90,76 +90,89 @@
 				})
 				.click(function (d, i, datum) { // same way you can bind hover event, same parameters.
 					console.log(datum.label);
+				})
+				.hover(function (d, i, datum) {
+					var taskStartTime = new Date(d.starting_time);
+					var taskEndTime = new Date(d.ending_time);
+					var taskTimings = [moment(taskStartTime).format("h:mm"), moment(taskEndTime).format("h:mm")]
+					var div = $('#hoverRes');
+					var colors = chart.colors();
+					div.find('.coloredDiv').css('background-color', colors(i))
+					div.find('#taskDescription').html($translate.instant("shiftworkApp.viewDayPlan.taskName") + ": " + d.label + " <br/>" +
+						$translate.instant("shiftworkApp.viewDayPlan.taskTiming") + ": " + taskTimings[0] + " " + $translate.instant("shiftworkApp.viewDayPlan.to") + " " + taskTimings[1]);
 				});
 
 			var svg = chartElem
 				.append("div")
 				.classed("svg-container", true)
 				.append("svg")
-				.attr("width",parentWidth)
+				.attr("width", parentWidth)
 				.attr("preserveAspectRatio", "xMinYMin meet")
 				//.attr("viewBox", "0 0 " + (parentWidth) + " " + (450))
 				.datum(vm.timelineData)
 				.call(chart);
-				
+
 			//d3.select("svg").classed("svg-content-responsive", true);
-			
+
 			var aspectRatio = d3.select("svg").attr("height") / d3.select("svg").attr("width");
-			
- 			d3.select(window)
+
+			d3.select(window)
 			.on("resize", function () {
 				var parentWidth = $(parentElem).width();
 				d3.select("svg").attr("width", parentWidth).attr("height", parentWidth * aspectRatio);
 			});
-			 
+
 		};
-		
+
 		vm.formatShiftDataForTimeline = function () {
 
 			vm.timelineData = new Array();
 			var dateObjects = new Array();
 
-			for (var index = 0; index < vm.shiftAssignments.length && index<5; index++) {
+			for (var index = 0; index < vm.shiftAssignments.length; index++) {
 
 				var empShiftData = {};
 				empShiftData.label = vm.shiftAssignments[index].employee.name;
+				empShiftData.class = "shift_" + (index + 1);
 				empShiftData.times = new Array();
 
 				var shiftType = vm.shiftAssignments[index].shift.shiftType;
 				var shiftStartDate = new Date(vm.shiftAssignments[index].shift.shiftDate.date);
 				var shiftEndDate = new Date(vm.shiftAssignments[index].shift.shiftDate.date);
-				
+
 				var shiftStartHour = shiftType.startTime.split(":")[0];
 				var shiftStartMinutes = shiftType.startTime.split(":")[1];
 				var shiftEndHour = shiftType.endTime.split(":")[0];
 				var shiftEndMinutes = shiftType.endTime.split(":")[1];
-				
-				if(shiftEndHour < shiftStartHour) {
-					shiftEndDate.setDate(shiftStartDate.getDate()+1);
+
+				if (shiftEndHour < shiftStartHour) {
+					shiftEndDate.setDate(shiftStartDate.getDate() + 1);
 				}
-				
+
 				var shiftStartDateTime = new Date((new Date(shiftStartDate.setHours(shiftStartHour))).setMinutes(shiftStartMinutes));
 				var shiftEndDateTime = new Date((new Date(shiftEndDate.setHours(shiftEndHour))).setMinutes(shiftEndMinutes));
-				
+
 				var totalShiftTimeInMs = shiftEndDateTime - shiftStartDateTime;
-				
+
 				var task1StartTime = shiftStartDateTime.getTime();
 				var task1EndTime = task1StartTime + (totalShiftTimeInMs * 0.25);
-				
+
 				var task2StartTime = task1EndTime;
 				var task2EndTime = shiftEndDateTime.getTime();
-				
+
 				var empTasks = vm.shiftAssignments[index].taskList;
-				
+
 				var nightShift = shiftType.nightShift;
 
 				for (var taskIndex = 0; taskIndex < empTasks.length; taskIndex++) {
 
-					var startTime = ((taskIndex+1)%2 == 0) ? task1StartTime : task2StartTime;
-					var endTime = ((taskIndex+1)%2 == 0) ? task1EndTime : task2EndTime;
-					
+					var startTime = ((taskIndex + 1) % 2 == 0) ? task1StartTime : task2StartTime;
+					var endTime = ((taskIndex + 1) % 2 == 0) ? task1EndTime : task2EndTime;
+
 					empShiftData.times.push({
-						"id" : ("border" + "_" + (nightShift ? "black" : "red")),
+						"id" : (taskIndex + 1),
+						"class" : ("border" + "_" + (nightShift ? "black" : "red")),
+						"label" : empTasks[taskIndex].description,
 						"starting_time" : startTime,
 						"ending_time" : endTime
 					});
@@ -168,7 +181,7 @@
 					dateObjects.push(new Date(endTime));
 				}
 
-				vm.timelineData.push(empShiftData);	
+				vm.timelineData.push(empShiftData);
 
 			}
 
