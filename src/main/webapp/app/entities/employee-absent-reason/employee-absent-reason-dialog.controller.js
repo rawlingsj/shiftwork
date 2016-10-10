@@ -11,6 +11,17 @@
         var vm = this;
         vm.employeeAbsentReason = entity;
 
+        vm.duplicateMsg = false;
+        vm.editId = $stateParams.id === null ? 0 : parseInt($stateParams.id);
+        vm.employeeAbsentReasons = [];
+        vm.loadAll = function() {
+            EmployeeAbsentReason.query(function(result) {
+                vm.employeeAbsentReasons = result;
+            });
+        };
+
+        vm.loadAll();
+
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
@@ -37,5 +48,23 @@
         vm.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
+        vm.verifyDuplicate = function(code) {
+            vm.duplicateMsg = false;
+            angular.forEach(vm.employeeAbsentReasons, function(employeeAbsentReason, key){
+                if(employeeAbsentReason.code === code) {
+                    if( vm.editId === 0) {
+                        console.log('existed');
+                        vm.duplicateMsg = true;
+                        return vm.duplicateMsg;
+                    }
+                    else if(vm.editId != employeeAbsentReason.id) {
+                        console.log('existed');
+                        vm.duplicateMsg = true;
+                        return vm.duplicateMsg;                       
+                    }
+                }
+            });
+            return vm.duplicateMsg;
+        }
     }
 })();

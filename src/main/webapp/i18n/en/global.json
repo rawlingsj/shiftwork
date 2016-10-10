@@ -128,7 +128,9 @@
             "pattern": "This field should follow pattern {{ pattern }}.",
             "number": "This field should be a number.",
             "datetimelocal": "This field should be a date and time.",
-            "time": "This field should be a time."
+            "time": "This field should be a time.",
+            "code": "This field should contain only numbers or letters.",
+			"codeexists": "The code entered is invalid, It has already been used."
         }
     },
     "error": {

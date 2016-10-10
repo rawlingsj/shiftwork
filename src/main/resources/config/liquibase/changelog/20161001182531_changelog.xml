@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+   
+<changeSet author="LD (generated)" id="1475346350519-1">
+    <addUniqueConstraint columnNames="code"
+            constraintName="shift_type_code_key"
+            tableName="shift_type"/>
+</changeSet>
+<changeSet author="LD (generated)" id="1475346350519-2">
+    <addUniqueConstraint columnNames="code"
+            constraintName="employee_code_key"
+            tableName="employee"/>
+</changeSet>
+<changeSet author="LD (generated)" id="1475346350519-3">
+    <addUniqueConstraint columnNames="code"
+            constraintName="skill_code_key"
+            tableName="skill"/>
+</changeSet>
+<changeSet author="LD (generated)" id="1475346350519-4">
+    <addUniqueConstraint columnNames="code"
+            constraintName="task_code_key"
+            tableName="task"/>
+</changeSet>
+<changeSet author="LD (generated)" id="1475346350519-5">
+    <addUniqueConstraint columnNames="code"
+            constraintName="employee_absent_reason_code_key"
+            tableName="employee_absent_reason"/>
+</changeSet>
+<changeSet author="LD (generated)" id="1475346350519-6">
+    <addUniqueConstraint columnNames="code"
+            constraintName="contract_code_key"
+            tableName="contract"/>
+</changeSet>
+</databaseChangeLog>

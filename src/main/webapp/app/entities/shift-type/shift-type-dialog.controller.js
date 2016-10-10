@@ -11,6 +11,16 @@
         var vm = this;
         vm.shiftType = entity;
         vm.tasks = Task.query();
+        vm.duplicateMsg = false;
+        vm.editId = $stateParams.id === null ? 0 : parseInt($stateParams.id);
+        vm.shiftTypes = [];
+        vm.loadAll = function() {
+            ShiftType.query(function(result) {
+                vm.shiftTypes = result;
+            });
+        };
+
+        vm.loadAll();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
@@ -38,5 +48,24 @@
         vm.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
+
+        vm.verifyDuplicate = function(code) {
+            vm.duplicateMsg = false;
+            angular.forEach(vm.shiftTypes, function(shiftType, key){
+                if(shiftType.code === code) {
+                    if( vm.editId === 0) {
+                        console.log('existed');
+                        vm.duplicateMsg = true;
+                        return vm.duplicateMsg;
+                    }
+                    else if(vm.editId != shiftType.id) {
+                        console.log('existed');
+                        vm.duplicateMsg = true;
+                        return vm.duplicateMsg;                       
+                    }
+                }
+            });
+            return vm.duplicateMsg;
+        }               
     }
 })();

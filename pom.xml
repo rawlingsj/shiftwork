@@ -290,6 +290,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-envers</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -395,6 +400,7 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-data</artifactId>
         </dependency>
+        <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
 
     <repositories>
@@ -614,7 +620,9 @@
                     <runOrder>alphabetical</runOrder>
                 </configuration>
             </plugin>
-            <plugin>
+
+            <!-- Commented this portion because metamodel classes not generating -->
+            <!--  <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
                 <version>2.2.4</version>
@@ -644,7 +652,8 @@
                         <mapstruct.defaultComponentModel>spring</mapstruct.defaultComponentModel>
                     </options>
                 </configuration>
-            </plugin>
+            </plugin> -->
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
