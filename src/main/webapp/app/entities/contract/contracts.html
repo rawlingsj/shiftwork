@@ -18,7 +18,7 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr>
-                    <th><span translate="global.field.id">ID</span></th>
+                    <th ng-show="false"><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.contract.code">Code</span></th>
                     <th><span translate="shiftworkApp.contract.description">Description</span></th>
                     <th><span translate="shiftworkApp.contract.weekendDefinition">Weekend Definition</span></th>
@@ -27,7 +27,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="contract in vm.contracts track by contract.id">
-                    <td><a ui-sref="contract-detail({id:contract.id})">{{contract.id}}</a></td>
+                    <td ng-show="false"><a ui-sref="contract-detail({id:contract.id})">{{contract.id}}</a></td>
                     <td>{{contract.code}}</td>
                     <td>{{contract.description}}</td>
                     <td>
