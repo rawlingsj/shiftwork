@@ -89,7 +89,7 @@
 						if(coworkers.length > 1) {
 							coworkers = coworkers.join(",");
 							var lastCommaIndex = coworkers.lastIndexOf(",");
-							coworkers = coworkers.substr(0, lastCommaIndex) + " & " + coworkers.substr(lastCommaIndex+1);
+							coworkers = coworkers.substr(0, lastCommaIndex) + " & " + coworkers.substr(lastCommaIndex + 1);
 						}
 						else {
 							coworkers = coworkers.join("");

@@ -102,16 +102,23 @@
 						$translate.instant("shiftworkApp.viewDayPlan.taskTiming") + ": " + taskTimings[0] + " " + $translate.instant("shiftworkApp.viewDayPlan.to") + " " + taskTimings[1]);
 				});
 
+			/* var viewBoxHeight = 450;
+			if(vm.timelineData.length < 10) {
+				viewBoxHeight = vm.timelineData.length * 45;
+			} */
+			
 			var svg = chartElem
 				.append("div")
 				.classed("svg-container", true)
 				.append("svg")
 				.attr("width", parentWidth)
 				.attr("preserveAspectRatio", "xMinYMin meet")
-				//.attr("viewBox", "0 0 " + (parentWidth) + " " + (450))
+				//.attr("viewBox", "0 0 " + (parentWidth) + " " + (viewBoxHeight))
 				.datum(vm.timelineData)
 				.call(chart);
 
+			d3.select("svg").attr("viewBox", "0 0 " + (parentWidth) + " " + d3.select("svg").attr("height"));
+			
 			//d3.select("svg").classed("svg-content-responsive", true);
 
 			var aspectRatio = d3.select("svg").attr("height") / d3.select("svg").attr("width");
