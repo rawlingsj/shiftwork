@@ -58,23 +58,26 @@
 			<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'" translate="calendar.view.day">Day</label>
 		  </div>
 		</div>
-	
-		<div>
-			<mwl-calendar
-				class="empShiftCalendar"
-				events="vm.events"
-				view="vm.calendarView"
-				view-title="vm.calendarTitle"
-				view-date="vm.viewDate"
-				on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-				cell-is-open="vm.isCellOpen"
-				on-view-change-click="false"
-				day-view-start="00:00"
-				day-view-end="23:59"
-				day-view-split="30"
-				cell-modifier="vm.cellModifier( calendarCell )">
-			</mwl-calendar>
-			<!-- on-event-click="vm.showTaskDetail(calendarEvent)" -->
-		</div>
+		
+		<div class="clear"></div>
+		<br class="visible-xs visible-sm">
+		<br>
+		
+		<mwl-calendar
+			class="empShiftCalendar"
+			events="vm.events"
+			view="vm.calendarView"
+			view-title="vm.calendarTitle"
+			view-date="vm.viewDate"
+			on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+			cell-is-open="vm.isCellOpen"
+			on-view-change-click="false"
+			day-view-start="00:00"
+			day-view-end="23:59"
+			day-view-split="30"
+			cell-modifier="vm.cellModifier( calendarCell )">
+		</mwl-calendar>
+		<!-- on-event-click="vm.showTaskDetail(calendarEvent)" -->
+		
 	</div>
 </div>
