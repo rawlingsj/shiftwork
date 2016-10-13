@@ -94,7 +94,7 @@
 				.hover(function (d, i, datum) {
 					var taskStartTime = new Date(d.starting_time);
 					var taskEndTime = new Date(d.ending_time);
-					var taskTimings = [moment(taskStartTime).format("h:mm"), moment(taskEndTime).format("h:mm")]
+					var taskTimings = [moment(taskStartTime).format("H:mm"), moment(taskEndTime).format("H:mm")]
 					var div = $('#hoverRes');
 					var colors = chart.colors();
 					div.find('.coloredDiv').css('background-color', colors(i))
@@ -143,6 +143,7 @@
 				empShiftData.class = "shift_" + (index + 1);
 				empShiftData.times = new Array();
 
+				var empTasks = vm.shiftAssignments[index].taskList;
 				var shiftType = vm.shiftAssignments[index].shift.shiftType;
 				var shiftStartDate = new Date(vm.shiftAssignments[index].shift.shiftDate.date);
 				var shiftEndDate = new Date(vm.shiftAssignments[index].shift.shiftDate.date);
@@ -162,19 +163,23 @@
 				var totalShiftTimeInMs = shiftEndDateTime - shiftStartDateTime;
 
 				var task1StartTime = shiftStartDateTime.getTime();
-				var task1EndTime = task1StartTime + (totalShiftTimeInMs * 0.25);
-
-				var task2StartTime = task1EndTime;
-				var task2EndTime = shiftEndDateTime.getTime();
-
-				var empTasks = vm.shiftAssignments[index].taskList;
-
+				var task1EndTime = -1, task2StartTime = -1, task2EndTime = -1;
+				
+				if(empTasks.length < 2) { //only one task
+					var task1EndTime = shiftEndDateTime.getTime();
+				}
+				else {
+					task1EndTime = task1StartTime + (totalShiftTimeInMs * 0.25);
+					task2StartTime = task1EndTime;
+					task2EndTime = shiftEndDateTime.getTime();
+				}
+				
 				var nightShift = shiftType.nightShift;
 
 				for (var taskIndex = 0; taskIndex < empTasks.length; taskIndex++) {
 
-					var startTime = ((taskIndex + 1) % 2 == 0) ? task1StartTime : task2StartTime;
-					var endTime = ((taskIndex + 1) % 2 == 0) ? task1EndTime : task2EndTime;
+					var startTime = ((taskIndex + 1) % 2 != 0) ? task1StartTime : task2StartTime;
+					var endTime = ((taskIndex + 1) % 2 != 0) ? task1EndTime : task2EndTime;
 
 					empShiftData.times.push({
 						"id" : (taskIndex + 1),
