@@ -54,6 +54,9 @@ public class ShiftType implements Serializable {
                inverseJoinColumns = @JoinColumn(name="task_id", referencedColumnName="id"))
     private Set<Task> tasks = new HashSet<>();
 
+    @Embedded
+    private Style style;
+
     public Long getId() {
         return id;
     }
@@ -157,5 +160,13 @@ public class ShiftType implements Serializable {
             ", startTime='" + startTime + "'" +
             ", endTime='" + endTime + "'" +
             '}';
+    }
+
+    public Style getStyle() {
+        return style;
+    }
+
+    public void setStyle(Style style) {
+        this.style = style;
     }
 }

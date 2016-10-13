@@ -1,19 +1,21 @@
 package com.teammachine.staffrostering.web.rest;
 
 import com.teammachine.staffrostering.ShiftworkApp;
+import com.teammachine.staffrostering.domain.Style;
 import com.teammachine.staffrostering.domain.Task;
+import com.teammachine.staffrostering.domain.enumeration.TaskImportance;
+import com.teammachine.staffrostering.domain.enumeration.TaskType;
+import com.teammachine.staffrostering.domain.enumeration.TaskUrgency;
 import com.teammachine.staffrostering.repository.TaskRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -26,12 +28,9 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.teammachine.staffrostering.domain.enumeration.TaskType;
-import com.teammachine.staffrostering.domain.enumeration.TaskImportance;
-import com.teammachine.staffrostering.domain.enumeration.TaskUrgency;
 
 /**
  * Test class for the TaskResource REST controller.
@@ -46,6 +45,7 @@ public class TaskResourceIntTest {
 
     private static final String DEFAULT_CODE = "AAAAA";
     private static final String UPDATED_CODE = "BBBBB";
+
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBB";
 
@@ -60,6 +60,15 @@ public class TaskResourceIntTest {
 
     private static final TaskUrgency DEFAULT_URGENCY = TaskUrgency.URGENT;
     private static final TaskUrgency UPDATED_URGENCY = TaskUrgency.NOT_URGENT;
+
+    private static final String DEFAULT_BACKGROUND_COLOR = "white";
+    private static final String UPDATED_BACKGROUND_COLOR = "black";
+
+    private static final String DEFAULT_TEXT_COLOR = "white";
+    private static final String UPDATED_TEXT_COLOR = "black";
+
+    private static final String DEFAULT_ICON = "fa-icon-o";
+    private static final String UPDATED_ICON = "fa-icon-c";
 
     @Inject
     private TaskRepository taskRepository;
@@ -93,6 +102,7 @@ public class TaskResourceIntTest {
         task.setTaskType(DEFAULT_TASK_TYPE);
         task.setImportance(DEFAULT_IMPORTANCE);
         task.setUrgency(DEFAULT_URGENCY);
+        task.setStyle(new Style(DEFAULT_BACKGROUND_COLOR, DEFAULT_TEXT_COLOR, DEFAULT_ICON));
     }
 
     @Test
@@ -103,9 +113,9 @@ public class TaskResourceIntTest {
         // Create the Task
 
         restTaskMockMvc.perform(post("/api/tasks")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(task)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(task)))
+            .andExpect(status().isCreated());
 
         // Validate the Task in the database
         List<Task> tasks = taskRepository.findAll();
@@ -117,6 +127,9 @@ public class TaskResourceIntTest {
         assertThat(testTask.getTaskType()).isEqualTo(DEFAULT_TASK_TYPE);
         assertThat(testTask.getImportance()).isEqualTo(DEFAULT_IMPORTANCE);
         assertThat(testTask.getUrgency()).isEqualTo(DEFAULT_URGENCY);
+        assertThat(testTask.getStyle().getBackgroundColor()).isEqualTo(DEFAULT_BACKGROUND_COLOR);
+        assertThat(testTask.getStyle().getTextColor()).isEqualTo(DEFAULT_TEXT_COLOR);
+        assertThat(testTask.getStyle().getIcon()).isEqualTo(DEFAULT_ICON);
     }
 
     @Test
@@ -127,15 +140,18 @@ public class TaskResourceIntTest {
 
         // Get all the tasks
         restTaskMockMvc.perform(get("/api/tasks?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
-                .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
-                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-                .andExpect(jsonPath("$.[*].staffNeeded").value(hasItem(DEFAULT_STAFF_NEEDED)))
-                .andExpect(jsonPath("$.[*].taskType").value(hasItem(DEFAULT_TASK_TYPE.toString())))
-                .andExpect(jsonPath("$.[*].importance").value(hasItem(DEFAULT_IMPORTANCE.getCode())))
-                .andExpect(jsonPath("$.[*].urgency").value(hasItem(DEFAULT_URGENCY.getCode())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].staffNeeded").value(hasItem(DEFAULT_STAFF_NEEDED)))
+            .andExpect(jsonPath("$.[*].taskType").value(hasItem(DEFAULT_TASK_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].importance").value(hasItem(DEFAULT_IMPORTANCE.getCode())))
+            .andExpect(jsonPath("$.[*].urgency").value(hasItem(DEFAULT_URGENCY.getCode())))
+            .andExpect(jsonPath("$.[*].style.backgroundColor").value(hasItem(DEFAULT_BACKGROUND_COLOR)))
+            .andExpect(jsonPath("$.[*].style.textColor").value(hasItem(DEFAULT_TEXT_COLOR)))
+            .andExpect(jsonPath("$.[*].style.icon").value(hasItem(DEFAULT_ICON)));
     }
 
     @Test
@@ -154,7 +170,10 @@ public class TaskResourceIntTest {
             .andExpect(jsonPath("$.staffNeeded").value(DEFAULT_STAFF_NEEDED))
             .andExpect(jsonPath("$.taskType").value(DEFAULT_TASK_TYPE.toString()))
             .andExpect(jsonPath("$.importance").value(DEFAULT_IMPORTANCE.getCode()))
-            .andExpect(jsonPath("$.urgency").value(DEFAULT_URGENCY.getCode()));
+            .andExpect(jsonPath("$.urgency").value(DEFAULT_URGENCY.getCode()))
+            .andExpect(jsonPath("$.style.backgroundColor").value(DEFAULT_BACKGROUND_COLOR))
+            .andExpect(jsonPath("$.style.textColor").value(DEFAULT_TEXT_COLOR))
+            .andExpect(jsonPath("$.style.icon").value(DEFAULT_ICON));
     }
 
     @Test
@@ -162,7 +181,7 @@ public class TaskResourceIntTest {
     public void getNonExistingTask() throws Exception {
         // Get the task
         restTaskMockMvc.perform(get("/api/tasks/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -181,11 +200,12 @@ public class TaskResourceIntTest {
         updatedTask.setTaskType(UPDATED_TASK_TYPE);
         updatedTask.setImportance(UPDATED_IMPORTANCE);
         updatedTask.setUrgency(UPDATED_URGENCY);
+        updatedTask.setStyle(new Style(UPDATED_BACKGROUND_COLOR, UPDATED_TEXT_COLOR, UPDATED_ICON));
 
         restTaskMockMvc.perform(put("/api/tasks")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedTask)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedTask)))
+            .andExpect(status().isOk());
 
         // Validate the Task in the database
         List<Task> tasks = taskRepository.findAll();
@@ -197,6 +217,9 @@ public class TaskResourceIntTest {
         assertThat(testTask.getTaskType()).isEqualTo(UPDATED_TASK_TYPE);
         assertThat(testTask.getImportance()).isEqualTo(UPDATED_IMPORTANCE);
         assertThat(testTask.getUrgency()).isEqualTo(UPDATED_URGENCY);
+        assertThat(testTask.getStyle().getBackgroundColor()).isEqualTo(UPDATED_BACKGROUND_COLOR);
+        assertThat(testTask.getStyle().getTextColor()).isEqualTo(UPDATED_TEXT_COLOR);
+        assertThat(testTask.getStyle().getIcon()).isEqualTo(UPDATED_ICON);
     }
 
     @Test
@@ -208,8 +231,8 @@ public class TaskResourceIntTest {
 
         // Get the task
         restTaskMockMvc.perform(delete("/api/tasks/{id}", task.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
         List<Task> tasks = taskRepository.findAll();
