@@ -81,7 +81,7 @@ class DemoDataInstaller {
     private EmployeeLeaveAbsenceRepository employeeLeaveAbsenceRepository;
 
     @PostConstruct
-    private void install() {
+    public void install() {
         logger.info("----- Installation of demo data -----");
 
         // Weekend definition
@@ -206,9 +206,9 @@ class DemoDataInstaller {
         logger.info("* skill proficiencies");
 
         // employee absent reason
-        EmployeeAbsentReason dayOffReason = createEmployeeAbsentReason("day-off", "Day off", "Day off", 1, DurationUnit.DAYS);
+        EmployeeAbsentReason dayOffReason = createEmployeeAbsentReason("dayoff", "Day off", "Day off", 1, DurationUnit.DAYS);
         EmployeeAbsentReason sickReason = createEmployeeAbsentReason("sick", "Sick", "Sick", 5, DurationUnit.DAYS);
-        EmployeeAbsentReason maternityLeaveReason = createEmployeeAbsentReason("maternity_leave", "Maternity Leave", "Maternity Leave", 6, DurationUnit.MONTHS);
+        EmployeeAbsentReason maternityLeaveReason = createEmployeeAbsentReason("maternityleave", "Maternity Leave", "Maternity Leave", 6, DurationUnit.MONTHS);
         logger.info("* employee absent reasons");
 
         // employee leave absence
