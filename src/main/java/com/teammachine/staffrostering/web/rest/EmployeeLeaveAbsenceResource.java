@@ -1,10 +1,14 @@
 package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.teammachine.staffrostering.domain.Employee;
 import com.teammachine.staffrostering.domain.EmployeeAbsentReason;
 import com.teammachine.staffrostering.domain.EmployeeLeaveAbsence;
 import com.teammachine.staffrostering.domain.enumeration.DurationUnit;
 import com.teammachine.staffrostering.repository.EmployeeLeaveAbsenceRepository;
+import com.teammachine.staffrostering.repository.EmployeeRepository;
+import com.teammachine.staffrostering.web.rest.errors.CustomParameterizedException;
+import com.teammachine.staffrostering.web.rest.errors.ErrorConstants;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +35,8 @@ public class EmployeeLeaveAbsenceResource {
 
     @Inject
     private EmployeeLeaveAbsenceRepository employeeLeaveAbsenceRepository;
+    @Inject
+    private EmployeeRepository employeeRepository;
 
     /**
      * POST  /employee-leave-absences : Create a new employeeLeaveAbsence.
@@ -107,10 +113,17 @@ public class EmployeeLeaveAbsenceResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<EmployeeLeaveAbsence> getAllEmployeeLeaveAbsences() {
+    public List<EmployeeLeaveAbsence> getAllEmployeeLeaveAbsences(@RequestParam(name = "employee", required = false) Long employeeId) {
         log.debug("REST request to get all EmployeeLeaveAbsences");
-        List<EmployeeLeaveAbsence> employeeLeaveAbsences = employeeLeaveAbsenceRepository.findAll();
-        return employeeLeaveAbsences;
+        if (employeeId != null) {
+            Employee employee = employeeRepository.findOne(employeeId);
+            if (employee == null) {
+                throw new CustomParameterizedException(ErrorConstants.ERR_NO_SUCH_EMPLOYEE, "" + employeeId);
+            }
+            return employeeLeaveAbsenceRepository.findByEmployee(employee);
+        } else {
+            return employeeLeaveAbsenceRepository.findAll();
+        }
     }
 
     /**

@@ -1,18 +1,24 @@
 package com.teammachine.staffrostering.web.rest.dto;
 
-import com.teammachine.staffrostering.domain.Employee;
 import com.teammachine.staffrostering.domain.ShiftDate;
 import com.teammachine.staffrostering.domain.ShiftType;
-import com.teammachine.staffrostering.domain.Task;
 
-import java.util.Set;
+import java.util.List;
 
 public class ScheduledShiftDTO {
 
+    private Long id;
     private ShiftType shiftType;
     private ShiftDate shiftDate;
-    private Set<Task> tasks;
-    private Set<Employee> coworkers;
+    private List<TaskWithCoworkersDTO> tasks;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public ShiftType getShiftType() {
         return shiftType;
@@ -30,19 +36,11 @@ public class ScheduledShiftDTO {
         this.shiftDate = shiftDate;
     }
 
-    public Set<Task> getTasks() {
+    public List<TaskWithCoworkersDTO> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Set<Task> tasks) {
+    public void setTasks(List<TaskWithCoworkersDTO> tasks) {
         this.tasks = tasks;
-    }
-
-    public Set<Employee> getCoworkers() {
-        return coworkers;
-    }
-
-    public void setCoworkers(Set<Employee> coworkers) {
-        this.coworkers = coworkers;
     }
 }

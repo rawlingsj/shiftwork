@@ -19,7 +19,10 @@
             "absentFrom": "Absent From",
             "absentTo": "Absent To",
             "reason": "Reason",
-            "employee": "Employee"
+            "employee": "Employee",
+            "searchBy": {
+                "employee": "Search by employee..."
+            }
         }
     }
 }

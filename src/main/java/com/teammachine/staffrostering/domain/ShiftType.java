@@ -10,6 +10,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * A ShiftType.
@@ -25,6 +27,8 @@ public class ShiftType implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "code validation failed.")   
     @Column(name = "code")
     private String code;
 
@@ -49,6 +53,9 @@ public class ShiftType implements Serializable {
                joinColumns = @JoinColumn(name="shift_type_id", referencedColumnName="id"),
                inverseJoinColumns = @JoinColumn(name="task_id", referencedColumnName="id"))
     private Set<Task> tasks = new HashSet<>();
+
+    @Embedded
+    private Style style;
 
     public Long getId() {
         return id;
@@ -153,5 +160,13 @@ public class ShiftType implements Serializable {
             ", startTime='" + startTime + "'" +
             ", endTime='" + endTime + "'" +
             '}';
+    }
+
+    public Style getStyle() {
+        return style;
+    }
+
+    public void setStyle(Style style) {
+        this.style = style;
     }
 }

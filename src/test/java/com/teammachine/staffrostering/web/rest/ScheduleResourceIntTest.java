@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.*;
 import com.teammachine.staffrostering.repository.*;
-import com.teammachine.staffrostering.web.rest.errors.ErrorConstants;
 import com.teammachine.staffrostering.web.rest.errors.ExceptionTranslator;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +25,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.ZoneId;
 
 import static org.hamcrest.Matchers.contains;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -71,7 +71,6 @@ public class ScheduleResourceIntTest {
 
     private MockMvc restShiftAssignmentMockMvc;
 
-
     private ShiftDate shiftDate_25, shiftDate_26, shiftDate_27;
 
     private Employee employee_001, employee_002, employee_003;
@@ -80,9 +79,9 @@ public class ScheduleResourceIntTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         ScheduleResource scheduleResource = new ScheduleResource();
-        ReflectionTestUtils.setField(scheduleResource, "employeeRepository", employeeRepository);
         ReflectionTestUtils.setField(scheduleResource, "shiftAssignmentRepository", shiftAssignmentRepository);
         ReflectionTestUtils.setField(scheduleResource, "shiftDateRepository", shiftDateRepository);
+        ReflectionTestUtils.setField(scheduleResource, "shiftTypeRepository", shiftTypeRepository);
         this.restShiftAssignmentMockMvc = MockMvcBuilders.standaloneSetup(scheduleResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter)
@@ -103,78 +102,35 @@ public class ScheduleResourceIntTest {
         employee_003 = createEmployee("003");
     }
 
-    @Test
-    public void getScheduleNoSuchEmployee() throws Exception {
-        restShiftAssignmentMockMvc.perform(get("/api/schedules")
-            .param("employee", "10039")
-            .param("from", shiftDate_25.getId().toString())
-            .param("to", shiftDate_27.getId().toString()))
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_NO_SUCH_EMPLOYEE))
-            .andExpect(jsonPath("$.params[*]").value(contains("10039")));
+    private String asRequestParam(LocalDate localDate) {
+        return localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli() + "";
     }
 
     @Test
-    public void getScheduleNoSuchShiftDateFromParam() throws Exception {
-        restShiftAssignmentMockMvc.perform(get("/api/schedules")
-            .param("employee", employee_001.getId().toString())
-            .param("from", "101030123")
-            .param("to", shiftDate_27.getId().toString()))
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_NO_SUCH_SHIFT_DATE))
-            .andExpect(jsonPath("$.params[*]").value(contains("101030123")));
-    }
-
-    @Test
-    public void getScheduleNoSuchShiftDateToParam() throws Exception {
-        restShiftAssignmentMockMvc.perform(get("/api/schedules")
-            .param("employee", employee_001.getId().toString())
-            .param("from", shiftDate_26.getId().toString())
-            .param("to", "101030123"))
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_NO_SUCH_SHIFT_DATE))
-            .andExpect(jsonPath("$.params[*]").value(contains("101030123")));
-    }
-
-    @Test
-    public void getScheduleNoShiftAssignments() throws Exception {
-        restShiftAssignmentMockMvc.perform(get("/api/schedules")
-            .param("employee", employee_001.getId().toString())
-            .param("from", shiftDate_27.getId().toString())
-            .param("to", shiftDate_27.getId().toString()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.[*]").isEmpty());
-    }
-
-    @Test
-    public void getSchedule() throws Exception {
-        ShiftType shiftType = createShiftType("E", 1);
+    public void getDaySchedule() throws Exception {
+        ShiftType shiftTypeE = createShiftType("E", 1);
+        ShiftType shiftTypeL = createShiftType("L", 2);
+        ShiftType shiftTypeN = createShiftType("N", 3);
         Task task_1 = createTask("1");
         Task task_2 = createTask("2");
-        Shift shift_25 = createShift(shiftDate_25, shiftType);
-        Shift shift_26 = createShift(shiftDate_26, shiftType);
-        Shift shift_27 = createShift(shiftDate_27, shiftType);
-        createShiftAssignment(shift_25, employee_001, task_1, task_2);
-        createShiftAssignment(shift_25, employee_002, task_1);
-        createShiftAssignment(shift_26, employee_001, task_1);
-        createShiftAssignment(shift_26, employee_003, task_2);
-        createShiftAssignment(shift_27, employee_002, task_1, task_2);
-        createShiftAssignment(shift_27, employee_003, task_1);
-        createShiftAssignment(shift_27, employee_001, task_1);
+        Shift shift_25_E = createShift(shiftDate_25, shiftTypeE);
+        Shift shift_26_E = createShift(shiftDate_26, shiftTypeE);
+        Shift shift_25_L = createShift(shiftDate_25, shiftTypeL);
+        Shift shift_25_N = createShift(shiftDate_25, shiftTypeN);
+        ShiftAssignment shiftAssignment1 = createShiftAssignment(shift_25_E, employee_001, task_1, task_2);
+        ShiftAssignment shiftAssignment2 = createShiftAssignment(shift_25_L, employee_002, task_1);
+        ShiftAssignment shiftAssignment3 = createShiftAssignment(shift_25_N, employee_003, task_2);
+        createShiftAssignment(shift_26_E, employee_001);
 
         restShiftAssignmentMockMvc.perform(get("/api/schedules")
-            .param("employee", employee_001.getId().toString())
-            .param("from", shiftDate_25.getId().toString())
-            .param("to", shiftDate_26.getId().toString()))
+            .param("shiftDate", asRequestParam(DATE_2016_07_25)))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.[*].shiftType.id").value(contains(shiftType.getId().intValue(), shiftType.getId().intValue())))
-            .andExpect(jsonPath("$.[*].shiftDate.id").value(contains(shiftDate_25.getId().intValue(), shiftDate_26.getId().intValue())))
-            .andExpect(jsonPath("$.[0].tasks[*].id").value(contains(task_1.getId().intValue(), task_2.getId().intValue())))
-            .andExpect(jsonPath("$.[1].tasks[*].id").value(contains(task_1.getId().intValue())))
-            .andExpect(jsonPath("$.[0].coworkers[*].id").value(contains(employee_002.getId().intValue())))
-            .andExpect(jsonPath("$.[1].coworkers[*]").isEmpty());
+            .andExpect(jsonPath("$.[*].id").value(contains(
+                shiftAssignment1.getId().intValue(),
+                shiftAssignment2.getId().intValue(),
+                shiftAssignment3.getId().intValue()
+            )));
     }
 
     private ShiftDate createShiftDate(int index, LocalDate date) {
@@ -220,6 +176,7 @@ public class ScheduleResourceIntTest {
         shiftAssignment.setShift(shift);
         shiftAssignment.setEmployee(employee);
         shiftAssignment.setTaskList(ImmutableSet.copyOf(tasks));
+        shiftAssignment.setIndexInShift(0);
         shiftAssignmentRepository.save(shiftAssignment);
         return shiftAssignment;
     }

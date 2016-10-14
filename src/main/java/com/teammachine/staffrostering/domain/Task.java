@@ -10,6 +10,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * A Task.
@@ -25,6 +27,8 @@ public class Task implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "code validation failed.")   
     @Column(name = "code")
     private String code;
 
@@ -46,6 +50,9 @@ public class Task implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "urgency")
     private TaskUrgency urgency;
+
+    @Embedded
+    private Style style;
 
     public Long getId() {
         return id;
@@ -134,5 +141,13 @@ public class Task implements Serializable {
             ", importance='" + importance + "'" +
             ", urgency='" + urgency + "'" +
             '}';
+    }
+
+    public void setStyle(Style style) {
+        this.style = style;
+    }
+
+    public Style getStyle() {
+        return style;
     }
 }

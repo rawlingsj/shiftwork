@@ -58,6 +58,8 @@ public class EmployeeLeaveAbsenceResourceIntTest {
     private static final ZonedDateTime DEFAULT_ABSENT_TO = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
     private static final ZonedDateTime UPDATED_ABSENT_TO = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
     private static final String DEFAULT_ABSENT_TO_STR = dateTimeFormatter.format(DEFAULT_ABSENT_TO);
+
+    private static final String DEFAULT_REASON_CODE = "Reason";
     private static final int DEFAULT_DURATION = 6;
     private static final ChronoUnit DEFAULT_DURATION_UNIT = ChronoUnit.DAYS;
 
@@ -90,6 +92,7 @@ public class EmployeeLeaveAbsenceResourceIntTest {
     @Before
     public void initTest() {
         employeeAbsentReason = new EmployeeAbsentReason();
+        employeeAbsentReason.setCode(DEFAULT_REASON_CODE);
         employeeAbsentReason.setDefaultDuration(DEFAULT_DURATION);
         employeeAbsentReason.setDefaultDurationUnit(DurationUnit.valueOf(DEFAULT_DURATION_UNIT));
         employeeAbsentReasonRepository.saveAndFlush(employeeAbsentReason);

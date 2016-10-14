@@ -73,7 +73,7 @@ public class StaffRosterResourceIntTest {
         staffRosterDTO.setShiftAssignments(Collections.singletonList(shiftAssignment));
 
         // update
-        String employeeCode = "Employee 001";
+        String employeeCode = "Employee001";
         int hardConstraintMatches = 0;
         int softConstraintMatches = -3;
         staffRosterParametrization.setHardConstraintMatches(hardConstraintMatches);

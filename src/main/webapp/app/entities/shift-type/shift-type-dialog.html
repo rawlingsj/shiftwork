@@ -16,8 +16,18 @@
         <div class="form-group">
             <label class="control-label" translate="shiftworkApp.shiftType.code" for="field_code">Code</label>
             <input type="text" class="form-control" name="code" id="field_code"
-                    ng-model="vm.shiftType.code"
-                     />
+                    ng-model="vm.shiftType.code" ng-change="vm.verifyDuplicate(vm.shiftType.code)"
+                    ng-pattern="/^[a-zA-Z0-9]*$/" />
+            <div ng-show="editForm.code.$invalid">
+                <p class="alert alert-danger"
+                    ng-show="editForm.code.$error.pattern" translate="entity.validation.code">
+                    This field should contain only numbers or letters.
+                </p>
+            </div>
+            <div class='alert alert-danger' 
+                        ng-show='vm.duplicateMsg'>
+                        The code entered is invalid, It has already been used.
+            </div>             
         </div>
         <div class="form-group">
             <label class="control-label" translate="shiftworkApp.shiftType.index" for="field_index">Index</label>
@@ -71,7 +81,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving || vm.duplicateMsg" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>
