@@ -52,10 +52,10 @@
 		
 		<div class="col-md-6 text-center">
 		  <div class="btn-group">
-			<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'" translate="calendar.view.year">Year</label>
-			<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'" translate="calendar.view.month">Month</label>
-			<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'" translate="calendar.view.week">Week</label>
-			<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'" translate="calendar.view.day">Day</label>
+			<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'" translate="calendar.view.year" ng-click="vm.viewDateChanged()">Year</label>
+			<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'" translate="calendar.view.month" ng-click="vm.viewDateChanged()">Month</label>
+			<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'" translate="calendar.view.week" ng-click="vm.viewDateChanged()">Week</label>
+			<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'" translate="calendar.view.day" ng-click="vm.viewDateChanged()">Day</label>
 		  </div>
 		</div>
 		
@@ -71,7 +71,7 @@
 			view-date="vm.viewDate"
 			on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
 			cell-is-open="vm.isCellOpen"
-			on-view-change-click="false"
+			on-view-change-click="true"
 			day-view-start="00:00"
 			day-view-end="23:59"
 			day-view-split="30"

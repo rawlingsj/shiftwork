@@ -94,10 +94,10 @@
 				.hover(function (d, i, datum) {
 					var taskStartTime = new Date(d.starting_time);
 					var taskEndTime = new Date(d.ending_time);
-					var taskTimings = [moment(taskStartTime).format("H:mm"), moment(taskEndTime).format("H:mm")]
+					var taskTimings = [moment(taskStartTime).format("H:mm"), moment(taskEndTime).format("H:mm")];
 					var div = $('#hoverRes');
 					var colors = chart.colors();
-					div.find('.coloredDiv').css('background-color', colors(i))
+					div.find('.coloredDiv').css('background-color', colors(i));
 					div.find('#taskDescription').html($translate.instant("shiftworkApp.viewDayPlan.taskName") + ": " + d.label + " <br/>" +
 						$translate.instant("shiftworkApp.viewDayPlan.taskTiming") + ": " + taskTimings[0] + " " + $translate.instant("shiftworkApp.viewDayPlan.to") + " " + taskTimings[1]);
 				});
@@ -166,7 +166,7 @@
 				var task1EndTime = -1, task2StartTime = -1, task2EndTime = -1;
 				
 				if(empTasks.length < 2) { //only one task
-					var task1EndTime = shiftEndDateTime.getTime();
+					task1EndTime = shiftEndDateTime.getTime();
 				}
 				else {
 					task1EndTime = task1StartTime + (totalShiftTimeInMs * 0.25);
