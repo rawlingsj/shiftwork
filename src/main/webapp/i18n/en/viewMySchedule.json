@@ -5,8 +5,10 @@
                 "title": "View My Schedule",
 				"search": "Search for Employee"				
             },
-			"shiftDescription" : "On ##_DATE_## you will be working a ##_SHIFT_TYPE_## shift. <br/> You have the following tasks : ",
-			"taskDescription" : "you will be working with ##_CO_WORKERS_##"
+			"shiftDescriptionFuture" : "On ##_DATE_## you will be working a ##_SHIFT_TYPE_## shift. <br/> You have the following tasks : ",
+			"shiftDescriptionPast" : "On ##_DATE_## you worked a ##_SHIFT_TYPE_## shift. <br/> You had the following tasks : ",
+			"taskDescriptionFuture" : "you will be working with ##_CO_WORKERS_##",
+			"taskDescriptionPast" : "you worked with ##_CO_WORKERS_##"
         },
 		"viewMyScheduleDetail" : {
 			"home" : {

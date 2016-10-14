@@ -116,7 +116,16 @@
 				var shiftStartDateTime = new Date((new Date(shiftStartDate.setHours(shiftStartHour))).setMinutes(shiftStartMinutes));
 				var shiftEndDateTime = new Date((new Date(shiftEndDate.setHours(shiftEndHour))).setMinutes(shiftEndMinutes));
 				
-				var shiftDescription = $translate.instant("shiftworkApp.viewMySchedule.shiftDescription")
+				var today = new Date();
+				var eventType = "";
+				if(shiftEndDateTime.getTime() >  today.getTime()) {
+					eventType = "Future";
+				}
+				else {
+					eventType = "Past";
+				}
+				
+				var shiftDescription = $translate.instant("shiftworkApp.viewMySchedule.shiftDescription" + eventType)
 				.replace("##_DATE_##", new moment(new Date(shiftEndDate)).format('MMMM DD'))
 				.replace("##_SHIFT_TYPE_##", shiftType.description);
 
@@ -139,7 +148,7 @@
 							coworkers = coworkers.join("");
 						}
 							
-						taskDescription += ", " + $translate.instant("shiftworkApp.viewMySchedule.taskDescription")
+						taskDescription += ", " + $translate.instant("shiftworkApp.viewMySchedule.taskDescription" + eventType)
 						.replace("##_CO_WORKERS_##", coworkers);
 					
 					}
