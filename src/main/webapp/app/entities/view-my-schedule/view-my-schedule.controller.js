@@ -12,6 +12,7 @@
 		var vm = this;
 		vm.calendarView = 'month';
 		
+		calendarConfig.templates.calendarDayView = 'app/entities/view-my-schedule/calendarDayView.html';
 		calendarConfig.templates.calendarMonthCell = 'app/entities/view-my-schedule/calendarMonthCell.html';
 		calendarConfig.templates.calendarSlideBox = 'app/entities/view-my-schedule/calendarSlideBox.html';
 		calendarConfig.templates.calendarMonthCellEvents = 'app/entities/view-my-schedule/calendarMonthCellEvents.html';
@@ -109,9 +110,9 @@
 				var shiftEndHour = shiftType.endTime.split(":")[0];
 				var shiftEndMinutes = shiftType.endTime.split(":")[1];
 
-				/*if (shiftEndHour < shiftStartHour) {
+				if (shiftEndHour < shiftStartHour) {
 					shiftEndDate.setDate(shiftStartDate.getDate() + 1);
-				}*/ 
+				}
 
 				var shiftStartDateTime = new Date((new Date(shiftStartDate.setHours(shiftStartHour))).setMinutes(shiftStartMinutes));
 				var shiftEndDateTime = new Date((new Date(shiftEndDate.setHours(shiftEndHour))).setMinutes(shiftEndMinutes));
@@ -126,7 +127,7 @@
 				}
 				
 				var shiftDescription = $translate.instant("shiftworkApp.viewMySchedule.shiftDescription" + eventType)
-				.replace("##_DATE_##", new moment(new Date(shiftEndDate)).format('MMMM DD'))
+				.replace("##_DATE_##", new moment(new Date(shiftStartDate)).format('MMMM DD'))
 				.replace("##_SHIFT_TYPE_##", shiftType.description);
 
 				var taskDescription = "";
@@ -159,7 +160,7 @@
 				
 				shiftDescription += taskDescription;
 				
-				vm.events.push({
+				var event = {
 					$id : index + 1,
 					title : shiftDescription,
 					startsAt : new Date(shiftStartDateTime),
@@ -170,7 +171,15 @@
 					},
 					cssClass : "shiftDescription",
 					allDay: false
-				});
+				};
+				
+				if (shiftStartDate.getDate() < shiftEndDate.getDate()) {
+					event.endsAtBk = new Date(event.endsAt.getTime());
+					delete event.endsAt;
+					event.allDay = true;
+				} 
+				
+				vm.events.push(event);
 				
 			}
 
@@ -219,6 +228,7 @@
 			calendarConfig.templates.calendarMonthCell = 'mwl/calendarMonthCell.html';
 			calendarConfig.templates.calendarSlideBox = 'mwl/calendarSlideBox.html';
 			calendarConfig.templates.calendarMonthCellEvents = 'mwl/calendarMonthCellEvents.html';
+			calendarConfig.templates.calendarDayView = 'mwl/calendarDayView.html';
 		});
 	}
 })();
