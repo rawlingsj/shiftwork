@@ -110,8 +110,10 @@
 				var shiftEndHour = shiftType.endTime.split(":")[0];
 				var shiftEndMinutes = shiftType.endTime.split(":")[1];
 
+				var shiftOverlapsOnNextDay = false;
 				if (shiftEndHour < shiftStartHour) {
 					shiftEndDate.setDate(shiftStartDate.getDate() + 1);
+					shiftOverlapsOnNextDay = true;
 				}
 
 				var shiftStartDateTime = new Date((new Date(shiftStartDate.setHours(shiftStartHour))).setMinutes(shiftStartMinutes));
@@ -173,7 +175,7 @@
 					allDay: false
 				};
 				
-				if (shiftStartDate.getDate() < shiftEndDate.getDate()) {
+				if (shiftOverlapsOnNextDay) {
 					event.endsAtBk = new Date(event.endsAt.getTime());
 					delete event.endsAt;
 					event.allDay = true;
