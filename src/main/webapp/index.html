@@ -12,6 +12,7 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+	<link href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css content/css/main.css -->
@@ -67,11 +68,15 @@
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
     <script src="bower_components/file-saver/FileSaver.js"></script>
+	<script src="bower_components/moment/moment.js"></script>
+	<script src="bower_components/d3/d3.min.js"></script>
+	<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js app/app.js  -->
     <!-- inject:js -->
+	<script src="app/lib/d3-timeline/src/d3-timeline.js"></script>
     <script src="app/app.module.js"></script>
     <script src="app/account/reset/request/reset.request.state.js"></script>
     <script src="app/account/reset/request/reset.request.controller.js"></script>
@@ -242,6 +247,12 @@
     <script src="app/entities/boolean-contract-line/boolean-contract-line-dialog.controller.js"></script>
     <script src="app/entities/boolean-contract-line/boolean-contract-line-detail.controller.js"></script>
     <script src="app/entities/boolean-contract-line/boolean-contract-line-delete-dialog.controller.js"></script>
+	<script src="app/entities/view-day-plan/view-day-plan.state.js"></script>
+    <script src="app/entities/view-day-plan/view-day-plan.service.js"></script>
+    <script src="app/entities/view-day-plan/view-day-plan.controller.js"></script>
+	<script src="app/entities/view-my-schedule/view-my-schedule.state.js"></script>
+    <script src="app/entities/view-my-schedule/view-my-schedule.service.js"></script>
+    <script src="app/entities/view-my-schedule/view-my-schedule.controller.js"></script>
     <script src="app/components/util/truncate-words.filter.js"></script>
     <script src="app/components/util/truncate-characters.filter.js"></script>
     <script src="app/components/util/sort.directive.js"></script>

@@ -18,7 +18,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -37,6 +36,8 @@ import java.util.stream.Collectors;
 class DemoDataInstaller {
 
     private final Logger logger = LoggerFactory.getLogger(DemoDataInstaller.class);
+
+    private final ZonedDateTime now = ZonedDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
 
     static class CreateDemoDataCondition implements Condition {
 
@@ -82,6 +83,10 @@ class DemoDataInstaller {
 
     @PostConstruct
     private void install() {
+        if (contractRepository.findAll().stream().map(Contract::getDescription).anyMatch(description -> description.equalsIgnoreCase("fulltime"))) {
+            logger.info("Some demo data entities are detected, seems the installer has already been executed, so will not run again.");
+            return;
+        }
         logger.info("----- Installation of demo data -----");
 
         // Weekend definition
@@ -155,8 +160,8 @@ class DemoDataInstaller {
         logger.info("* shift types");
 
         // shiftDates
-        LocalDate firstDate = LocalDate.of(2010, 1, 1);
-        LocalDate lastDate = LocalDate.of(2010, 1, 28);
+        LocalDate firstDate = now.toLocalDate().minusDays(14);
+        LocalDate lastDate = now.toLocalDate().plusDays(18);
         LocalDate localDate = firstDate;
         ShiftDate firstShiftDate = null, lastShiftDate = null;
         while (!localDate.isAfter(lastDate)) {
@@ -212,9 +217,9 @@ class DemoDataInstaller {
         logger.info("* employee absent reasons");
 
         // employee leave absence
-        createEmployeeLeaveAbsence(a, ZonedDateTime.of(2016, 6, 1, 0, 0, 0, 0, ZoneId.systemDefault()), ZonedDateTime.of(2016, 6, 2, 0, 0, 0, 0, ZoneId.systemDefault()), dayOffReason);
-        createEmployeeLeaveAbsence(b, ZonedDateTime.of(2016, 6, 1, 0, 0, 0, 0, ZoneId.systemDefault()), ZonedDateTime.of(2016, 6, 5, 0, 0, 0, 0, ZoneId.systemDefault()), sickReason);
-        createEmployeeLeaveAbsence(c, ZonedDateTime.of(2016, 6, 1, 0, 0, 0, 0, ZoneId.systemDefault()), ZonedDateTime.of(2016, 12, 2, 0, 0, 0, 0, ZoneId.systemDefault()), maternityLeaveReason);
+        createEmployeeLeaveAbsence(a, now, now.plusDays(1), dayOffReason);
+        createEmployeeLeaveAbsence(b, now.minusDays(2), now.plusDays(2), sickReason);
+        createEmployeeLeaveAbsence(c, now, now.plusMonths(12), maternityLeaveReason);
         logger.info("* employee leave absences");
 
         logger.info("----- Installed demo data -----");

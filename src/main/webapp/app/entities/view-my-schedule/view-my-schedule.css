@@ -1,0 +1,32 @@
+.clear {
+	clear : both;
+}
+.empShiftCalendar .cal-slide-content {
+	padding: 20px;
+	color: #fff;
+	background-color: #4e7494;
+	box-shadow: inset 0 0 15px 0 rgba(0,0,0,.5);
+}
+.empShiftCalendar .cal-week-box [data-event-class] {
+    height: auto;
+    line-height: 25px;
+}
+.empShiftCalendar .day-shift {
+	background-color : rgb(255, 255, 167);
+}
+.empShiftCalendar .night-shift {
+	background-color : rgb(121, 121, 212);
+}
+.empShiftCalendar .shiftDescription {
+	margin: 10px 0px 5px 0px;
+}
+.empShiftCalendar .taskDescription {
+	list-style: initial;
+	margin-left: 20px;
+}
+.empShiftCalendar .cal-slide-content a.event-item {
+	color: #fff;
+	font-weight: 400;
+	text-decoration: none;
+	cursor: default;
+}
