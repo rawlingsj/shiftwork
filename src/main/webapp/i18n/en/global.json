@@ -29,6 +29,8 @@
                 "minMaxContractLine": "Min Max Contract Line",
                 "employees": "Employees",
                 "taskSkillRequirement": "Task Skill Requirement",
+				"viewDayPlan": "View Day Plan",
+				"viewMySchedule": "View My Schedule",
                 "employeeAbsentReason": "Employee Absent Reason",
                 "employeeLeaveAbsence": "Employee Leave Absence",
                 "planningJob": "Planning Job",
@@ -98,7 +100,12 @@
         },
         "field": {
             "id": "ID"
-        }
+        },
+		"day" : {
+			"today" : "Today",
+			"yesterday" : "Yesterday",
+			"tomorrow" : "Tomorrow"
+		}
     },
     "entity": {
         "action": {
@@ -134,6 +141,19 @@
 			"codeexists": "The code entered is invalid, It has already been used."
         }
     },
+	"calendar" : {
+		"action" : {
+			"previous" : "Previous",
+			"today" : "Today",
+			"next" : "Next"
+		},
+		"view" : {
+			"day" : "Day",
+			"month" : "Month",
+			"week" : "Week",
+			"year" : "Year"
+		}
+	},
     "error": {
         "server.not.reachable": "Server not reachable",
         "NotNull": "Field {{ fieldName }} cannot be empty!",

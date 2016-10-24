@@ -18,10 +18,12 @@
         };
 
         vm.resetFilter = function () {
+			console.log("In resetFilter");
             vm.loadAll();
         };
 
         vm.getEmployee = function (keyword) {
+			console.log("In getEmployee");
             if (keyword) {
                 return Typeahead.findEmployees(keyword);
             } else {
@@ -31,6 +33,7 @@
         };
 
         vm.ngModelOptionsSelected = function (value) {
+			console.log("In ngModelOptionsSelected");
             if (arguments.length) {
                 var _selected = value;
             } else {
@@ -47,6 +50,7 @@
         };
 
         vm.onTypeaheadCallback = function ($item, $model, $label) {
+			console.log("In onTypeaheadCallback");
             vm.employees = $filter('filter')(vm.employees, {id: $item.id});
         };
 
