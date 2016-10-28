@@ -1,3 +1,5 @@
+var tScope = "";
+
 (function() {
     'use strict';
 
@@ -8,6 +10,7 @@
     TaskDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Task'];
 
     function TaskDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Task) {
+		tScope = this;
         var vm = this;
         vm.task = entity;
         vm.duplicateMsg = false;
