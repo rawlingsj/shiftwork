@@ -17,14 +17,16 @@
             'infinite-scroll',
             // jhipster-needle-angularjs-add-module JHipster will add new module here
             'angular-loading-bar',
-			'mwl.calendar'
+			'mwl.calendar',
+            "xeditable"
         ])
         .run(run);
 
-    run.$inject = ['stateHandler', 'translationHandler'];
+    run.$inject = ['stateHandler', 'translationHandler', 'editableOptions'];
 
-    function run(stateHandler, translationHandler) {
+    function run(stateHandler, translationHandler, editableOptions ) {
         stateHandler.initialize();
         translationHandler.initialize();
+        editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
     }
 })();

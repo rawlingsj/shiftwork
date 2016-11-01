@@ -268,3 +268,23 @@ ul#strengthBar {
 /* jhipster-needle-scss-add-main JHipster will add new css style */
 
 /* jhipster-needle-css-add-main JHipster will add new css style */
+.modal-content {
+    margin: 10px auto;
+    padding: 0;
+    box-sizing: border-box;
+    width: 650px;
+    border: #848484 solid 10px;
+    border-width: 10px;
+}
+.box {
+    background:#FAFAFA;
+    font-size:22px;
+    margin:0;
+    padding: 10px 40px;
+    left: 50px;
+    box-sizing: border-box;
+}
+.box-input-group {
+    position: relative;
+    border-collapse: separate;
+}
