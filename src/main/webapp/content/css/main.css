@@ -284,3 +284,7 @@ ul#strengthBar {
     left: 50px;
     box-sizing: border-box;
 }
+.box-input-group {
+    position: relative;
+    border-collapse: separate;
+}

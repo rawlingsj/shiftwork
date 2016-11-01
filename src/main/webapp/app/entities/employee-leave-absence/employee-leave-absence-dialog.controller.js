@@ -13,6 +13,7 @@
         vm.employeeabsentreasons = EmployeeAbsentReason.query();
         vm.employees = Employee.query();
         vm.isSaving = false;
+        vm.editId = $stateParams.id === null ? 0 : parseInt($stateParams.id);
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
@@ -28,7 +29,6 @@
         };
 
         vm.save = function () {
-            vm.isSaving = true;
             if (vm.employeeLeaveAbsence.id !== null) {
                 EmployeeLeaveAbsence.update(vm.employeeLeaveAbsence, onSaveSuccess, onSaveError);
             } else {
@@ -39,21 +39,38 @@
         vm.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
-
         vm.datePickerOpenStatus = {};
         vm.datePickerOpenStatus.absentFrom = false;
         vm.datePickerOpenStatus.absentTo = false;
-
+        vm.minDate = new Date();
         vm.openCalendar = function(date) {
             vm.datePickerOpenStatus[date] = true;
         };
 
+        $scope.$watch("vm.employeeLeaveAbsence.absentFrom", function(newValue, oldValue) {
+            if(vm.employeeLeaveAbsence.absentFrom == null){
+                vm.employeeLeaveAbsence.absentFrom = vm.minDate;
+            }
+            else if(vm.employeeLeaveAbsence.absentFrom > vm.employeeLeaveAbsence.absentTo) {
+                vm.employeeLeaveAbsence.absentTo =  new Date(new Date(vm.employeeLeaveAbsence.absentFrom).getTime() + 24 * 60 * 60 * 1000);
+                vm.employeeLeaveAbsence.absentTo.setHours(0,0,0,0);
+            }
+ 
+        });
+
+        $scope.$watch("vm.employeeLeaveAbsence.absentTo", function(newValue, oldValue) {
+            if(vm.employeeLeaveAbsence.absentTo == null){
+                vm.employeeLeaveAbsence.absentTo =  new Date(new Date(vm.employeeLeaveAbsence.absentFrom).getTime() + 24 * 60 * 60 * 1000);
+                vm.employeeLeaveAbsence.absentTo.setHours(0,0,0,0);
+            }
+        });
+
         if( vm.employeeLeaveAbsence.absentFrom == null) {
-            vm.employeeLeaveAbsence.absentFrom = new Date();
+            vm.employeeLeaveAbsence.absentFrom = vm.minDate;
         }
 
         if( vm.employeeLeaveAbsence.absentTo == null) {
-            vm.employeeLeaveAbsence.absentTo = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+            vm.employeeLeaveAbsence.absentTo = new Date(new Date(vm.minDate).getTime() + 24 * 60 * 60 * 1000);
             vm.employeeLeaveAbsence.absentTo.setHours(0,0,0,0);
         }        
         var selectedEmployee = false;
