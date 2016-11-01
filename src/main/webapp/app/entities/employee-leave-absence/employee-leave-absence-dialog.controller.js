@@ -13,7 +13,6 @@
         vm.employeeabsentreasons = EmployeeAbsentReason.query();
         vm.employees = Employee.query();
         vm.isSaving = false;
-        vm.editId = $stateParams.id === null ? 0 : parseInt($stateParams.id);
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
