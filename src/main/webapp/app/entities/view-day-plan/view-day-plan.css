@@ -1,4 +1,4 @@
-.svg-container {
+.viewDayPlan .svg-container {
 	display: inline-block;
 	position: relative;
 	width: 100%;
@@ -6,41 +6,41 @@
 	vertical-align: top;
 	overflow: hidden;
 }
-.svg-content-responsive {
+.viewDayPlan .svg-content-responsive {
 	display: inline-block;
 	position: absolute;
 	top: 10px;
 	left: 0;
 }
-#shiftTimeline .border_black {
+.viewDayPlan  #shiftTimeline .border_black {
 	stroke: #000;
 	stroke-width : 2;
 }
-#shiftTimeline .border_red {
+.viewDayPlan  #shiftTimeline .border_red {
 	stroke: red;
 	stroke-width : 2;
 }
-#shiftTimeline g text {
+.viewDayPlan  #shiftTimeline g text {
 	cursor : default;
 }
-.axis path,
-.axis line {
+.viewDayPlan .axis path,
+.viewDayPlan .axis line {
   fill: none;
   stroke: black;
   shape-rendering: crispEdges;
 }
 
-.axis text {
+.viewDayPlan  .axis text {
   font-family: sans-serif;
   font-size: 10px;
 }
-#hoverRes .coloredDiv {
+.viewDayPlan  #hoverRes .coloredDiv {
 	height: 20px; 
 	width: 20px; 
 	float: left;
 }
 
-#hoverRes #taskDescription {
+.viewDayPlan  #hoverRes #taskDescription {
 	padding-left: 30px;
 	margin-top: 15px;
 }
