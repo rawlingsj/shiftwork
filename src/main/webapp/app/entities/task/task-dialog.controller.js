@@ -26,6 +26,13 @@ var tScope = "";
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
+			$('.icp-auto').iconpicker({placement: 'topRight'});
+			$('.icp-dd').iconpicker({
+				placement: 'right',
+				inputSearch: true
+			});
+			$('.icp').iconpicker({
+			});
         });
 
         var onSaveSuccess = function (result) {
