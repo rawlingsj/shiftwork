@@ -16,9 +16,10 @@
             "detail": {
                 "title": "Employee Leave Absence"
             },
-            "absentFrom": "Absent From",
-            "absentTo": "Absent To",
-            "reason": "Reason",
+            "absentFrom": "from",
+            "absentTo": "to",
+            "absentUtil": "until",
+            "reason": "is absent, due",
             "employee": "Employee",
             "searchBy": {
                 "employee": "Search by employee..."
