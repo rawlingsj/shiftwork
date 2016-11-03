@@ -12,6 +12,7 @@ import com.teammachine.staffrostering.repository.ShiftTypeRepository;
 import com.teammachine.staffrostering.web.rest.errors.CustomParameterizedException;
 import com.teammachine.staffrostering.web.rest.errors.ErrorConstants;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -21,6 +22,7 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -182,10 +184,7 @@ public class ScheduleResource {
             for (Pair<Task, Integer> task : tasksWeight) {
                 XSSFCellStyle style = (XSSFCellStyle) workbook.createCellStyle();
                 XSSFFont font = (XSSFFont) workbook.createFont();
-                font.setColor(new XSSFColor(getTaskTextColorOrDefault(task.getKey(), Color.BLACK)));
-                style.setFillForegroundColor(new XSSFColor(getTaskBackgroundColorOrDefault(task.getKey(), Color.LIGHT_GRAY)));
-                style.setFillPattern(CellStyle.SOLID_FOREGROUND);
-                style.setFont(font);
+                setCellStyle(task.getKey(), style, font);
                 int taskEndIdx = taskStartIdx + task.getValue() - 1;
                 for (Integer index : listCellsIndex.subList(taskStartIdx, taskEndIdx + 1)) {
                     Cell assignmentCell = contentRow.createCell(index);
@@ -200,6 +199,23 @@ public class ScheduleResource {
                 taskStartIdx = taskEndIdx + 1;
             }
         }
+    }
+
+    private void setCellStyle(Task task, XSSFCellStyle style, XSSFFont font) {
+        Color textColor = getTaskTextColorOrDefault(task, Color.WHITE);
+        Color backgroundColor = getTaskBackgroundColorOrDefault(task, Color.decode("#c2571a"));
+        font.setColor(new XSSFColor(textColor));
+        style.setFillForegroundColor(new XSSFColor(backgroundColor));
+        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style.setBorderColor(XSSFCellBorder.BorderSide.BOTTOM, new XSSFColor(textColor));
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBorderColor(XSSFCellBorder.BorderSide.TOP, new XSSFColor(textColor));
+        style.setBorderTop(BorderStyle.THIN);
+        style.setBorderColor(XSSFCellBorder.BorderSide.LEFT, new XSSFColor(textColor));
+        style.setBorderLeft(BorderStyle.THIN);
+        style.setBorderColor(XSSFCellBorder.BorderSide.RIGHT, new XSSFColor(textColor));
+        style.setBorderRight(BorderStyle.THIN);
+        style.setFont(font);
     }
 
     private Color getTaskTextColorOrDefault(Task task, Color defaultColor) {
