@@ -35,7 +35,8 @@
     "moment": "^2.14.1",
     "angular-bootstrap-calendar": "^0.23.0",
     "angular-bootstrap-colorpicker": "^3.0.25",
-    "fontawesome-iconpicker": "https://github.com/itsjavi/fontawesome-iconpicker.git#^1.2.2"
+    "fontawesome-iconpicker": "https://github.com/itsjavi/fontawesome-iconpicker.git#^1.2.2",
+    "font-awesome": "^4.7.0"
   },
   "devDependencies": {
     "angular-mocks": "1.5.2"

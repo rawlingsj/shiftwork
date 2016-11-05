@@ -1,5 +1,3 @@
-var tScope = "";
-
 (function() {
     'use strict';
 
@@ -10,7 +8,7 @@ var tScope = "";
     TaskDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Task'];
 
     function TaskDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Task) {
-		tScope = $scope;
+		
         var vm = this;
         vm.task = entity;
         vm.duplicateMsg = false;
@@ -26,18 +24,18 @@ var tScope = "";
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
-			$('.icp-auto').iconpicker({placement: 'top'});
-			$(".icp-auto").on('iconpickerSelected', function(e) {
+			
+			var selectedIcon = (vm.task.style && typeof vm.task.style.icon === 'string') ? vm.task.style.icon : false;
+			
+			$('.iconpicker').iconpicker({
+				defaultValue: selectedIcon,
+				placement: 'top'
+			});
+			$(".iconpicker").on('iconpickerSelected', function(e) {
 				// Fire the "input changed" event to update ng-model
-				console.log("iconpickerSelected");
+				// console.log("iconpickerSelected");
 				$(e.currentTarget).trigger('input');
 			});
-			/* $('.icp-dd').iconpicker({
-				placement: 'right',
-				inputSearch: true
-			});
-			$('.icp').iconpicker({
-			}); */
         });
 
         var onSaveSuccess = function (result) {
