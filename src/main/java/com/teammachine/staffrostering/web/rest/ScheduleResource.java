@@ -129,7 +129,10 @@ public class ScheduleResource {
         SimpleDateFormat outputTimeFormat = new SimpleDateFormat("HH:mm");
         Calendar calendar = Calendar.getInstance();
         Integer latestCellIndex = 1;
-        for (ShiftType shiftType : shiftTypeRepository.findAll()) {
+        List<ShiftType> shiftTypes = shiftTypeRepository.findAll().stream()
+            .sorted(Comparator.comparing(ShiftType::getStartTime))
+            .collect(Collectors.toList());
+        for (ShiftType shiftType : shiftTypes) {
             List<Integer> listCellsIndex = new ArrayList<>();
             Date startTime = timeFormat.parse(shiftType.getStartTimeString());
             Date endTime = timeFormat.parse(shiftType.getEndTimeString());
