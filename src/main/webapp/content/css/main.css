@@ -265,6 +265,18 @@ ul#strengthBar {
 }
 /* end of ui bootstrap tweaks */
 
+/* entity global css start */
+.colorpicker-preview {
+	width: 30px;
+	height: 30px;
+	border-radius: 2px;
+	display: inline-block;
+	vertical-align: middle;
+	border: 1px solid #ccc;
+	margin-left: 10px;
+}
+/* entity global css end */
+
 /* jhipster-needle-scss-add-main JHipster will add new css style */
 
 /* jhipster-needle-css-add-main JHipster will add new css style */

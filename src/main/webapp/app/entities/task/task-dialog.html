@@ -1,4 +1,3 @@
-
 <form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
 
     <div class="modal-header">
@@ -73,7 +72,27 @@
                 <option value="Not_Urgent" translate="shiftworkApp.TaskUrgency.Not_Urgent">Not_Urgent</option>
             </select>
         </div>
-
+		<div class="form-group">
+            <label class="control-label" translate="shiftworkApp.task.style" for="field_style">Style</label>
+			<br/>
+			<div class="row">
+				<div class="col-xs-4">
+					<label class="control-label" for="field_style" translate="shiftworkApp.task.styleOptions.textColor">Text Color</label>
+					<div class="colorpicker-preview" ng-style="{'background-color': vm.task.style.textColor}" colorpicker type="button" colorpicker-with-input="true" colorpicker-position="top" ng-model="vm.task.style.textColor"></div>
+				</div>
+				<div class="col-xs-4">
+					<label class="control-label" for="field_style" translate="shiftworkApp.task.styleOptions.bgColor">Background Color</label>
+					<div class="colorpicker-preview" ng-style="{'background-color': vm.task.style.backgroundColor}" colorpicker type="button" colorpicker-with-input="true" colorpicker-position="top" ng-model="vm.task.style.backgroundColor"></div>
+				</div>
+			</div>
+        </div>
+		<div class="form-group">
+            <label class="control-label" for="field_style" translate="shiftworkApp.task.styleOptions.icon">Icon</label>
+            <div class="input-group">
+				<input data-placement="bottomRight" class="form-control iconpicker" type="text" ng-model="vm.task.style.icon" />
+				<span class="input-group-addon"></span>
+			</div>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
