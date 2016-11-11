@@ -129,12 +129,12 @@ class DemoDataInstaller {
         logger.info("* contracts with contract lines");
 
         // tasks
-        Task task1 = createTask("T1", "Task1", 1, TaskType.SHORT, TaskImportance.NOT_IMPORTANT, TaskUrgency.URGENT);
-        Task task2 = createTask("T2", "Task2", 1, TaskType.MAIN, TaskImportance.IMPORTANT, TaskUrgency.URGENT);
-        Task task3 = createTask("T3", "Task3", 1, TaskType.SHORT, TaskImportance.NOT_IMPORTANT, TaskUrgency.URGENT);
-        Task task4 = createTask("T4", "Task4", 1, TaskType.MAIN, TaskImportance.IMPORTANT, TaskUrgency.NOT_URGENT);
-        Task task5 = createTask("T5", "Task5", 1, TaskType.FULL, TaskImportance.IMPORTANT, TaskUrgency.NOT_URGENT);
-        Task task6 = createTask("T6", "Task6", 1, TaskType.FULL, TaskImportance.IMPORTANT, TaskUrgency.NOT_URGENT);
+        Task task1 = createTask("T1", "Task1", 1, TaskType.SHORT, TaskImportance.NOT_IMPORTANT, TaskUrgency.URGENT, createStyle("#FFFFFF", "#093145"));
+        Task task2 = createTask("T2", "Task2", 1, TaskType.MAIN, TaskImportance.IMPORTANT, TaskUrgency.URGENT, createStyle("#FFFFFF", "#107896"));
+        Task task3 = createTask("T3", "Task3", 1, TaskType.SHORT, TaskImportance.NOT_IMPORTANT, TaskUrgency.URGENT, createStyle("#FFFFFF", "#829356"));
+        Task task4 = createTask("T4", "Task4", 1, TaskType.MAIN, TaskImportance.IMPORTANT, TaskUrgency.NOT_URGENT, createStyle("#FFFFFF", "#bca136"));
+        Task task5 = createTask("T5", "Task5", 1, TaskType.FULL, TaskImportance.IMPORTANT, TaskUrgency.NOT_URGENT, createStyle("#FFFFFF", "#c2571a"));
+        Task task6 = createTask("T6", "Task6", 1, TaskType.FULL, TaskImportance.IMPORTANT, TaskUrgency.NOT_URGENT, createStyle("#FFFFFF", "#9a2617"));
         logger.info("* tasks");
 
         // skills
@@ -271,7 +271,7 @@ class DemoDataInstaller {
         return skill;
     }
 
-    private Task createTask(String code, String description, int staffNeeded, TaskType taskType, TaskImportance importance, TaskUrgency urgency) {
+    private Task createTask(String code, String description, int staffNeeded, TaskType taskType, TaskImportance importance, TaskUrgency urgency, Style style) {
         Task task = new Task();
         task.setCode(code);
         task.setDescription(description);
@@ -279,6 +279,7 @@ class DemoDataInstaller {
         task.setTaskType(taskType);
         task.setImportance(importance);
         task.setUrgency(urgency);
+        task.setStyle(style);
         taskRepository.save(task);
         return task;
     }
@@ -399,6 +400,13 @@ class DemoDataInstaller {
         employeeLeaveAbsence.setReason(reason);
         employeeLeaveAbsenceRepository.save(employeeLeaveAbsence);
         return employeeLeaveAbsence;
+    }
+
+    private Style createStyle(String text, String background) {
+        Style style = new Style();
+        style.setTextColor(text);
+        style.setBackgroundColor(background);
+        return style;
     }
 }
 

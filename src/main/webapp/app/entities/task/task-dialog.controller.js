@@ -8,6 +8,7 @@
     TaskDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Task'];
 
     function TaskDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Task) {
+		
         var vm = this;
         vm.task = entity;
         vm.duplicateMsg = false;
@@ -23,6 +24,18 @@
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
+			
+			var selectedIcon = (vm.task.style && typeof vm.task.style.icon === 'string') ? vm.task.style.icon : false;
+			
+			$('.iconpicker').iconpicker({
+				defaultValue: selectedIcon,
+				placement: 'top'
+			});
+			$(".iconpicker").on('iconpickerSelected', function(e) {
+				// Fire the "input changed" event to update ng-model
+				// console.log("iconpickerSelected");
+				$(e.currentTarget).trigger('input');
+			});
         });
 
         var onSaveSuccess = function (result) {
