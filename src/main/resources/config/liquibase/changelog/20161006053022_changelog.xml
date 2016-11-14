@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+   <changeSet author="LD (generated)" id="1475731832665-1">
+      <addColumn tableName="skill">
+         <column name="rotation_period_unit" type="varchar(16)"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1475731832665-2">
+      <addColumn tableName="skill">
+         <column name="rotation_period_value" type="int4"/>
+      </addColumn>
+   </changeSet>
+</databaseChangeLog>

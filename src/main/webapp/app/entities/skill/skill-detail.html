@@ -8,6 +8,12 @@
             <span>{{vm.skill.code}}</span>
         </dd>
         <hr>
+        <dt><span translate="shiftworkApp.skill.rotationPeriod" style="white-space:pre-wrap;word-wrap:break-word;">Max period without allocation</span></dt>
+        <dd>
+            <span translate="{{'shiftworkApp.Duration.' + vm.skill.rotationPeriodUnit}}"
+                  translate-values="{value: '{{vm.skill.rotationPeriodValue}}'}">{{vm.skill.rotationPeriodValue}} {{vm.employeeAbsentReason.rotationPeriodUnit}}</span>
+        </dd>
+        <hr>
     </dl>
 
     <button type="submit"

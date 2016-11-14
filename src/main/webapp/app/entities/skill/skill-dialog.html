@@ -24,10 +24,23 @@
                     This field should contain only numbers or letters.
                 </p>
             </div>
-            <div class='alert alert-danger' 
+            <div class='alert alert-danger'
                         ng-show='vm.duplicateMsg'>
                         The code entered is invalid, It has already been used.
-            </div>              
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="shiftworkApp.skill.rotationPeriod" for="field_rotationPeriodValue">Max period without allocation</label>
+            <div class="form-inline">
+                <input type="number" min="1" class="form-control" name="rotationPeriodValue" id="field_rotationPeriodValue"
+                       ng-model="vm.skill.rotationPeriodValue" required
+                />
+                <select class="form-control" name="rotationPeriodUnit" ng-model="vm.skill.rotationPeriodUnit" id="field_rotationPeriodUnit" required>
+                    <option value="DAYS" translate="shiftworkApp.DurationUnit.DAYS">DAYS</option>
+                    <option value="MONTHS" translate="shiftworkApp.DurationUnit.MONTHS">MONTHS</option>
+                    <option value="YEARS" translate="shiftworkApp.DurationUnit.YEARS">YEARS</option>
+                </select>
+            </div>
         </div>
     </div>
     <div class="modal-footer">

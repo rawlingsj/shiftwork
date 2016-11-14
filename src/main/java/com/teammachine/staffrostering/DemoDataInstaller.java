@@ -82,7 +82,7 @@ class DemoDataInstaller {
     private EmployeeLeaveAbsenceRepository employeeLeaveAbsenceRepository;
 
     @PostConstruct
-    public void install() {
+    void install() {
         if (contractRepository.findAll().stream().map(Contract::getDescription).anyMatch(description -> description.equalsIgnoreCase("fulltime"))) {
             logger.info("Some demo data entities are detected, seems the installer has already been executed, so will not run again.");
             return;
@@ -267,6 +267,8 @@ class DemoDataInstaller {
     private Skill createSkill(String code) {
         Skill skill = new Skill();
         skill.setCode(code);
+        skill.setRotationPeriodValue(1);
+        skill.setRotationPeriodUnit(DurationUnit.MONTHS);
         skillRepository.save(skill);
         return skill;
     }
