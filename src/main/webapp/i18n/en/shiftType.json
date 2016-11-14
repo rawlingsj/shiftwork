@@ -22,7 +22,13 @@
             "nightShift": "Night Shift",
             "startTime": "Start Time",
             "endTime": "End Time",
-            "tasks": "Tasks"
+            "tasks": "Tasks",
+			"style" : "Style",
+			"styleOptions" : {
+				"textColor" : "Text Color",
+				"bgColor" : "Background Color",
+				"icon" : "Icon"
+			}
         }
     }
 }

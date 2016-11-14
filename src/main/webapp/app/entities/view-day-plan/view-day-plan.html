@@ -1,0 +1,23 @@
+<div class="viewDayPlan">
+
+    <h2 translate="shiftworkApp.viewDayPlan.home.title">Viewing Day Schedule</h2>
+	<a ng-hide="vm.datePickerOpenStatus.date" ng-click="vm.openCalendar('date')">
+		{{ vm.shiftDateFormatted }}
+	</a>
+	<div class="form-group">
+		<div class="input-group">
+			<input ng-show="vm.datePickerOpenStatus.date" id="shift_date" type="text" class="form-control" name="date" uib-datepicker-popup="{{dateformat}}" ng-model="vm.shiftDate" ng-change="vm.shiftDateChanged()" is-open="vm.datePickerOpenStatus.date"/>
+		</div>
+	</div>
+    <br/>
+	
+	<div id="shiftTimeline" ng-show="vm.shiftAssignments.length > 0"></div>
+	<div id="hoverRes" ng-show="vm.shiftAssignments.length > 0">
+		<div class="coloredDiv"></div>
+		<div id="taskDescription"></div>
+		<div id="scrolled_date"></div>
+		</div>
+	</div>
+	<p class="noRecordsMsg" ng-show="vm.shiftAssignments.length < 1" translate="shiftworkApp.viewDayPlan.noRecordsFoundMsg">No Records Found, Select Any Other Date</p>
+	
+</div>

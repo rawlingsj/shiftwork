@@ -29,6 +29,8 @@
                 "minMaxContractLine": "Min Max Contract Line",
                 "employees": "Employees",
                 "taskSkillRequirement": "Task Skill Requirement",
+				"viewDayPlan": "View Day Plan",
+				"viewMySchedule": "View My Schedule",
                 "employeeAbsentReason": "Employee Absent Reason",
                 "employeeLeaveAbsence": "Employee Leave Absence",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
@@ -97,7 +99,12 @@
         },
         "field": {
             "id": "ID"
-        }
+        },
+		"day" : {
+			"today" : "Today",
+			"yesterday" : "Yesterday",
+			"tomorrow" : "Tomorrow"
+		}
     },
     "entity": {
         "action": {
@@ -128,9 +135,24 @@
             "pattern": "This field should follow pattern {{ pattern }}.",
             "number": "This field should be a number.",
             "datetimelocal": "This field should be a date and time.",
-            "time": "This field should be a time."
+            "time": "This field should be a time.",
+            "code": "This field should contain only numbers or letters.",
+			"codeexists": "The code entered is invalid, It has already been used."
         }
     },
+	"calendar" : {
+		"action" : {
+			"previous" : "Previous",
+			"today" : "Today",
+			"next" : "Next"
+		},
+		"view" : {
+			"day" : "Day",
+			"month" : "Month",
+			"week" : "Week",
+			"year" : "Year"
+		}
+	},
     "error": {
         "server.not.reachable": "Server not reachable",
         "NotNull": "Field {{ fieldName }} cannot be empty!",

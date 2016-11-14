@@ -22,7 +22,13 @@
             "staffNeeded": "Staff Needed",
             "taskType": "Task Type",
             "importance": "Importance",
-            "urgency": "Urgency"
+            "urgency": "Urgency",
+			"style" : "Style",
+			"styleOptions" : {
+				"textColor" : "Text Color",
+				"bgColor" : "Background Color",
+				"icon" : "Icon"
+			}
         }
     }
 }

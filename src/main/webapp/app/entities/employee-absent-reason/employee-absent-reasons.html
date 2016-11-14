@@ -18,7 +18,7 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr>
-                    <th><span translate="global.field.id">ID</span></th>
+                    <th ng-show="false"><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.employeeAbsentReason.code">Code</span></th>
                     <th><span translate="shiftworkApp.employeeAbsentReason.name">Name</span></th>
                     <th><span translate="shiftworkApp.employeeAbsentReason.description">Description</span></th>
@@ -27,7 +27,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="employeeAbsentReason in vm.employeeAbsentReasons track by employeeAbsentReason.id">
-                    <td><a ui-sref="employee-absent-reason-detail({id:employeeAbsentReason.id})">{{employeeAbsentReason.id}}</a></td>
+                    <td ng-show="false"><a ui-sref="employee-absent-reason-detail({id:employeeAbsentReason.id})">{{employeeAbsentReason.id}}</a></td>
                     <td>{{employeeAbsentReason.code}}</td>
                     <td>{{employeeAbsentReason.name}}</td>
                     <td>{{employeeAbsentReason.description}}</td>

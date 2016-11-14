@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Period;
 import java.util.Objects;
+import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * A Skill.
@@ -27,6 +29,7 @@ public class Skill implements Serializable {
     private Long id;
 
     @NotBlank
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "code validation failed.")
     @Column(name = "code")
     private String code;
 

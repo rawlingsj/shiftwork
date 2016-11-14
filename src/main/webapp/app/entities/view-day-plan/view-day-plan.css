@@ -1,0 +1,46 @@
+.viewDayPlan .svg-container {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	/* padding-bottom: 65%; */ /* aspect ratio */
+	vertical-align: top;
+	overflow: hidden;
+}
+.viewDayPlan .svg-content-responsive {
+	display: inline-block;
+	position: absolute;
+	top: 10px;
+	left: 0;
+}
+.viewDayPlan  #shiftTimeline .border_black {
+	stroke: #000;
+	stroke-width : 2;
+}
+.viewDayPlan  #shiftTimeline .border_red {
+	stroke: red;
+	stroke-width : 2;
+}
+.viewDayPlan  #shiftTimeline g text {
+	cursor : default;
+}
+.viewDayPlan .axis path,
+.viewDayPlan .axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+.viewDayPlan  .axis text {
+  font-family: sans-serif;
+  font-size: 10px;
+}
+.viewDayPlan  #hoverRes .coloredDiv {
+	height: 20px; 
+	width: 20px; 
+	float: left;
+}
+
+.viewDayPlan  #hoverRes #taskDescription {
+	padding-left: 30px;
+	margin-top: 15px;
+}

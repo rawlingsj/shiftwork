@@ -8,11 +8,34 @@
     TaskDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Task'];
 
     function TaskDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Task) {
+		
         var vm = this;
         vm.task = entity;
+        vm.duplicateMsg = false;
+        vm.editId = $stateParams.id === null ? 0 : parseInt($stateParams.id);
+        vm.tasks = [];
+        vm.loadAll = function() {
+            Task.query(function(result) {
+                vm.tasks = result;
+            });
+        };
+
+        vm.loadAll();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
+			
+			var selectedIcon = (vm.task.style && typeof vm.task.style.icon === 'string') ? vm.task.style.icon : false;
+			
+			$('.iconpicker').iconpicker({
+				defaultValue: selectedIcon,
+				placement: 'top'
+			});
+			$(".iconpicker").on('iconpickerSelected', function(e) {
+				// Fire the "input changed" event to update ng-model
+				// console.log("iconpickerSelected");
+				$(e.currentTarget).trigger('input');
+			});
         });
 
         var onSaveSuccess = function (result) {
@@ -37,5 +60,24 @@
         vm.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
+
+        vm.verifyDuplicate = function(code) {
+            vm.duplicateMsg = false;
+            angular.forEach(vm.tasks, function(task, key){
+                if(task.code === code) {
+                    if( vm.editId === 0) {
+                        console.log('existed');
+                        vm.duplicateMsg = true;
+                        return vm.duplicateMsg;
+                    }
+                    else if(vm.editId != task.id) {
+                        console.log('existed');
+                        vm.duplicateMsg = true;
+                        return vm.duplicateMsg;                       
+                    }
+                }
+            });
+            return vm.duplicateMsg;
+        }
     }
 })();

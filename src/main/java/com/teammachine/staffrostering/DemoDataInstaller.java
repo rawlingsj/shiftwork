@@ -18,7 +18,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -37,6 +36,8 @@ import java.util.stream.Collectors;
 class DemoDataInstaller {
 
     private final Logger logger = LoggerFactory.getLogger(DemoDataInstaller.class);
+
+    private final ZonedDateTime now = ZonedDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
 
     static class CreateDemoDataCondition implements Condition {
 
@@ -81,7 +82,11 @@ class DemoDataInstaller {
     private EmployeeLeaveAbsenceRepository employeeLeaveAbsenceRepository;
 
     @PostConstruct
-    void install() {
+    private void install() {
+        if (contractRepository.findAll().stream().map(Contract::getDescription).anyMatch(description -> description.equalsIgnoreCase("fulltime"))) {
+            logger.info("Some demo data entities are detected, seems the installer has already been executed, so will not run again.");
+            return;
+        }
         logger.info("----- Installation of demo data -----");
 
         // Weekend definition
@@ -124,12 +129,12 @@ class DemoDataInstaller {
         logger.info("* contracts with contract lines");
 
         // tasks
-        Task task1 = createTask("T1", "Task1", 1, TaskType.SHORT, TaskImportance.NOT_IMPORTANT, TaskUrgency.URGENT);
-        Task task2 = createTask("T2", "Task2", 1, TaskType.MAIN, TaskImportance.IMPORTANT, TaskUrgency.URGENT);
-        Task task3 = createTask("T3", "Task3", 1, TaskType.SHORT, TaskImportance.NOT_IMPORTANT, TaskUrgency.URGENT);
-        Task task4 = createTask("T4", "Task4", 1, TaskType.MAIN, TaskImportance.IMPORTANT, TaskUrgency.NOT_URGENT);
-        Task task5 = createTask("T5", "Task5", 1, TaskType.FULL, TaskImportance.IMPORTANT, TaskUrgency.NOT_URGENT);
-        Task task6 = createTask("T6", "Task6", 1, TaskType.FULL, TaskImportance.IMPORTANT, TaskUrgency.NOT_URGENT);
+        Task task1 = createTask("T1", "Task1", 1, TaskType.SHORT, TaskImportance.NOT_IMPORTANT, TaskUrgency.URGENT, createStyle("#FFFFFF", "#093145"));
+        Task task2 = createTask("T2", "Task2", 1, TaskType.MAIN, TaskImportance.IMPORTANT, TaskUrgency.URGENT, createStyle("#FFFFFF", "#107896"));
+        Task task3 = createTask("T3", "Task3", 1, TaskType.SHORT, TaskImportance.NOT_IMPORTANT, TaskUrgency.URGENT, createStyle("#FFFFFF", "#829356"));
+        Task task4 = createTask("T4", "Task4", 1, TaskType.MAIN, TaskImportance.IMPORTANT, TaskUrgency.NOT_URGENT, createStyle("#FFFFFF", "#bca136"));
+        Task task5 = createTask("T5", "Task5", 1, TaskType.FULL, TaskImportance.IMPORTANT, TaskUrgency.NOT_URGENT, createStyle("#FFFFFF", "#c2571a"));
+        Task task6 = createTask("T6", "Task6", 1, TaskType.FULL, TaskImportance.IMPORTANT, TaskUrgency.NOT_URGENT, createStyle("#FFFFFF", "#9a2617"));
         logger.info("* tasks");
 
         // skills
@@ -155,8 +160,8 @@ class DemoDataInstaller {
         logger.info("* shift types");
 
         // shiftDates
-        LocalDate firstDate = LocalDate.of(2010, 1, 1);
-        LocalDate lastDate = LocalDate.of(2010, 1, 28);
+        LocalDate firstDate = now.toLocalDate().minusDays(14);
+        LocalDate lastDate = now.toLocalDate().plusDays(18);
         LocalDate localDate = firstDate;
         ShiftDate firstShiftDate = null, lastShiftDate = null;
         while (!localDate.isAfter(lastDate)) {
@@ -212,9 +217,9 @@ class DemoDataInstaller {
         logger.info("* employee absent reasons");
 
         // employee leave absence
-        createEmployeeLeaveAbsence(a, ZonedDateTime.of(2016, 6, 1, 0, 0, 0, 0, ZoneId.systemDefault()), ZonedDateTime.of(2016, 6, 2, 0, 0, 0, 0, ZoneId.systemDefault()), dayOffReason);
-        createEmployeeLeaveAbsence(b, ZonedDateTime.of(2016, 6, 1, 0, 0, 0, 0, ZoneId.systemDefault()), ZonedDateTime.of(2016, 6, 5, 0, 0, 0, 0, ZoneId.systemDefault()), sickReason);
-        createEmployeeLeaveAbsence(c, ZonedDateTime.of(2016, 6, 1, 0, 0, 0, 0, ZoneId.systemDefault()), ZonedDateTime.of(2016, 12, 2, 0, 0, 0, 0, ZoneId.systemDefault()), maternityLeaveReason);
+        createEmployeeLeaveAbsence(a, now, now.plusDays(1), dayOffReason);
+        createEmployeeLeaveAbsence(b, now.minusDays(2), now.plusDays(2), sickReason);
+        createEmployeeLeaveAbsence(c, now, now.plusMonths(12), maternityLeaveReason);
         logger.info("* employee leave absences");
 
         logger.info("----- Installed demo data -----");
@@ -268,7 +273,7 @@ class DemoDataInstaller {
         return skill;
     }
 
-    private Task createTask(String code, String description, int staffNeeded, TaskType taskType, TaskImportance importance, TaskUrgency urgency) {
+    private Task createTask(String code, String description, int staffNeeded, TaskType taskType, TaskImportance importance, TaskUrgency urgency, Style style) {
         Task task = new Task();
         task.setCode(code);
         task.setDescription(description);
@@ -276,6 +281,7 @@ class DemoDataInstaller {
         task.setTaskType(taskType);
         task.setImportance(importance);
         task.setUrgency(urgency);
+        task.setStyle(style);
         taskRepository.save(task);
         return task;
     }
@@ -396,6 +402,13 @@ class DemoDataInstaller {
         employeeLeaveAbsence.setReason(reason);
         employeeLeaveAbsenceRepository.save(employeeLeaveAbsence);
         return employeeLeaveAbsence;
+    }
+
+    private Style createStyle(String text, String background) {
+        Style style = new Style();
+        style.setTextColor(text);
+        style.setBackgroundColor(background);
+        return style;
     }
 }
 

@@ -8,12 +8,35 @@
     ShiftTypeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'ShiftType', 'Task'];
 
     function ShiftTypeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, ShiftType, Task) {
-        var vm = this;
+		
+		var vm = this;
         vm.shiftType = entity;
         vm.tasks = Task.query();
+        vm.duplicateMsg = false;
+        vm.editId = $stateParams.id === null ? 0 : parseInt($stateParams.id);
+        vm.shiftTypes = [];
+        vm.loadAll = function() {
+            ShiftType.query(function(result) {
+                vm.shiftTypes = result;
+            });
+        };
+
+        vm.loadAll();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
+			var selectedIcon = (vm.shiftType.style && typeof vm.shiftType.style.icon === 'string') ? vm.shiftType.style.icon : false;
+			
+			$('.iconpicker').iconpicker({
+				selected: selectedIcon,
+				defaultValue: selectedIcon,
+				placement: 'top'
+			});
+			$(".iconpicker").on('iconpickerSelected', function(e) {
+				// Fire the "input changed" event to update ng-model
+				// console.log("iconpickerSelected");
+				$(e.currentTarget).trigger('input');
+			});
         });
 
         var onSaveSuccess = function (result) {
@@ -38,5 +61,24 @@
         vm.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
+
+        vm.verifyDuplicate = function(code) {
+            vm.duplicateMsg = false;
+            angular.forEach(vm.shiftTypes, function(shiftType, key){
+                if(shiftType.code === code) {
+                    if( vm.editId === 0) {
+                        console.log('existed');
+                        vm.duplicateMsg = true;
+                        return vm.duplicateMsg;
+                    }
+                    else if(vm.editId != shiftType.id) {
+                        console.log('existed');
+                        vm.duplicateMsg = true;
+                        return vm.duplicateMsg;                       
+                    }
+                }
+            });
+            return vm.duplicateMsg;
+        }               
     }
 })();

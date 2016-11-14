@@ -64,8 +64,8 @@ public class ShiftAssignmentRepositoryIntTest {
         shiftType_N = createShiftType("N", 3);
 
         // create tasks
-        task_1 = createTask("Task_1");
-        task_2 = createTask("Task_2");
+        task_1 = createTask("Task1");
+        task_2 = createTask("Task2");
 
         // create shift dates
         shiftDate_25 = createShiftDate(1, DATE_2016_07_25);
