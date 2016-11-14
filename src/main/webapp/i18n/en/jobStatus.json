@@ -1,0 +1,10 @@
+{
+    "shiftworkApp": {
+        "JobStatus" : {
+            "null": "",
+            "PENDING": "Pending",
+            "RUNNING": "Running",
+            "COMPLETED": "Completed"
+        }
+    }
+}

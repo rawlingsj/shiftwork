@@ -103,7 +103,7 @@ public class ShiftAssignmentRepositoryIntTest {
         ShiftAssignment shiftAssignment_N27 = createShiftAssignment(shift_N27, employee_003, task_1, task_2);
 
         // Business method
-        List<ShiftAssignment> shiftAssignments_26 = shiftAssignmentRepository.findAllForShiftDate(shiftDate_26).stream()
+        List<ShiftAssignment> shiftAssignments_26 = shiftAssignmentRepository.findAllBetweenShiftDates(shiftDate_26.getDayIndex(), shiftDate_26.getDayIndex()).stream()
             .sorted(Comparator.comparing(sa -> sa.getShift().getShiftType().getIndex())).collect(Collectors.toList());
 
         // Asserts

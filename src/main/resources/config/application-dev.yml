@@ -77,3 +77,7 @@ jhipster:
             queueSize: 512
     swagger: # swagger is enabled. It can be disabled by pasing 'no-swagger' profile at run time as well
         enabled: true
+
+plannerengine:
+    url: http://localhost:8082/plannerengine-0.0.1-SNAPSHOT/rest
+

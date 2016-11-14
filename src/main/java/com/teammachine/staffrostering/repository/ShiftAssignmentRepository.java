@@ -24,8 +24,8 @@ public interface ShiftAssignmentRepository extends JpaRepository<ShiftAssignment
     ShiftAssignment findOneWithEagerRelationships(@Param("id") Long id);
 
     @Query("select distinct shiftAssignment from ShiftAssignment shiftAssignment left join fetch shiftAssignment.taskList " +
-        "where shiftAssignment.shift.shiftDate = :shiftDate")
-    List<ShiftAssignment> findAllForShiftDate(@Param("shiftDate") ShiftDate shiftDate);
+        "where shiftAssignment.shift.shiftDate.dayIndex between :fromShiftDateIndex and :toShiftDateIndex")
+    List<ShiftAssignment> findAllBetweenShiftDates(@Param("fromShiftDateIndex") Integer fromShiftDateIndex, @Param("toShiftDateIndex") Integer toShiftDateIndex);
 
     @Query("select distinct shiftAssignment from ShiftAssignment shiftAssignment left join fetch shiftAssignment.taskList " +
         "where shiftAssignment.shift.shiftDate.date = :date")
