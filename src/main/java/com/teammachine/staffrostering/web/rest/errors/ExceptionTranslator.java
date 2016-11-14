@@ -48,10 +48,17 @@ public class ExceptionTranslator {
         return ex.getErrorDTO();
     }
 
+    @ExceptionHandler(NoSuchEntityException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ParameterizedErrorDTO processParameterizedValidationError(NoSuchEntityException ex) {
+        return ex.getErrorDTO();
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ResponseBody
-    public ErrorDTO processAccessDeniedExcpetion(AccessDeniedException e) {
+    public ErrorDTO processAccessDeniedException(AccessDeniedException e) {
         return new ErrorDTO(ErrorConstants.ERR_ACCESS_DENIED, e.getMessage());
     }
 

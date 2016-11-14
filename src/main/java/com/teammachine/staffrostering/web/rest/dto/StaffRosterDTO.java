@@ -8,7 +8,6 @@ import java.util.List;
 public class StaffRosterDTO {
 
     private StaffRosterParametrization staffRosterParametrization;
-
     private List<ShiftAssignment> shiftAssignments;
 
     public StaffRosterParametrization getStaffRosterParametrization() {

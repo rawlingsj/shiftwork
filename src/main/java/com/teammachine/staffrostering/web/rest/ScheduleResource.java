@@ -96,7 +96,7 @@ public class ScheduleResource {
     }
 
     private List<ShiftAssignment> getShiftAssignments(ShiftDate shiftDate) {
-        return shiftAssignmentRepository.findAllForShiftDate(shiftDate).stream().sorted(byShiftTypeAndIndex()).collect(Collectors.toList());
+        return shiftAssignmentRepository.findAllBetweenShiftDates(shiftDate.getDayIndex(), shiftDate.getDayIndex()).stream().sorted(byShiftTypeAndIndex()).collect(Collectors.toList());
     }
 
     private Comparator<ShiftAssignment> byShiftTypeAndIndex() {

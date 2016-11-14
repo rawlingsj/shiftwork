@@ -138,9 +138,9 @@ class DemoDataInstaller {
         logger.info("* tasks");
 
         // skills
-        Skill skill1 = createSkill("Skill1", 14, DurationUnit.DAYS);
-        Skill skill2 = createSkill("Skill2", 1, DurationUnit.MONTHS);
-        Skill skill3 = createSkill("Skill3", 1, DurationUnit.YEARS);
+        Skill skill1 = createSkill("Skill1");
+        Skill skill2 = createSkill("Skill2");
+        Skill skill3 = createSkill("Skill3");
         logger.info("* skills");
 
         // task skill requirements
@@ -211,9 +211,9 @@ class DemoDataInstaller {
         logger.info("* skill proficiencies");
 
         // employee absent reason
-        EmployeeAbsentReason dayOffReason = createEmployeeAbsentReason("dayoff", "Day off", "Day off", 1, DurationUnit.DAYS);
+        EmployeeAbsentReason dayOffReason = createEmployeeAbsentReason("day-off", "Day off", "Day off", 1, DurationUnit.DAYS);
         EmployeeAbsentReason sickReason = createEmployeeAbsentReason("sick", "Sick", "Sick", 5, DurationUnit.DAYS);
-        EmployeeAbsentReason maternityLeaveReason = createEmployeeAbsentReason("maternityleave", "Maternity Leave", "Maternity Leave", 6, DurationUnit.MONTHS);
+        EmployeeAbsentReason maternityLeaveReason = createEmployeeAbsentReason("maternity_leave", "Maternity Leave", "Maternity Leave", 6, DurationUnit.MONTHS);
         logger.info("* employee absent reasons");
 
         // employee leave absence
@@ -264,11 +264,9 @@ class DemoDataInstaller {
         contractLineRepository.save(minMaxContractLine);
     }
 
-    private Skill createSkill(String code, int rotationPeriod, DurationUnit rotationPeriodUnit) {
+    private Skill createSkill(String code) {
         Skill skill = new Skill();
         skill.setCode(code);
-        skill.setRotationPeriodValue(rotationPeriod);
-        skill.setRotationPeriodUnit(rotationPeriodUnit);
         skillRepository.save(skill);
         return skill;
     }

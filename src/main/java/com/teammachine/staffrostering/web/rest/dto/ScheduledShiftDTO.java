@@ -8,11 +8,8 @@ import java.util.List;
 public class ScheduledShiftDTO {
 
     private Long id;
-
     private ShiftType shiftType;
-
     private ShiftDate shiftDate;
-
     private List<TaskWithCoworkersDTO> tasks;
 
     public Long getId() {
@@ -46,5 +43,4 @@ public class ScheduledShiftDTO {
     public void setTasks(List<TaskWithCoworkersDTO> tasks) {
         this.tasks = tasks;
     }
-
 }

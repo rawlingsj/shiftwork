@@ -267,7 +267,7 @@ public class ShiftAssignmentResourceIntTest {
         ShiftAssignment shiftAssignment3 = createShiftAssignment(createShift(shiftDate, shiftType_L), 1);
         ShiftAssignment shiftAssignment4 = createShiftAssignment(createShift(createShiftDate(2), shiftType_E), 1);
 
-        restShiftAssignmentMockMvc.perform(get("/api/shift-assignments").param("shiftDate", shiftDate.getId().toString()))
+        restShiftAssignmentMockMvc.perform(get("/api/shift-assignments").param("fromShiftDate", shiftDate.getId().toString()).param("toShiftDate", shiftDate.getId().toString()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.[*].id").value(contains(

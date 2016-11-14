@@ -92,10 +92,11 @@ public class ShiftAssignmentResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<ShiftAssignment> getAllShiftAssignments(@RequestParam(value = "shiftDate", required = false) Long shiftDateId) {
+    public List<ShiftAssignment> getAllShiftAssignments(@RequestParam(value = "fromShiftDate", required = false) Long fromShiftDate,
+                                                        @RequestParam(value = "toShiftDate", required = false) Long toShiftDate) {
         log.debug("REST request to get ShiftAssignments");
-        if (shiftDateId != null) {
-            return getShiftAssignmentsForShiftDate(shiftDateId);
+        if (fromShiftDate != null && toShiftDate != null) {
+            return getShiftAssignmentsBetweenShiftDates(fromShiftDate, toShiftDate);
         } else {
             return getAllShiftAssignments();
         }
@@ -107,12 +108,16 @@ public class ShiftAssignmentResource {
             .collect(Collectors.toList());
     }
 
-    private List<ShiftAssignment> getShiftAssignmentsForShiftDate(long shiftDateId) {
-        ShiftDate shiftDate = shiftDateRepository.findOne(shiftDateId);
-        if (shiftDate == null) {
-            throw new CustomParameterizedException(ErrorConstants.ERR_NO_SUCH_SHIFT_DATE, "" + shiftDateId);
+    private List<ShiftAssignment> getShiftAssignmentsBetweenShiftDates(long fromShiftDateId, long toShiftDateId) {
+        ShiftDate fromShiftDate = shiftDateRepository.findOne(fromShiftDateId);
+        if (fromShiftDate == null) {
+            throw new CustomParameterizedException(ErrorConstants.ERR_NO_SUCH_SHIFT_DATE, "" + fromShiftDateId);
         }
-        return shiftAssignmentRepository.findAllForShiftDate(shiftDate).stream()
+        ShiftDate toShiftDate = shiftDateRepository.findOne(toShiftDateId);
+        if (toShiftDate == null) {
+            throw new CustomParameterizedException(ErrorConstants.ERR_NO_SUCH_SHIFT_DATE, "" + toShiftDate);
+        }
+        return shiftAssignmentRepository.findAllBetweenShiftDates(fromShiftDate.getDayIndex(), toShiftDate.getDayIndex()).stream()
             .sorted(Comparator.<ShiftAssignment, Integer>comparing(sha -> sha.getShift().getShiftType().getIndex()).thenComparing(ShiftAssignment::getIndexInShift))
             .collect(Collectors.toList());
     }
