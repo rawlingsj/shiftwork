@@ -28,8 +28,6 @@
                         ng-show='vm.duplicateMsg'>
                         The code entered is invalid, It has already been used.
             </div>
-                    ng-model="vm.skill.code"
-                     required/>
         </div>
         <div class="form-group">
             <label class="control-label" translate="shiftworkApp.skill.rotationPeriod" for="field_rotationPeriodValue">Max period without allocation</label>
@@ -44,7 +42,6 @@
                 </select>
             </div>
         </div>
-
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
