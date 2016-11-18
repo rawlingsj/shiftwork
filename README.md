@@ -1,4 +1,4 @@
-# shiftwork
+﻿# shiftwork
 
 This application was generated using JHipster, you can find documentation and help at [https://jhipster.github.io](https://jhipster.github.io).
 
@@ -76,3 +76,11 @@ To setup this project in Jenkins, use the following configuration:
 [Karma]: http://karma-runner.github.io/
 [Jasmine]: http://jasmine.github.io/2.0/introduction.html
 [Protractor]: https://angular.github.io/protractor/
+
+
+## Troubleshooting guide
+
+If you find that the bower directory is not created, try running the command inside staffservice directory:
+bower install bower.json
+
+
