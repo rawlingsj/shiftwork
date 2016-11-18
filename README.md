@@ -78,8 +78,9 @@ To setup this project in Jenkins, use the following configuration:
 [Protractor]: https://angular.github.io/protractor/
 
 
-##Troubleshooting 
-Execute the command inside staffservice directory for run Jhisper:
+## Troubleshooting guide
+
+If you find that the bower directory is not created, try running the command inside staffservice directory:
 bower install bower.json
 
 
