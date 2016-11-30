@@ -2,8 +2,10 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.teammachine.staffrostering.domain.ShiftDate;
+import com.teammachine.staffrostering.domain.enumeration.DayOfWeek;
 import com.teammachine.staffrostering.repository.ShiftDateRepository;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -13,9 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -46,6 +53,8 @@ public class ShiftDateResource {
         if (shiftDate.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("shiftDate", "idexists", "A new shiftDate cannot already have an ID")).body(null);
         }
+        String dayOfWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(Date.from(shiftDate.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        shiftDate.setDayOfWeek(DayOfWeek.valueOf(dayOfWeek.toUpperCase()));
         ShiftDate result = shiftDateRepository.save(shiftDate);
         return ResponseEntity.created(new URI("/api/shift-dates/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("shiftDate", result.getId().toString()))
