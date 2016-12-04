@@ -1,0 +1,40 @@
+<div>
+    <h2 translate="shiftworkApp.employeeAgreement.home.title">Employee Agreement</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="new-employee-agreement" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="shiftworkApp.employeeAgreement.home.createLabel">
+                        Create new Employee Agreement
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th ng-show="false"><span translate="global.field.id">ID</span></th>
+                    <th><span translate="shiftworkApp.employeeAgreement.code">Code</span></th>
+                    <th><span translate="shiftworkApp.employeeAgreement.description">Description</span></th>
+                    <th><span translate="shiftworkApp.employeeAgreement.weekendDefinition">Weekend Definition</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employeeAgreement in vm.employeeAgreements track by employeeAgreement.id">
+                    <td ng-show="false"><a>{{employeeAgreement.id}}</a></td>
+                    <td>{{employeeAgreement.code}}</td>
+                    <td>{{employeeAgreement.description}}</td>
+                    <td>
+                        <a ui-sref="weekend-definition-detail({id:contract.weekendDefinition.id})">{{employeeAgreement.weekendDefinition.description}}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

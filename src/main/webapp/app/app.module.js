@@ -19,7 +19,9 @@
             'angular-loading-bar',
 			'mwl.calendar',
 			'colorpicker.module',
-            "xeditable"
+			'mgo-angular-wizard',
+            'xeditable',
+			'rzModule'
         ])
         .run(run);
 

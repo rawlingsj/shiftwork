@@ -17,6 +17,7 @@
                 "contractLine": "Contract Line",
                 "patternContractLine": "Pattern Contract Line",
                 "employee": "Employee",
+				"employeeAgreement" : "Employee Agreement",
                 "skillProficiency": "Skill Proficiency",
                 "employeeDayOffRequest": "Employee Day Off Request",
                 "employeeDayOnRequest": "Employee Day On Request",
@@ -152,6 +153,11 @@
 			"week" : "Week",
 			"year" : "Year"
 		}
+	},
+	"action" : {
+		"next" : "Next",
+		"previous" : "Previous",
+		"submit" : "Submit"
 	},
     "error": {
         "server.not.reachable": "Server not reachable",

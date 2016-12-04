@@ -1,0 +1,34 @@
+.newEmployeeAgreement section.step {
+	/* padding: 0 5%; */
+	margin-top: 50px;
+}
+.newEmployeeAgreement .steps-indicator li.current a {
+	color: #286090;
+}
+.newEmployeeAgreement .steps-indicator li.current a:before {
+	background-color: #286090;
+}
+.newEmployeeAgreement .steps-indicator li.done a {
+	color: #3c763d;
+}
+.newEmployeeAgreement .steps-indicator li.done a:before {
+	background-color: #3c763d;
+}
+.float-right {
+	float: right;
+}
+.newEmployeeAgreement .boolContractOptions {
+	margin: 5px 0px 15px 0px;
+}
+.newEmployeeAgreement .boolContractOption h4 {
+	text-transform: capitalize;
+}
+.newEmployeeAgreement .rzslider .rz-bubble.rz-limit {
+	color: #FFF;
+}
+.newEmployeeAgreement .rzslider .rz-bubble {
+	color: #FFF;
+}
+.newEmployeeAgreement .list-group-item.active{
+    margin-bottom: 1px;
+}

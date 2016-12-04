@@ -1,0 +1,115 @@
+<div class="newEmployeeAgreement">
+    <h2 translate="shiftworkApp.newEmployeeAgreement.home.title">New Employee Agreement</h2>
+    <jhi-alert></jhi-alert>
+	
+	<wizard indicators-position="top" on-finish="finishedWizard()"> 
+	
+		<wz-step wz-title="{{'shiftworkApp.newEmployeeAgreement.contract.title' | translate}}">
+			<!-- <h4 translate="shiftworkApp.newEmployeeAgreement.contract.createNewTitle">Employee Agreement</h4> -->
+			<div class="form-group">
+				<label translate="shiftworkApp.newEmployeeAgreement.contract.weekendDefinition" for="field_weekendDefinition">Weekend Definition</label>
+				<select class="form-control" id="field_weekendDefinition" name="weekendDefinition" ng-model="vm.newEmployeeAgreemment.newContract.weekendDefinition" ng-options="weekendDefinition as weekendDefinition.description for weekendDefinition in vm.weekenddefinitions track by weekendDefinition.id">
+					<option value=""></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label class="control-label" translate="shiftworkApp.newEmployeeAgreement.contract.description" for="field_description">Description</label>
+				<input type="text" class="form-control" name="description" id="field_description" ng-model="vm.newEmployeeAgreemment.newContract.description"/>
+			</div>
+			<div class="form-group">
+				<label class="control-label" translate="shiftworkApp.newEmployeeAgreement.contract.code" for="field_code">Code</label>
+				<input type="text" class="form-control" name="code" id="field_code" ng-model="vm.newEmployeeAgreemment.newContract.code" ng-pattern="/^[a-zA-Z0-9]*$/" ng-change="vm.verifyDuplicate(vm.newEmployeeAgreemment.newContract.code)" />
+				<div class='alert alert-danger' ng-show='vm.duplicateMsg'>
+					The code entered is invalid, It has already been used.
+				</div>             
+			</div>
+			<h4 translate="shiftworkApp.newEmployeeAgreement.contract.useExisting">Or use an existing</h4>
+			<div class="form-group">
+				<select class="form-control" id="field_code" name="employeeAgreement" ng-model="vm.newEmployeeAgreemment.existingContract" ng-options="contract as (contract.description + ' ('  + contract.code + ')' )  for contract in vm.existingContracts track by contract.id">
+					<option value=""></option>
+				</select>
+			</div>
+			<div class="col-xs-6 no-padding-right float-right">
+                <button class="btn btn-primary float-right" wz-next ng-click="scrollToWizardTop()">
+                    <span translate="action.next">
+                        Next
+                    </span>
+                </button>
+            </div>
+			<div class="clear"></div>
+		</wz-step>
+		
+		<wz-step wz-title="{{'shiftworkApp.newEmployeeAgreement.boolContractOptions.title' | translate}}">
+			<!-- <h4 translate="shiftworkApp.newEmployeeAgreement.boolContractOptions.title">Settings</h4> -->
+			<label class="control-label" translate="shiftworkApp.newEmployeeAgreement.boolContractOptions.selectOneOfBelowSettings">Select one of the below settings</label>
+			<div class="list-group boolContractOptions">
+				<a class="list-group-item boolContractOption" ng-repeat="contractLine in vm.boolContractLines" ng-class="{ 'active': contractLine.selected }" ng-click="contractLine.selected = !contractLine.selected">
+					<h4 class="list-group-item-heading">{{ contractLine.name }}</h4>
+					<p class="list-group-item-text">{{ contractLine.description }}</p>
+					<div ng-show="contractLine.selected" ng-click="$event.stopPropagation();">
+						<h5 translate="shiftworkApp.newEmployeeAgreement.boolContractOptions.weight">Weight</h5>
+						<rzslider
+							rz-slider-model="contractLine.weight"
+							rz-slider-options="slider.options"></rzslider>
+					</div>
+				</a> 
+			</div>
+			<div class="col-xs-6 no-padding-left">
+                <button class="btn btn-primary" wz-previous ng-click="scrollToWizardTop()">
+                    <span translate="action.previous">
+                        Previous
+                    </span>
+                </button>
+            </div>
+			<div class="col-xs-6 no-padding-right float-right">
+                <button class="btn btn-primary float-right" wz-next ng-click="scrollToWizardTop()">
+                    <span translate="action.next">
+                        Next
+                    </span>
+                </button>
+            </div>
+			<div class="clear"></div>
+		</wz-step>
+		
+		<wz-step wz-title="{{'shiftworkApp.newEmployeeAgreement.minMaxContractOptions.title' | translate}}">
+			<!-- <h4 translate="shiftworkApp.newEmployeeAgreement.minMaxContractOptions.title">Advance Settings</h4> -->
+			<label class="control-label" translate="shiftworkApp.newEmployeeAgreement.minMaxContractOptions.selectOneOfBelowSettings">Select one of the below settings</label>
+			<div class="list-group boolContractOptions">
+				<a class="list-group-item boolContractOption" ng-repeat="contractLine in vm.minMaxContractLines" ng-class="{ 'active': contractLine.selected }" ng-click="contractLine.selected = !contractLine.selected">
+					<h4 class="list-group-item-heading">{{ contractLine.name }}</h4>
+					<p class="list-group-item-text">{{ contractLine.description }}</p>
+					<div ng-show="contractLine.selected" ng-click="$event.stopPropagation();">
+						<h5 translate="shiftworkApp.newEmployeeAgreement.minMaxContractOptions.weight">Weight</h5>
+						<rzslider
+							rz-slider-model="contractLine.weight"
+							rz-slider-high="contractLine.defaultMaxWeight"
+							rz-slider-options="slider.options"></rzslider>
+					</div>
+					<div ng-show="contractLine.selected" ng-click="$event.stopPropagation();">
+						<h5 translate="shiftworkApp.newEmployeeAgreement.minMaxContractOptions.value">Value</h5>
+						<rzslider
+							rz-slider-model="contractLine.value"
+							rz-slider-high="contractLine.defaultMaxValue"
+							rz-slider-options="slider.options"></rzslider>
+					</div>					
+				</a>	
+			</div>
+			<div class="col-xs-6 no-padding-left">
+                <button class="btn btn-primary" wz-previous ng-click="scrollToWizardTop()">
+                    <span translate="action.previous">
+                        Previous
+                    </span>
+                </button>
+            </div>
+			<div class="col-xs-6 no-padding-right float-right">
+                <button class="btn btn-primary float-right" wz-next ng-click="scrollToWizardTop()">
+                    <span translate="action.submit">
+                        Submit
+                    </span>
+                </button>
+            </div>
+			<div class="clear"></div>
+		</wz-step>
+		
+	</wizard>
+</div>

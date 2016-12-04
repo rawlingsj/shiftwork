@@ -1,0 +1,48 @@
+{
+    "shiftworkApp": {
+        "employeeAgreement" : {
+            "home": {
+                "title": "Employee Agreement",
+                "createLabel": "Create a new Employee Agreement",
+                "createOrEditLabel": "Create or edit an Employee Agreement",
+                "search": "Search for Employee Agreement"
+            },
+            "created": "A new Employee Agreement is created with identifier {{ param }}",
+            "updated": "An Employee Agreement is updated with identifier {{ param }}",
+            "deleted": "An Employee Agreement is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Employee Agreement {{ id }}?"
+            },
+            "detail": {
+                "title": "Employee Agreement"
+            },
+            "code": "Code",
+            "description": "Description",
+            "weekendDefinition": "Weekend Definition"
+        },
+		"newEmployeeAgreement" : {
+            "home": {
+                "title": "New Employee Agreement"
+            },
+			"contract": {
+				"title": "Employee Agreement",
+				"createNewTitle": "Employee Agreement",
+				"useExisting": "Or use an existing",
+				"weekendDefinition": "Weekend Definition",
+				"description": "Description",
+				"code": "Code"
+			},
+			"boolContractOptions": {
+				"title" : "Settings",
+				"selectOneOfBelowSettings": "Select one of the below settings",
+				"weight": "Weight"
+			},
+			"minMaxContractOptions": {
+				"title": "Advance Settings",
+				"selectOneOfBelowSettings": "Select one of the below settings",
+				"weight": "Weight",
+				"value": "Value"
+			}
+        }
+    }
+}
