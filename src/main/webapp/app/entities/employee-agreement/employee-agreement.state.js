@@ -25,7 +25,10 @@
             },
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('employeeAgreement');
+                    $translatePartialLoader.addPart('contract');
+					$translatePartialLoader.addPart('booleanContractLine');
+                    $translatePartialLoader.addPart('contractLineType');
+					$translatePartialLoader.addPart('employeeAgreement');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
@@ -47,7 +50,10 @@
             },
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('employeeAgreement');
+                    $translatePartialLoader.addPart('contract');
+					$translatePartialLoader.addPart('booleanContractLine');
+                    $translatePartialLoader.addPart('contractLineType');
+					$translatePartialLoader.addPart('employeeAgreement');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
