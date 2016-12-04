@@ -27,6 +27,7 @@
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('contract');
 					$translatePartialLoader.addPart('booleanContractLine');
+					$translatePartialLoader.addPart('minMaxContractLine');
                     $translatePartialLoader.addPart('contractLineType');
 					$translatePartialLoader.addPart('employeeAgreement');
                     $translatePartialLoader.addPart('global');
@@ -52,6 +53,7 @@
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('contract');
 					$translatePartialLoader.addPart('booleanContractLine');
+					$translatePartialLoader.addPart('minMaxContractLine');
                     $translatePartialLoader.addPart('contractLineType');
 					$translatePartialLoader.addPart('employeeAgreement');
                     $translatePartialLoader.addPart('global');

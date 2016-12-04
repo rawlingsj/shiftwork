@@ -82,14 +82,14 @@
 						<h5 translate="shiftworkApp.newEmployeeAgreement.minMaxContractOptions.weight">Weight</h5>
 						<rzslider
 							rz-slider-model="contractLine.weight"
-							rz-slider-high="contractLine.defaultMaxWeight"
+							rz-slider-high="contractLine.maxWeight"
 							rz-slider-options="slider.options"></rzslider>
 					</div>
 					<div ng-show="contractLine.selected" ng-click="$event.stopPropagation();">
 						<h5 translate="shiftworkApp.newEmployeeAgreement.minMaxContractOptions.value">Value</h5>
 						<rzslider
 							rz-slider-model="contractLine.value"
-							rz-slider-high="contractLine.defaultMaxValue"
+							rz-slider-high="contractLine.maxValue"
 							rz-slider-options="slider.options"></rzslider>
 					</div>					
 				</a>	

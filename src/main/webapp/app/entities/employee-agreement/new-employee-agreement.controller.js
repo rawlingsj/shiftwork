@@ -1,5 +1,3 @@
-var nScope = "";
-
 (function () {
 	'use strict';
 
@@ -7,11 +5,9 @@ var nScope = "";
 	.module('shiftworkApp')
 	.controller('NewEmployeeAgreementController', NewEmployeeAgreementController);
 
-	NewEmployeeAgreementController.$inject = ['$scope', '$window', 'WeekendDefinition', 'Contract', 'BooleanContractLine'];
+	NewEmployeeAgreementController.$inject = ['$scope', '$window', '$location', 'WeekendDefinition', 'Contract', 'BooleanContractLine', 'MinMaxContractLine'];
 
-	function NewEmployeeAgreementController($scope, $window, WeekendDefinition, Contract, BooleanContractLine) {
-		
-		nScope = $scope;
+	function NewEmployeeAgreementController($scope, $window, $location, WeekendDefinition, Contract, BooleanContractLine, MinMaxContractLine) {
 		
 		var vm = this;
 		
@@ -61,8 +57,8 @@ var nScope = "";
 		for(var index = 0; index < vm.contractLines.length; index++ ) {
 			vm.contractLines[index].weight = 3;
 			vm.contractLines[index].value = 3;
-			vm.contractLines[index].defaultMaxWeight = 7;
-			vm.contractLines[index].defaultMaxValue = 7;
+			vm.contractLines[index].maxWeight = 7;
+			vm.contractLines[index].maxValue = 7;
 		}
 		
 		vm.boolContractLines = angular.copy(vm.contractLines);
@@ -91,7 +87,7 @@ var nScope = "";
 			else {
 				
 				vm.selectedContract = vm.newEmployeeAgreemment.existingContract;
-				vm.selectedContract = vm.newEmployeeAgreemment.newContract;
+				vm.saveContractLines();
 				
 			}
 			
@@ -99,8 +95,8 @@ var nScope = "";
 		
 		vm.saveContractLines = function() {
 			
-			for(var index = 0; index < vm.boolContractLines.length; index++ ) {
-				var boolContract = vm.boolContractLines[index];
+			for(var boolContractIndex = 0; boolContractIndex < vm.boolContractLines.length; boolContractIndex++ ) {
+				var boolContract = vm.boolContractLines[boolContractIndex];
 				if(boolContract.selected == true) {
 					var param = {
 						type: "boolean",
@@ -113,6 +109,27 @@ var nScope = "";
 					BooleanContractLine.save(param);
 				}
 			}
+			
+			for(var minMaxContractIndex = 0; minMaxContractIndex < vm.minMaxContractLines.length; minMaxContractIndex++ ) {
+				var minMaxContract = vm.minMaxContractLines[minMaxContractIndex];
+				if(minMaxContract.selected == true) {
+					var param = {
+						type: "minmax",
+						contract: vm.selectedContract,
+						minimumEnabled: true,
+						maximumEnabled: true,
+						minimumWeight: minMaxContract.maxWeight,
+						maximumWeight: minMaxContract.maxWeight,
+						minimumValue: minMaxContract.maxValue,
+						maximumValue: minMaxContract.maxValue,
+						contractLineType: minMaxContract.value
+					};
+					console.log(param);
+					MinMaxContractLine.save(param);
+				}
+			}
+			
+			$location.path('employee-agreement');
 			
 		};
 		
@@ -128,8 +145,6 @@ var nScope = "";
         }      
 		
 		$scope.slider = {
-			model : 3,
-			max : 7,
 			options : {
 				floor : 1,
 				ceil : 10
