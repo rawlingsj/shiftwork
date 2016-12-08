@@ -2,7 +2,7 @@ package com.teammachine.staffrostering.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "plannerengine", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "plannerengine", ignoreUnknownFields = true)
 public class PlannerEngineConnectionProperties {
 
     private String url;

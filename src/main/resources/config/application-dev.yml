@@ -18,21 +18,18 @@ spring:
         livereload:
             enabled: false # we use gulp + BrowserSync for livereload
     datasource:
-        url: jdbc:h2:mem:shiftwork;DB_CLOSE_DELAY=-1
+        url: jdbc:postgresql://localhost:5432/shiftwork
         name:
         username: shiftwork
-        password:
-    h2:
-        console:
-            enabled: false
+        password: 654321
     jpa:
-        database-platform: com.teammachine.staffrostering.domain.util.FixedH2Dialect
-        database: H2
-        show_sql: true
+        database-platform: com.teammachine.staffrostering.domain.util.FixedPostgreSQL82Dialect
+        database: POSTGRESQL
+        show_sql: false
         properties:
             hibernate.cache.use_second_level_cache: true
             hibernate.cache.use_query_cache: false
-            hibernate.generate_statistics: true
+            hibernate.generate_statistics: false
             hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
     mail:
         host: localhost
@@ -68,7 +65,7 @@ jhipster:
             enabled: false
             host: localhost
             port: 2003
-            prefix: shiftwork
+            prefix: staffservice
         logs: # report metrics in the logs
             enabled: false
             reportFrequency: 60 # in seconds
@@ -80,3 +77,7 @@ jhipster:
             queueSize: 512
     swagger: # swagger is enabled. It can be disabled by pasing 'no-swagger' profile at run time as well
         enabled: true
+
+plannerengine:
+    url: http://localhost:8082/plannerengine-0.0.1-SNAPSHOT/rest
+
