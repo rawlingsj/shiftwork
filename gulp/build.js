@@ -19,10 +19,7 @@ var config = require('./config');
 
 var initTask = lazypipe()
     .pipe(sourcemaps.init)
-//  .pipe(footer, ';'); 
-/*commented to resolve the semicolon issue between css files 
-(https://github.com/jhipster/generator-jhipster/issues/3906) */
-
+    .pipe(footer, ';');
 var jsTask = lazypipe()
     .pipe(ngAnnotate)
     .pipe(uglify);

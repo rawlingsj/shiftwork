@@ -1,8 +1,7 @@
 package com.teammachine.staffrostering.config.liquibase;
 
-import com.teammachine.staffrostering.config.Constants;
-import liquibase.exception.LiquibaseException;
-import liquibase.integration.spring.SpringLiquibase;
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,7 +9,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.util.StopWatch;
 
-import javax.inject.Inject;
+import com.teammachine.staffrostering.config.Constants;
+import liquibase.exception.LiquibaseException;
+import liquibase.integration.spring.SpringLiquibase;
 
 /**
  * Specific liquibase.integration.spring.SpringLiquibase that will update the database asynchronously.
@@ -41,7 +42,7 @@ public class AsyncSpringLiquibase extends SpringLiquibase {
     @Override
     public void afterPropertiesSet() throws LiquibaseException {
         if (!env.acceptsProfiles(Constants.SPRING_PROFILE_NO_LIQUIBASE)) {
-            if (env.acceptsProfiles(/*Constants.SPRING_PROFILE_DEVELOPMENT, */Constants.SPRING_PROFILE_HEROKU)) {
+            if (env.acceptsProfiles(Constants.SPRING_PROFILE_DEVELOPMENT, Constants.SPRING_PROFILE_HEROKU)) {
                 taskExecutor.execute(() -> {
                     try {
                         log.warn("Starting Liquibase asynchronously, your database might not be ready at startup!");

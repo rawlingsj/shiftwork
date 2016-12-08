@@ -1,12 +1,12 @@
 version: '2'
 services:
-    staffservice-postgresql:
-        container_name: staffservice-postgresql
+    shiftwork-postgresql:
+        container_name: shiftwork-postgresql
         image: postgres:9.5.1
         # volumes:
         #     - ~/volumes/jhipster/shiftwork/postgresql/:/var/lib/postgresql/
         environment:
-            - POSTGRES_USER=staffservice
+            - POSTGRES_USER=shiftwork
             - POSTGRES_PASSWORD=
         ports:
             - 5432:5432

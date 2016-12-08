@@ -16,18 +16,14 @@
             'ui.router',
             'infinite-scroll',
             // jhipster-needle-angularjs-add-module JHipster will add new module here
-            'angular-loading-bar',
-			'mwl.calendar',
-			'colorpicker.module',
-            "xeditable"
+            'angular-loading-bar'
         ])
         .run(run);
 
-    run.$inject = ['stateHandler', 'translationHandler', 'editableOptions'];
+    run.$inject = ['stateHandler', 'translationHandler'];
 
-    function run(stateHandler, translationHandler, editableOptions ) {
+    function run(stateHandler, translationHandler) {
         stateHandler.initialize();
         translationHandler.initialize();
-        editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
     }
 })();

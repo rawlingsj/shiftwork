@@ -3,7 +3,6 @@ package com.teammachine.staffrostering;
 import com.teammachine.staffrostering.config.Constants;
 import com.teammachine.staffrostering.config.JHipsterProperties;
 
-import com.teammachine.staffrostering.config.PlannerEngineConnectionProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -24,7 +23,7 @@ import java.util.Collection;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = { MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class })
-@EnableConfigurationProperties({ JHipsterProperties.class, LiquibaseProperties.class, PlannerEngineConnectionProperties.class })
+@EnableConfigurationProperties({ JHipsterProperties.class, LiquibaseProperties.class })
 public class ShiftworkApp {
 
     private static final Logger log = LoggerFactory.getLogger(ShiftworkApp.class);
