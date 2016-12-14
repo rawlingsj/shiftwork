@@ -2,7 +2,9 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.teammachine.staffrostering.domain.ShiftDate;
+import com.teammachine.staffrostering.domain.enumeration.DayOfWeek;
 import com.teammachine.staffrostering.repository.ShiftDateRepository;
+import com.teammachine.staffrostering.web.rest.dto.ShiftDateDTO;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,10 +29,10 @@ import java.util.Optional;
 public class ShiftDateResource {
 
     private final Logger log = LoggerFactory.getLogger(ShiftDateResource.class);
-        
+
     @Inject
     private ShiftDateRepository shiftDateRepository;
-    
+
     /**
      * POST  /shift-dates : Create a new shiftDate.
      *
@@ -41,12 +44,15 @@ public class ShiftDateResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ShiftDate> createShiftDate(@RequestBody ShiftDate shiftDate) throws URISyntaxException {
+    public ResponseEntity<ShiftDate> createShiftDate(@RequestBody ShiftDateDTO shiftDate) throws URISyntaxException {
         log.debug("REST request to save ShiftDate : {}", shiftDate);
+        ShiftDate entity = new ShiftDate();
         if (shiftDate.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("shiftDate", "idexists", "A new shiftDate cannot already have an ID")).body(null);
         }
-        ShiftDate result = shiftDateRepository.save(shiftDate);
+        shiftDate.setDayOfWeek(getDayOfWeekFromDate(shiftDate.getDate()));
+        MapDtoToEntity(entity, shiftDate);
+        ShiftDate result = shiftDateRepository.save(entity);
         return ResponseEntity.created(new URI("/api/shift-dates/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("shiftDate", result.getId().toString()))
             .body(result);
@@ -65,12 +71,14 @@ public class ShiftDateResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ShiftDate> updateShiftDate(@RequestBody ShiftDate shiftDate) throws URISyntaxException {
+    public ResponseEntity<ShiftDate> updateShiftDate(@RequestBody ShiftDateDTO shiftDate) throws URISyntaxException {
         log.debug("REST request to update ShiftDate : {}", shiftDate);
+        ShiftDate entity = new ShiftDate();
         if (shiftDate.getId() == null) {
             return createShiftDate(shiftDate);
         }
-        ShiftDate result = shiftDateRepository.save(shiftDate);
+        MapDtoToEntity(entity,shiftDate);
+        ShiftDate result = shiftDateRepository.save(entity);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("shiftDate", shiftDate.getId().toString()))
             .body(result);
@@ -125,6 +133,17 @@ public class ShiftDateResource {
         log.debug("REST request to delete ShiftDate : {}", id);
         shiftDateRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("shiftDate", id.toString())).build();
+    }
+
+    private DayOfWeek getDayOfWeekFromDate(LocalDate date) {
+        return DayOfWeek.valueOf(String.valueOf(date.getDayOfWeek()));
+    }
+
+    private void MapDtoToEntity(ShiftDate entity, ShiftDateDTO dto) {
+        entity.setId(dto.getId());
+        entity.setDayOfWeek(dto.getDayOfWeek());
+        entity.setDate(dto.getDate());
+        entity.setDayIndex(dto.getDayIndex());
     }
 
 }
