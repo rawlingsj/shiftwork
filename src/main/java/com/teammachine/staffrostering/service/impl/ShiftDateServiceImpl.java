@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,17 +48,14 @@ public class ShiftDateServiceImpl implements ShiftDateService {
 
     }
 
-
-    private DayOfWeek getDayOfWeekFromDate(LocalDate date) {
-        return DayOfWeek.valueOf(String.valueOf(date.getDayOfWeek()));
-    }
-
     /**
-     * Service Layer Logic
+     * This method read shiftDateDTO and generate "N" no of records in DB, depending upon shiftDateDTO.getRepeatFor() and shiftDateDTO.getDaysOfWeek()
+     *
      * @param shiftDateDTO
-     * @param shiftDateEntity
      */
-    public void generateRecords(ShiftDateDTO shiftDateDTO, ShiftDate shiftDateEntity) {
+    @Override
+    public List<ShiftDate> generateRecords(ShiftDateDTO shiftDateDTO) {
+        List<ShiftDate> shiftDates = new ArrayList<>();
         LocalDate date = shiftDateDTO.getDate();
         DayOfWeek[] daysOfWeek = shiftDateDTO.getDaysOfWeek();
         for (int rf = 0; rf < shiftDateDTO.getRepeatFor(); rf++) {
@@ -65,21 +63,35 @@ public class ShiftDateServiceImpl implements ShiftDateService {
                 int range = rf * 7 + (mapDayToNumber(daysOfWeek[dayIndex]) - mapDayToNumber(getDayOfWeekFromDate(date)));
                 shiftDateDTO.setDate(date.plusDays(range));
                 shiftDateDTO.setDayOfWeek(getDayOfWeekFromDate(shiftDateDTO.getDate()));
-                MapDtoToEntity(shiftDateEntity, shiftDateDTO);
-                save(shiftDateEntity);
+                shiftDates.add(mapDTOToEntity(shiftDateDTO));
             }
         }
-
+        shiftDates.forEach(shiftDate -> save(shiftDate));
+        return shiftDates;
 
     }
 
-    public void MapDtoToEntity(ShiftDate entity, ShiftDateDTO dto) {
-        entity.setId(dto.getId());
-        entity.setDayOfWeek(dto.getDayOfWeek());
-        entity.setDate(dto.getDate());
-        entity.setDayIndex(dto.getDayIndex());
+    /**
+     * Convert ShiftDateDTO to ShiftDate Entity
+     * @param dto
+     * @return ShiftDateEntity
+     */
+    @Override
+    public ShiftDate mapDTOToEntity(ShiftDateDTO dto) {
+        ShiftDate shiftDate = new ShiftDate();
+        shiftDate.setId(dto.getId());
+        shiftDate.setDayOfWeek(dto.getDayOfWeek());
+        shiftDate.setDate(dto.getDate());
+        shiftDate.setDayIndex(dto.getDayIndex());
+        return shiftDate;
     }
 
+    /**
+     * One-To-One Mapping [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY] = [1, 2, 3, 4, 5, 6, 7]
+     *
+     * @param dayOfWeek
+     * @return
+     */
     private int mapDayToNumber(DayOfWeek dayOfWeek) {
         switch (dayOfWeek) {
             case MONDAY:
@@ -100,5 +112,10 @@ public class ShiftDateServiceImpl implements ShiftDateService {
                 return 0;
         }
     }
+
+    private DayOfWeek getDayOfWeekFromDate(LocalDate date) {
+        return DayOfWeek.valueOf(String.valueOf(date.getDayOfWeek()));
+    }
+
 
 }

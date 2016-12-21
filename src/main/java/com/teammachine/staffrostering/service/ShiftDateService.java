@@ -11,9 +11,14 @@ import java.util.List;
  */
 public interface ShiftDateService {
     ShiftDate save(ShiftDate shiftDate);
+
     List<ShiftDate> findAll();
+
     ShiftDate findOne(Long id);
+
     void delete(Long id);
-    void MapDtoToEntity(ShiftDate entity, ShiftDateDTO dto);
-    void generateRecords(ShiftDateDTO shiftDateDTO, ShiftDate shiftDateEntity);
+
+    ShiftDate mapDTOToEntity(ShiftDateDTO dto);
+
+    List<ShiftDate> generateRecords(ShiftDateDTO shiftDateDTO);
 }

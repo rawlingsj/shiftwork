@@ -2,8 +2,6 @@ package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.teammachine.staffrostering.domain.ShiftDate;
-import com.teammachine.staffrostering.domain.enumeration.DayOfWeek;
-import com.teammachine.staffrostering.repository.ShiftDateRepository;
 import com.teammachine.staffrostering.service.ShiftDateService;
 import com.teammachine.staffrostering.web.rest.dto.ShiftDateDTO;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.net.URISyntaxException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +32,7 @@ public class ShiftDateResource {
     /**
      * POST  /shift-dates : Create a new shiftDate.
      *
-     * @param shiftDate the shiftDate to create
+     * @param shiftDateDTO the shiftDate to create
      * @return the ResponseEntity with status 201 (Created) and with body the new shiftDate, or with status 400 (Bad Request) if the shiftDate has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
@@ -43,13 +40,12 @@ public class ShiftDateResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ShiftDateDTO> createShiftDate(@RequestBody ShiftDateDTO shiftDate) throws URISyntaxException {
-        log.debug("REST request to save ShiftDate : {}", shiftDate);
-        ShiftDate entity = new ShiftDate();
-        shiftDateService.generateRecords(shiftDate, entity);
+    public ResponseEntity<List<ShiftDate>> createShiftDate(@RequestBody ShiftDateDTO shiftDateDTO) throws URISyntaxException {
+        log.debug("REST request to save ShiftDate : {}", shiftDateDTO);
+        List<ShiftDate> results = shiftDateService.generateRecords(shiftDateDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("shiftDate", shiftDate.getDate().toString()))
-            .body(shiftDate);
+            .headers(HeaderUtil.createEntityUpdateAlert("shiftDate", shiftDateDTO.getDate().toString()))
+            .body(results);
     }
 
     /**
@@ -65,17 +61,12 @@ public class ShiftDateResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ShiftDateDTO> updateShiftDate(@RequestBody ShiftDateDTO shiftDate) throws URISyntaxException {
+    public ResponseEntity<ShiftDate> updateShiftDate(@RequestBody ShiftDate shiftDate) throws URISyntaxException {
         log.debug("REST request to update ShiftDate : {}", shiftDate);
-        ShiftDate entity = new ShiftDate();
-        if (shiftDate.getId() == null) {
-            return createShiftDate(shiftDate);
-        }
-        shiftDateService.MapDtoToEntity(entity, shiftDate);
-        shiftDateService.save(entity);
+        ShiftDate result = shiftDateService.save(shiftDate);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("shiftDate", shiftDate.getId().toString()))
-            .body(shiftDate);
+            .body(result);
     }
 
     /**
