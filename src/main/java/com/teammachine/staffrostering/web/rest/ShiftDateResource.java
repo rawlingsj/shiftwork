@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.teammachine.staffrostering.domain.ShiftDate;
 import com.teammachine.staffrostering.domain.enumeration.DayOfWeek;
 import com.teammachine.staffrostering.repository.ShiftDateRepository;
+import com.teammachine.staffrostering.service.ShiftDateService;
 import com.teammachine.staffrostering.web.rest.dto.ShiftDateDTO;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class ShiftDateResource {
     private final Logger log = LoggerFactory.getLogger(ShiftDateResource.class);
 
     @Inject
-    private ShiftDateRepository shiftDateRepository;
+    private ShiftDateService shiftDateService;
 
     /**
      * POST  /shift-dates : Create a new shiftDate.
@@ -71,7 +72,7 @@ public class ShiftDateResource {
             return createShiftDate(shiftDate);
         }
         MapDtoToEntity(entity, shiftDate);
-        ShiftDate result = shiftDateRepository.save(entity);
+        ShiftDate result = shiftDateService.save(entity);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("shiftDate", shiftDate.getId().toString()))
             .body(shiftDate);
@@ -88,7 +89,7 @@ public class ShiftDateResource {
     @Timed
     public List<ShiftDate> getAllShiftDates() {
         log.debug("REST request to get all ShiftDates");
-        List<ShiftDate> shiftDates = shiftDateRepository.findAll();
+        List<ShiftDate> shiftDates = shiftDateService.findAll();
         return shiftDates;
     }
 
@@ -104,7 +105,7 @@ public class ShiftDateResource {
     @Timed
     public ResponseEntity<ShiftDate> getShiftDate(@PathVariable Long id) {
         log.debug("REST request to get ShiftDate : {}", id);
-        ShiftDate shiftDate = shiftDateRepository.findOne(id);
+        ShiftDate shiftDate = shiftDateService.findOne(id);
         return Optional.ofNullable(shiftDate)
             .map(result -> new ResponseEntity<>(
                 result,
@@ -124,7 +125,7 @@ public class ShiftDateResource {
     @Timed
     public ResponseEntity<Void> deleteShiftDate(@PathVariable Long id) {
         log.debug("REST request to delete ShiftDate : {}", id);
-        shiftDateRepository.delete(id);
+        shiftDateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("shiftDate", id.toString())).build();
     }
 
@@ -146,7 +147,7 @@ public class ShiftDateResource {
                 shiftDateDTO.setDate(date.plusDays(range));
                 shiftDateDTO.setDayOfWeek(getDayOfWeekFromDate(shiftDateDTO.getDate()));
                 MapDtoToEntity(shiftDateEntity, shiftDateDTO);
-                shiftDateRepository.save(shiftDateEntity);
+                shiftDateService.save(shiftDateEntity);
             }
         }
 
