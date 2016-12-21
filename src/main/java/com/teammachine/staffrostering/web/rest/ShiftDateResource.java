@@ -46,7 +46,7 @@ public class ShiftDateResource {
     public ResponseEntity<ShiftDateDTO> createShiftDate(@RequestBody ShiftDateDTO shiftDate) throws URISyntaxException {
         log.debug("REST request to save ShiftDate : {}", shiftDate);
         ShiftDate entity = new ShiftDate();
-        generateRecords(shiftDate, entity);
+        shiftDateService.generateRecords(shiftDate, entity);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("shiftDate", shiftDate.getDate().toString()))
             .body(shiftDate);
@@ -71,8 +71,8 @@ public class ShiftDateResource {
         if (shiftDate.getId() == null) {
             return createShiftDate(shiftDate);
         }
-        MapDtoToEntity(entity, shiftDate);
-        ShiftDate result = shiftDateService.save(entity);
+        shiftDateService.MapDtoToEntity(entity, shiftDate);
+        shiftDateService.save(entity);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("shiftDate", shiftDate.getId().toString()))
             .body(shiftDate);
@@ -127,59 +127,6 @@ public class ShiftDateResource {
         log.debug("REST request to delete ShiftDate : {}", id);
         shiftDateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("shiftDate", id.toString())).build();
-    }
-
-    private DayOfWeek getDayOfWeekFromDate(LocalDate date) {
-        return DayOfWeek.valueOf(String.valueOf(date.getDayOfWeek()));
-    }
-
-    /**
-     * Service Layer Logic
-     * @param shiftDateDTO
-     * @param shiftDateEntity
-     */
-    private void generateRecords(ShiftDateDTO shiftDateDTO, ShiftDate shiftDateEntity) {
-        LocalDate date = shiftDateDTO.getDate();
-        DayOfWeek[] daysOfWeek = shiftDateDTO.getDaysOfWeek();
-        for (int rf = 0; rf < shiftDateDTO.getRepeatFor(); rf++) {
-            for (int dayIndex = 0; dayIndex < daysOfWeek.length; dayIndex++) {
-                int range = rf * 7 + (mapDayToNumber(daysOfWeek[dayIndex]) - mapDayToNumber(getDayOfWeekFromDate(date)));
-                shiftDateDTO.setDate(date.plusDays(range));
-                shiftDateDTO.setDayOfWeek(getDayOfWeekFromDate(shiftDateDTO.getDate()));
-                MapDtoToEntity(shiftDateEntity, shiftDateDTO);
-                shiftDateService.save(shiftDateEntity);
-            }
-        }
-
-
-    }
-
-    private void MapDtoToEntity(ShiftDate entity, ShiftDateDTO dto) {
-        entity.setId(dto.getId());
-        entity.setDayOfWeek(dto.getDayOfWeek());
-        entity.setDate(dto.getDate());
-        entity.setDayIndex(dto.getDayIndex());
-    }
-
-    private int mapDayToNumber(DayOfWeek dayOfWeek) {
-        switch (dayOfWeek) {
-            case MONDAY:
-                return 1;
-            case TUESDAY:
-                return 2;
-            case WEDNESDAY:
-                return 3;
-            case THURSDAY:
-                return 4;
-            case FRIDAY:
-                return 5;
-            case SATURDAY:
-                return 6;
-            case SUNDAY:
-                return 7;
-            default:
-                return 0;
-        }
     }
 
 
