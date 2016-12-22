@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by asad on 12/21/16.
@@ -57,22 +58,26 @@ public class ShiftDateServiceImpl implements ShiftDateService {
     public List<ShiftDate> generateRecords(ShiftDateDTO shiftDateDTO) {
         List<ShiftDate> shiftDates = new ArrayList<>();
         LocalDate date = shiftDateDTO.getDate();
-        DayOfWeek[] daysOfWeek = shiftDateDTO.getDaysOfWeek();
+        Set<DayOfWeek> daysOfWeek = shiftDateDTO.getDaysOfWeek();
+        daysOfWeek.add(getDayOfWeekFromDate(shiftDateDTO.getDate()));
+
         for (int rf = 0; rf < shiftDateDTO.getRepeatFor(); rf++) {
-            for (int dayIndex = 0; dayIndex < daysOfWeek.length; dayIndex++) {
-                int range = rf * 7 + (mapDayToNumber(daysOfWeek[dayIndex]) - mapDayToNumber(getDayOfWeekFromDate(date)));
-                shiftDateDTO.setDate(date.plusDays(range));
+            int finalRf = rf;
+            daysOfWeek.forEach(dayOfWeek -> {
+                int dayShift = finalRf * 7 + (mapDayToNumber(dayOfWeek) - mapDayToNumber(getDayOfWeekFromDate(date)));
+                shiftDateDTO.setDate(date.plusDays(dayShift));
                 shiftDateDTO.setDayOfWeek(getDayOfWeekFromDate(shiftDateDTO.getDate()));
                 shiftDates.add(mapDTOToEntity(shiftDateDTO));
-            }
+
+            });
         }
-//        shiftDates.forEach(shiftDate -> save(shiftDate));
         return shiftDates;
 
     }
 
     /**
      * Convert ShiftDateDTO to ShiftDate Entity
+     *
      * @param dto
      * @return ShiftDateEntity
      */
