@@ -83,10 +83,8 @@ public class ShiftDateServiceImpl implements ShiftDateService {
     @Override
     public ShiftDate mapDTOToEntity(ShiftDateDTO dto) {
         ShiftDate shiftDate = new ShiftDate();
-        shiftDate.setId(dto.getId());
         shiftDate.setDate(dto.getDate());
         shiftDate.setDayOfWeek(getDayOfWeekFromDate(dto.getDate()));
-        shiftDate.setDayIndex(dto.getDayIndex());
         return shiftDate;
     }
 

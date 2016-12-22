@@ -50,7 +50,7 @@ public class ShiftDateResource {
         List<ShiftDate> shiftDates = shiftDateService.generateEntitiesUsingRepeatForInShiftDateDTO(shiftDateDTO);
         shiftDates.forEach(shiftDate -> shiftDateService.save(shiftDate));
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("shiftDate", shiftDateDTO.getDate().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert("shiftDate", shiftDateDTO.toString()))
             .body(shiftDates);
     }
 

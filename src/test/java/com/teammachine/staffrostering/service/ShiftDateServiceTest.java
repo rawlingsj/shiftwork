@@ -27,11 +27,9 @@ public class ShiftDateServiceTest {
         Set<DayOfWeek> daysOfWeek = new HashSet<>();
         daysOfWeek.add(DayOfWeek.FRIDAY);
         daysOfWeek.add(DayOfWeek.MONDAY);
-        shiftDateDTO.setId(1L);
         shiftDateDTO.setDaysOfWeek(daysOfWeek);
         shiftDateDTO.setRepeatFor(4);
         shiftDateDTO.setDate(LocalDate.of(2017,1,4));
-        shiftDateDTO.setDayIndex(0);
         shiftDate = service.mapDTOToEntity(shiftDateDTO);
     }
 

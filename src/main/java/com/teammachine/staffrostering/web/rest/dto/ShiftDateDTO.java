@@ -10,12 +10,9 @@ import java.util.Set;
  */
 public class ShiftDateDTO {
 
-    private Long id;
-    private Integer dayIndex;
     private LocalDate date;
     private Set<DayOfWeek> daysOfWeek;
     private Integer repeatFor;
-
 
     public Integer getRepeatFor() {
         return repeatFor;
@@ -40,22 +37,5 @@ public class ShiftDateDTO {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
-    public Integer getDayIndex() {
-        return dayIndex;
-    }
-
-    public void setDayIndex(Integer dayIndex) {
-        this.dayIndex = dayIndex;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
 
 }
