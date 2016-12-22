@@ -13,7 +13,6 @@ public class ShiftDateDTO {
     private Long id;
     private Integer dayIndex;
     private LocalDate date;
-    private DayOfWeek dayOfWeek;
     private Set<DayOfWeek> daysOfWeek;
     private Integer repeatFor;
 
@@ -32,14 +31,6 @@ public class ShiftDateDTO {
 
     public void setDaysOfWeek(Set<DayOfWeek> daysOfWeek) {
         this.daysOfWeek = daysOfWeek;
-    }
-
-    public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
     }
 
     public LocalDate getDate() {

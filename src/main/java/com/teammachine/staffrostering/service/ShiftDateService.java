@@ -20,5 +20,5 @@ public interface ShiftDateService {
 
     ShiftDate mapDTOToEntity(ShiftDateDTO dto);
 
-    List<ShiftDate> generateRecords(ShiftDateDTO shiftDateDTO);
+    List<ShiftDate> generateEntitiesUsingRepeatForInShiftDateDTO(ShiftDateDTO shiftDateDTO);
 }

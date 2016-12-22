@@ -50,12 +50,12 @@ public class ShiftDateServiceImpl implements ShiftDateService {
     }
 
     /**
-     * This method read shiftDateDTO and generate "N" no of records in DB, depending upon shiftDateDTO.getRepeatFor() and shiftDateDTO.getDaysOfWeek()
+     * This method read shiftDateDTO and generate "N" no of ShiftDate Entities, depending upon shiftDateDTO.getRepeatFor() and shiftDateDTO.getDaysOfWeek()
      *
      * @param shiftDateDTO
      */
     @Override
-    public List<ShiftDate> generateRecords(ShiftDateDTO shiftDateDTO) {
+    public List<ShiftDate> generateEntitiesUsingRepeatForInShiftDateDTO(ShiftDateDTO shiftDateDTO) {
         List<ShiftDate> shiftDates = new ArrayList<>();
         LocalDate date = shiftDateDTO.getDate();
         Set<DayOfWeek> daysOfWeek = shiftDateDTO.getDaysOfWeek();
@@ -66,7 +66,6 @@ public class ShiftDateServiceImpl implements ShiftDateService {
             daysOfWeek.forEach(dayOfWeek -> {
                 int dayShift = finalRf * 7 + (mapDayToNumber(dayOfWeek) - mapDayToNumber(getDayOfWeekFromDate(date)));
                 shiftDateDTO.setDate(date.plusDays(dayShift));
-                shiftDateDTO.setDayOfWeek(getDayOfWeekFromDate(shiftDateDTO.getDate()));
                 shiftDates.add(mapDTOToEntity(shiftDateDTO));
 
             });
@@ -85,8 +84,8 @@ public class ShiftDateServiceImpl implements ShiftDateService {
     public ShiftDate mapDTOToEntity(ShiftDateDTO dto) {
         ShiftDate shiftDate = new ShiftDate();
         shiftDate.setId(dto.getId());
-        shiftDate.setDayOfWeek(dto.getDayOfWeek());
         shiftDate.setDate(dto.getDate());
+        shiftDate.setDayOfWeek(getDayOfWeekFromDate(dto.getDate()));
         shiftDate.setDayIndex(dto.getDayIndex());
         return shiftDate;
     }

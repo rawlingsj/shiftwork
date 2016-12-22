@@ -45,9 +45,9 @@ public class ShiftDateResource {
         log.debug("REST request to save ShiftDate : {}", shiftDateDTO);
         if(shiftDateDTO.getRepeatFor() == 0) {
             log.error("ShiftDateDTO.getRepeatFor() must be >= 1");
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).headers(HeaderUtil.createAlert("Message: ","RepeatFor Must be >= 1")).body(new ArrayList<>());
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).headers(HeaderUtil.createAlert("RepeatFor Must be >= 1", "Message")).body(new ArrayList<>());
         }
-        List<ShiftDate> shiftDates = shiftDateService.generateRecords(shiftDateDTO);
+        List<ShiftDate> shiftDates = shiftDateService.generateEntitiesUsingRepeatForInShiftDateDTO(shiftDateDTO);
         shiftDates.forEach(shiftDate -> shiftDateService.save(shiftDate));
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("shiftDate", shiftDateDTO.getDate().toString()))

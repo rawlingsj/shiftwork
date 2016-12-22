@@ -58,7 +58,7 @@ public class ShiftDateResourceTest {
     @Test
     public void testPost() throws URISyntaxException {
         List<ShiftDate> shiftDates = Arrays.asList(shiftDate);
-        when(service.generateRecords(shiftDateDTO)).thenReturn(shiftDates);
+        when(service.generateEntitiesUsingRepeatForInShiftDateDTO(shiftDateDTO)).thenReturn(shiftDates);
         ResponseEntity<List<ShiftDate>> responseEntity = resource.createShiftDate(shiftDateDTO);
         HttpStatus expected = HttpStatus.valueOf(200);
         HttpStatus actual = responseEntity.getStatusCode();
@@ -69,7 +69,7 @@ public class ShiftDateResourceTest {
     @Test
     public void testPostWithRepeatForEqualsZero() throws URISyntaxException {
         List<ShiftDate> shiftDates = Arrays.asList(shiftDate);
-        when(service.generateRecords(shiftDateDTO)).thenReturn(shiftDates);
+        when(service.generateEntitiesUsingRepeatForInShiftDateDTO(shiftDateDTO)).thenReturn(shiftDates);
         shiftDateDTO.setRepeatFor(0);
         ResponseEntity<List<ShiftDate>> responseEntity = resource.createShiftDate(shiftDateDTO);
         HttpStatus expected = HttpStatus.valueOf(406);
