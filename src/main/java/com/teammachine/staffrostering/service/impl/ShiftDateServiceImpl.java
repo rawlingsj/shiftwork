@@ -66,7 +66,7 @@ public class ShiftDateServiceImpl implements ShiftDateService {
                 shiftDates.add(mapDTOToEntity(shiftDateDTO));
             }
         }
-        shiftDates.forEach(shiftDate -> save(shiftDate));
+//        shiftDates.forEach(shiftDate -> save(shiftDate));
         return shiftDates;
 
     }

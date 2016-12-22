@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,10 +43,15 @@ public class ShiftDateResource {
     @Timed
     public ResponseEntity<List<ShiftDate>> createShiftDate(@RequestBody ShiftDateDTO shiftDateDTO) throws URISyntaxException {
         log.debug("REST request to save ShiftDate : {}", shiftDateDTO);
-        List<ShiftDate> results = shiftDateService.generateRecords(shiftDateDTO);
+        if(shiftDateDTO.getRepeatFor() == 0) {
+            log.error("ShiftDateDTO.getRepeatFor() must be >= 1");
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).headers(HeaderUtil.createAlert("Message: ","RepeatFor Must be >= 1")).body(new ArrayList<>());
+        }
+        List<ShiftDate> shiftDates = shiftDateService.generateRecords(shiftDateDTO);
+        shiftDates.forEach(shiftDate -> shiftDateService.save(shiftDate));
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("shiftDate", shiftDateDTO.getDate().toString()))
-            .body(results);
+            .body(shiftDates);
     }
 
     /**
