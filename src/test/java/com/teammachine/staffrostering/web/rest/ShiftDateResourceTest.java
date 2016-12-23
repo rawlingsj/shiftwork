@@ -38,6 +38,9 @@ public class ShiftDateResourceTest {
     @InjectMocks
     ShiftDateResource resource = new ShiftDateResource();
 
+    /**
+     * Populating Input ShiftDateDTO and ShiftDateEntity for test purposes.
+     */
     @Before
     public void setShiftDateDTO() {
         Set<DayOfWeek> daysOfWeek = new HashSet<>();
@@ -53,6 +56,12 @@ public class ShiftDateResourceTest {
 
     }
 
+    /**
+     * Test Case of POST Request. If POST is successful, it will return 200-OK status.
+     *
+     * @throws URISyntaxException
+     */
+
     @Test
     public void testPost() throws URISyntaxException {
         List<ShiftDate> shiftDates = Arrays.asList(shiftDate);
@@ -64,6 +73,11 @@ public class ShiftDateResourceTest {
 
     }
 
+    /**
+     * In Input ShiftDateDTO, if repeatFor == 0, then it will return 406 Not-Acceptable Request.
+     *
+     * @throws URISyntaxException
+     */
     @Test
     public void testPostWithRepeatForEqualsZero() throws URISyntaxException {
         List<ShiftDate> shiftDates = Arrays.asList(shiftDate);
