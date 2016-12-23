@@ -45,7 +45,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <javax.inject.version>1</javax.inject.version>
-        <liquibase.version>3.4.2</liquibase.version>
+        <liquibase.version>3.5.3</liquibase.version>
         <liquibase-slf4j.version>1.2.1</liquibase-slf4j.version>
         <liquibase-hibernate4.version>3.5</liquibase-hibernate4.version>
         <mapstruct.version>1.0.0.Final</mapstruct.version>
@@ -91,7 +91,7 @@
         <fabric8.service.name>staffservice</fabric8.service.name>
         <fabric8.service.port>80</fabric8.service.port>
         <fabric8.service.type>LoadBalancer</fabric8.service.type>
-        
+
     </properties>
 
 

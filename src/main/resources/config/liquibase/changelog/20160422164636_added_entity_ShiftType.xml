@@ -24,27 +24,27 @@
             <column name="code" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="index" type="integer">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="description" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="night_shift" type="bit">
                 <constraints nullable="true" />
             </column>
-            
-            <column name="start_time" type="varchar(8)">
+
+            <column name="start_time" type="binary(255)">
                 <constraints nullable="true" />
             </column>
-            
-            <column name="end_time" type="varchar(8)">
+
+            <column name="end_time" type="binary(255)">
                 <constraints nullable="true" />
             </column>
-            
+
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
     </changeSet>
