@@ -24,19 +24,19 @@
             <column name="index_in_shift" type="integer">
                 <constraints nullable="true" />
             </column>
-            
-            <column name="is_need_to_reassign" type="bit">
+
+            <column name="is_need_to_reassign" type="boolean">
                 <constraints nullable="true" />
             </column>
-            
-            <column name="is_dropped" type="bit">
+
+            <column name="is_dropped" type="boolean">
                 <constraints nullable="true" />
             </column>
-            
-            <column name="locked" type="bit">
+
+            <column name="locked" type="boolean">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="shift_id" type="bigint">
                 <constraints unique="true" uniqueConstraintName="shift_assignment_shift_id_key"/>
             </column>
@@ -45,6 +45,6 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

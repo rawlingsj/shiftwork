@@ -24,15 +24,15 @@
             <column name="code" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
-            <column name="is_sick" type="bit">
+
+            <column name="is_sick" type="boolean">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="contract_id" type="bigint"/>
             <column name="unavailable_shift_date_id" type="bigint">
                 <constraints unique="true" uniqueConstraintName="employee_unavailable_shift_date_id_key"/>
@@ -42,6 +42,6 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

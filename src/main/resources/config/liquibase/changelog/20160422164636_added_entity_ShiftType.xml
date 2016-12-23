@@ -33,7 +33,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="night_shift" type="bit">
+            <column name="night_shift" type="boolean">
                 <constraints nullable="true" />
             </column>
 
