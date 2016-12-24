@@ -18,9 +18,9 @@ spring:
         livereload:
             enabled: false # we use gulp + BrowserSync for livereload
     datasource:
-        url: jdbc:postgresql://localhost:5432/shiftwork
+        url: jdbc:postgresql://localhost:5432/staffservice
         name:
-        username: shiftwork
+        username: staffservice
         password: 654321
     jpa:
         database-platform: com.teammachine.staffrostering.domain.util.FixedPostgreSQL82Dialect
@@ -80,4 +80,3 @@ jhipster:
 
 plannerengine:
     url: http://localhost:8082/plannerengine-0.0.1-SNAPSHOT/rest
-

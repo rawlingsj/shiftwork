@@ -6,7 +6,7 @@ services:
             - shiftwork-postgresql:postgresql
         environment:
             - SPRING_PROFILES_ACTIVE=prod
-            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/shiftwork
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/staffservice
         ports:
             - 8080:8080
     shiftwork-postgresql:

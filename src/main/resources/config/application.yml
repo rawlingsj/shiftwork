@@ -14,7 +14,7 @@
 
 spring:
     application:
-        name: shiftwork
+        name: staffservice
     jpa:
         open-in-view: false
         hibernate:
