@@ -8,10 +8,10 @@ import com.teammachine.staffrostering.service.PlanningJobService;
 import com.teammachine.staffrostering.web.rest.dto.PlanningJobWithResultDTO;
 import com.teammachine.staffrostering.web.rest.errors.CustomParameterizedException;
 import com.teammachine.staffrostering.web.rest.errors.ErrorConstants;
-import com.teammachine.staffrostering.web.rest.errors.NoSuchEntityException;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +21,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping({"/api", "/api_basic"})
@@ -84,10 +85,15 @@ public class PlanningJobResource {
     @Timed
     public ResponseEntity<PlanningJob> syncPlanningJobStatus(@PathVariable Long id) {
         log.debug("REST request to sync PlanningJob status: {}", id);
-        PlanningJob planningJob = planningJobService.findById(id)
-            .map(planningJobService::syncPlanningJobStatus)
-            .orElseThrow(() -> new NoSuchEntityException(ErrorConstants.ERR_NO_SUCH_PLANNING_JOB, id));
-        return ResponseEntity.ok(planningJob);
+        Optional<PlanningJob> planningJob = planningJobService.findById(id);
+        if (planningJob.isPresent()) {
+            PlanningJob job = planningJob.get();
+            planningJobService.syncPlanningJobStatus(job);
+            return ResponseEntity.ok(job);
+        } else
+            return
+                new ResponseEntity<>(HeaderUtil.createFailureAlert(PlanningJob.class.getName(),
+                    ErrorConstants.ERR_NO_SUCH_PLANNING_JOB, id.toString()), HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/planning-jobs/{id}",
@@ -96,20 +102,25 @@ public class PlanningJobResource {
     @Timed
     public ResponseEntity<PlanningJobWithResultDTO> getPlanningJob(@PathVariable Long id) {
         log.debug("REST request to get PlanningJob : {}", id);
-        PlanningJob planningJob = planningJobService.findById(id)
-            .orElseThrow(() -> new NoSuchEntityException(ErrorConstants.ERR_NO_SUCH_PLANNING_JOB, id));
-        PlanningJobWithResultDTO jobDTO = new PlanningJobWithResultDTO();
-        jobDTO.setId(planningJob.getId());
-        jobDTO.setJobId(planningJob.getJobId());
-        jobDTO.setStatus(planningJob.getStatus());
-        StaffRosterParametrization parameterization = planningJob.getParameterization();
-        jobDTO.setParameterization(parameterization);
-        planningJobService.getPlanningJobResult(planningJob).ifPresent(result -> {
-            jobDTO.setShiftAssignments(result.getShiftAssignments());
-            parameterization.setHardConstraintMatches(result.getHardConstraintMatches());
-            parameterization.setSoftConstraintMatches(result.getSoftConstraintMatches());
-        });
-        return ResponseEntity.ok(jobDTO);
+        Optional<PlanningJob> planningJob = planningJobService.findById(id);
+        if (planningJob.isPresent()) {
+            PlanningJob job = planningJob.get();
+            PlanningJobWithResultDTO jobDTO = new PlanningJobWithResultDTO();
+            jobDTO.setId(job.getId());
+            jobDTO.setJobId(job.getJobId());
+            jobDTO.setStatus(job.getStatus());
+            StaffRosterParametrization parameterization = job.getParameterization();
+            jobDTO.setParameterization(parameterization);
+            planningJobService.getPlanningJobResult(job).ifPresent(result -> {
+                jobDTO.setShiftAssignments(result.getShiftAssignments());
+                parameterization.setHardConstraintMatches(result.getHardConstraintMatches());
+                parameterization.setSoftConstraintMatches(result.getSoftConstraintMatches());
+            });
+            return ResponseEntity.ok(jobDTO);
+        } else
+            return
+                new ResponseEntity<>(HeaderUtil.createFailureAlert(PlanningJob.class.getName(),
+                    ErrorConstants.ERR_NO_SUCH_PLANNING_JOB, id.toString()), HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/planning-jobs/{id}",
@@ -118,9 +129,12 @@ public class PlanningJobResource {
     @Timed
     public ResponseEntity<Void> deletePlanningJob(@PathVariable Long id) {
         log.debug("REST request to delete PlanningJob : {}", id);
-        PlanningJob planningJob = planningJobService.findById(id)
-            .orElseThrow(() -> new NoSuchEntityException(ErrorConstants.ERR_NO_SUCH_PLANNING_JOB, id));
-        planningJobService.terminateAndDeleteJob(planningJob);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("planningJob", id.toString())).build();
+        Optional<PlanningJob> planningJob = planningJobService.findById(id);
+        if (planningJob.isPresent()) {
+            planningJobService.terminateAndDeleteJob(planningJob.get());
+            return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("planningJob", id.toString())).build();
+        } else
+            return new ResponseEntity<>(HeaderUtil.createFailureAlert(PlanningJob.class.getName(),
+                ErrorConstants.ERR_NO_SUCH_PLANNING_JOB, id.toString()), HttpStatus.NOT_FOUND);
     }
 }
