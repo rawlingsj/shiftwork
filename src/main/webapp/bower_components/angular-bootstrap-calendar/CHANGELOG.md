@@ -1,3 +1,157 @@
+<a name="0.27.4"></a>
+## [0.27.4](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.3...v0.27.4) (2016-12-19)
+
+
+### Bug Fixes
+
+* display events on the day view that dont have end dates ([e5c1660](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e5c1660))
+
+
+
+<a name="0.27.3"></a>
+## [0.27.3](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.2...v0.27.3) (2016-12-14)
+
+
+### Bug Fixes
+
+* ensure angular 1.6 compatibility ([76a7fab](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/76a7fab))
+* **interact:** use new npm package ([f14d751](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/f14d751))
+
+
+
+<a name="0.27.2"></a>
+## [0.27.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.1...v0.27.2) (2016-12-13)
+
+
+### Bug Fixes
+
+* **dayView:** fix recurring events ([e5a18fc](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e5a18fc)), closes [#504](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/504)
+* **monthView:** fix recurring events ([ccb97cd](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/ccb97cd)), closes [#504](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/504)
+
+
+
+<a name="0.27.1"></a>
+## [0.27.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.27.0...v0.27.1) (2016-11-18)
+
+
+### Bug Fixes
+
+* **weekViewWithTimes:** fix on timespan click on last column ([f8f62e8](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/f8f62e8)), closes [#496](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/496)
+
+
+
+<a name="0.27.0"></a>
+# [0.27.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.26.1...v0.27.0) (2016-11-15)
+
+
+### Features
+
+* **dayView:** allow the event width to be customised ([c1d9cea](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/c1d9cea)), closes [#494](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/494)
+
+
+
+<a name="0.26.1"></a>
+## [0.26.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.26.0...v0.26.1) (2016-11-13)
+
+
+### Bug Fixes
+
+* dont modify the events array ([8b39c31](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/8b39c31)), closes [#491](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/491)
+
+
+
+<a name="0.26.0"></a>
+# [0.26.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.25.2...v0.26.0) (2016-11-09)
+
+* **styles:** scope all styles to the calendar component
+
+### BREAKING CHANGES
+
+All styles are now scoped to the `mwl-calendar` namespace. If using custom styles that ovveride the calendars defaults you will need to wrap them with the `mwl-calendar` selector so they will not be overridden.
+
+
+<a name="0.25.2"></a>
+## [0.25.2](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.25.1...v0.25.2) (2016-11-09)
+
+* This reverts a fix from the previous release that was accidentlly a breaking change
+
+<a name="0.25.1"></a>
+## [0.25.1](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.25.0...v0.25.1) (2016-11-09)
+
+
+### Bug Fixes
+
+* **styles:** scope all styles to the calendar component ([d793053](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/d793053)), closes [#488](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/488)
+
+
+
+<a name="0.25.0"></a>
+# [0.25.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.24.0...v0.25.0) (2016-10-30)
+
+
+### Bug Fixes
+
+* **dayView:** various day view fixes ([99ab592](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/99ab592))
+
+
+### Features
+
+* **dayView:** add tooltip to day view events ([ba859e2](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/ba859e2)), closes [#476](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/476)
+
+
+### BREAKING CHANGES
+
+* dayView: Tooltips are now added to all day view events by default. To disable them do:
+
+```
+calendarEventTitle.dayViewTooltip = angular.noop;
+```
+
+
+
+<a name="0.24.0"></a>
+# [0.24.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.23.0...v0.24.0) (2016-10-10)
+
+
+### Bug Fixes
+
+* **dayView:** dont throw when dragging an event and the date range select is enabled ([1e3efdd](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/1e3efdd)), closes [#439](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/439)
+* **weekView:** ensure events are always ordered by start date ([419626e](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/419626e)), closes [#443](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/443)
+* update event track by ids when the original calendar events are reset ([580a967](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/580a967)), closes [#457](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/457)
+* **weekView:** fix event span for end of day events ([5e038c5](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/5e038c5))
+* **weekView:** use correct date for onTimespanClick callback ([e05882e](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/e05882e)), closes [#454](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/454)
+* **weekViewWithTimes:** call the cell-modifier for each days hour segment ([29725a8](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/29725a8)), closes [#424](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/424)
+
+### Features
+
+* **cellAutoOpenDisabled:** allow disabling the auto opening and closing of the slidebox ([682b522](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/682b522)), closes [#426](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/426)
+* **dayView:** allow all hour segment times to be shown ([06bc836](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/06bc836)), closes [#429](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/429)
+* **monthView:** add cal-day-open class to the open day ([75d84c6](https://github.com/mattlewis92/angular-bootstrap-calendar/commit/75d84c6)), closes [#463](https://github.com/mattlewis92/angular-bootstrap-calendar/issues/463)
+
+
+### BREAKING CHANGES
+
+* weekView: if using a custom week view template, the getClickedDate function has been removed
+* If using a custom template the event track by field has changed from `$id` to `calendarEventId`. It is also now enumerable.
+* weekViewWithTimes: The `cell-modifier` will now be called for every days hour segment instead of just the first day in the week.
+
+The cssClass added will now be added on the segments day column instead of on the entire row.
+
+The structure of the week view with times template has also changed slightly if using a custom template
+* cellAutoOpenDisabled: The `slide-box-disabled` option is deprecated and will be removed in the next release. Use the new `cell-auto-open-disabled` option instead.
+
+Before:
+```
+slide-box-disabled="true"
+```
+
+After:
+```
+cell-auto-open-disabled="true"
+```
+
+
+
 <a name="0.23.0"></a>
 # [0.23.0](https://github.com/mattlewis92/angular-bootstrap-calendar/compare/0.22.0...v0.23.0) (2016-08-12)
 

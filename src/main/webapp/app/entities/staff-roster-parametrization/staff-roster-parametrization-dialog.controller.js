@@ -65,7 +65,7 @@
                     break;
                 }
                 case "t_one_month": {
-                    maxItem = 30; //TODO find max for given month
+                    maxItem = 30;
                     break;
                 }
             }
@@ -78,7 +78,6 @@
 
             for (var i = 0; i <= maxItem; i++) {
                 todaysItem = vm.shiftdates[i];
-                console.log(new Date(today.yyyymmdd()).valueOf() + ' ' + new Date(todaysItem.date).valueOf());
                 if (new Date(today.yyyymmdd()).valueOf() == new Date(todaysItem.date).valueOf()) {
                     todaysIndex = i;
                     break;

@@ -1,6 +1,6 @@
 {
   "name": "angular-bootstrap-calendar",
-  "version": "0.23.0",
+  "version": "0.27.4",
   "homepage": "https://github.com/mattlewis92/angular-bootstrap-calendar",
   "authors": [
     "Matt Lewis"
@@ -35,13 +35,13 @@
     "moment": "^2.10.0",
     "bootstrap": "^3.3.4"
   },
-  "_release": "0.23.0",
+  "_release": "0.27.4",
   "_resolution": {
     "type": "version",
-    "tag": "0.23.0",
-    "commit": "c40520a10a35f2027b9c8e3c7d5d7a0e57cfdc91"
+    "tag": "0.27.4",
+    "commit": "a137b15449276c353a04f43d4ddf7d88539175c4"
   },
   "_source": "https://github.com/mattlewis92/angular-bootstrap-calendar.git",
-  "_target": "^0.23.0",
+  "_target": "^0.27.1",
   "_originalSource": "angular-bootstrap-calendar"
 }

@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar.svg?branch=master)](https://travis-ci.org/mattlewis92/angular-bootstrap-calendar)
 [![Bower version](https://badge.fury.io/bo/angular-bootstrap-calendar.svg)](http://badge.fury.io/bo/angular-bootstrap-calendar)
 [![npm version](https://badge.fury.io/js/angular-bootstrap-calendar.svg)](http://badge.fury.io/js/angular-bootstrap-calendar)
-[![devDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/dev-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar#info=devDependencies)
+[![devDependency Status](https://david-dm.org/mattlewis92/angular-bootstrap-calendar/dev-status.svg)](https://david-dm.org/mattlewis92/angular-bootstrap-calendar?type=dev)
 [![GitHub issues](https://img.shields.io/github/issues/mattlewis92/angular-bootstrap-calendar.svg)](https://github.com/mattlewis92/angular-bootstrap-calendar/issues)
 [![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular-bootstrap-calendar.svg)](https://github.com/mattlewis92/angular-bootstrap-calendar/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-bootstrap-calendar/master/LICENSE)
@@ -33,17 +33,19 @@ All credits for the UI/UX and the less files of the calendar go to the original 
 
 Pull requests are welcome.
 
-Looking for an angular2 version of this module? Development is underway here: https://github.com/mattlewis92/angular2-calendar
+Looking for an angular 2.0+ version of this library? Check this out: https://github.com/mattlewis92/angular-calendar
 
 ## Installation
 
 The calendar has a few dependencies, these are as follows, and must be included before this libraries files:
 
-* [AngularJS](https://angularjs.org/) 1.3.x, 1.4.x and 1.5.x are supported
+* [AngularJS](https://angularjs.org/) 1.3.x, 1.4.x, 1.5.x and 1.6.x are supported
 * [Bootstrap](http://getbootstrap.com/) 3+ (CSS only)
 * [Moment.js](http://momentjs.com/)
+
+**Optional dependencies:**
 * [ui-bootstrap](http://angular-ui.github.io/bootstrap/) (0.14.0+, optional, include for collapse animations and tooltips.
-* [interact.js](http://interactjs.io/) (optional, include to allow drag and drop on the calendar)
+* [interactjs](http://interactjs.io/) (optional, include to allow drag and drop on the calendar)
 * [ngTouch](https://docs.angularjs.org/api/ngTouch) (optional, include if using the calendar on mobile devices. You will also need to enable `$touchProvider.ngClickOverrideEnabled(true)` on angular 1.5.0+)
 
 You can install through bower:
@@ -87,7 +89,7 @@ There is a single directive exposed to create the calendar, use it like so:
 ```javascript
 <mwl-calendar
     view="calendarView"
-    view-date="calendarDate"
+    view-date="viewDate"
     events="events"
     view-title="calendarTitle"
     on-event-click="eventClicked(calendarEvent)"
@@ -153,7 +155,7 @@ This expression is called when an event is clicked on the calendar. `calendarEve
 
 ### on-event-times-changed
 
-This expression is called when an event is dragged and dropped or resized into a different date / time on the calendar. The available values that are passed to the expression are: `calendarEvent`, `calendarNewEventStart`, `calendarNewEventEnd` and `calendarDraggedFromDate` (month view only). The directive won't change the event object and leaves that up to you to implement. Please note drag and drop is only available by including the [interact.js](http://interactjs.io/) library.
+This expression is called when an event is dragged and dropped or resized into a different date / time on the calendar. The available values that are passed to the expression are: `calendarEvent`, `calendarNewEventStart`, `calendarNewEventEnd` and `calendarDraggedFromDate` (month view only). The directive won't change the event object and leaves that up to you to implement. Please note drag and drop is only available by including the [interactjs](http://interactjs.io/) library.
 
 ### on-timespan-click
 
@@ -183,6 +185,10 @@ The number of chunks to split the day view hours up into. Can be either 10, 15 o
 
 The number of pixels to "snap" event drag and resizes to. Default: 30
 
+### day-view-event-width
+
+The width of day view events. Default: 150
+
 ### on-view-change-click
 
 An optional expression that is evaluated when the view is changed by clicking on a date. Return false from the expression function to disable the view change. `calendarDate` can be used in the expression and contains the date that was selected. `calendarNextView` is the view that the calendar will be changed to.
@@ -191,9 +197,9 @@ An optional expression that is evaluated when the view is changed by clicking on
 
 An optional expression that is evaluated on each cell generated for the year, month and day views. `calendarCell` can be used in the expression and is an object containing the current cell data which you can modify (see the `calendarHelper` service source code or just console.log it to see what data is available). If you add the `cssClass` property it will be applied to the cell.
 
-### slide-box-disabled
+### cell-auto-open-disabled
 
-If set it true it will disable the slidebox on the month and year views
+If set it true it will disable the auto opening and closing of the slidebox on the month and year views
 
 ### custom-template-urls
 
@@ -217,7 +223,7 @@ You can easily customise the date formats and i18n strings used throughout the c
 
 ```javascript
 angular.module('myModule')
-  .config(function(calendarConfig) {
+  .config(['calendarConfig', function(calendarConfig) {
 
     console.log(calendarConfig); //view all available config
 
@@ -235,7 +241,7 @@ angular.module('myModule')
 
     calendarConfig.showTimesOnWeekView = true; //Make the week view more like the day view, with the caveat that event end times are ignored.
 
-  });
+  }]);
 ```
 
 ## Custom directive templates
@@ -252,7 +258,7 @@ There is also a helper directive that you can use for the next, today and previo
 <button
   class="btn btn-primary"
   mwl-date-modifier
-  date="calendarDay"
+  date="viewDate"
   decrement="calendarView">
   Previous
 </button>
@@ -260,7 +266,7 @@ There is also a helper directive that you can use for the next, today and previo
 <button
   class="btn btn-default"
   mwl-date-modifier
-  date="calendarDay"
+  date="viewDate"
   set-to-today>
   Today
 </button>
@@ -268,7 +274,7 @@ There is also a helper directive that you can use for the next, today and previo
 <button
   class="btn btn-primary"
   mwl-date-modifier
-  date="calendarDay"
+  date="viewDate"
   increment="calendarView">
   Next
 </button>
@@ -280,11 +286,11 @@ You can either use angular's date filter or moment.js to format dates. The defau
 
 ```javascript
 angular.module('myModule')
-  .config(function(calendarConfig) {
+  .config(['calendarConfig', function(calendarConfig) {
 
     calendarConfig.dateFormatter = 'moment'; // use moment to format dates
 
-  });
+  }]);
 ```
 
 Then you just need to include the appropriate locale files for your app.
