@@ -11,4 +11,5 @@ import java.util.List;
  */
 public interface ShiftDateRepository extends JpaRepository<ShiftDate,Long> {
 
+    List<ShiftDate> findAllByOrderByDateAsc();
 }
