@@ -3,64 +3,132 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myStaffRosterParametrizationLabel" translate="shiftworkApp.staffRosterParametrization.home.createOrEditLabel">Create or edit a Staff Roster Parametrization</h4>
+        <h4 class="modal-title" id="myStaffRosterParametrizationLabel"
+            translate="shiftworkApp.staffRosterParametrization.home.createOrEditLabel">Create or edit a Staff Roster
+            Parametrization</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary" ng-click="vm.switchTemplate('t_today')">Today</button>
-            <button type="button" class="btn btn-primary" ng-click="vm.switchTemplate('t_tomorrow')">Tomorrow</button>
-            <button type="button" class="btn btn-primary" ng-click="vm.switchTemplate('t_one_week')">One Week</button>
-            <button type="button" class="btn btn-primary" ng-click="vm.switchTemplate('t_one_month')">One Month</button>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" ng-click="vm.switchTemplate('t_today')">Today
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="vm.switchTemplate('t_tomorrow')">
+                            Tomorrow
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="vm.switchTemplate('t_one_week')">One
+                            Week
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="vm.switchTemplate('t_one_month')">One
+                            Month
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <br/>
-        <a ng-click="vm.showHideForm = !vm.showHideForm">Advanced</a>
+        <hr/>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <a ng-click="vm.showHideForm = !vm.showHideForm">Advanced</a>
+                </div>
+            </div>
+        </div>
+        <hr/>
         <div ng-hide="vm.showHideForm">
-        <div class="form-group" ng-show="vm.staffRosterParametrization.id">
-            <label for="id" translate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.staffRosterParametrization.id" readonly />
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="shiftworkApp.staffRosterParametrization.name" for="field_name">Name</label>
-            <input type="text" class="form-control" name="name" id="field_name"
-                    ng-model="vm.staffRosterParametrization.name"
-                     />
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="shiftworkApp.staffRosterParametrization.description" for="field_description">Description</label>
-            <input type="text" class="form-control" name="description" id="field_description"
-                    ng-model="vm.staffRosterParametrization.description"
-                     />
-        </div>
-        <div class="form-group">
-            <label translate="shiftworkApp.staffRosterParametrization.firstShiftDate" for="field_firstShiftDate">First Shift Date</label>
-            <select class="form-control" id="field_firstShiftDate" name="firstShiftDate" ng-model="vm.staffRosterParametrization.firstShiftDate" ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label translate="shiftworkApp.staffRosterParametrization.lastShiftDate" for="field_lastShiftDate">Last Shift Date</label>
-            <select class="form-control" id="field_lastShiftDate" name="lastShiftDate" ng-model="vm.staffRosterParametrization.lastShiftDate" ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label translate="shiftworkApp.staffRosterParametrization.planningWindowStart" for="field_planningWindowStart">Planning Window Start</label>
-            <select class="form-control" id="field_planningWindowStart" name="planningWindowStart" ng-model="vm.staffRosterParametrization.planningWindowStart" ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label translate="shiftworkApp.staffRosterParametrization.planningWindowEnd" for="field_planningWindowEnd">Planning Window End</label>
-            <select class="form-control" id="field_planningWindowEnd" name="planningWindowEnd" ng-model="vm.staffRosterParametrization.planningWindowEnd" ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
-                <option value=""></option>
-            </select>
+            <div class="form-group" ng-show="vm.staffRosterParametrization.id">
+                <label for="id" translate="global.field.id">ID</label>
+                <input type="text" class="form-control" id="id" name="id"
+                       ng-model="vm.staffRosterParametrization.id" readonly/>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" translate="shiftworkApp.staffRosterParametrization.name"
+                                   for="field_name">Name</label>
+                            <input type="text" class="form-control" name="name" id="field_name"
+                                   ng-model="vm.staffRosterParametrization.name"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" translate="shiftworkApp.staffRosterParametrization.description"
+                                   for="field_description">Description</label>
+                            <input type="text" class="form-control" name="description" id="field_description"
+                                   ng-model="vm.staffRosterParametrization.description"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label translate="shiftworkApp.staffRosterParametrization.firstShiftDate"
+                                   for="field_firstShiftDate">First
+                                Shift Date</label>
+                            <select class="form-control" id="field_firstShiftDate" name="firstShiftDate"
+                                    ng-model="vm.staffRosterParametrization.firstShiftDate"
+                                    ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label translate="shiftworkApp.staffRosterParametrization.lastShiftDate"
+                                   for="field_lastShiftDate">Last
+                                Shift Date</label>
+                            <select class="form-control" id="field_lastShiftDate" name="lastShiftDate"
+                                    ng-model="vm.staffRosterParametrization.lastShiftDate"
+                                    ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label translate="shiftworkApp.staffRosterParametrization.planningWindowStart"
+                                   for="field_planningWindowStart">Planning Window Start</label>
+                            <select class="form-control" id="field_planningWindowStart" name="planningWindowStart"
+                                    ng-model="vm.staffRosterParametrization.planningWindowStart"
+                                    ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label translate="shiftworkApp.staffRosterParametrization.planningWindowEnd"
+                                   for="field_planningWindowEnd">Planning Window End</label>
+                            <select class="form-control" id="field_planningWindowEnd" name="planningWindowEnd"
+                                    ng-model="vm.staffRosterParametrization.planningWindowEnd"
+                                    ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+            translate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
