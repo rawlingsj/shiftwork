@@ -12,7 +12,7 @@
         vm.staffRosterParametrization = entity;
         vm.shiftdates = ShiftDate.query();
         vm.switchTemplate = switchTemplate;
-        vm.showHideForm = false;
+        vm.showHideForm = true;
 
         $timeout(function () {
             angular.element('.form-group:eq(1)>input').focus();
@@ -49,50 +49,45 @@
             oneWeek.setDate(today.getDate() + 7);
             var oneMonth = new Date()
             oneMonth.setMonth(today.getMonth() + 1);
-
-            var maxItem;
             switch (template) {
-                case "t_today": {
-                    maxItem = 0;
+                case "TODAY": {
+                    setFormValues(today, today, template);
                     break;
                 }
-                case "t_tomorrow": {
-                    maxItem = 1;
+                case "TOMORROW": {
+                    setFormValues(today, tomorrow, template);
                     break;
                 }
-                case "t_one_week": {
-                    maxItem = 7;
+                case "ONE WEEK": {
+                    setFormValues(today, oneWeek, template);
                     break;
                 }
-                case "t_one_month": {
-                    maxItem = 30;
-                    break;
-                }
-            }
-
-            var todaysItem;
-            var todaysIndex;
-            if (vm.shiftdates.length < maxItem) {
-                maxItem = vm.shiftdates.length;
-            }
-
-            for (var i = 0; i <= maxItem; i++) {
-                todaysItem = vm.shiftdates[i];
-                if (new Date(today.yyyymmdd()).valueOf() == new Date(todaysItem.date).valueOf()) {
-                    todaysIndex = i;
+                case "ONE MONTH": {
+                    setFormValues(today, oneMonth, template);
                     break;
                 }
             }
-
-            vm.staffRosterParametrization.name = template + today.getTime();
-            vm.staffRosterParametrization.description = vm.staffRosterParametrization.name;
-
-            vm.staffRosterParametrization.firstShiftDate = todaysItem;
-            vm.staffRosterParametrization.lastShiftDate = todaysItem;
-            vm.staffRosterParametrization.planningWindowStart = todaysItem;
-            vm.staffRosterParametrization.planningWindowEnd = todaysItem;
-
         }
+
+        function setFormValues(today, lsd, template) {
+            vm.staffRosterParametrization.name = template + ' ' + vm.shiftdates[geteDateShiftItem(today)].date;
+            vm.staffRosterParametrization.description = template + ' ' + vm.shiftdates[geteDateShiftItem(today)].date;
+
+            vm.staffRosterParametrization.firstShiftDate = vm.shiftdates[geteDateShiftItem(today)];
+            vm.staffRosterParametrization.lastShiftDate = vm.shiftdates[geteDateShiftItem(lsd)];
+            vm.staffRosterParametrization.planningWindowStart = vm.shiftdates[geteDateShiftItem(today)];
+            vm.staffRosterParametrization.planningWindowEnd = vm.shiftdates[geteDateShiftItem(lsd)];
+        }
+
+        function geteDateShiftItem(givenDate) {
+            for (var i = 0; i < vm.shiftdates.length; i++) {
+                if (new Date(givenDate.yyyymmdd()).valueOf() == new Date(vm.shiftdates[i].date).valueOf()) {
+                    return i;
+                    break;
+                }
+            }
+        }
+
 
         vm.datePickerOpenStatus = {};
         vm.datePickerOpenStatus.lastRunTime = false;
