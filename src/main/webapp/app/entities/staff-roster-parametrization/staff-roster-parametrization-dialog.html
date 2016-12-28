@@ -78,6 +78,7 @@
                                 Shift Date</label>
                             <select class="form-control" id="field_firstShiftDate" name="firstShiftDate"
                                     ng-model="vm.staffRosterParametrization.firstShiftDate"
+                                    ng-change="vm.update()"
                                     ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
                                 <option value=""></option>
                             </select>
@@ -90,6 +91,7 @@
                                 Shift Date</label>
                             <select class="form-control" id="field_lastShiftDate" name="lastShiftDate"
                                     ng-model="vm.staffRosterParametrization.lastShiftDate"
+                                    ng-change="vm.update()"
                                     ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
                                 <option value=""></option>
                             </select>
@@ -105,6 +107,7 @@
                                    for="field_planningWindowStart">Planning Window Start</label>
                             <select class="form-control" id="field_planningWindowStart" name="planningWindowStart"
                                     ng-model="vm.staffRosterParametrization.planningWindowStart"
+                                    ng-change="vm.update()"
                                     ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
                                 <option value=""></option>
                             </select>
@@ -116,6 +119,7 @@
                                    for="field_planningWindowEnd">Planning Window End</label>
                             <select class="form-control" id="field_planningWindowEnd" name="planningWindowEnd"
                                     ng-model="vm.staffRosterParametrization.planningWindowEnd"
+                                    ng-change="vm.update()"
                                     ng-options="shiftDate as shiftDate.dateString for shiftDate in vm.shiftdates track by shiftDate.id">
                                 <option value=""></option>
                             </select>
@@ -130,7 +134,7 @@
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
             translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>

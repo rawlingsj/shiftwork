@@ -13,6 +13,8 @@
         vm.shiftdates = ShiftDate.query();
         vm.switchTemplate = switchTemplate;
         vm.showHideForm = true;
+        vm.datePickerOpenStatus = {};
+        vm.datePickerOpenStatus.lastRunTime = false;
 
         $timeout(function () {
             angular.element('.form-group:eq(1)>input').focus();
@@ -43,54 +45,72 @@
 
         function switchTemplate(template) {
             var today = new Date();
-            var tomorrow = new Date();
-            tomorrow.setDate(today.getDate() + 1);
-            var oneWeek = new Date()
-            oneWeek.setDate(today.getDate() + 7);
-            var oneMonth = new Date()
-            oneMonth.setMonth(today.getMonth() + 1);
             switch (template) {
                 case "TODAY": {
                     setFormValues(today, today, template);
                     break;
                 }
                 case "TOMORROW": {
+                    var tomorrow = new Date();
+                    tomorrow.setDate(today.getDate() + 1);
                     setFormValues(today, tomorrow, template);
                     break;
                 }
                 case "ONE WEEK": {
+                    var oneWeek = new Date()
+                    oneWeek.setDate(today.getDate() + 7);
                     setFormValues(today, oneWeek, template);
                     break;
                 }
                 case "ONE MONTH": {
+                    var oneMonth = new Date()
+                    oneMonth.setMonth(today.getMonth() + 1);
                     setFormValues(today, oneMonth, template);
                     break;
                 }
             }
         }
 
-        function setFormValues(today, lsd, template) {
-            vm.staffRosterParametrization.name = template + ' ' + vm.shiftdates[geteDateShiftItem(today)].date;
-            vm.staffRosterParametrization.description = template + ' ' + vm.shiftdates[geteDateShiftItem(today)].date;
+        vm.update = function () {
+            if (vm.staffRosterParametrization.firstShiftDate != null &&
+                vm.staffRosterParametrization.lastShiftDate != null &&
+                vm.staffRosterParametrization.planningWindowStart != null &&
+                vm.staffRosterParametrization.planningWindowEnd != null
+            ) vm.isSaving = false;
+            else vm.isSaving = true;
+        };
 
-            vm.staffRosterParametrization.firstShiftDate = vm.shiftdates[geteDateShiftItem(today)];
-            vm.staffRosterParametrization.lastShiftDate = vm.shiftdates[geteDateShiftItem(lsd)];
-            vm.staffRosterParametrization.planningWindowStart = vm.shiftdates[geteDateShiftItem(today)];
-            vm.staffRosterParametrization.planningWindowEnd = vm.shiftdates[geteDateShiftItem(lsd)];
+        function setFormValues(firstDate, lastDate, template) {
+            vm.staffRosterParametrization.name = template + ' ' + getDateShift(firstDate).date;
+            vm.staffRosterParametrization.description = template + ' ' + getDateShift(firstDate).date;
+
+            var fsd = getDateShift(firstDate);
+            var lsd = getDateShift(lastDate);
+            var pwsDate = firstDate;
+            var pws = getDateShift(new Date(pwsDate.setMonth(pwsDate.getMonth() - 1)));
+            var pwe = getDateShift(firstDate);
+            if (fsd == null || lsd == null || pws == null || pwe == null) {
+                vm.isSaving = true;
+            } else vm.isSaving = false;
+            vm.staffRosterParametrization.firstShiftDate = fsd;
+            vm.staffRosterParametrization.lastShiftDate = lsd;
+            vm.staffRosterParametrization.planningWindowStart = pws;
+            vm.staffRosterParametrization.planningWindowEnd = pwe;
         }
 
-        function geteDateShiftItem(givenDate) {
-            for (var i = 0; i < vm.shiftdates.length; i++) {
-                if (new Date(givenDate.yyyymmdd()).valueOf() == new Date(vm.shiftdates[i].date).valueOf()) {
-                    return i;
-                    break;
+        function getDateShift(date) {
+            try {
+                for (var i = 0; i < vm.shiftdates.length; i++) {
+                    var shiftDate = vm.shiftdates[i];
+                    if (new Date(date.yyyymmdd()).valueOf() == new Date(shiftDate.date).valueOf()) {
+                        return shiftDate;
+                        break;
+                    }
                 }
+            } catch (err) {
             }
+            return null;
         }
-
-
-        vm.datePickerOpenStatus = {};
-        vm.datePickerOpenStatus.lastRunTime = false;
 
         vm.openCalendar = function (date) {
             vm.datePickerOpenStatus[date] = true;
