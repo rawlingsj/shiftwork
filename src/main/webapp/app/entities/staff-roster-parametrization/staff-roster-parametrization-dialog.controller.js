@@ -81,17 +81,17 @@
         };
 
         function setFormValues(firstDate, lastDate, template) {
-            vm.staffRosterParametrization.name = template + ' ' + getDateShift(firstDate).date;
-            vm.staffRosterParametrization.description = template + ' ' + getDateShift(firstDate).date;
-
             var fsd = getDateShift(firstDate);
-            var lsd = getDateShift(lastDate);
+            var lsd = getClosestDateShift(lastDate);
             var pwsDate = firstDate;
-            var pws = getDateShift(new Date(pwsDate.setMonth(pwsDate.getMonth() - 1)));
-            var pwe = getDateShift(firstDate);
+            var pws = getPastClosestDateShift(new Date(pwsDate.setMonth(pwsDate.getMonth() - 1)));
+            var pwe = fsd;
             if (fsd == null || lsd == null || pws == null || pwe == null) {
                 vm.isSaving = true;
             } else vm.isSaving = false;
+
+            vm.staffRosterParametrization.description = fsd.date + ' - ' + lsd.date;
+            vm.staffRosterParametrization.name = template + ' ' + new Date();
             vm.staffRosterParametrization.firstShiftDate = fsd;
             vm.staffRosterParametrization.lastShiftDate = lsd;
             vm.staffRosterParametrization.planningWindowStart = pws;
@@ -110,6 +110,38 @@
             } catch (err) {
             }
             return null;
+        }
+
+        function getClosestDateShift(date) {
+            var latest = vm.shiftdates[0];
+            try {
+                for (var i = 0; i < vm.shiftdates.length; i++) {
+                    var shiftDate = vm.shiftdates[i];
+                    if (new Date(date.yyyymmdd()).valueOf() < new Date(shiftDate.date).valueOf()) {
+                        return latest;
+                        break;
+                    } else {
+                        latest = shiftDate;
+                    }
+                }
+            } catch (err) {
+            }
+            return latest;
+        }
+
+        function getPastClosestDateShift(date) {
+            var latest = vm.shiftdates[0];
+            try {
+                for (var i = vm.shiftdates.length - 1; i > 0; i--) {
+                    var shiftDate = vm.shiftdates[i];
+                    if (new Date(date.yyyymmdd()).valueOf() >= new Date(shiftDate.date).valueOf()) {
+                        latest = shiftDate;
+                        break;
+                    }
+                }
+            } catch (err) {
+            }
+            return latest;
         }
 
         vm.openCalendar = function (date) {
