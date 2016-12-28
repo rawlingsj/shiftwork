@@ -1,11 +1,14 @@
 package com.teammachine.staffrostering.web.rest;
 
 import com.teammachine.staffrostering.ShiftworkApp;
+import com.teammachine.staffrostering.domain.PlanningJob;
 import com.teammachine.staffrostering.domain.StaffRosterParametrization;
 import com.teammachine.staffrostering.repository.StaffRosterParametrizationRepository;
+import com.teammachine.staffrostering.service.PlanningJobService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -26,9 +29,13 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -64,6 +71,9 @@ public class StaffRosterParametrizationResourceIntTest {
     @Inject
     private StaffRosterParametrizationRepository staffRosterParametrizationRepository;
 
+    @Mock
+    private PlanningJobService planningJobService;
+
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -79,6 +89,7 @@ public class StaffRosterParametrizationResourceIntTest {
         MockitoAnnotations.initMocks(this);
         StaffRosterParametrizationResource staffRosterParametrizationResource = new StaffRosterParametrizationResource();
         ReflectionTestUtils.setField(staffRosterParametrizationResource, "staffRosterParametrizationRepository", staffRosterParametrizationRepository);
+        ReflectionTestUtils.setField(staffRosterParametrizationResource, "planningJobService", planningJobService);
         this.restStaffRosterParametrizationMockMvc = MockMvcBuilders.standaloneSetup(staffRosterParametrizationResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -94,13 +105,15 @@ public class StaffRosterParametrizationResourceIntTest {
         staffRosterParametrization.setLastRunTime(DEFAULT_LAST_RUN_TIME);
     }
 
+
     @Test
     @Transactional
     public void createStaffRosterParametrization() throws Exception {
         int databaseSizeBeforeCreate = staffRosterParametrizationRepository.findAll().size();
+        PlanningJob panningJob = mock(PlanningJob.class);
+        when(planningJobService.runPlanningJob(anyObject())).thenReturn(Optional.of(panningJob));
 
         // Create the StaffRosterParametrization
-
         restStaffRosterParametrizationMockMvc.perform(post("/api/staff-roster-parametrizations")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(staffRosterParametrization)))
