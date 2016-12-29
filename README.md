@@ -1,4 +1,4 @@
-﻿# shiftwork
+# shiftwork
 
 This application was generated using JHipster, you can find documentation and help at [https://jhipster.github.io](https://jhipster.github.io).
 
@@ -21,7 +21,7 @@ We use [Gulp][] as our build system. Install the Gulp command-line tool globally
 Run the following commands in two separate terminals to create a blissful development experience where your browser
 auto-refreshes when files change on your hard drive.
 
-    ./mvnw -Pdev
+    ./mvnw
     gulp
 
 Bower is used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
@@ -76,11 +76,3 @@ To setup this project in Jenkins, use the following configuration:
 [Karma]: http://karma-runner.github.io/
 [Jasmine]: http://jasmine.github.io/2.0/introduction.html
 [Protractor]: https://angular.github.io/protractor/
-
-
-## Troubleshooting guide
-
-If you find that the bower directory is not created, try running the command inside staffservice directory:
-bower install bower.json
-
-

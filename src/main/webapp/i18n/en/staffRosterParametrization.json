@@ -24,7 +24,8 @@
             "firstShiftDate": "First Shift Date",
             "lastShiftDate": "Last Shift Date",
             "planningWindowStart": "Planning Window Start",
-            "planningWindowEnd": "Planning Window End"
+            "planningWindowEnd": "Planning Window End",
+            "saveAndRun": "Save and Run"
         }
     }
 }

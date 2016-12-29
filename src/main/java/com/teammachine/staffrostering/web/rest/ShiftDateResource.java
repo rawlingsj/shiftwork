@@ -26,10 +26,10 @@ import java.util.Optional;
 public class ShiftDateResource {
 
     private final Logger log = LoggerFactory.getLogger(ShiftDateResource.class);
-        
+
     @Inject
     private ShiftDateRepository shiftDateRepository;
-    
+
     /**
      * POST  /shift-dates : Create a new shiftDate.
      *
@@ -87,7 +87,7 @@ public class ShiftDateResource {
     @Timed
     public List<ShiftDate> getAllShiftDates() {
         log.debug("REST request to get all ShiftDates");
-        List<ShiftDate> shiftDates = shiftDateRepository.findAll();
+        List<ShiftDate> shiftDates = shiftDateRepository.findAllByOrderByDateAsc();
         return shiftDates;
     }
 

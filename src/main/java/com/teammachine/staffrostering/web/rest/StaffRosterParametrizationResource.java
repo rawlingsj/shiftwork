@@ -3,6 +3,9 @@ package com.teammachine.staffrostering.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.teammachine.staffrostering.domain.StaffRosterParametrization;
 import com.teammachine.staffrostering.repository.StaffRosterParametrizationRepository;
+import com.teammachine.staffrostering.service.PlanningJobService;
+import com.teammachine.staffrostering.web.rest.errors.CustomParameterizedException;
+import com.teammachine.staffrostering.web.rest.errors.ErrorConstants;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +28,13 @@ import java.util.Optional;
 public class StaffRosterParametrizationResource {
 
     private final Logger log = LoggerFactory.getLogger(StaffRosterParametrizationResource.class);
-        
+
     @Inject
     private StaffRosterParametrizationRepository staffRosterParametrizationRepository;
-    
+
+    @Inject
+    private PlanningJobService planningJobService;
+
     /**
      * POST  /staff-roster-parametrizations : Create a new staffRosterParametrization.
      *
@@ -40,12 +46,16 @@ public class StaffRosterParametrizationResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<StaffRosterParametrization> createStaffRosterParametrization(@RequestBody StaffRosterParametrization staffRosterParametrization) throws URISyntaxException {
+    public ResponseEntity<StaffRosterParametrization> createStaffRosterParametrization(@RequestBody StaffRosterParametrization staffRosterParametrization)
+        throws URISyntaxException, CustomParameterizedException
+    {
         log.debug("REST request to save StaffRosterParametrization : {}", staffRosterParametrization);
         if (staffRosterParametrization.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("staffRosterParametrization", "idexists", "A new staffRosterParametrization cannot already have an ID")).body(null);
         }
         StaffRosterParametrization result = staffRosterParametrizationRepository.save(staffRosterParametrization);
+        planningJobService.runPlanningJob(result)
+            .orElseThrow(() -> new CustomParameterizedException(ErrorConstants.ERR_UNABLE_TO_RUN_PLANNING_JOB));
         return ResponseEntity.created(new URI("/api/staff-roster-parametrizations/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("staffRosterParametrization", result.getId().toString()))
             .body(result);

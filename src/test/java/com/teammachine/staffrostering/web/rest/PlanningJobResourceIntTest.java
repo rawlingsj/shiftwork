@@ -207,10 +207,7 @@ public class PlanningJobResourceIntTest {
         // Business method
         restPlanningJobMockMvc.perform(get("/api/planning-jobs/{id}", id))
             // Asserts
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound())
-            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_NO_SUCH_PLANNING_JOB))
-            .andExpect(jsonPath("$.params[*]").value(contains(String.valueOf(id))));
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -291,10 +288,7 @@ public class PlanningJobResourceIntTest {
         // Business method
         restPlanningJobMockMvc.perform(put("/api/planning-jobs/{id}", id))
             // Asserts
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound())
-            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_NO_SUCH_PLANNING_JOB))
-            .andExpect(jsonPath("$.params[*]").value(contains(String.valueOf(id))));
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -320,9 +314,6 @@ public class PlanningJobResourceIntTest {
         // Business method
         restPlanningJobMockMvc.perform(delete("/api/planning-jobs/{id}", id))
             // Asserts
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound())
-            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_NO_SUCH_PLANNING_JOB))
-            .andExpect(jsonPath("$.params[*]").value(contains(String.valueOf(id))));
+            .andExpect(status().isNotFound());
     }
 }

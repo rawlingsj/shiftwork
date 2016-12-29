@@ -7,33 +7,31 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entities",
-                "shiftDate": "Shift Date",
-                "shiftType": "Shift Type",
-                "skill": "Skill",
-                "weekendDefinition": "Weekend Definition",
-                "staffRosterParametrization": "Staff Roster Parametrization",
-                "shift": "Shift",
-                "contract": "Contract",
-                "contractLine": "Contract Line",
-                "patternContractLine": "Pattern Contract Line",
-                "employee": "Employee",
-                "skillProficiency": "Skill Proficiency",
-                "employeeDayOffRequest": "Employee Day Off Request",
-                "employeeDayOnRequest": "Employee Day On Request",
-                "employeeShiftOnRequest": "Employee Shift On Request",
-                "employeeShiftOffRequest": "Employee Shift Off Request",
-                "shiftAssignment": "Shift Assignment",
-                "task": "Task",
-                "taskTpye": "Task Tpye",
-                "booleanContractLine": "Boolean Contract Line",
-                "minMaxContractLine": "Min Max Contract Line",
+                "shiftDate": "Shift Dates",
+                "shiftType": "Shift Types",
+                "skill": "Skills",
+                "weekendDefinition": "Weekend Definitions",
+                "staffRosterParametrization": "Staff Roster Parametrizations",
+                "shift": "Shifts",
+                "contract": "Contracts",
+                "patternContractLine": "Pattern Contract Lines",
+                "employee": "Employees",
+                "skillProficiency": "Skill Proficiencies",
+                "employeeDayOffRequest": "Employee Day Off Requests",
+                "employeeDayOnRequest": "Employee Day On Requests",
+                "employeeShiftOnRequest": "Employee Shift On Requests",
+                "employeeShiftOffRequest": "Employee Shift Off Requests",
+                "shiftAssignment": "Shift Assignments",
+                "task": "Tasks",
+                "booleanContractLine": "Boolean Contract Lines",
+                "minMaxContractLine": "Min Max Contract Lines",
                 "employees": "Employees",
-                "taskSkillRequirement": "Task Skill Requirement",
-				"viewDayPlan": "View Day Plan",
-				"viewMySchedule": "View My Schedule",
-                "employeeAbsentReason": "Employee Absent Reason",
-                "employeeLeaveAbsence": "Employee Leave Absence",
-                "planningJob": "Planning Job",
+                "taskSkillRequirement": "Task Skill Requirements",
+                "employeeAbsentReason": "Employee Absent Reasons",
+                "employeeLeaveAbsence": "Employee Leave Absences",
+                "viewDayPlan": "Day Schedules",
+                "viewMySchedule": "My Schedule",
+                "planningJob": "Planning Jobs",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -100,12 +98,7 @@
         },
         "field": {
             "id": "ID"
-        },
-		"day" : {
-			"today" : "Today",
-			"yesterday" : "Yesterday",
-			"tomorrow" : "Tomorrow"
-		}
+        }
     },
     "entity": {
         "action": {
@@ -135,25 +128,9 @@
             "maxbytes": "This field cannot be more than {{ max }} bytes.",
             "pattern": "This field should follow pattern {{ pattern }}.",
             "number": "This field should be a number.",
-            "datetimelocal": "This field should be a date and time.",
-            "time": "This field should be a time.",
-            "code": "This field should contain only numbers or letters.",
-			"codeexists": "The code entered is invalid, It has already been used."
+            "datetimelocal": "This field should be a date and time."
         }
     },
-	"calendar" : {
-		"action" : {
-			"previous" : "Previous",
-			"today" : "Today",
-			"next" : "Next"
-		},
-		"view" : {
-			"day" : "Day",
-			"month" : "Month",
-			"week" : "Week",
-			"year" : "Year"
-		}
-	},
     "error": {
         "server.not.reachable": "Server not reachable",
         "NotNull": "Field {{ fieldName }} cannot be empty!",

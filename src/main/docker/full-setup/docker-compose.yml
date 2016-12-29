@@ -27,4 +27,3 @@ services:
           - JAVA_OPTS=-Dstaffservice.url=http://staffservice:8080
         ports:
           - 8282:8080
-

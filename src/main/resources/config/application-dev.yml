@@ -80,4 +80,3 @@ jhipster:
 
 plannerengine:
     url: http://localhost:8082/plannerengine-0.0.1-SNAPSHOT/rest
-

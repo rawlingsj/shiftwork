@@ -30,7 +30,7 @@
    </changeSet>
     <changeSet author="LD (generated)" id="1471284027788-8">
         <addColumn tableName="employee">
-            <column name="active" type="bit" defaultValue="1"/>
+            <column name="active" type="boolean" defaultValue="true"/>
         </addColumn>
     </changeSet>
 </databaseChangeLog>

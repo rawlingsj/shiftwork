@@ -18,10 +18,10 @@ spring:
         livereload:
             enabled: false
     datasource:
-        url: jdbc:postgresql://postgresql:5432/staffservice
+        url: jdbc:postgresql://localhost:5432/staffservice
         name:
         username: staffservice
-        password: Mnbv!432
+        password:
     jpa:
         database-platform: com.teammachine.staffrostering.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL
@@ -72,7 +72,7 @@ jhipster:
             enabled: false
             host: localhost
             port: 2003
-            prefix: staffservice
+            prefix: shiftwork
         logs: # report metrics in the logs
             enabled: false
             reportFrequency: 60 # in seconds
@@ -84,7 +84,3 @@ jhipster:
             queueSize: 512
     swagger: # swagger is disabled. It can be disabled by pasing 'no-swagger' profile at run time as well
         enabled: false
-
-
-plannerengine:
-    url: http://localhost:8082/plannerengine-0.0.1-SNAPSHOT/rest

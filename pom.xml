@@ -5,14 +5,15 @@
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
-        <version>1.3.3.RELEASE</version>
+        <version>1.3.8.RELEASE</version>
+        <relativePath />
     </parent>
 
     <groupId>com.teammachine.staffrostering</groupId>
-    <artifactId>staffservice</artifactId>
+    <artifactId>shiftwork</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>staffservice</name>
+    <name>shiftwork</name>
 
     <prerequisites>
         <maven>3.0.0</maven>
@@ -48,7 +49,7 @@
         <javax.inject.version>1</javax.inject.version>
         <liquibase-hibernate4.version>3.5</liquibase-hibernate4.version>
         <liquibase-slf4j.version>1.2.1</liquibase-slf4j.version>
-        <liquibase.version>3.4.2</liquibase.version>
+        <liquibase.version>3.5.3</liquibase.version>
         <logstash-logback-encoder.version>4.6</logstash-logback-encoder.version>
         <mapstruct.version>1.0.0.Final</mapstruct.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
@@ -77,6 +78,7 @@
         <sortpom-maven-plugin.version>2.5.0</sortpom-maven-plugin.version>
         <spring-security.version>4.0.4.RELEASE</spring-security.version>
         <springfox.version>2.4.0</springfox.version>
+
     </properties>
 
     <dependencies>
@@ -263,7 +265,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- jhipster-needle-maven-add-dependency -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
@@ -289,11 +290,6 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-envers</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-jpamodelgen</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -339,10 +335,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-loader-tools</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -426,6 +418,7 @@
                 </includes>
             </resource>
             <resource>
+                <filtering>false</filtering>
                 <directory>src/main/resources/</directory>
                 <excludes>
                     <exclude>**/*.xml</exclude>
@@ -505,7 +498,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.4.5</version>
                 <configuration>
-                    <imageName>staffservice</imageName>
+                    <imageName>shiftwork</imageName>
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
@@ -604,8 +597,7 @@
                             <version>[3.0.0,)</version>
                         </requireMavenVersion>
                         <requireJavaVersion>
-                            <message>You are running an older version of Java. JHipster requires at least JDK
-                                ${java.version}</message>
+                            <message>You are running an older version of Java. JHipster requires at least JDK ${java.version}</message>
                             <version>[${java.version}.0,)</version>
                         </requireJavaVersion>
                     </rules>
@@ -620,9 +612,7 @@
                     <runOrder>alphabetical</runOrder>
                 </configuration>
             </plugin>
-
-            <!-- Commented this portion because metamodel classes not generating -->
-            <!--  <plugin>
+            <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
                 <version>2.2.4</version>
@@ -652,8 +642,7 @@
                         <mapstruct.defaultComponentModel>spring</mapstruct.defaultComponentModel>
                     </options>
                 </configuration>
-            </plugin> -->
-
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
@@ -714,15 +703,12 @@
                 <configuration>
                     <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
                     <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
-                    <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost:5432/staffservice</url>
+                    <driver />
+                    <url />
                     <defaultSchemaName />
-                    <username>staffservice</username>
-                    <password>654321</password>
-                    <referenceUrl>jdbc:postgresql://localhost:5432/staffserviceref</referenceUrl>
-                    <referenceDriver>org.postgresql.Driver</referenceDriver>
-                    <referenceUsername>staffservice</referenceUsername>
-                    <referencePassword>654321</referencePassword>
+                    <username>shiftwork</username>
+                    <password />
+                    <referenceUrl>hibernate:spring:com.teammachine.staffrostering.domain?dialect=&amp;hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy</referenceUrl>
                     <verbose>true</verbose>
                     <logging>debug</logging>
                 </configuration>
@@ -758,6 +744,9 @@
     <profiles>
         <profile>
             <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -788,9 +777,6 @@
         </profile>
         <profile>
             <id>prod</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -855,31 +841,6 @@
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </dependency>
             </dependencies>
-        </profile>
-        <profile>
-            <id>f8-build</id>
-            <build>
-                <defaultGoal>clean install docker:build fabric8:json</defaultGoal>
-            </build>
-        </profile>
-        <profile>
-            <id>f8-deploy</id>
-            <build>
-                <defaultGoal>clean install docker:build docker:push fabric8:json fabric8:apply</defaultGoal>
-            </build>
-            <properties>
-                <fabric8.imagePullPolicySnapshot>Always</fabric8.imagePullPolicySnapshot>
-                <fabric8.recreate>true</fabric8.recreate>
-            </properties>
-        </profile>
-        <profile>
-            <id>f8-local-deploy</id>
-            <build>
-                <defaultGoal>clean install docker:build fabric8:json fabric8:apply</defaultGoal>
-            </build>
-            <properties>
-                <fabric8.recreate>true</fabric8.recreate>
-            </properties>
         </profile>
     </profiles>
 

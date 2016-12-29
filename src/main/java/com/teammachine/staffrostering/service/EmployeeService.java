@@ -11,7 +11,7 @@ public interface EmployeeService {
 
 	/**
 	 * Save a employee.
-	 * 
+	 *
 	 * @param employee
 	 *            the entity to save
 	 * @return the persisted entity
@@ -20,14 +20,14 @@ public interface EmployeeService {
 
 	/**
 	 * Get all the employees.
-	 * 
+	 *
 	 * @return the list of entities
 	 */
 	List<Employee> findAll();
 
 	/**
 	 * Get the "id" employee.
-	 * 
+	 *
 	 * @param id
 	 *            the id of the entity
 	 * @return the entity
@@ -36,7 +36,7 @@ public interface EmployeeService {
 
 	/**
 	 * Delete the "id" employee.
-	 * 
+	 *
 	 * @param id
 	 *            the id of the entity
 	 */
@@ -44,10 +44,12 @@ public interface EmployeeService {
 
 	/**
 	 * List the employees based on name or code
-	 * 
+	 *
 	 * @param like
 	 *            of type String
 	 * @return list of employees
 	 */
 	List<Employee> findByCodeOrName(String like);
+
+	List<Employee> findAllByCodeLikeIgnoreCaseOrNameLikeIgnoreCase(String like);
 }
