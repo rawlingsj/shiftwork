@@ -49,12 +49,12 @@
         };
 
         vm.save = function () {
-            if ($scope.selection.length > 0 && vm.shiftDate.repeatFor >= 0 && vm.shiftDate.date != null) {
-                vm.isSaving = true;
-                vm.shiftDate.daysOfWeek = $scope.selection;
-                if (vm.shiftDate.id !== null) {
-                    ShiftDate.update(vm.shiftDate, onSaveSuccess, onSaveError);
-                } else {
+            vm.isSaving = true;
+            if (vm.shiftDate.id !== null) {
+                ShiftDate.update(vm.shiftDate, onSaveSuccess, onSaveError);
+            } else {
+                if ($scope.selection.length > 0 && vm.shiftDate.repeatFor >= 0 && vm.shiftDate.date != null) {
+                    vm.shiftDate.daysOfWeek = $scope.selection;
                     ShiftDate.save(vm.shiftDate, onSaveSuccess, onSaveError);
                 }
             }

@@ -9,7 +9,7 @@
                 "createMultipleShiftsLabel": "Create multiple Shifts",
                 "search": "Search for Shift Date"
             },
-            "created": "A new Shift Date is created with identifier {{ param }}",
+            "created": "A new Shift Date is created with starting date {{ param }}",
             "updated": "A Shift Date is updated with identifier {{ param }}",
             "deleted": "A Shift Date is deleted with identifier {{ param }}",
             "delete": {
