@@ -13,13 +13,13 @@
         vm.shifts = Shift.query();
 
         $scope.days = [
-            { name: 'S', value: 'SUNDAY',  selected: false },
-            { name: 'M', value: 'MONDAY',   selected: false },
-            { name: 'T', value: 'TUESDAY',   selected: false },
-            { name: 'W', value: 'WEDNESDAY',   selected: false },
-            { name: 'T', value: 'THURSDAY',   selected: false },
-            { name: 'F', value: 'FRIDAY',   selected: false },
-            { name: 'S', value: 'SATURDAY',   selected: false }
+            { name: 'Mon', value: 'MONDAY',   selected: false },
+            { name: 'Tue', value: 'TUESDAY',   selected: false },
+            { name: 'Wed', value: 'WEDNESDAY',   selected: false },
+            { name: 'Thu', value: 'THURSDAY',   selected: false },
+            { name: 'Fri', value: 'FRIDAY',   selected: false },
+            { name: 'Sat', value: 'SATURDAY',   selected: false },
+            { name: 'Sun', value: 'SUNDAY',  selected: false }
         ];
 
         $scope.selection = [];

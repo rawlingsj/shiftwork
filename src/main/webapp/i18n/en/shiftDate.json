@@ -4,7 +4,7 @@
             "home": {
                 "title": "Shift Dates",
                 "createLabel": "Create a new Shift Date",
-                "createMultipleLabel": "Create Multiple",
+                "createMultipleLabel": "Create new Shifts",
                 "createOrEditLabel": "Create or edit a Shift Date",
                 "createMultipleShiftsLabel": "Create multiple Shifts",
                 "search": "Search for Shift Date"

@@ -4,7 +4,7 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myShiftDateLabel" translate="shiftworkApp.shiftDate.home.createMultipleShiftsLabel">Create multiple Shifts</h4>
+        <h4 class="modal-title" id="myShiftDateLabel" translate="shiftworkApp.shiftDate.home.createMultipleLabel">Create new Shifts</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
@@ -19,31 +19,39 @@
                     ng-model="vm.shiftDate.dayIndex"
                      />
         </div>-->
-
-        <div class="form-group">
-            <label class="control-label" translate="shiftworkApp.shiftDate.dayOfWeek">Day Of Week</label>
-            <label ng-repeat="day in days">
-                <input
-                    type="checkbox"
-                    name="selectedDays[]"
-                    value="{{day.name}}"
-                    ng-model="day.selected"
-                > {{day.name}}
-            </label>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label" translate="shiftworkApp.shiftDate.dayOfWeek">Day Of Week</label>
+                    <div class="form-group">
+                        <label ng-repeat="day in days">
+                            {{day.name}} <input type="checkbox" name="selectedDays[]" value="{{day.name}}" ng-model="day.selected">&nbsp;
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label class="control-label" translate="shiftworkApp.shiftDate.startsOn" for="field_date">Starts on</label>
-                <div class="input-group">
-                    <input id="field_date" type="text" class="form-control" name="date" uib-datepicker-popup="{{dateformat}}" ng-model="vm.shiftDate.date" is-open="vm.datePickerOpenStatus.date"
-                    />
-                    <span class="input-group-btn">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label" translate="shiftworkApp.shiftDate.startsOn" for="field_date">Starts on</label>
+                        <div class="input-group">
+                            <input id="field_date" type="text" class="form-control" name="date" uib-datepicker-popup="{{dateformat}}" ng-model="vm.shiftDate.date" is-open="vm.datePickerOpenStatus.date"
+                            />
+                            <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openCalendar('date')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
+                        </div>
+                    </div>
                 </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" translate="shiftworkApp.shiftDate.repeatFor">Repeat for</label>
-            <input type="text" ng-model="vm.shiftDate.repeatFor" name="occurrence">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label" translate="shiftworkApp.shiftDate.repeatFor">Repeat for</label>
+                        <input type="number" ng-model="vm.shiftDate.repeatFor" name="occurrence" class="form-control">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
