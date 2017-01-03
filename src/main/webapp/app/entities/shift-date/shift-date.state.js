@@ -87,6 +87,36 @@
                 });
             }]
         })
+        .state('shift-date.newMultiple', {
+            parent: 'shift-date',
+            url: '/newMultiple',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/shift-date/shift-date-dialog-multiple.html',
+                    controller: 'ShiftDateDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: function () {
+                            return {
+                                dayIndex: null,
+                                date: null,
+                                dayOfWeek: null,
+                                id: null
+                            };
+                        }
+                    }
+                }).result.then(function() {
+                    $state.go('shift-date', null, { reload: true });
+                }, function() {
+                    $state.go('shift-date');
+                });
+            }]
+        })
         .state('shift-date.edit', {
             parent: 'shift-date',
             url: '/{id}/edit',

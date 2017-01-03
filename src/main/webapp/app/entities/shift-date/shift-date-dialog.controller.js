@@ -12,6 +12,28 @@
         vm.shiftDate = entity;
         vm.shifts = Shift.query();
 
+        $scope.days = [
+            { name: 'S', value: 'SUNDAY',  selected: false },
+            { name: 'M', value: 'MONDAY',   selected: false },
+            { name: 'T', value: 'TUESDAY',   selected: false },
+            { name: 'W', value: 'WEDNESDAY',   selected: false },
+            { name: 'T', value: 'THURSDAY',   selected: false },
+            { name: 'F', value: 'FRIDAY',   selected: false },
+            { name: 'S', value: 'SATURDAY',   selected: false }
+        ];
+
+        $scope.selection = [];
+
+        $scope.selectedDays = function selectedDays() {
+            return filterFilter($scope.days, { selected: true });
+        };
+
+        $scope.$watch('days|filter:{selected:true}', function (nv) {
+            $scope.selection = nv.map(function (day) {
+                return day.value;
+            });
+        }, true);
+
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
@@ -28,6 +50,7 @@
 
         vm.save = function () {
             vm.isSaving = true;
+            vm.shiftDate.daysOfWeek = $scope.selection;
             if (vm.shiftDate.id !== null) {
                 ShiftDate.update(vm.shiftDate, onSaveSuccess, onSaveError);
             } else {

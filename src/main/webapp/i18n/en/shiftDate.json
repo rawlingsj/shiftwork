@@ -4,7 +4,9 @@
             "home": {
                 "title": "Shift Dates",
                 "createLabel": "Create a new Shift Date",
+                "createMultipleLabel": "Create Multiple",
                 "createOrEditLabel": "Create or edit a Shift Date",
+                "createMultipleShiftsLabel": "Create multiple Shifts",
                 "search": "Search for Shift Date"
             },
             "created": "A new Shift Date is created with identifier {{ param }}",
@@ -18,7 +20,9 @@
             },
             "dayIndex": "Day Index",
             "date": "Date",
+            "startsOn": "Starts on",
             "dayOfWeek": "Day Of Week",
+            "repeatFor": "Repeat for",
             "shiftList": "Shift List"
         }
     }

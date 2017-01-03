@@ -28,6 +28,7 @@
             },
             'save': {
                 method: 'POST',
+                isArray: true,
                 transformRequest: function (data) {
                     data.date = DateUtils.convertLocalDateToServer(data.date);
                     return angular.toJson(data);
