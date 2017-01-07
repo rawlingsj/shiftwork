@@ -31,7 +31,6 @@ node {
   checkout scm
 
   kubernetes.pod('buildpod').withImage('172.30.16.65:80/shiftwork/jhipster-build')
-      .withPrivileged(true)
       .withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
       .withEnvVar('DOCKER_CONFIG','/home/jenkins/.docker/')
       .withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
