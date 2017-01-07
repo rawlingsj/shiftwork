@@ -29,7 +29,7 @@ podTemplate(label: label, serviceAccount: 'jenkins', containers: [
         ]) {
 
   node(label) {
-    git git@gitlab.com:hughestech/PlannerEngine.git
+    git gitlab.com:hughestech/PlannerEngine.git
 
     echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
     container(name: 'maven') {
