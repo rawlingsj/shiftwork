@@ -1,5 +1,5 @@
 @Library('github.com/rawlingsj/fabric8-pipeline-library)'
-#!/usr/bin/groovy
+
 def failIfNoTests = ""
 try {
   failIfNoTests = ITEST_FAIL_IF_NO_TEST
