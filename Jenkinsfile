@@ -39,6 +39,7 @@ podTemplate(label: label, serviceAccount: 'jenkins', containers: [
       mavenCanaryRelease {
         version = canaryVersion
       }
+     }
     
   }
 }
