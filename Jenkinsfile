@@ -16,7 +16,7 @@ def label = "master"
 
 
 podTemplate(label: label, serviceAccount: 'jenkins', containers: [
-        [name: 'maven', image: 'iocanel/jenkins-jnlp-client:latest', command: 'cat', ttyEnabled: true, envVars: [
+        [name: 'maven', image: 'fabric8/builder-clients', command: 'cat', ttyEnabled: true, envVars: [
                 [key: 'MAVEN_OPTS', value:'-Duser.home=/home/jenkins/'],
                 [key: 'DOCKER_CONFIG', value:'/home/jenkins/.docker/'],
                 [key: 'KUBERNETES_MASTER', value:  'kubernetes.default'] ]],
