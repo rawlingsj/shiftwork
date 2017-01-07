@@ -21,7 +21,7 @@ try {
 }
 
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
-def utils = new io.fabric8.Utils()
+//def utils = new io.fabric8.Utils()
 
 node {
   def envProd = 'shiftwork-production'
