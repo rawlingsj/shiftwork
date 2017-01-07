@@ -13,6 +13,7 @@ try {
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 // def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
 def label = "master"
+def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 
 podTemplate(label: label, serviceAccount: 'jenkins', containers: [
         [name: 'maven', image: 'fabric8/maven-builder', command: 'cat', ttyEnabled: true, envVars: [
@@ -32,12 +33,10 @@ podTemplate(label: label, serviceAccount: 'jenkins', containers: [
     git = checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '0a768e1b-dd34-4001-a607-1ec64ad3cf73', url: 'https://gitlab.com/hughestech/PlannerEngine.git']]])
 
     echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
-    container(name: 'maven') {
-
-      stage 'Build Release'
-      mavenCanaryRelease {
-        version = canaryVersion
-      }
+    stage 'Canary Release'
+    mavenCanaryRelease{
+      version = canaryVersion
+    }
     }
   }
 }
