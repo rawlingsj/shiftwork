@@ -8,12 +8,13 @@ try {
   failIfNoTests = "false"
 }
 
-def itestPattern = ""
+def localItestPattern = ""
 try {
-  itestPattern = ITEST_PATTERN
+  localItestPattern = ITEST_PATTERN
 } catch (Throwable e) {
-  itestPattern = "*KT"
+  localItestPattern = "*KT"
 }
+
 
 def versionPrefix = ""
 try {
@@ -24,35 +25,44 @@ try {
 
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 def utils = new io.fabric8.Utils()
+def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
 
-node {
-  def envProd = 'shiftwork-production'
+podTemplate(label: label, serviceAccount: 'jenkins', containers: [
+        [name: 'maven', image: 'fabric8/maven-builder', command: 'cat', ttyEnabled: true, envVars: [
+                [key: 'MAVEN_OPTS', value: '-Duser.home=/home/jenkins/'],
+                [key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/'],
+                [key: 'KUBERNETES_MASTER', value: 'kubernetes.default']]],
+        [name: 'jnlp', image: 'iocanel/jenkins-jnlp-client:latest', command:'/usr/local/bin/start.sh', args: '${computer.jnlpmac} ${computer.name}', ttyEnabled: false,
+                envVars: [[key: 'DOCKER_HOST', value: 'unix:/var/run/docker.sock']]]],
+        volumes: [
+                [$class: 'PersistentVolumeClaim', mountPath: '/home/jenkins/.mvnrepository', claimName: 'jenkins-mvn-local-repo'],
+                [$class: 'SecretVolume', mountPath: '/home/jenkins/.m2/', secretName: 'jenkins-maven-settings'],
+                [$class: 'SecretVolume', mountPath: '/home/jenkins/.docker', secretName: 'jenkins-docker-cfg'],
+                [$class: 'HostPathVolume', mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock']
+        ]) {
+  node(label) {
+    def envStage = utils.environmentNamespace('shiftwork-production')
 
-  checkout scm
+    git GIT_URL
 
-  kubernetes.pod('buildpod').withImage('172.30.16.65:80/shiftwork/jhipster-build')
-      .withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
-      .withEnvVar('DOCKER_CONFIG','/home/jenkins/.docker/')
-      .withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
-      .withSecret('jenkins-maven-settings','/root/.m2')
-      .withServiceAccount('jenkins')
-      .inside {
+    echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
+    container(name: 'maven') {
 
-    stage 'Canary Release'
-    mavenCanaryRelease{
-      version = canaryVersion
+      stage 'Build Release'
+      mavenCanaryRelease {
+        version = canaryVersion
+      }
+
+      stage 'Integration Test'
+      mavenIntegrationTest {
+        environment = 'Testing'
+        failIfNoTests = localFailIfNoTests
+        itestPattern = localItestPattern
+      }
+
+      stage 'Rollout Staging'
+      kubernetesApply(environment: envStage)
+
     }
-
-    stage 'Integration Test'
-    mavenIntegrationTest{
-      environment = 'Testing'
-      failIfNoTests = localFailIfNoTests
-      itestPattern = localItestPattern
-    }
-
-    stage 'Rolling Upgrade Production'
-    def rc = readFile 'target/classes/kubernetes.json'
-    kubernetesApply(file: rc, environment: envProd)
-
   }
 }
