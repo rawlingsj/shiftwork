@@ -1,3 +1,4 @@
+@Library('github.com/rawlingsj/fabric8-pipeline-library)'
 #!/usr/bin/groovy
 def failIfNoTests = ""
 try {
