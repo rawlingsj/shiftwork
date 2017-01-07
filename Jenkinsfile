@@ -13,7 +13,7 @@ try {
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 // def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
 def label = "master"
-def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
+
 
 podTemplate(label: label, serviceAccount: 'jenkins', containers: [
         [name: 'maven', image: 'fabric8/maven-builder', command: 'cat', ttyEnabled: true, envVars: [
