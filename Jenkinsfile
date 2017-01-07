@@ -11,12 +11,12 @@ try {
 }
 
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
-// def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
-def label = "master"
+def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
+//def label = "master"
 
 
 podTemplate(label: label, serviceAccount: 'jenkins', containers: [
-        [name: 'maven', image: 'fabric8/builder-clients', command: 'cat', ttyEnabled: true, envVars: [
+        [name: 'maven', image: 'fabric8/maven-builder', command: 'cat', ttyEnabled: true, envVars: [
                 [key: 'MAVEN_OPTS', value:'-Duser.home=/home/jenkins/'],
                 [key: 'DOCKER_CONFIG', value:'/home/jenkins/.docker/'],
                 [key: 'KUBERNETES_MASTER', value:  'kubernetes.default'] ]],
