@@ -33,10 +33,12 @@ podTemplate(label: label, serviceAccount: 'jenkins', containers: [
     git = checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '0a768e1b-dd34-4001-a607-1ec64ad3cf73', url: 'https://gitlab.com/hughestech/PlannerEngine.git']]])
 
     echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
-    stage 'Canary Release'
-    mavenCanaryRelease{
-      version = canaryVersion
-    }
-    }
+    
+
+      stage 'Build Release'
+      mavenCanaryRelease {
+        version = canaryVersion
+      }
+    
   }
 }
