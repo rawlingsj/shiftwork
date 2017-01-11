@@ -30,7 +30,7 @@ podTemplate(label: label, serviceAccount: 'jenkins', containers: [
         ]) {
 
   node(label) {
-    git = checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'f5cbf2f9-0028-42e5-8fc5-1e0c60240992', url: 'https://gitlab.com/hughestech/staffservice.git']]])
+    git = checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'd10bf7ec-cebe-499a-9d04-9daa3fcc51a8', url: 'https://gitlab.com/hughestech/staffservice.git']]])
 
     echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
     container(name: 'maven') {
