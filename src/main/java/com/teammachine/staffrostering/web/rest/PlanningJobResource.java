@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.teammachine.staffrostering.domain.PlanningJob;
 import com.teammachine.staffrostering.domain.StaffRosterParametrization;
 import com.teammachine.staffrostering.domain.enumeration.JobStatus;
+import com.teammachine.staffrostering.repository.StaffRosterParametrizationRepository;
 import com.teammachine.staffrostering.service.PlanningJobService;
 import com.teammachine.staffrostering.web.rest.dto.PlanningJobWithResultDTO;
 import com.teammachine.staffrostering.web.rest.errors.CustomParameterizedException;
@@ -32,20 +33,23 @@ public class PlanningJobResource {
     @Inject
     private PlanningJobService planningJobService;
 
+    @Inject
+    private StaffRosterParametrizationRepository staffRosterParametrizationRepository;
+
     @RequestMapping(value = "/planning-jobs",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<PlanningJob> createPlanningJob(@RequestBody PlanningJob planningJob) throws URISyntaxException {
         log.debug("REST request to save PlanningJob : {}", planningJob);
-        if (planningJob.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("planningJob", "idexists", "A new planningJob cannot already have an ID")).body(null);
-        }
-        PlanningJob result = planningJobService.runPlanningJob(planningJob.getParameterization())
-            .orElseThrow(() -> new CustomParameterizedException(ErrorConstants.ERR_UNABLE_TO_RUN_PLANNING_JOB));
+        StaffRosterParametrization parameterization = planningJob.getParameterization();
+        parameterization.setId(null);
+        parameterization = staffRosterParametrizationRepository.save(parameterization);
+        PlanningJob result = planningJobService.runPlanningJob(parameterization)
+                .orElseThrow(() -> new CustomParameterizedException(ErrorConstants.ERR_UNABLE_TO_RUN_PLANNING_JOB));
         return ResponseEntity.created(new URI("/api/planning-jobs/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("planningJob", result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert("planningJob", result.getId().toString()))
+                .body(result);
     }
 
     @RequestMapping(value = "/planning-jobs",
