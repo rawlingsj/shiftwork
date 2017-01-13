@@ -71,6 +71,16 @@ public class PlanningJobResource {
         return ResponseEntity.ok().build();
     }
 
+    @RequestMapping(value = "/planning-jobs-status",
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Void> syncPlanningJobProgressStatuses(@RequestBody(required = false) Map<String, Object> plannerServiceJob) {
+        log.debug("REST request to sync PlanningJobs' progress statuses");
+        // TODO: implement UI socket notification
+        return ResponseEntity.ok().build();
+    }
+
     private void syncOneJob(Map<String, Object> plannerServiceJob) {
         String jobId = (String) plannerServiceJob.get("jobId");
         JobStatus jobStatus = JobStatus.valueOf((String) plannerServiceJob.get("status"));
