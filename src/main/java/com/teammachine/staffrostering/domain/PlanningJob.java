@@ -30,7 +30,7 @@ public class PlanningJob implements Serializable {
     private JobStatus status;
 
     @OneToOne
-    @JoinColumn(unique = true)
+    @JoinColumn(unique = false)
     private StaffRosterParametrization parameterization;
 
     public Long getId() {

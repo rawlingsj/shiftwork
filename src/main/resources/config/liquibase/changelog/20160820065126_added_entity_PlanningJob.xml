@@ -30,7 +30,7 @@
             </column>
             
             <column name="parameterization_id" type="bigint">
-                <constraints unique="true"/>
+                <constraints unique="false"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
