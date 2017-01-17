@@ -12,11 +12,15 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
-	<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
-
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.css" />
+    <link rel="stylesheet" href="bower_components/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.css" />
+    <link rel="stylesheet" href="bower_components/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+    <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" />
+	<link rel="stylesheet" href="bower_components/react-calendar-timeline/build/dist/react-calendar-timeline.css" />
     <!-- endbower -->
-    <!-- endbuild -->
+    <!-- ensdbuild -->
     <!-- build:css content/css/main.css -->
     <link rel="stylesheet" href="content/css/main.css">
     <!-- endbuild -->
@@ -68,6 +72,21 @@
     <script src="bower_components/json3/lib/json3.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+    <script src="bower_components/file-saver/FileSaver.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/react/dist/react.js"></script>
+	<script src="bower_components/react-dom/dist/react-dom.js"></script>
+	<script src="bower_components/interact/dist/interact.js"></script>
+	<script src="bower_components/moment/moment.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.7.6/immutable.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.0.1/faker.js"></script>
+	<script src="bower_components/react-calendar-timeline/build/dist/react-calendar-timeline.js"></script>
+    <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+    <script src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
+    <script src="bower_components/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.js"></script>
+    <script src="bower_components/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.min.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -79,21 +98,6 @@
     <script src="app/account/reset/request/reset.request.controller.js"></script>
     <script src="app/account/reset/finish/reset.finish.state.js"></script>
     <script src="app/account/reset/finish/reset.finish.controller.js"></script>
-    <script src="app/entities/weekend-definition/weekend-definition.state.js"></script>
-    <script src="app/entities/weekend-definition/weekend-definition.service.js"></script>
-    <script src="app/entities/weekend-definition/weekend-definition.controller.js"></script>
-    <script src="app/entities/weekend-definition/weekend-definition-dialog.controller.js"></script>
-    <script src="app/entities/weekend-definition/weekend-definition-detail.controller.js"></script>
-    <script src="app/entities/weekend-definition/weekend-definition-delete-dialog.controller.js"></script>
-    <script src="app/entities/view-my-schedule/view-my-schedule.state.js"></script>
-    <script src="app/entities/view-my-schedule/view-my-schedule.service.js"></script>
-    <script src="app/entities/view-my-schedule/view-my-schedule.controller.js"></script>
-    <script src="app/entities/shift-assignment/shift-assignment.state.js"></script>
-    <script src="app/entities/shift-assignment/shift-assignment.service.js"></script>
-    <script src="app/entities/shift-assignment/shift-assignment.controller.js"></script>
-    <script src="app/entities/shift-assignment/shift-assignment-dialog.controller.js"></script>
-    <script src="app/entities/shift-assignment/shift-assignment-detail.controller.js"></script>
-    <script src="app/entities/shift-assignment/shift-assignment-delete-dialog.controller.js"></script>
     <script src="app/services/user/user.service.js"></script>
     <script src="app/services/auth/sessions.service.js"></script>
     <script src="app/services/auth/register.service.js"></script>
@@ -107,18 +111,19 @@
     <script src="app/services/auth/auth.service.js"></script>
     <script src="app/services/auth/activate.service.js"></script>
     <script src="app/services/auth/account.service.js"></script>
-    <script src="app/entities/staff-roster-parametrization/staff-roster-parametrization.state.js"></script>
-    <script src="app/entities/staff-roster-parametrization/staff-roster-parametrization.service.js"></script>
-    <script src="app/entities/staff-roster-parametrization/staff-roster-parametrization.controller.js"></script>
-    <script src="app/entities/staff-roster-parametrization/staff-roster-parametrization-dialog.controller.js"></script>
-    <script src="app/entities/staff-roster-parametrization/staff-roster-parametrization-detail.controller.js"></script>
-    <script src="app/entities/staff-roster-parametrization/staff-roster-parametrization-delete-dialog.controller.js"></script>
-    <script src="app/entities/shift/shift.state.js"></script>
-    <script src="app/entities/shift/shift.service.js"></script>
-    <script src="app/entities/shift/shift.controller.js"></script>
-    <script src="app/entities/shift/shift-dialog.controller.js"></script>
-    <script src="app/entities/shift/shift-detail.controller.js"></script>
-    <script src="app/entities/shift/shift-delete-dialog.controller.js"></script>
+    <script src="app/layouts/navbar/navbar.controller.js"></script>
+    <script src="app/layouts/navbar/active-menu.directive.js"></script>
+    <script src="app/layouts/navbar/active-link.directive.js"></script>
+    <script src="app/entities/view-my-schedule/view-my-schedule.state.js"></script>
+    <script src="app/entities/view-my-schedule/view-my-schedule.service.js"></script>
+    <script src="app/entities/view-my-schedule/view-my-schedule.controller.js"></script>
+    <script src="app/layouts/error/error.state.js"></script>
+    <script src="app/entities/weekend-definition/weekend-definition.state.js"></script>
+    <script src="app/entities/weekend-definition/weekend-definition.service.js"></script>
+    <script src="app/entities/weekend-definition/weekend-definition.controller.js"></script>
+    <script src="app/entities/weekend-definition/weekend-definition-dialog.controller.js"></script>
+    <script src="app/entities/weekend-definition/weekend-definition-detail.controller.js"></script>
+    <script src="app/entities/weekend-definition/weekend-definition-delete-dialog.controller.js"></script>
     <script src="app/entities/view-day-plan/view-day-plan.state.js"></script>
     <script src="app/entities/view-day-plan/view-day-plan.service.js"></script>
     <script src="app/entities/view-day-plan/view-day-plan.controller.js"></script>
@@ -140,12 +145,12 @@
     <script src="app/entities/task/task-dialog.controller.js"></script>
     <script src="app/entities/task/task-detail.controller.js"></script>
     <script src="app/entities/task/task-delete-dialog.controller.js"></script>
-    <script src="app/entities/employee-day-on-request/employee-day-on-request.state.js"></script>
-    <script src="app/entities/employee-day-on-request/employee-day-on-request.service.js"></script>
-    <script src="app/entities/employee-day-on-request/employee-day-on-request.controller.js"></script>
-    <script src="app/entities/employee-day-on-request/employee-day-on-request-dialog.controller.js"></script>
-    <script src="app/entities/employee-day-on-request/employee-day-on-request-detail.controller.js"></script>
-    <script src="app/entities/employee-day-on-request/employee-day-on-request-delete-dialog.controller.js"></script>
+    <script src="app/entities/staff-roster-parametrization/staff-roster-parametrization.state.js"></script>
+    <script src="app/entities/staff-roster-parametrization/staff-roster-parametrization.service.js"></script>
+    <script src="app/entities/staff-roster-parametrization/staff-roster-parametrization.controller.js"></script>
+    <script src="app/entities/staff-roster-parametrization/staff-roster-parametrization-dialog.controller.js"></script>
+    <script src="app/entities/staff-roster-parametrization/staff-roster-parametrization-detail.controller.js"></script>
+    <script src="app/entities/staff-roster-parametrization/staff-roster-parametrization-delete-dialog.controller.js"></script>
     <script src="app/entities/skill-proficiency/skill-proficiency.state.js"></script>
     <script src="app/entities/skill-proficiency/skill-proficiency.service.js"></script>
     <script src="app/entities/skill-proficiency/skill-proficiency.controller.js"></script>
@@ -170,18 +175,18 @@
     <script src="app/entities/shift-date/shift-date-dialog.controller.js"></script>
     <script src="app/entities/shift-date/shift-date-detail.controller.js"></script>
     <script src="app/entities/shift-date/shift-date-delete-dialog.controller.js"></script>
-    <script src="app/entities/contract-line/contract-line.state.js"></script>
-    <script src="app/entities/contract-line/contract-line.service.js"></script>
-    <script src="app/entities/contract-line/contract-line.controller.js"></script>
-    <script src="app/entities/contract-line/contract-line-dialog.controller.js"></script>
-    <script src="app/entities/contract-line/contract-line-detail.controller.js"></script>
-    <script src="app/entities/contract-line/contract-line-delete-dialog.controller.js"></script>
-    <script src="app/entities/boolean-contract-line/boolean-contract-line.state.js"></script>
-    <script src="app/entities/boolean-contract-line/boolean-contract-line.service.js"></script>
-    <script src="app/entities/boolean-contract-line/boolean-contract-line.controller.js"></script>
-    <script src="app/entities/boolean-contract-line/boolean-contract-line-dialog.controller.js"></script>
-    <script src="app/entities/boolean-contract-line/boolean-contract-line-detail.controller.js"></script>
-    <script src="app/entities/boolean-contract-line/boolean-contract-line-delete-dialog.controller.js"></script>
+    <script src="app/entities/shift-assignment/shift-assignment.state.js"></script>
+    <script src="app/entities/shift-assignment/shift-assignment.service.js"></script>
+    <script src="app/entities/shift-assignment/shift-assignment.controller.js"></script>
+    <script src="app/entities/shift-assignment/shift-assignment-dialog.controller.js"></script>
+    <script src="app/entities/shift-assignment/shift-assignment-detail.controller.js"></script>
+    <script src="app/entities/shift-assignment/shift-assignment-delete-dialog.controller.js"></script>
+    <script src="app/entities/shift/shift.state.js"></script>
+    <script src="app/entities/shift/shift.service.js"></script>
+    <script src="app/entities/shift/shift.controller.js"></script>
+    <script src="app/entities/shift/shift-dialog.controller.js"></script>
+    <script src="app/entities/shift/shift-detail.controller.js"></script>
+    <script src="app/entities/shift/shift-delete-dialog.controller.js"></script>
     <script src="app/entities/planning-job/staff-roster.service.js"></script>
     <script src="app/entities/planning-job/planning-job.state.js"></script>
     <script src="app/entities/planning-job/planning-job.service.js"></script>
@@ -229,6 +234,12 @@
     <script src="app/entities/employee-leave-absence/employee-leave-absence-dialog.controller.js"></script>
     <script src="app/entities/employee-leave-absence/employee-leave-absence-detail.controller.js"></script>
     <script src="app/entities/employee-leave-absence/employee-leave-absence-delete-dialog.controller.js"></script>
+    <script src="app/entities/employee-day-on-request/employee-day-on-request.state.js"></script>
+    <script src="app/entities/employee-day-on-request/employee-day-on-request.service.js"></script>
+    <script src="app/entities/employee-day-on-request/employee-day-on-request.controller.js"></script>
+    <script src="app/entities/employee-day-on-request/employee-day-on-request-dialog.controller.js"></script>
+    <script src="app/entities/employee-day-on-request/employee-day-on-request-detail.controller.js"></script>
+    <script src="app/entities/employee-day-on-request/employee-day-on-request-delete-dialog.controller.js"></script>
     <script src="app/entities/employee-day-off-request/employee-day-off-request.state.js"></script>
     <script src="app/entities/employee-day-off-request/employee-day-off-request.service.js"></script>
     <script src="app/entities/employee-day-off-request/employee-day-off-request.controller.js"></script>
@@ -247,16 +258,35 @@
     <script src="app/entities/employee/employee-dialog.controller.js"></script>
     <script src="app/entities/employee/employee-detail.controller.js"></script>
     <script src="app/entities/employee/employee-delete-dialog.controller.js"></script>
+    <script src="app/entities/contract-line/contract-line.state.js"></script>
+    <script src="app/entities/contract-line/contract-line.service.js"></script>
+    <script src="app/entities/contract-line/contract-line.controller.js"></script>
+    <script src="app/entities/contract-line/contract-line-dialog.controller.js"></script>
+    <script src="app/entities/contract-line/contract-line-detail.controller.js"></script>
+    <script src="app/entities/contract-line/contract-line-delete-dialog.controller.js"></script>
     <script src="app/entities/contract/contract.state.js"></script>
     <script src="app/entities/contract/contract.service.js"></script>
     <script src="app/entities/contract/contract.controller.js"></script>
     <script src="app/entities/contract/contract-dialog.controller.js"></script>
     <script src="app/entities/contract/contract-detail.controller.js"></script>
     <script src="app/entities/contract/contract-delete-dialog.controller.js"></script>
-    <script src="app/layouts/navbar/navbar.controller.js"></script>
-    <script src="app/layouts/navbar/active-menu.directive.js"></script>
-    <script src="app/layouts/navbar/active-link.directive.js"></script>
-    <script src="app/layouts/error/error.state.js"></script>
+    <script src="app/entities/boolean-contract-line/boolean-contract-line.state.js"></script>
+    <script src="app/entities/boolean-contract-line/boolean-contract-line.service.js"></script>
+    <script src="app/entities/boolean-contract-line/boolean-contract-line.controller.js"></script>
+    <script src="app/entities/boolean-contract-line/boolean-contract-line-dialog.controller.js"></script>
+    <script src="app/entities/boolean-contract-line/boolean-contract-line-detail.controller.js"></script>
+    <script src="app/entities/boolean-contract-line/boolean-contract-line-delete-dialog.controller.js"></script>
+    <script src="app/blocks/handlers/translation.handler.js"></script>
+    <script src="app/blocks/handlers/state.handler.js"></script>
+    <script src="app/blocks/interceptor/notification.interceptor.js"></script>
+    <script src="app/blocks/interceptor/errorhandler.interceptor.js"></script>
+    <script src="app/blocks/interceptor/auth-expired.interceptor.js"></script>
+    <script src="app/blocks/config/translation.config.js"></script>
+    <script src="app/blocks/config/translation-storage.provider.js"></script>
+    <script src="app/blocks/config/localstorage.config.js"></script>
+    <script src="app/blocks/config/http.config.js"></script>
+    <script src="app/blocks/config/compile.config.js"></script>
+    <script src="app/blocks/config/alert.config.js"></script>
     <script src="app/components/util/truncate-words.filter.js"></script>
     <script src="app/components/util/truncate-characters.filter.js"></script>
     <script src="app/components/util/sort.directive.js"></script>
@@ -283,17 +313,6 @@
     <script src="app/components/alert/alert.service.js"></script>
     <script src="app/components/alert/alert.directive.js"></script>
     <script src="app/components/alert/alert-error.directive.js"></script>
-    <script src="app/blocks/interceptor/notification.interceptor.js"></script>
-    <script src="app/blocks/interceptor/errorhandler.interceptor.js"></script>
-    <script src="app/blocks/interceptor/auth-expired.interceptor.js"></script>
-    <script src="app/blocks/config/translation.config.js"></script>
-    <script src="app/blocks/config/translation-storage.provider.js"></script>
-    <script src="app/blocks/config/localstorage.config.js"></script>
-    <script src="app/blocks/config/http.config.js"></script>
-    <script src="app/blocks/config/compile.config.js"></script>
-    <script src="app/blocks/config/alert.config.js"></script>
-    <script src="app/blocks/handlers/translation.handler.js"></script>
-    <script src="app/blocks/handlers/state.handler.js"></script>
     <script src="app/admin/user-management/user-management.state.js"></script>
     <script src="app/admin/user-management/user-management.controller.js"></script>
     <script src="app/admin/user-management/user-management-dialog.controller.js"></script>
@@ -303,13 +322,13 @@
     <script src="app/admin/metrics/metrics.service.js"></script>
     <script src="app/admin/metrics/metrics.modal.controller.js"></script>
     <script src="app/admin/metrics/metrics.controller.js"></script>
+    <script src="app/admin/logs/logs.state.js"></script>
+    <script src="app/admin/logs/logs.service.js"></script>
+    <script src="app/admin/logs/logs.controller.js"></script>
     <script src="app/admin/health/health.state.js"></script>
     <script src="app/admin/health/health.service.js"></script>
     <script src="app/admin/health/health.modal.controller.js"></script>
     <script src="app/admin/health/health.controller.js"></script>
-    <script src="app/admin/logs/logs.state.js"></script>
-    <script src="app/admin/logs/logs.service.js"></script>
-    <script src="app/admin/logs/logs.controller.js"></script>
     <script src="app/admin/docs/docs.state.js"></script>
     <script src="app/admin/configuration/configuration.state.js"></script>
     <script src="app/admin/configuration/configuration.service.js"></script>
@@ -317,10 +336,10 @@
     <script src="app/admin/audits/audits.state.js"></script>
     <script src="app/admin/audits/audits.service.js"></script>
     <script src="app/admin/audits/audits.controller.js"></script>
-    <script src="app/account/settings/settings.state.js"></script>
-    <script src="app/account/settings/settings.controller.js"></script>
     <script src="app/account/sessions/sessions.state.js"></script>
     <script src="app/account/sessions/sessions.controller.js"></script>
+    <script src="app/account/settings/settings.state.js"></script>
+    <script src="app/account/settings/settings.controller.js"></script>
     <script src="app/account/register/register.state.js"></script>
     <script src="app/account/register/register.controller.js"></script>
     <script src="app/account/password/password.state.js"></script>

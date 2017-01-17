@@ -268,3 +268,7 @@ ul#strengthBar {
 /* jhipster-needle-scss-add-main JHipster will add new css style */
 
 /* jhipster-needle-css-add-main JHipster will add new css style */
+    .react-calendar-timeline .rct-item.item-weekend {
+      background: #21F32C;
+      border-color: #29B31A;
+    }
