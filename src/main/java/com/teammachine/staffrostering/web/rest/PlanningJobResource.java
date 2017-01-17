@@ -78,6 +78,9 @@ public class PlanningJobResource {
     public ResponseEntity<Void> syncPlanningJobProgressStatuses(@RequestBody(required = false) Map<String, Object> plannerServiceJob) {
         log.debug("REST request to sync PlanningJobs' progress statuses");
         // TODO: implement UI socket notification
+        Integer hardConstraintMatches = (Integer) plannerServiceJob.get("hardConstraintMatches");
+        Integer softConstraintMatches = (Integer) plannerServiceJob.get("hardConstraintMatches");
+        syncOneJob(plannerServiceJob);
         return ResponseEntity.ok().build();
     }
 
