@@ -1,0 +1,163 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "react-calendar-timeline@^0.11.1",
+        "scope": null,
+        "escapedName": "react-calendar-timeline",
+        "name": "react-calendar-timeline",
+        "rawSpec": "^0.11.1",
+        "spec": ">=0.11.1 <0.12.0",
+        "type": "range"
+      },
+      "C:\\Users\\Administrator\\staffservice-tmpfix-dbname\\staffservice"
+    ]
+  ],
+  "_from": "react-calendar-timeline@>=0.11.1 <0.12.0",
+  "_id": "react-calendar-timeline@0.11.1",
+  "_inCache": true,
+  "_location": "/react-calendar-timeline",
+  "_nodeVersion": "6.9.1",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/react-calendar-timeline-0.11.1.tgz_1480499028297_0.22787591977976263"
+  },
+  "_npmUser": {
+    "name": "mariusandra",
+    "email": "marius.andra@gmail.com"
+  },
+  "_npmVersion": "3.10.8",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-calendar-timeline@^0.11.1",
+    "scope": null,
+    "escapedName": "react-calendar-timeline",
+    "name": "react-calendar-timeline",
+    "rawSpec": "^0.11.1",
+    "spec": ">=0.11.1 <0.12.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-calendar-timeline/-/react-calendar-timeline-0.11.1.tgz",
+  "_shasum": "62c37727c5cc207ea5da6996831b9d03103f65ac",
+  "_shrinkwrap": null,
+  "_spec": "react-calendar-timeline@^0.11.1",
+  "_where": "C:\\Users\\Administrator\\staffservice-tmpfix-dbname\\staffservice",
+  "author": {
+    "name": "Marius Andra",
+    "email": "marius.andra@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/namespace-ee/react-calendar-timeline/issues"
+  },
+  "contributors": [
+    {
+      "name": "Stanisław Chmiela",
+      "email": "sjchmiela@gmail.com"
+    }
+  ],
+  "dependencies": {
+    "interact.js": "^1.2.6",
+    "react-pure-render": "^1.0.2"
+  },
+  "description": "react calendar timeline",
+  "devDependencies": {
+    "babel-cli": "^6.7.5",
+    "babel-core": "~6.18.2",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "~6.2.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "css-loader": "~0.26.0",
+    "es5-shim": "~4.5.9",
+    "eslint": "^3.10.2",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-react": "^6.7.1",
+    "eslint-plugin-standard": "^2.0.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "jasmine": "~2.5.2",
+    "jasmine-core": "~2.5.2",
+    "karma": "~1.3.0",
+    "karma-jasmine": "~1.0.2",
+    "karma-phantomjs-launcher": "~1.0.2",
+    "karma-sourcemap-loader": "~0.3.7",
+    "karma-webpack": "~1.8.0",
+    "moment": "^2.11.1",
+    "node-sass": "^3.4.2",
+    "react": "^15.0.1",
+    "react-addons-perf": "^15.0.1",
+    "react-dom": "^15.0.1",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "rimraf": "^2.5.0",
+    "sass-loader": "~4.0.2",
+    "style-loader": "~0.13.0",
+    "webpack": "~1.13.3",
+    "webpack-dev-server": "~1.16.2"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "62c37727c5cc207ea5da6996831b9d03103f65ac",
+    "tarball": "https://registry.npmjs.org/react-calendar-timeline/-/react-calendar-timeline-0.11.1.tgz"
+  },
+  "gitHead": "5169ad3ac0d5eff4bd518512bcb61c097b9b53a6",
+  "homepage": "https://github.com/namespace-ee/react-calendar-timeline",
+  "keywords": [
+    "react",
+    "reactjs",
+    "react-component",
+    "timeline"
+  ],
+  "license": "MIT",
+  "main": "modules/index.js",
+  "maintainers": [
+    {
+      "name": "lnagel",
+      "email": "lenno@namespace.ee"
+    },
+    {
+      "name": "mariusandra",
+      "email": "marius.andra@gmail.com"
+    }
+  ],
+  "name": "react-calendar-timeline",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "interact.js": "*",
+    "moment": "*",
+    "react": "^0.14.8 || ^15.0.1",
+    "react-dom": "^0.14.8 || ^15.0.1"
+  },
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namespace-ee/react-calendar-timeline.git"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run build:dev && npm run build:prod",
+    "build:dev": "echo 'DEV - BUILD' && webpack --config webpack.config.js",
+    "build:prod": "echo 'PROD - BUILD' && webpack --config webpack.config.prod.js",
+    "clean": "rimraf -rf ./build",
+    "info": "npm info react-calendar-timeline",
+    "lint": "eslint --ext .js,.jsx src",
+    "lintfix": "eslint --ext .js,.jsx src --fix",
+    "module": "babel src --out-dir modules && sass src/lib/Timeline.scss:modules/lib/Timeline.css && sed -i '.bak' 's/Timeline\\.scss/Timeline\\.css/g' modules/lib/Timeline.js && rm modules/lib/Timeline.js.bak",
+    "npm:publish:latest": "npm run release && cd build && npm publish",
+    "npm:publish:next": "npm run release && cd build && npm publish --tag next",
+    "postversion": "git push origin `git rev-parse --abbrev-ref HEAD` && git push origin `git describe`",
+    "preversion": "npm run module && npm run lint",
+    "release": "npm run build && babel src --out-dir build && cp README.md build/ && node scripts/release.js",
+    "start": "webpack-dev-server --inline --hot --host 0.0.0.0",
+    "upgrade:patch": "npm version patch",
+    "watch": "npm run clean && node scripts/watch.js"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "version": "0.11.1"
+}
