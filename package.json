@@ -61,6 +61,8 @@
     "test": "gulp test"
   },
   "dependencies": {
-    "file-saver": "^1.3.2"
+    "file-saver": "^1.3.2",
+    "sockjs-client": "github:parlew/sockjs-client",
+    "stompjs": "^2.3.3"
   }
 }

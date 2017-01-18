@@ -1,6 +1,8 @@
 package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.teammachine.staffrostering.GreetingController;
+import com.teammachine.staffrostering.HelloMessage;
 import com.teammachine.staffrostering.domain.PlanningJob;
 import com.teammachine.staffrostering.domain.StaffRosterParametrization;
 import com.teammachine.staffrostering.domain.enumeration.JobStatus;
@@ -11,9 +13,11 @@ import com.teammachine.staffrostering.web.rest.errors.ErrorConstants;
 import com.teammachine.staffrostering.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -23,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+//import com.teammachine.staffrostering.GreetingController;
+
 @RestController
 @RequestMapping({"/api", "/api_basic"})
 public class PlanningJobResource {
@@ -31,6 +37,11 @@ public class PlanningJobResource {
 
     @Inject
     private PlanningJobService planningJobService;
+
+    /*@Autowired
+    private GreetingController greetingController;*/
+    @Autowired
+    private SimpMessagingTemplate template;
 
     @RequestMapping(value = "/planning-jobs",
         method = RequestMethod.POST,
@@ -80,6 +91,14 @@ public class PlanningJobResource {
         // TODO: implement UI socket notification
         Integer hardConstraintMatches = (Integer) plannerServiceJob.get("hardConstraintMatches");
         Integer softConstraintMatches = (Integer) plannerServiceJob.get("hardConstraintMatches");
+        HelloMessage mgs = new HelloMessage();
+        mgs.setName(hardConstraintMatches + " " + softConstraintMatches);
+        try {
+//            greetingController.greeting(mgs);
+            template.convertAndSend("/topic/greetings", mgs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         syncOneJob(plannerServiceJob);
         return ResponseEntity.ok().build();
     }
