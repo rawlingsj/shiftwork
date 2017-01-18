@@ -1,6 +1,7 @@
 package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.teammachine.staffrostering.Greeting;
 import com.teammachine.staffrostering.GreetingController;
 import com.teammachine.staffrostering.HelloMessage;
 import com.teammachine.staffrostering.domain.PlanningJob;
@@ -95,7 +96,7 @@ public class PlanningJobResource {
         mgs.setName(hardConstraintMatches + " " + softConstraintMatches);
         try {
 //            greetingController.greeting(mgs);
-            template.convertAndSend("/topic/greetings", mgs);
+            template.convertAndSend("/topic/greetings", new Greeting("Hello, " + mgs.getName() + "!"));
         } catch (Exception e) {
             e.printStackTrace();
         }
