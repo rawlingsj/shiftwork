@@ -67,4 +67,22 @@
             </tbody>
         </table>
     </div>
+    <div>
+        <form>
+            <div class="row">
+                <div class="col-md-6">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <button id="connect" class="btn btn-default" ng-click="vm.connect()">Connect</button>
+                            <button id="disconnect" class="btn btn-default" ng-click="vm.disconnect()" disabled="disabled">Disconnect
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <span id="greetings"></span>
+            </div>
+        </form>
+    </div>
 </div>

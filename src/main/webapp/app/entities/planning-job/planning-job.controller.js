@@ -5,9 +5,9 @@
         .module('shiftworkApp')
         .controller('PlanningJobController', PlanningJobController);
 
-    PlanningJobController.$inject = ['$scope', '$state', 'PlanningJob', 'StaffRoster'];
+    PlanningJobController.$inject = ['$scope', '$state', 'PlanningJob', 'StaffRoster', 'WS'];
 
-    function PlanningJobController ($scope, $state, PlanningJob, StaffRoster) {
+    function PlanningJobController ($scope, $state, PlanningJob, StaffRoster, WS) {
         var vm = this;
         vm.planningJobs = [];
         vm.loadAll = function() {
@@ -35,5 +35,17 @@
                 StaffRoster.save(staffRoster);
             });
         };
+
+        vm.connect = function () {
+            WS.connect();
+        }
+
+        vm.disconnect = function () {
+            WS.disconnect();
+        }
+
+        vm.update = function () {
+            WS.get();
+        }
     }
 })();
