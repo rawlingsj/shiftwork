@@ -52,7 +52,8 @@
 
         function listenScore($event, jobStatusUpdate) {
             $("#score" + jobStatusUpdate.jobId).text(jobStatusUpdate.hardConstraintMatches +
-                ' ' + jobStatusUpdate.softConstraintMatches + ' ' + jobStatusUpdate.status);
+                '/' + jobStatusUpdate.softConstraintMatches);
+            $("#status" + jobStatusUpdate.jobId).text(jobStatusUpdate.status);
         }
     }
 })();

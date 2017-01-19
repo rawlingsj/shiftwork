@@ -24,16 +24,24 @@
             <column name="job_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
+
             <column name="status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            
+
+            <column name="hard_constraint_matches" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="soft_constraint_matches" type="integer">
+                <constraints nullable="true" />
+            </column>
+
             <column name="parameterization_id" type="bigint">
                 <constraints unique="false"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

@@ -1,12 +1,13 @@
 package com.teammachine.staffrostering.domain;
 
-import com.teammachine.staffrostering.domain.enumeration.JobStatus;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+
+import com.teammachine.staffrostering.domain.enumeration.JobStatus;
 
 /**
  * A PlanningJob.
@@ -28,6 +29,12 @@ public class PlanningJob implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private JobStatus status;
+
+    @Column(name = "hard_constraint_matches")
+    private Integer hardConstraintMatches;
+
+    @Column(name = "soft_constraint_matches")
+    private Integer softConstraintMatches;
 
     @OneToOne
     @JoinColumn(unique = false)
@@ -55,6 +62,22 @@ public class PlanningJob implements Serializable {
 
     public void setStatus(JobStatus status) {
         this.status = status;
+    }
+
+    public Integer getHardConstraintMatches() {
+        return hardConstraintMatches;
+    }
+
+    public void setHardConstraintMatches(Integer hardConstraintMatches) {
+        this.hardConstraintMatches = hardConstraintMatches;
+    }
+
+    public Integer getSoftConstraintMatches() {
+        return softConstraintMatches;
+    }
+
+    public void setSoftConstraintMatches(Integer softConstraintMatches) {
+        this.softConstraintMatches = softConstraintMatches;
     }
 
     public StaffRosterParametrization getParameterization() {
@@ -91,6 +114,8 @@ public class PlanningJob implements Serializable {
             "id=" + id +
             ", jobId='" + jobId + "'" +
             ", status='" + status + "'" +
+            ", hardConstraintMatches='" + hardConstraintMatches + "'" +
+            ", softConstraintMatches='" + softConstraintMatches + "'" +
             '}';
     }
 }

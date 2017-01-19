@@ -85,14 +85,14 @@ public class PlanningJobResource {
     @Timed
     public ResponseEntity<Void> syncPlanningJobProgressStatuses(@RequestBody(required = false) Map<String, Object> plannerServiceJob) {
         log.debug("REST request to sync PlanningJobs' progress statuses");
-        // TODO: implement UI socket notification
+
         String jobId = (String) plannerServiceJob.get("jobId");
-        String status = (String) plannerServiceJob.get("status");
+        String jobStatus = (String) plannerServiceJob.get("status");
         Integer hardConstraintMatches = (Integer) plannerServiceJob.get("hardConstraintMatches");
         Integer softConstraintMatches = (Integer) plannerServiceJob.get("softConstraintMatches");
 
         try {
-            JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, status, hardConstraintMatches, softConstraintMatches);
+            JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, jobStatus, hardConstraintMatches, softConstraintMatches);
             template.convertAndSend("/topic/greetings", jobStatusUpdate);
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,8 +104,12 @@ public class PlanningJobResource {
     private void syncOneJob(Map<String, Object> plannerServiceJob) {
         String jobId = (String) plannerServiceJob.get("jobId");
         JobStatus jobStatus = JobStatus.valueOf((String) plannerServiceJob.get("status"));
+        Integer hardConstraintMatches = (Integer) plannerServiceJob.get("hardConstraintMatches");
+        Integer softConstraintMatches = (Integer) plannerServiceJob.get("softConstraintMatches");
         if (jobId != null && jobStatus != null) {
-            planningJobService.updatePlanningJobStatus(jobId, jobStatus);
+            JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, jobStatus.toString(), hardConstraintMatches, softConstraintMatches);
+            template.convertAndSend("/topic/greetings", jobStatusUpdate);
+            planningJobService.updatePlanningJobStatus(jobId, jobStatus, hardConstraintMatches, softConstraintMatches);
         }
     }
 

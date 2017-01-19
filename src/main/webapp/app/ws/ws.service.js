@@ -30,7 +30,7 @@
                 console.log('Connected: ' + frame);
                 stompClient.subscribe('/topic/greetings', function (greeting) {
                     var jobStatusUpdate = JSON.parse(greeting.body);
-                    showScore(jobStatusUpdate);
+                    $rootScope.$broadcast('score', jobStatusUpdate);
                 });
             });
         }
@@ -45,10 +45,6 @@
 
         function sendName() {
             stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
-        }
-
-        function showScore(jobStatusUpdate) {
-            $rootScope.$broadcast('score', jobStatusUpdate);
         }
 
         $(function () {

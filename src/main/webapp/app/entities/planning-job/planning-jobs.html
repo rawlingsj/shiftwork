@@ -37,8 +37,8 @@
                     <td>
                         <a ui-sref="staff-roster-parametrization-detail({id:planningJob.parameterization.id})">{{planningJob.parameterization.name}}</a>
                     </td>
-                    <td translate="{{'shiftworkApp.JobStatus.' + planningJob.status}}">{{planningJob.status}}</td>
-                    <td><span id="score{{planningJob.jobId}}"></span></td>
+                    <td id="status{{planningJob.jobId}}" translate="{{'shiftworkApp.JobStatus.' + planningJob.status}}">{{planningJob.status}}</td>
+                    <td><span id="score{{planningJob.jobId}}">{{planningJob.hardConstraintMatches}}/{{planningJob.softConstraintMatches}}</span></td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
