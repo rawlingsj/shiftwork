@@ -47,5 +47,12 @@
         vm.update = function () {
             WS.get();
         }
+
+        $scope.$on('score', listenScore);
+
+        function listenScore($event, jobStatusUpdate) {
+            $("#score" + jobStatusUpdate.jobId).text(jobStatusUpdate.hardConstraintMatches +
+                ' ' + jobStatusUpdate.softConstraintMatches + ' ' + jobStatusUpdate.status);
+        }
     }
 })();

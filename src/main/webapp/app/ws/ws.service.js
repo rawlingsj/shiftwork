@@ -4,9 +4,9 @@
         .module('shiftworkApp')
         .service('WS', WS);
 
-    WS.$inject = [];
+    WS.$inject = ['$rootScope'];
 
-    function WS () {
+    function WS ($rootScope) {
 
         var stompClient = null;
 
@@ -30,7 +30,7 @@
                 console.log('Connected: ' + frame);
                 stompClient.subscribe('/topic/greetings', function (greeting) {
                     var jobStatusUpdate = JSON.parse(greeting.body);
-                    showGreeting(jobStatusUpdate);
+                    showScore(jobStatusUpdate);
                 });
             });
         }
@@ -47,9 +47,8 @@
             stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
         }
 
-        function showGreeting(jobStatusUpdate) {
-            $("#score"+jobStatusUpdate.jobId).text(jobStatusUpdate.hardConstraintMatches +
-            ' ' + jobStatusUpdate.softConstraintMatches + ' ' + jobStatusUpdate.status);
+        function showScore(jobStatusUpdate) {
+            $rootScope.$broadcast('score', jobStatusUpdate);
         }
 
         $(function () {
