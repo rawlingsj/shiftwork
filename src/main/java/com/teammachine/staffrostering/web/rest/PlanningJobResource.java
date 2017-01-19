@@ -1,9 +1,7 @@
 package com.teammachine.staffrostering.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.teammachine.staffrostering.Greeting;
-import com.teammachine.staffrostering.GreetingController;
-import com.teammachine.staffrostering.HelloMessage;
+import com.teammachine.staffrostering.JobStatusUpdate;
 import com.teammachine.staffrostering.domain.PlanningJob;
 import com.teammachine.staffrostering.domain.StaffRosterParametrization;
 import com.teammachine.staffrostering.domain.enumeration.JobStatus;
@@ -39,8 +37,6 @@ public class PlanningJobResource {
     @Inject
     private PlanningJobService planningJobService;
 
-    /*@Autowired
-    private GreetingController greetingController;*/
     @Autowired
     private SimpMessagingTemplate template;
 
@@ -90,13 +86,14 @@ public class PlanningJobResource {
     public ResponseEntity<Void> syncPlanningJobProgressStatuses(@RequestBody(required = false) Map<String, Object> plannerServiceJob) {
         log.debug("REST request to sync PlanningJobs' progress statuses");
         // TODO: implement UI socket notification
+        String jobId = (String) plannerServiceJob.get("jobId");
+        String status = (String) plannerServiceJob.get("status");
         Integer hardConstraintMatches = (Integer) plannerServiceJob.get("hardConstraintMatches");
-        Integer softConstraintMatches = (Integer) plannerServiceJob.get("hardConstraintMatches");
-        HelloMessage mgs = new HelloMessage();
-        mgs.setName(hardConstraintMatches + " " + softConstraintMatches);
+        Integer softConstraintMatches = (Integer) plannerServiceJob.get("softConstraintMatches");
+
         try {
-//            greetingController.greeting(mgs);
-            template.convertAndSend("/topic/greetings", new Greeting("Hello, " + mgs.getName() + "!"));
+            JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, status, hardConstraintMatches, softConstraintMatches);
+            template.convertAndSend("/topic/greetings", jobStatusUpdate);
         } catch (Exception e) {
             e.printStackTrace();
         }

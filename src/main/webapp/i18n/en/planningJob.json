@@ -17,6 +17,7 @@
             },
             "jobId": "Job Id",
             "status": "Status",
+            "score": "Score",
             "parameterization": "Parameterization",
             "action": {
                 "run": "Run",

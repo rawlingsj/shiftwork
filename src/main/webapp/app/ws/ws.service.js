@@ -29,7 +29,8 @@
                 setConnected(true);
                 console.log('Connected: ' + frame);
                 stompClient.subscribe('/topic/greetings', function (greeting) {
-                    showGreeting(JSON.parse(greeting.body).content);
+                    var jobStatusUpdate = JSON.parse(greeting.body);
+                    showGreeting(jobStatusUpdate);
                 });
             });
         }
@@ -46,8 +47,9 @@
             stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
         }
 
-        function showGreeting(message) {
-            $("#greetings").text(message);
+        function showGreeting(jobStatusUpdate) {
+            $("#score"+jobStatusUpdate.jobId).text(jobStatusUpdate.hardConstraintMatches +
+            ' ' + jobStatusUpdate.softConstraintMatches + ' ' + jobStatusUpdate.status);
         }
 
         $(function () {
