@@ -1,7 +1,5 @@
 package com.teammachine.staffrostering;
 
-import com.teammachine.staffrostering.domain.enumeration.JobStatus;
-
 public class JobStatusUpdate {
 
     private String jobId;
@@ -18,8 +16,6 @@ public class JobStatusUpdate {
         this.hardConstraintMatches = hardConstraintMatches;
         this.softConstraintMatches = softConstraintMatches;
     }
-
-
 
     public String getJobId() {
         return jobId;

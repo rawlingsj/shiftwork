@@ -11,7 +11,6 @@ public class GreetingController {
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
     public JobStatusUpdate greeting(HelloMessage message) throws Exception {
-        Thread.sleep(10); // simulated delay
         return new JobStatusUpdate();
     }
 

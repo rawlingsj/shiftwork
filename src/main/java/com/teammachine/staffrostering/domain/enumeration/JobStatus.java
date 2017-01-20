@@ -4,5 +4,15 @@ package com.teammachine.staffrostering.domain.enumeration;
  * The JobStatus enumeration.
  */
 public enum JobStatus {
-    PENDING,RUNNING,COMPLETED
+    PENDING("Pending"),RUNNING("Running"),COMPLETED("Completed");
+
+    private String description;
+
+    JobStatus(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

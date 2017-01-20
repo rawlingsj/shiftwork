@@ -87,12 +87,12 @@ public class PlanningJobResource {
         log.debug("REST request to sync PlanningJobs' progress statuses");
 
         String jobId = (String) plannerServiceJob.get("jobId");
-        String jobStatus = (String) plannerServiceJob.get("status");
+        JobStatus jobStatus = JobStatus.valueOf((String) plannerServiceJob.get("status"));
         Integer hardConstraintMatches = (Integer) plannerServiceJob.get("hardConstraintMatches");
         Integer softConstraintMatches = (Integer) plannerServiceJob.get("softConstraintMatches");
 
         try {
-            JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, jobStatus, hardConstraintMatches, softConstraintMatches);
+            JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, jobStatus.getDescription(), hardConstraintMatches, softConstraintMatches);
             template.convertAndSend("/topic/greetings", jobStatusUpdate);
         } catch (Exception e) {
             e.printStackTrace();
@@ -107,7 +107,7 @@ public class PlanningJobResource {
         Integer hardConstraintMatches = (Integer) plannerServiceJob.get("hardConstraintMatches");
         Integer softConstraintMatches = (Integer) plannerServiceJob.get("softConstraintMatches");
         if (jobId != null && jobStatus != null) {
-            JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, jobStatus.toString(), hardConstraintMatches, softConstraintMatches);
+            JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, jobStatus.getDescription(), hardConstraintMatches, softConstraintMatches);
             template.convertAndSend("/topic/greetings", jobStatusUpdate);
             planningJobService.updatePlanningJobStatus(jobId, jobStatus, hardConstraintMatches, softConstraintMatches);
         }

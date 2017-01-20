@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * Created by bahadyr on 1/19/17.
  */
 @Component
-public class ScheduledUpdatesOnTopic{
+public class ScheduledUpdatesOnTopic {
 
     @Autowired
     private SimpMessagingTemplate template;
@@ -17,4 +17,5 @@ public class ScheduledUpdatesOnTopic{
 //    public void publishUpdates(String text){
 //        template.convertAndSend("/topic/greetings", text);
 //    }
+
 }
