@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -36,6 +37,11 @@ public class StaffRosterParametrization implements Serializable {
 
     @Column(name = "last_run_time")
     private ZonedDateTime lastRunTime;
+
+    @Min(value = 0)
+    @Max(value = 100)
+    @Column(name = "duration")
+    private Integer duration;
 
     @ManyToOne
     private ShiftDate firstShiftDate;
@@ -95,6 +101,14 @@ public class StaffRosterParametrization implements Serializable {
 
     public void setLastRunTime(ZonedDateTime lastRunTime) {
         this.lastRunTime = lastRunTime;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
     public ShiftDate getFirstShiftDate() {
@@ -158,6 +172,7 @@ public class StaffRosterParametrization implements Serializable {
             ", hardConstraintMatches='" + hardConstraintMatches + "'" +
             ", softConstraintMatches='" + softConstraintMatches + "'" +
             ", lastRunTime='" + lastRunTime + "'" +
+            ", duration='" + duration + "'" +
             '}';
     }
 }

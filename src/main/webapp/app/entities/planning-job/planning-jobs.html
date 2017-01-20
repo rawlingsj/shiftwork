@@ -28,6 +28,7 @@
                     <th><span translate="shiftworkApp.planningJob.parameterization">Parameterization</span></th>
                     <th><span translate="shiftworkApp.planningJob.status">Status</span></th>
                     <th><span translate="shiftworkApp.planningJob.score">Score</span></th>
+                    <th><span translate="shiftworkApp.planningJob.score">Score</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -39,6 +40,14 @@
                     </td>
                     <td id="status{{planningJob.jobId}}" translate="{{'shiftworkApp.JobStatus.' + planningJob.status}}">{{planningJob.status}}</td>
                     <td><span id="score{{planningJob.jobId}}">{{planningJob.hardConstraintMatches}}/{{planningJob.softConstraintMatches}}</span></td>
+                    <td width="50%">
+                        <div class="progress">
+                            <div id="timeMillisSpent{{planningJob.jobId}}" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="23"
+                                 aria-valuemin="0" aria-valuemax="100" style="">
+                                <span id="complete-info"></span>
+                            </div>
+                        </div>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

@@ -362,6 +362,7 @@ class DemoDataInstaller {
         staffRosterParametrization.setPlanningWindowStart(firstShiftDate);
         staffRosterParametrization.setLastShiftDate(lastShiftDate);
         staffRosterParametrization.setPlanningWindowEnd(lastShiftDate);
+        staffRosterParametrization.setDuration(2);
         staffRosterParametrizationRepository.save(staffRosterParametrization);
         return staffRosterParametrization;
     }

@@ -54,6 +54,10 @@
             $("#score" + jobStatusUpdate.jobId).text(jobStatusUpdate.hardConstraintMatches +
                 '/' + jobStatusUpdate.softConstraintMatches);
             $("#status" + jobStatusUpdate.jobId).text(jobStatusUpdate.status);
+            var w = Math.round(jobStatusUpdate.timeMillisSpent * 100 / 120000)+'%';
+            $("#timeMillisSpent" + jobStatusUpdate.jobId).attr("aria-valuenow", w);
+            $("#timeMillisSpent" + jobStatusUpdate.jobId).attr("style", "width:"+ w);
+            // $("#timeMillisSpent" + jobStatusUpdate.jobId).text(jobStatusUpdate.timeMillisSpent)
         }
     }
 })();

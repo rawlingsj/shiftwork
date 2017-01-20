@@ -90,9 +90,10 @@ public class PlanningJobResource {
         JobStatus jobStatus = JobStatus.valueOf((String) plannerServiceJob.get("status"));
         Integer hardConstraintMatches = (Integer) plannerServiceJob.get("hardConstraintMatches");
         Integer softConstraintMatches = (Integer) plannerServiceJob.get("softConstraintMatches");
+        Integer timeMillisSpent = (Integer) plannerServiceJob.get("timeMillisSpent");
 
         try {
-            JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, jobStatus.getDescription(), hardConstraintMatches, softConstraintMatches);
+            JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, jobStatus.getDescription(), hardConstraintMatches, softConstraintMatches, timeMillisSpent);
             template.convertAndSend("/topic/greetings", jobStatusUpdate);
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,8 +107,9 @@ public class PlanningJobResource {
         JobStatus jobStatus = JobStatus.valueOf((String) plannerServiceJob.get("status"));
         Integer hardConstraintMatches = (Integer) plannerServiceJob.get("hardConstraintMatches");
         Integer softConstraintMatches = (Integer) plannerServiceJob.get("softConstraintMatches");
+        Integer timeMillisSpent = (Integer) plannerServiceJob.get("timeMillisSpent");
         if (jobId != null && jobStatus != null) {
-            JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, jobStatus.getDescription(), hardConstraintMatches, softConstraintMatches);
+            JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, jobStatus.getDescription(), hardConstraintMatches, softConstraintMatches, timeMillisSpent);
             template.convertAndSend("/topic/greetings", jobStatusUpdate);
             planningJobService.updatePlanningJobStatus(jobId, jobStatus, hardConstraintMatches, softConstraintMatches);
         }

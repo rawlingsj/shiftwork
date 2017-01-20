@@ -28,9 +28,14 @@
    <changeSet author="LD (generated)" id="1471284027788-7">
       <dropColumn columnName="unavailable_shift_type_id" tableName="employee"/>
    </changeSet>
-    <changeSet author="LD (generated)" id="1471284027788-8">
-        <addColumn tableName="employee">
-            <column name="active" type="boolean" defaultValue="true"/>
-        </addColumn>
-    </changeSet>
+   <changeSet author="LD (generated)" id="1471284027788-8">
+      <addColumn tableName="employee">
+         <column name="active" type="boolean" defaultValue="true"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="LD (generated)" id="1471284027788-9">
+      <addColumn tableName="staff_roster_parametrization">
+         <column name="duration" type="integer" defaultValue="2"/>
+      </addColumn>
+   </changeSet>
 </databaseChangeLog>

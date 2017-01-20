@@ -6,15 +6,19 @@ public class JobStatusUpdate {
     private String status;
     private Integer hardConstraintMatches;
     private Integer softConstraintMatches;
+    private Integer timeMillisSpent;
 
     public JobStatusUpdate() {
     }
 
-    public JobStatusUpdate(String jobId, String status, Integer hardConstraintMatches, Integer softConstraintMatches) {
+    public JobStatusUpdate(String jobId, String status,
+                           Integer hardConstraintMatches, Integer softConstraintMatches, Integer timeMillisSpent
+    ) {
         this.jobId = jobId;
         this.status = status;
         this.hardConstraintMatches = hardConstraintMatches;
         this.softConstraintMatches = softConstraintMatches;
+        this.timeMillisSpent = timeMillisSpent;
     }
 
     public String getJobId() {
@@ -31,5 +35,9 @@ public class JobStatusUpdate {
 
     public Integer getSoftConstraintMatches() {
         return softConstraintMatches;
+    }
+
+    public Integer getTimeMillisSpent() {
+        return timeMillisSpent;
     }
 }
