@@ -13,16 +13,12 @@
               link:function(scope, el, attrs){
 
                   scope.$watch('items', function(newValue, oldValue){
-                      //var MyComponent = React.createFactory(GRID);
-                      console.debug('----- directive scope -------');
-                       console.debug(scope);
+                  console.debug('----- directive scope -------');
+                  console.debug(scope);
 
-                       var GROUP_COUNT = 30;
+    var GROUP_COUNT = 30;
     var ITEM_COUNT = 10;
     var DAYS_IN_PAST = 30;
-
-    //var groups = [{ id: 1, title: 'group 1' }, { id: 2, title: 'group 2' }];
-
 
     var groups = scope.groups;
     var items = scope.items;
@@ -120,12 +116,7 @@
 
 
     var filter = React.createElement("div", {}, "The filter");
-    /* jshint undef:false */
     ReactDOM.render(React.createElement(ReactCalendarTimeline['default'], props, filter), document.getElementById('main'));
-
-
-
-
 
                 })
             }
@@ -152,12 +143,8 @@
         $scope.groups = [];
     
 
-         var object = {};
-         var id = 1;
-/*for (var x = 0; x < 100; x++) {
-  objects[x] = {name: etc};
-}*/
-
+        var object = {};
+        var id = 1;
         vm.loadAll = function () {
             ShiftAssignment.query(function (result) {
 
@@ -194,13 +181,6 @@
 
         console.debug('------api call ------');
         console.debug(vm.shiftAssignments);
-
-
-
-
-
-       // $scope.groups = [{ id: 1, title: 'group 1' }, { id: 2, title: 'group 2' }];
-
 
        $scope.items = [
               {
