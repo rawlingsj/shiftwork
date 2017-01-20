@@ -138,14 +138,70 @@
 
 
 
-    ShiftAssignmentController.$inject = ['$scope', '$state', 'ShiftAssignment', 'ShiftDate', '$http'];
+    ShiftAssignmentController.$inject = ['$scope', '$state', 'ShiftAssignment', 'ShiftDate', '$http', '$q'];
 
-    function ShiftAssignmentController($scope, $state, ShiftAssignment, ShiftDate, $http) {
+    function ShiftAssignmentController($scope, $state, ShiftAssignment, ShiftDate, $http, $q) {
 
 
 
         var vm = this;
-       $scope.groups = [{ id: 1, title: 'group 1' }, { id: 2, title: 'group 2' }];
+
+        vm.shiftAssignments = [];
+        vm.shiftdates = ShiftDate.query();
+
+        $scope.groups = [];
+    
+
+         var object = {};
+         var id = 1;
+/*for (var x = 0; x < 100; x++) {
+  objects[x] = {name: etc};
+}*/
+
+        vm.loadAll = function () {
+            ShiftAssignment.query(function (result) {
+
+      
+            vm.shiftAssignments = result;
+            console.debug(vm.shiftAssignments);
+
+            vm.shiftAssignments.forEach( function(s) { 
+                id++;
+                $scope.groups.push({ id: (id+1)+'', title: s.employee.name});
+            });
+ 
+
+
+
+            var GROUP_COUNT = vm.shiftAssignments.length;
+           
+            
+
+            var TEM_COUNT = 1000;
+            var DAYS_IN_PAST = 30;
+
+            console.debug(GROUP_COUNT);
+
+            });
+        };
+
+        vm.loadAll();
+
+
+
+        console.debug('------Controller scope --------');
+        console.debug($scope);
+
+        console.debug('------api call ------');
+        console.debug(vm.shiftAssignments);
+
+
+
+
+
+       // $scope.groups = [{ id: 1, title: 'group 1' }, { id: 2, title: 'group 2' }];
+
+
        $scope.items = [
               {
                 id: 1,
@@ -172,33 +228,6 @@
                 end: moment().add(3, 'day').hours(0).minutes(0).seconds(0)
               }
       ];
-
-
-
-
-
-        vm.shiftAssignments = [];
-        vm.shiftdates = ShiftDate.query();
-
-        
-
-        vm.loadAll = function () {
-            ShiftAssignment.query(function (result) {
-                vm.shiftAssignments = result;
-                console.debug(vm.shiftAssignments);
-
-            var GROUP_COUNT = vm.shiftAssignments.length;
-            var TEM_COUNT = 1000;
-            var DAYS_IN_PAST = 30;
-
-            console.debug(GROUP_COUNT);
-
-            });
-        };
-
-        vm.loadAll();
-        console.debug('------Controller scope --------');
-        console.debug($scope);
 
 
 
