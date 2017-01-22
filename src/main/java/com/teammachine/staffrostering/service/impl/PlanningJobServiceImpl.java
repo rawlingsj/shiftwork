@@ -80,12 +80,14 @@ public class PlanningJobServiceImpl implements PlanningJobService {
 
     @Override
     public void updatePlanningJobStatus(String jobId, JobStatus newStatus,
-                                        Integer hardConstraintMatches, Integer softConstraintMatches) {
+                                        Integer hardConstraintMatches, Integer softConstraintMatches,
+                                        Integer timeMillisSpent) {
         PlanningJob planningJob = planningJobRepository.findByJobId(jobId);
         if (planningJob != null && planningJob.getStatus() != newStatus) {
             planningJob.setStatus(newStatus);
             planningJob.setHardConstraintMatches(hardConstraintMatches);
             planningJob.setSoftConstraintMatches(softConstraintMatches);
+            planningJob.setTimeMillisSpent(timeMillisSpent);
             planningJobRepository.save(planningJob);
         }
     }

@@ -36,7 +36,11 @@
             <column name="soft_constraint_matches" type="integer">
                 <constraints nullable="true" />
             </column>
-
+            
+            <column name="time_millis_spent" type="integer">
+                <constraints nullable="true" />
+            </column>
+            
             <column name="parameterization_id" type="bigint">
                 <constraints unique="false"/>
             </column>

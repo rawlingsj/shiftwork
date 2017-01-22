@@ -20,7 +20,9 @@ public interface PlanningJobService {
 
     PlanningJob syncPlanningJobStatus(PlanningJob planningJob);
 
-    void updatePlanningJobStatus(String jobId, JobStatus newStatus, Integer hardConstraintMatches, Integer softConstraintMatches);
+    void updatePlanningJobStatus(String jobId, JobStatus newStatus,
+                                 Integer hardConstraintMatches, Integer softConstraintMatches,
+                                 Integer timeMillisSpent);
 
     void terminateAndDeleteJob(PlanningJob planningJob);
 

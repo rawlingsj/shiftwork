@@ -26,6 +26,10 @@
         {
             "fieldName": "softConstraintMatches",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "timeMillisSpent",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20160820065126",

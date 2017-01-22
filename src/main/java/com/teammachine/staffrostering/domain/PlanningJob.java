@@ -36,6 +36,9 @@ public class PlanningJob implements Serializable {
     @Column(name = "soft_constraint_matches")
     private Integer softConstraintMatches;
 
+    @Column(name = "time_millis_spent")
+    private Integer timeMillisSpent;
+
     @OneToOne
     @JoinColumn(unique = false)
     private StaffRosterParametrization parameterization;
@@ -80,6 +83,14 @@ public class PlanningJob implements Serializable {
         this.softConstraintMatches = softConstraintMatches;
     }
 
+    public Integer getTimeMillisSpent() {
+        return timeMillisSpent;
+    }
+
+    public void setTimeMillisSpent(Integer timeMillisSpent) {
+        this.timeMillisSpent = timeMillisSpent;
+    }
+
     public StaffRosterParametrization getParameterization() {
         return parameterization;
     }
@@ -116,6 +127,7 @@ public class PlanningJob implements Serializable {
             ", status='" + status + "'" +
             ", hardConstraintMatches='" + hardConstraintMatches + "'" +
             ", softConstraintMatches='" + softConstraintMatches + "'" +
+            ", timeMillisSpent='" + timeMillisSpent + "'" +
             '}';
     }
 }

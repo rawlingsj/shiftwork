@@ -18,6 +18,7 @@
 
         vm.loadAll();
 
+
         vm.refresh = function(jobId) {
             PlanningJob.update({id: jobId}, null, vm.loadAll);
         };
@@ -36,17 +37,18 @@
             });
         };
 
-        vm.connect = function () {
+        vm.connect = function() {
             WS.connect();
-        }
+        };
+        vm.connect();
 
-        vm.disconnect = function () {
+        vm.disconnect = function() {
             WS.disconnect();
-        }
+        };
 
-        vm.update = function () {
+        vm.update = function() {
             WS.get();
-        }
+        };
 
         $scope.$on('score', listenScore);
 

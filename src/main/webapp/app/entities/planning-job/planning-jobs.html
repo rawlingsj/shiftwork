@@ -42,8 +42,8 @@
                     <td><span id="score{{planningJob.jobId}}">{{planningJob.hardConstraintMatches}}/{{planningJob.softConstraintMatches}}</span></td>
                     <td width="50%">
                         <div class="progress">
-                            <div id="timeMillisSpent{{planningJob.jobId}}" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="23"
-                                 aria-valuemin="0" aria-valuemax="100" style="">
+                            <div id="timeMillisSpent{{planningJob.jobId}}" class="progress-bar progress-bar-success" role="progressbar"
+                                 aria-valuenow="{{planningJob.timeMillisSpent}}%" aria-valuemin="0" aria-valuemax="100" style="">
                                 <span id="complete-info"></span>
                             </div>
                         </div>

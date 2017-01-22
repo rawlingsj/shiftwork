@@ -84,7 +84,7 @@ public class PlanningJobResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Void> syncPlanningJobProgressStatuses(@RequestBody(required = false) Map<String, Object> plannerServiceJob) {
-        log.debug("REST request to sync PlanningJobs' progress statuses");
+        /*log.debug("REST request to sync PlanningJobs' progress statuses");
 
         String jobId = (String) plannerServiceJob.get("jobId");
         JobStatus jobStatus = JobStatus.valueOf((String) plannerServiceJob.get("status"));
@@ -97,7 +97,7 @@ public class PlanningJobResource {
             template.convertAndSend("/topic/greetings", jobStatusUpdate);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         syncOneJob(plannerServiceJob);
         return ResponseEntity.ok().build();
     }
@@ -111,7 +111,7 @@ public class PlanningJobResource {
         if (jobId != null && jobStatus != null) {
             JobStatusUpdate jobStatusUpdate =  new JobStatusUpdate(jobId, jobStatus.getDescription(), hardConstraintMatches, softConstraintMatches, timeMillisSpent);
             template.convertAndSend("/topic/greetings", jobStatusUpdate);
-            planningJobService.updatePlanningJobStatus(jobId, jobStatus, hardConstraintMatches, softConstraintMatches);
+            planningJobService.updatePlanningJobStatus(jobId, jobStatus, hardConstraintMatches, softConstraintMatches, timeMillisSpent);
         }
     }
 
