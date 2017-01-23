@@ -11,8 +11,8 @@ try {
 }
 
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
-//def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
-def label = "master"
+def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
+//def label = "master"
 
 
 podTemplate(label: label, serviceAccount: 'jenkins', containers: [
@@ -30,7 +30,7 @@ podTemplate(label: label, serviceAccount: 'jenkins', containers: [
         ]) {
 
   node(label) {
-    git = checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'GitlabHughesTechSS', url: 'https://gitlab.com/hughestech/staffservice.git']]]
+    git = git credentialsId: 'GitlabHughesTechSS', url: 'https://gitlab.com/hughestech/staffservice.git'
 
 
     echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
