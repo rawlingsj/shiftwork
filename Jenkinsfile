@@ -31,15 +31,30 @@ podTemplate(label: label, serviceAccount: 'jenkins', containers: [
 
   node(label) {
     git = git credentialsId: 'GitlabHughesTechSS', url: 'https://gitlab.com/hughestech/staffservice.git'
+    def envStage = utils.environmentNamespace('shiftwork-dev')
 
 
     echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
     container(name: 'maven') {
+    
+    		stage 'Build Release'
+		    mavenCanaryRelease {
+		      version = canaryVersion
+		    }
+		
+		    stage 'Integration Test'
+		    mavenIntegrationTest {
+		      environment = 'Testing'
+		      failIfNoTests = localFailIfNoTests
+		      itestPattern = localItestPattern
+		    }
+		
+		    stage 'Rollout Staging'
+		    kubernetesApply(environment: envStage)
 
-      stage 'Build Release'
-      mavenCanaryRelease {
-        version = canaryVersion
-      }
+  			}
+
+      
      }
     
   }
