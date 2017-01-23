@@ -12,6 +12,7 @@ try {
 
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
+def utils = new io.fabric8.Utils()
 //def label = "master"
 
 
