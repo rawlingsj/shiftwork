@@ -40,7 +40,6 @@
         vm.connect = function() {
             WS.connect();
         };
-        vm.connect();
 
         vm.disconnect = function() {
             WS.disconnect();
