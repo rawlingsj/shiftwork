@@ -142,6 +142,11 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-actor_2.11</artifactId>
+            <version>2.4.3</version>
+        </dependency>
+        <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <exclusions>
@@ -376,6 +381,10 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-cloudfoundry-connector</artifactId>
         </dependency>
@@ -391,15 +400,6 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-data</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-actor_2.11</artifactId>
-            <version>2.4.3</version>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
@@ -505,7 +505,7 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.5</version>
+                <version>0.4.13</version>
                 <configuration>
                     <imageName>shiftwork</imageName>
                     <dockerDirectory>src/main/docker</dockerDirectory>
@@ -546,8 +546,8 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
-                <version>2.2.100</version>
-                <executions>
+                <version>3.1.49</version>
+                <!--<executions>
                     <execution>
                         <id>json</id>
                         <phase>generate-resources</phase>
@@ -562,7 +562,7 @@
                             <goal>attach</goal>
                         </goals>
                     </execution>
-                </executions>
+                </executions>-->
             </plugin>
             <plugin>
                 <groupId>io.gatling</groupId>
@@ -716,7 +716,7 @@
                     <url>jdbc:postgresql://localhost:5432/staffservice</url>
                     <!--<defaultSchemaName>public</defaultSchemaName>-->
                     <username>staffservice</username>
-                    <password></password>
+                    <password />
                     <defaultSchemaName />
                     <!--<referenceUrl>hibernate:spring:com.teammachine.staffrostering.domain?dialect=&amp;hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy</referenceUrl>-->
                     <referenceUrl>hibernate:spring:com.teammachine.staffrostering.domain?dialect=org.hibernate.dialect.PostgreSQL82Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
