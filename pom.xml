@@ -524,6 +524,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.14.2</version>
                 <configuration>
+                	<dockerHost>https://localhost:2376</dockerHost>
                     <images>
                         <image>
                             <name>${docker.image}</name>
