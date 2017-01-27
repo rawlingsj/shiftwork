@@ -1,44 +1,87 @@
 #!/usr/bin/groovy
-@Library('github.com/fabric8io/fabric8-pipeline-library@master')
+import io.fabric8.Fabric8Commands
+import io.fabric8.Utils
 
-def failIfNoTests = ""
-try {
-  failIfNoTests = ITEST_FAIL_IF_NO_TEST
-} catch (Throwable e) {
-  failIfNoTests = "false"
-}
+def call(body) {
+    // evaluate the body block, and collect configuration into the object
+    def config = [version: '']
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = config
+    body()
 
-def localItestPattern = ""
-try {
-  localItestPattern = ITEST_PATTERN
-} catch (Throwable e) {
-  localItestPattern = "*KT"
-}
+    container('clients') {
+        def newVersion = config.version
+        if (newVersion == '') {
+            newVersion = getNewVersion {}
+        }
 
+        env.setProperty('VERSION', newVersion)
 
-def versionPrefix = ""
-try {
-  versionPrefix = VERSION_PREFIX
-} catch (Throwable e) {
-  versionPrefix = "1.0"
-}
+        def flow = new Fabric8Commands()
+        if (flow.isOpenShift()) {
+            s2iBuild(newVersion)
+        } else {
+            dockerBuild(newVersion)
+        }
 
-def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
-def utils = new io.fabric8.Utils()
-def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
-
-mavenNode{
-  def envStage = utils.environmentNamespace('shiftwork-dev')
-
-
-  echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
-  container(name: 'maven') {
-
-    stage 'Build Release'
-    mavenCanaryRelease {
-      version = canaryVersion
-      sh "mvn fabric8:push -Ddocker.push.registry=${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}"
+        return newVersion
     }
+}
 
-  }
+def dockerBuild(version){
+    def utils = new Utils()
+    def flow = new Fabric8Commands()
+    def namespace = utils.getNamespace()
+    def newImageName = "${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}/${namespace}/${env.JOB_NAME}:${version}"
+
+    sh "docker build -t ${newImageName} ."
+    if (flow.isSingleNode()) {
+        sh "echo 'Running on a single node, skipping docker push as not needed'"
+    } else {
+        sh "docker push ${newImageName}"
+    }
+}
+
+def s2iBuild(version){
+
+    def utils = new Utils()
+    def ns = utils.namespace
+    def is = getImageStream(ns)
+    def bc = getBuildConfig(version, ns)
+
+    sh "oc delete is ${env.JOB_NAME} -n ${ns}"
+    kubernetesApply(file: is, environment: ns)
+    kubernetesApply(file: bc, environment: ns)
+    sh "oc start-build ${env.JOB_NAME}-s2i --from-dir ../${env.JOB_NAME} --follow -n ${ns}"
+
+}
+
+def getImageStream(ns){
+    return """
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: ${env.JOB_NAME}
+  namespace: ${ns}
+"""
+}
+
+def getBuildConfig(version, ns){
+    return """
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: ${env.JOB_NAME}-s2i
+  namespace: ${ns}
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: ${env.JOB_NAME}:${version}
+  runPolicy: Serial
+  source:
+    type: Binary
+  strategy:
+    type: Docker
+"""
 }
