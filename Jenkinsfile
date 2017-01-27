@@ -40,7 +40,7 @@ mavenNode{
     stage 'Build Release'
     mavenCanaryRelease {
       version = canaryVersion
-      sh "mvn fabric8:push -Ddocker.push.registry=fabric8-docker-registry.default.openshift.hughestech.co -e"
+      sh "mvn fabric8:push -Ddocker.push.registry=tcp://fabric8-docker-registry.default.openshift.hughestech.co:2376 -e"
       
     }
 
