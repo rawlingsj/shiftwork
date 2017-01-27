@@ -549,7 +549,7 @@
                 <artifactId>fabric8-maven-plugin</artifactId>
                 <version>3.1.49</version>
                 <configuration>
-               		<dockerHost>tcp://fabric8-docker-registry.default.openshift.hughestech.co:2376</dockerHost>
+               		<dockerHost>tcp://fabric8-docker-registry.default.openshift.hughestech.co:2375</dockerHost>
                 </configuration>
                 <!--<executions>
                     <execution>
