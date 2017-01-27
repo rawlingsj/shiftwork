@@ -1,4 +1,7 @@
 #!/usr/bin/groovy
+@Library('github.com/fabric8io/fabric8-pipeline-library@master')
+
+
 import io.fabric8.Fabric8Commands
 import io.fabric8.Utils
 
