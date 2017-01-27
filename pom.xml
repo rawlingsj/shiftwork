@@ -508,7 +508,6 @@
                 <version>0.4.13</version>
                 <configuration>
                     <imageName>shiftwork</imageName>
-                    <dockerHost>https://localhost:2376</dockerHost>
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
@@ -524,7 +523,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.14.2</version>
                 <configuration>
-                	<dockerHost>https://fabric8-docker-registry.default.openshift.hughestech.co:2376</dockerHost>
+                	<dockerHost>tcp://fabric8-docker-registry.default.openshift.hughestech.co:2376</dockerHost>
                     <images>
                         <image>
                             <name>${docker.image}</name>
