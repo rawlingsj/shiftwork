@@ -502,48 +502,8 @@
                     <expandEmptyElements>false</expandEmptyElements>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.13</version>
-                <configuration>
-                    <imageName>shiftwork</imageName>
-                    <dockerDirectory>src/main/docker</dockerDirectory>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.war</include>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.14.2</version>
-                <configuration>
-                	
-                    <images>
-                        <image>
-                            <name>${docker.image}</name>
-                            <build>
-                                <from>${docker.from}</from>
-                                <assembly>
-                                    <basedir>/app</basedir>
-                                    <descriptorRef>${docker.assemblyDescriptorRef}</descriptorRef>
-                                </assembly>
-                                <ports>
-                                    <port>8080</port>
-                                </ports>
-                                <cmd>
-                                    <shell>java -jar /app/${project.artifactId}-${project.version}.war --spring.profiles.active=prod</shell>
-                                </cmd>
-                            </build>
-                        </image>
-                    </images>
-                </configuration>
-            </plugin>
+            
+            
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
