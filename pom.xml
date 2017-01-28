@@ -510,6 +510,7 @@
                 <version>3.1.49</version>
                 <configuration>
                		<dockerHost>tcp://f8registry.openshift.hughestech.co:2375</dockerHost>
+               		<image>shiftwork/staffservice:latest</image>
                 </configuration>
                 <!--<executions>
                     <execution>
