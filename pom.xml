@@ -12,7 +12,7 @@
     <groupId>com.teammachine.staffrostering</groupId>
     <artifactId>shiftwork</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <!--<packaging>war</packaging>-->
     <name>shiftwork</name>
 
     <prerequisites>
@@ -24,22 +24,32 @@
         <awaitility.version>1.7.0</awaitility.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-lang.version>2.6</commons-lang.version>
-        <docker.assemblyDescriptorRef>artifact</docker.assemblyDescriptorRef>
-        <docker.from>docker.io/fabric8/java-jboss-openjdk8-jdk:1.0.10</docker.from>
-        <docker.image>shiftwork/${project.artifactId}:${project.version}</docker.image>
-        <docker.port.container.http>8080</docker.port.container.http>
-        <docker.port.container.jolokia>8778</docker.port.container.jolokia>
-        <fabric8.iconRef>icons/spring-boot</fabric8.iconRef>
-        <fabric8.label.project>staffservice</fabric8.label.project>
-        <fabric8.label.version>${project.version}</fabric8.label.version>
-        <fabric8.readinessProbe.httpGet.path>/</fabric8.readinessProbe.httpGet.path>
-        <fabric8.readinessProbe.httpGet.port>8080</fabric8.readinessProbe.httpGet.port>
-        <fabric8.readinessProbe.initialDelaySeconds>5</fabric8.readinessProbe.initialDelaySeconds>
-        <fabric8.readinessProbe.timeoutSeconds>30</fabric8.readinessProbe.timeoutSeconds>
-        <fabric8.service.containerPort>8080</fabric8.service.containerPort>
-        <fabric8.service.name>staffservice</fabric8.service.name>
-        <fabric8.service.port>80</fabric8.service.port>
-        <fabric8.service.type>LoadBalancer</fabric8.service.type>
+        <fabric8.maven.plugin.version>3.2.13</fabric8.maven.plugin.version>
+        <fabric8.version>2.2.192</fabric8.version>
+        <!--<docker.assemblyDescriptorRef>artifact</docker.assemblyDescriptorRef>-->
+        <!--<docker.from>docker.io/fabric8/java-jboss-openjdk8-jdk:1.0.10</docker.from>-->
+        <!--<docker.image>shiftwork/${project.artifactId}:${project.version}</docker.image>-->
+
+        <!--<docker.host>tcp://openshift.hughestech.co:2376</docker.host>-->
+        <!--<docker.registry>1fabric8-docker-registry.project2.176.9.36.15.nip.io:5000</docker.registry>-->
+
+        <!--<docker.host>tcp://192.168.99.101:2376</docker.host>-->
+        <!--<docker.registry>fabric8-docker-registry.project2.176.9.36.15.nip.io:5000</docker.registry>-->
+        <!--<docker.push.registry>myfabric8-docker-registry.project2.176.9.36.15.nip.io</docker.push.registry>-->
+
+        <!--<docker.port.container.http>8080</docker.port.container.http>-->
+        <!--<docker.port.container.jolokia>8778</docker.port.container.jolokia>-->
+        <!--<fabric8.iconRef>icons/spring-boot</fabric8.iconRef>-->
+        <!--<fabric8.label.project>staffservice</fabric8.label.project>-->
+        <!--<fabric8.label.version>${project.version}</fabric8.label.version>-->
+        <!--<fabric8.readinessProbe.httpGet.path>/</fabric8.readinessProbe.httpGet.path>-->
+        <!--<fabric8.readinessProbe.httpGet.port>8080</fabric8.readinessProbe.httpGet.port>-->
+        <!--<fabric8.readinessProbe.initialDelaySeconds>5</fabric8.readinessProbe.initialDelaySeconds>-->
+        <!--<fabric8.readinessProbe.timeoutSeconds>30</fabric8.readinessProbe.timeoutSeconds>-->
+        <!--<fabric8.service.containerPort>8080</fabric8.service.containerPort>-->
+        <!--<fabric8.service.name>staffservice</fabric8.service.name>-->
+        <!--<fabric8.service.port>80</fabric8.service.port>-->
+        <!--<fabric8.service.type>LoadBalancer</fabric8.service.type>-->
         <gatling-maven-plugin.version>2.1.7</gatling-maven-plugin.version>
         <gatling.version>2.1.7</gatling.version>
         <hibernate.version>4.3.11.Final</hibernate.version>
@@ -82,6 +92,7 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-hibernate4</artifactId>
@@ -229,6 +240,13 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>fabric8-project-bom-with-platform-deps</artifactId>
+            <version>${fabric8.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <dependency>
             <groupId>io.gatling.highcharts</groupId>
             <artifactId>gatling-charts-highcharts</artifactId>
             <version>${gatling.version}</version>
@@ -336,6 +354,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>${spring-boot.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -502,13 +528,16 @@
                     <expandEmptyElements>false</expandEmptyElements>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.4.13</version>
                 <configuration>
-                    <imageName>shiftwork</imageName>
+                    &lt;!&ndash;<imageName>shiftwork</imageName>&ndash;&gt;
+                    <imageName>${docker.image}</imageName>
                     <dockerDirectory>src/main/docker</dockerDirectory>
+                    &lt;!&ndash;<registryUrl>fabric8-docker-registry.project2.176.9.36.15.nip.io</registryUrl>&ndash;&gt;
+                    &lt;!&ndash;<dockerHost>fabric8-docker-registry.project2.176.9.36.15.nip.io</dockerHost>&ndash;&gt;
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
@@ -517,11 +546,11 @@
                         </resource>
                     </resources>
                 </configuration>
-            </plugin>
-            <plugin>
+            </plugin>-->
+            <!--<plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.14.2</version>
+                <version>0.19.0</version>
                 <configuration>
                     <images>
                         <image>
@@ -536,17 +565,25 @@
                                     <port>8080</port>
                                 </ports>
                                 <cmd>
-                                    <shell>java -jar /app/${project.artifactId}-${project.version}.war --spring.profiles.active=prod</shell>
+                                    <shell>java -jar /app/${project.artifactId}-${project.version}.war &#45;&#45;spring.profiles.active=prod</shell>
                                 </cmd>
                             </build>
                         </image>
                     </images>
                 </configuration>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
-                <version>3.1.49</version>
+                <version>${fabric8.maven.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>resource</goal>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <!--<executions>
                     <execution>
                         <id>json</id>
@@ -727,8 +764,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <executable>true</executable>
+                    <!--<executable>true</executable>-->
+                    <mainClass>com.teammachine.staffrostering.ShiftworkApp</mainClass>
                     <!--
                     Enable the line below to have remote debugging of your application on port 5005
                     <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
