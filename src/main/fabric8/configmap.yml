@@ -1,0 +1,8 @@
+metadata:
+  name: ${project.artifactId}
+data:
+#  SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/staffservice
+  application.properties: |
+    # spring application properties file
+    welcome = Hello from Kubernetes ConfigMap!!!
+    dummy = some value

@@ -1,0 +1,23 @@
+metadata:
+  annotations:
+    configmap.fabric8.io/update-on-change: ${project.artifactId}
+spec:
+  replicas: 1
+  template:
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: ${project.artifactId}
+            items:
+            - key: application.properties
+              path: application.properties
+      containers:
+#        - name: staffservice
+#          image: staffservice
+#          env:
+#              - name: JAVA_OPTIONS
+#                value: "-DSPRING_DATASOURCE_UR=jdbc:postgresql://postgresql:5432/staffservice"
+        - volumeMounts:
+            - name: config
+              mountPath: /deployments/config

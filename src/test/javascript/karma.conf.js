@@ -53,6 +53,12 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.min.js',
             'src/main/webapp/bower_components/angular-ui-select/dist/select.js',
             'src/main/webapp/bower_components/angular-xeditable/dist/js/xeditable.js',
+            'src/main/webapp/bower_components/metisMenu/dist/metisMenu.js',
+            'src/main/webapp/bower_components/eve-raphael/eve.js',
+            'src/main/webapp/bower_components/raphael/raphael.min.js',
+            'src/main/webapp/bower_components/mocha/mocha.js',
+            'src/main/webapp/bower_components/morris.js/morris.js',
+            'src/main/webapp/bower_components/holderjs/holder.js',
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
             // endbower
             'src/main/webapp/app/app.module.js',

@@ -2,7 +2,7 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("React"), require("moment"), require("interact"));
 	else if(typeof define === 'function' && define.amd)
-		define(["React", "moment", "interact"], factory);
+		define(["React", "../../bower_components/moment/moment", "interact"], factory);
 	else if(typeof exports === 'object')
 		exports["ReactCalendarTimeline"] = factory(require("React"), require("moment"), require("interact"));
 	else
