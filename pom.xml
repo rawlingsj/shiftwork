@@ -507,14 +507,26 @@
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
                 <version>3.2.15</version>
+                <executions>
+                	<execution>
+                		<execution>
+                        <id>json</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>json</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>attach</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach</goal>
+                        </goals>
+                    </execution>
+                	</execution>
+                </executions>
                 <configuration>
-               		<images>
-               			<image>
-	               			<build>
-	               				<entryPoint>java -jar /app/${project.artifactId}-${project.version}.war --spring.profiles.active=prod</entryPoint>
-	               			</build>
-               			</image>
-               		</images>
+
                		
                 </configuration>
                 <!--<executions>
