@@ -21,12 +21,10 @@
             "hardConstraintMatches": "Hard Constraint Matches",
             "softConstraintMatches": "Soft Constraint Matches",
             "lastRunTime": "Last Run Time",
-            "duration": "Duration",
             "firstShiftDate": "First Shift Date",
             "lastShiftDate": "Last Shift Date",
             "planningWindowStart": "Planning Window Start",
-            "planningWindowEnd": "Planning Window End",
-            "saveAndRun": "Save and Run"
+            "planningWindowEnd": "Planning Window End"
         }
     }
 }

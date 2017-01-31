@@ -33,15 +33,15 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="night_shift" type="boolean">
+            <column name="night_shift" type="bit">
                 <constraints nullable="true" />
             </column>
 
-            <column name="start_time" type="binary(255)">
+            <column name="start_time" type="varchar(8)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="end_time" type="binary(255)">
+            <column name="end_time" type="varchar(8)">
                 <constraints nullable="true" />
             </column>
 

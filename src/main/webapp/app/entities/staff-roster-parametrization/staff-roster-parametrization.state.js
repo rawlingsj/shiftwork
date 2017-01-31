@@ -75,7 +75,6 @@
                                 description: null,
                                 hardConstraintMatches: null,
                                 softConstraintMatches: null,
-                                timeMillisSpent: null,
                                 lastRunTime: null,
                                 id: null
                             };

@@ -1,19 +1,16 @@
 #!/usr/bin/groovy
-@Library('github.com/fabric8io/fabric8-pipeline-library@master')
-
- 
-def localItestPattern = ""
+def failIfNoTests = ""
 try {
-  localItestPattern = ITEST_PATTERN
+  failIfNoTests = ITEST_FAIL_IF_NO_TEST
 } catch (Throwable e) {
-  localItestPattern = "*KT"
+  failIfNoTests = "false"
 }
 
-def localFailIfNoTests = ""
+def itestPattern = ""
 try {
-  localFailIfNoTests = ITEST_FAIL_IF_NO_TEST
+  itestPattern = ITEST_PATTERN
 } catch (Throwable e) {
-  localFailIfNoTests = "false"
+  itestPattern = "*KT"
 }
 
 def versionPrefix = ""
@@ -24,45 +21,37 @@ try {
 }
 
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
-
-def fabric8Console = "${env.FABRIC8_CONSOLE ?: ''}"
 def utils = new io.fabric8.Utils()
-def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
 
-mavenNode{
-  def envStage = utils.environmentNamespace('staging')
-  def envProd = utils.environmentNamespace('production')
-  
-  git = git branch: 'feature/10-endpoint-for-updates', credentialsId: 'shiftwork', url: 'https://gitlab.com/hughestech/staffservice.git'
+node {
+  def envProd = 'shiftwork-production'
 
-  echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
-  container(name: 'maven') {
+  checkout scm
 
-    stage 'Build Release'
-    mavenCanaryRelease {
+  kubernetes.pod('buildpod').withImage('172.30.150.12:80/shiftwork/jhipster-build')
+      .withPrivileged(true)
+      .withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
+      .withEnvVar('DOCKER_CONFIG','/home/jenkins/.docker/')
+      .withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
+      .withSecret('jenkins-maven-settings','/root/.m2')
+      .withServiceAccount('jenkins')
+      .inside {
+
+    stage 'Canary Release'
+    mavenCanaryRelease{
       version = canaryVersion
     }
 
-    stage 'Integration Testing'
-    mavenIntegrationTest {
+    stage 'Integration Test'
+    mavenIntegrationTest{
       environment = 'Testing'
       failIfNoTests = localFailIfNoTests
       itestPattern = localItestPattern
     }
 
-    stage 'Rollout Staging'
-    kubernetesApply(environment: envStage)
-
-    stage 'Approve'
-    approve {
-      room = null
-      version = canaryVersion
-      console = fabric8Console
-      environment = 'Staging'
-    }
-
-    stage 'Rollout Production'
-    kubernetesApply(environment: envProd)
+    stage 'Rolling Upgrade Production'
+    def rc = readFile 'target/classes/kubernetes.json'
+    kubernetesApply(file: rc, environment: envProd)
 
   }
 }

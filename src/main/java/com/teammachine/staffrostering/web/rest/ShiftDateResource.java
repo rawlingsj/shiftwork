@@ -87,7 +87,7 @@ public class ShiftDateResource {
     @Timed
     public List<ShiftDate> getAllShiftDates() {
         log.debug("REST request to get all ShiftDates");
-        List<ShiftDate> shiftDates = shiftDateRepository.findAllByOrderByDateAsc();
+        List<ShiftDate> shiftDates = shiftDateRepository.findAll();
         return shiftDates;
     }
 

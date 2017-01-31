@@ -75,14 +75,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employeeRepository.delete(id);
 	}
 
-    public List<Employee> findByCodeOrName(String like) {
-        log.debug("Request to find employees by code or name with value: {}", like);
-        Specification<Employee> findBySearchItem = EmployeeSpecs.findByNameOrCode(like);
-        return employeeRepository.findAll(findBySearchItem);
-    }
-
-    @Override
-    public List<Employee> findAllByCodeLikeIgnoreCaseOrNameLikeIgnoreCase(String like) {
-        return employeeRepository.findAllByCodeLikeIgnoreCaseOrNameLikeIgnoreCase("%" + like + "%", "%" + like + "%");
-    }
+	public List<Employee> findByCodeOrName(String like) {
+		log.debug("Request to find employees by code or name with value: {}", like);
+		Specification<Employee> findBySearchItem = EmployeeSpecs.findByNameOrCode(like);
+		return employeeRepository.findAll(findBySearchItem);
+	}
 }

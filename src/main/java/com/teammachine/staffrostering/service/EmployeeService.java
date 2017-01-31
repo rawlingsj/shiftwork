@@ -50,6 +50,4 @@ public interface EmployeeService {
 	 * @return list of employees
 	 */
 	List<Employee> findByCodeOrName(String like);
-
-	List<Employee> findAllByCodeLikeIgnoreCaseOrNameLikeIgnoreCase(String like);
 }

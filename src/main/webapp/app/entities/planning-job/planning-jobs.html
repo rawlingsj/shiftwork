@@ -27,8 +27,6 @@
                     <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="shiftworkApp.planningJob.parameterization">Parameterization</span></th>
                     <th><span translate="shiftworkApp.planningJob.status">Status</span></th>
-                    <th><span translate="shiftworkApp.planningJob.score">Score</span></th>
-                    <th><span translate="shiftworkApp.planningJob.score">Score</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -38,16 +36,7 @@
                     <td>
                         <a ui-sref="staff-roster-parametrization-detail({id:planningJob.parameterization.id})">{{planningJob.parameterization.name}}</a>
                     </td>
-                    <td id="status{{planningJob.jobId}}" translate="{{'shiftworkApp.JobStatus.' + planningJob.status}}">{{planningJob.status}}</td>
-                    <td><span id="score{{planningJob.jobId}}">{{planningJob.hardConstraintMatches}}/{{planningJob.softConstraintMatches}}</span></td>
-                    <td width="50%">
-                        <div class="progress">
-                            <div id="timeMillisSpent{{planningJob.jobId}}" class="progress-bar progress-bar-success" role="progressbar"
-                                 aria-valuenow="{{planningJob.timeMillisSpent}}%" aria-valuemin="0" aria-valuemax="100" style="">
-                                <span id="complete-info"></span>
-                            </div>
-                        </div>
-                    </td>
+                    <td translate="{{'shiftworkApp.JobStatus.' + planningJob.status}}">{{planningJob.status}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
@@ -77,20 +66,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-    <div>
-        <form>
-            <div class="row">
-                <div class="col-md-6">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <button id="connect" class="btn btn-default" ng-click="vm.connect()">Connect</button>
-                            <button id="disconnect" class="btn btn-default" ng-click="vm.disconnect()" disabled="disabled">Disconnect
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </form>
     </div>
 </div>

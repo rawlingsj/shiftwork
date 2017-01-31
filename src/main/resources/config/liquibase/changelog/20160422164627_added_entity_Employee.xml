@@ -25,7 +25,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="is_sick" type="boolean">
+            <column name="is_sick" type="bit">
                 <constraints nullable="true" />
             </column>
 

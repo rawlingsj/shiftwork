@@ -59,16 +59,6 @@
         {
             "fieldName": "lastRunTime",
             "fieldType": "ZonedDateTime"
-        },
-        {
-            "fieldName": "duration",
-            "fieldType": "Integer",
-            "fieldValidateRules": [
-                "min",
-                "max"
-            ],
-            "fieldValidateRulesMin": 0,
-            "fieldValidateRulesMax": 100
         }
     ],
     "changelogDate": "20160422164626",

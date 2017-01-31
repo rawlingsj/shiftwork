@@ -1,0 +1,16 @@
+---
+chatRoom: "staffservice"
+issueProjectName: "staffservice"
+buildName: "staffservice"
+codeReview: true
+links:
+  Git: "https://lemurzjb@bitbucket.org/shiftwork/staffservice.git"
+  Job: "http://172.30.98.146:80/job/staffservice"
+  Production: "http://172.30.152.37:80/kubernetes/pods?namespace=shiftwork-prod"
+  Room: "http://letschat.shiftwork.openshift.hughestech.space/#!/room/572b53c9cbe2ea1500e2f44e"
+  Staging: "http://172.30.152.37:80/kubernetes/pods?namespace=shiftwork-staging"
+  Testing: "http://172.30.152.37:80/kubernetes/pods?namespace=shiftwork-testing"
+environments:
+  Testing: "shiftwork-testing"
+  Staging: "shiftwork-staging"
+  Production: "shiftwork-prod"

@@ -25,7 +25,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="enabled" type="boolean">
+            <column name="enabled" type="bit">
                 <constraints nullable="true" />
             </column>
 
@@ -33,7 +33,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="minimum_enabled" type="boolean">
+            <column name="minimum_enabled" type="bit">
                 <constraints nullable="true" />
             </column>
 
@@ -45,7 +45,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="maximum_enabled" type="boolean">
+            <column name="maximum_enabled" type="bit">
                 <constraints nullable="true" />
             </column>
 

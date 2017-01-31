@@ -5,9 +5,9 @@
         .module('shiftworkApp')
         .controller('PlanningJobController', PlanningJobController);
 
-    PlanningJobController.$inject = ['$scope', '$state', 'PlanningJob', 'StaffRoster', 'WS'];
+    PlanningJobController.$inject = ['$scope', '$state', 'PlanningJob', 'StaffRoster'];
 
-    function PlanningJobController ($scope, $state, PlanningJob, StaffRoster, WS) {
+    function PlanningJobController ($scope, $state, PlanningJob, StaffRoster) {
         var vm = this;
         vm.planningJobs = [];
         vm.loadAll = function() {
@@ -17,7 +17,6 @@
         };
 
         vm.loadAll();
-
 
         vm.refresh = function(jobId) {
             PlanningJob.update({id: jobId}, null, vm.loadAll);
@@ -36,29 +35,5 @@
                 StaffRoster.save(staffRoster);
             });
         };
-
-        vm.connect = function() {
-            WS.connect();
-        };
-
-        vm.disconnect = function() {
-            WS.disconnect();
-        };
-
-        vm.update = function() {
-            WS.get();
-        };
-
-        $scope.$on('score', listenScore);
-
-        function listenScore($event, jobStatusUpdate) {
-            $("#score" + jobStatusUpdate.jobId).text(jobStatusUpdate.hardConstraintMatches +
-                '/' + jobStatusUpdate.softConstraintMatches);
-            $("#status" + jobStatusUpdate.jobId).text(jobStatusUpdate.status);
-            var w = Math.round(jobStatusUpdate.timeMillisSpent * 100 / 120000)+'%';
-            $("#timeMillisSpent" + jobStatusUpdate.jobId).attr("aria-valuenow", w);
-            $("#timeMillisSpent" + jobStatusUpdate.jobId).attr("style", "width:"+ w);
-            // $("#timeMillisSpent" + jobStatusUpdate.jobId).text(jobStatusUpdate.timeMillisSpent)
-        }
     }
 })();

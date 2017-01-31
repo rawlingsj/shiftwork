@@ -17,9 +17,6 @@
             },
             "jobId": "Job Id",
             "status": "Status",
-            "score": "Score",
-            "hardConstraintMatches": "Hard Constraint Matches",
-            "softConstraintMatches": "Soft Constraint Matches",
             "parameterization": "Parameterization",
             "action": {
                 "run": "Run",

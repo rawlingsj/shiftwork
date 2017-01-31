@@ -25,15 +25,15 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="is_need_to_reassign" type="boolean">
+            <column name="is_need_to_reassign" type="bit">
                 <constraints nullable="true" />
             </column>
 
-            <column name="is_dropped" type="boolean">
+            <column name="is_dropped" type="bit">
                 <constraints nullable="true" />
             </column>
 
-            <column name="locked" type="boolean">
+            <column name="locked" type="bit">
                 <constraints nullable="true" />
             </column>
 

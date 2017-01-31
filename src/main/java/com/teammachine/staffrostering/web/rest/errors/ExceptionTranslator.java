@@ -1,7 +1,5 @@
 package com.teammachine.staffrostering.web.rest.errors;
 
-import java.util.List;
-
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.HttpStatus;
@@ -12,7 +10,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.List;
 
 /**
  * Controller advice to translate the server side exceptions to client-friendly json structures.
@@ -44,10 +48,17 @@ public class ExceptionTranslator {
         return ex.getErrorDTO();
     }
 
+    @ExceptionHandler(NoSuchEntityException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ParameterizedErrorDTO processParameterizedValidationError(NoSuchEntityException ex) {
+        return ex.getErrorDTO();
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ResponseBody
-    public ErrorDTO processAccessDeniedExcpetion(AccessDeniedException e) {
+    public ErrorDTO processAccessDeniedException(AccessDeniedException e) {
         return new ErrorDTO(ErrorConstants.ERR_ACCESS_DENIED, e.getMessage());
     }
 
@@ -66,6 +77,13 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ErrorDTO processMethodNotSupportedException(HttpRequestMethodNotSupportedException exception) {
         return new ErrorDTO(ErrorConstants.ERR_METHOD_NOT_SUPPORTED, exception.getMessage());
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDTO processMissingServletRequestParameter(MissingServletRequestParameterException exception) {
+        return new ErrorDTO(ErrorConstants.ERR_MISSING_REQUEST_PARAMETER, exception.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

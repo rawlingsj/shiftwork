@@ -35,7 +35,7 @@ public class FieldResource {
         if (like.isEmpty()) {
             return Collections.emptyList();
         }
-        return employeeService.findAllByCodeLikeIgnoreCaseOrNameLikeIgnoreCase(like).stream()
+        return employeeService.findByCodeOrName(like).stream()
             .map(this::asDTO)
             .sorted(Comparator.comparing(e -> e.getName().toLowerCase()))
             .collect(Collectors.toList());

@@ -1,6 +1,5 @@
 package com.teammachine.staffrostering.web.rest;
 
-import com.teammachine.staffrostering.JobStatusUpdate;
 import com.teammachine.staffrostering.ShiftworkApp;
 import com.teammachine.staffrostering.domain.PlanningJob;
 import com.teammachine.staffrostering.domain.ShiftAssignment;
@@ -26,7 +25,6 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -65,8 +63,6 @@ public class PlanningJobResourceIntTest {
 
     @Mock
     private PlannerEngine plannerEngine;
-    @Mock
-    private SimpMessagingTemplate template;
     @Inject
     private PlanningJobRepository planningJobRepository;
     @Inject
@@ -211,7 +207,10 @@ public class PlanningJobResourceIntTest {
         // Business method
         restPlanningJobMockMvc.perform(get("/api/planning-jobs/{id}", id))
             // Asserts
-            .andExpect(status().isNotFound());
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_NO_SUCH_PLANNING_JOB))
+            .andExpect(jsonPath("$.params[*]").value(contains(String.valueOf(id))));
     }
 
     @Test
@@ -222,23 +221,19 @@ public class PlanningJobResourceIntTest {
         PlanningJob updatedPlanningJob = new PlanningJob();
         updatedPlanningJob.setJobId(JOB_ID);
         updatedPlanningJob.setStatus(UPDATED_STATUS);
-        updatedPlanningJob.setHardConstraintMatches(1);
-        updatedPlanningJob.setSoftConstraintMatches(1);
-        JobStatusUpdate jobStatusUpdate = new JobStatusUpdate();
-        doNothing().when(template).convertAndSend("/topic/greetings", jobStatusUpdate);
 
         // Business method
         restPlanningJobMockMvc.perform(put("/api/planning-jobs")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(updatedPlanningJob)))
-            .andExpect(status().is5xxServerError());
+            .andExpect(status().isOk());
 
         // Asserts
         List<PlanningJob> planningJobs = planningJobRepository.findAll();
         assertThat(planningJobs).hasSize(1);
         PlanningJob testPlanningJob = planningJobs.get(0);
         assertThat(testPlanningJob.getJobId()).isEqualTo(JOB_ID);
-//        assertThat(testPlanningJob.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testPlanningJob.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test
@@ -296,7 +291,10 @@ public class PlanningJobResourceIntTest {
         // Business method
         restPlanningJobMockMvc.perform(put("/api/planning-jobs/{id}", id))
             // Asserts
-            .andExpect(status().isNotFound());
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_NO_SUCH_PLANNING_JOB))
+            .andExpect(jsonPath("$.params[*]").value(contains(String.valueOf(id))));
     }
 
     @Test
@@ -322,6 +320,9 @@ public class PlanningJobResourceIntTest {
         // Business method
         restPlanningJobMockMvc.perform(delete("/api/planning-jobs/{id}", id))
             // Asserts
-            .andExpect(status().isNotFound());
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_NO_SUCH_PLANNING_JOB))
+            .andExpect(jsonPath("$.params[*]").value(contains(String.valueOf(id))));
     }
 }
