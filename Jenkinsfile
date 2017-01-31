@@ -31,7 +31,7 @@ def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').rep
 
 mavenNode{
   def envStage = utils.environmentNamespace('staging')
-  def envProd = utils.environmentNamespace('production')
+  def envProd = utils.environmentNamespace('ss')
   
   git = git branch: 'feature/f8deploy', credentialsId: 'shiftwork', url: 'https://gitlab.com/hughestech/staffservice.git'
 
@@ -50,16 +50,7 @@ mavenNode{
       itestPattern = localItestPattern
     }
 
-    stage 'Rollout Staging'
-    kubernetesApply(environment: envStage)
-
-    stage 'Approve'
-    approve {
-      room = null
-      version = canaryVersion
-      console = fabric8Console
-      environment = 'Staging'
-    }
+    
 
     stage 'Rollout Production'
     kubernetesApply(environment: envProd)
