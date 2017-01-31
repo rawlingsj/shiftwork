@@ -24,12 +24,11 @@
         <awaitility.version>1.7.0</awaitility.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-lang.version>2.6</commons-lang.version>
+        <docker.assemblyDescriptorRef>artifact</docker.assemblyDescriptorRef>
+        <docker.from>docker.io/fabric8/java-jboss-openjdk8-jdk:1.0.10</docker.from>
+        <docker.image>shiftwork/${project.artifactId}:${project.version}</docker.image>
         <fabric8.maven.plugin.version>3.2.13</fabric8.maven.plugin.version>
         <fabric8.version>2.2.192</fabric8.version>
-        <!--<docker.assemblyDescriptorRef>artifact</docker.assemblyDescriptorRef>-->
-        <!--<docker.from>docker.io/fabric8/java-jboss-openjdk8-jdk:1.0.10</docker.from>-->
-        <!--<docker.image>shiftwork/${project.artifactId}:${project.version}</docker.image>-->
-
         <!--<docker.host>tcp://openshift.hughestech.co:2376</docker.host>-->
         <!--<docker.registry>1fabric8-docker-registry.project2.176.9.36.15.nip.io:5000</docker.registry>-->
 
@@ -547,13 +546,13 @@
                     </resources>
                 </configuration>
             </plugin>-->
-            <!--<plugin>
+            <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.19.0</version>
+                <version>0.14.2</version>
                 <configuration>
                     <images>
-                        <image>
+                        <!--<image>
                             <name>${docker.image}</name>
                             <build>
                                 <from>${docker.from}</from>
@@ -568,10 +567,15 @@
                                     <shell>java -jar /app/${project.artifactId}-${project.version}.war &#45;&#45;spring.profiles.active=prod</shell>
                                 </cmd>
                             </build>
+                        </image>-->
+                        <image>
+                            <build>
+                                <entryPoint>java -jar /app/${project.artifactId}-${project.version}.war --spring.profiles.active=prod</entryPoint>
+                            </build>
                         </image>
                     </images>
                 </configuration>
-            </plugin>-->
+            </plugin>
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
@@ -750,12 +754,13 @@
                     <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
                     <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                     <driver>org.postgresql.Driver</driver>
-                    <!--<url>jdbc:postgresql://localhost:5432/staffservice</url>-->
-                    <url>jdbc:postgresql://172.17.0.1:5432/staffservice-dev</url>
+                    <url>jdbc:postgresql://localhost:5432/shiftwork-dev</url>
+                    <username>staffservice</username>
+                    <password />
                     <!--<defaultSchemaName>public</defaultSchemaName>-->
-                    <!--<username>staffservice</username>-->
-                    <username>swdbuser</username>
-                    <password>5fXi0120&amp;42V</password>
+                    <!--<url>jdbc:postgresql://172.17.0.1:5432/staffservice-dev</url>-->
+                    <!--<username>swdbuser</username>-->
+                    <!--<password>5fXi0120&amp;42V</password>-->
                     <defaultSchemaName />
                     <!--<referenceUrl>hibernate:spring:com.teammachine.staffrostering.domain?dialect=&amp;hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy</referenceUrl>-->
                     <referenceUrl>hibernate:spring:com.teammachine.staffrostering.domain?dialect=org.hibernate.dialect.PostgreSQL82Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>

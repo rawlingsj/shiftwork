@@ -23,6 +23,7 @@ spring:
  #        username: staffservice
  #        password: 654321
          url: jdbc:postgresql://172.17.0.1:5432/shiftwork-dev
+#         url: jdbc:postgresql://localhost:5432/shiftwork-dev
          name:
          username: swdbuser
          password: 5fXi0120&42V
