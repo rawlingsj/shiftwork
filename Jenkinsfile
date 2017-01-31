@@ -1,4 +1,6 @@
 #!/usr/bin/groovy
+@Library('github.com/fabric8io/fabric8-pipeline-library@master')
+
 def failIfNoTests = ""
 try {
   failIfNoTests = ITEST_FAIL_IF_NO_TEST
