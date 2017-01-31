@@ -506,10 +506,16 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
-                <version>3.1.49</version>
+                <version>3.2.15</version>
                 <configuration>
-               		<dockerHost>tcp://f8registry.openshift.hughestech.co:2375</dockerHost>
-               		<image>shiftwork/staffservice:latest</image>
+               		<images>
+               			<image>
+	               			<build>
+	               				<entryPoint>java -jar /app/${project.artifactId}-${project.version}.war --spring.profiles.active=prod</entryPoint>
+	               			</build>
+               			</image>
+               		</images>
+               		
                 </configuration>
                 <!--<executions>
                     <execution>
