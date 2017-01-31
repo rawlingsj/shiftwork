@@ -31,7 +31,7 @@ def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').rep
 
 mavenNode{
   def envStage = utils.environmentNamespace('staging')
-  def envProd = utils.environmentNamespace('ss')
+  def envProd = utils.environmentNamespace('ss-prod')
   
   git = git branch: 'feature/f8deploy', credentialsId: 'shiftwork', url: 'https://gitlab.com/hughestech/staffservice.git'
 
@@ -43,12 +43,7 @@ mavenNode{
       version = canaryVersion
     }
 
-    stage 'Integration Testing'
-    mavenIntegrationTest {
-      environment = 'Testing'
-      failIfNoTests = localFailIfNoTests
-      itestPattern = localItestPattern
-    }
+   
 
     
 
