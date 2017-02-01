@@ -33,7 +33,6 @@ node {
   kubernetes.pod('buildpod')
   	//.withImage('172.30.150.12:80/shiftwork/jhipster-build')
   	.withImage('172.30.139.137:5000/ss/staffservice')
-  		.withNewSecurityContext()
       		.withPrivileged(true)
       	.endSecurityContext()
       .withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
