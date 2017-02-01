@@ -21,7 +21,7 @@ We use [Gulp][] as our build system. Install the Gulp command-line tool globally
 Run the following commands in two separate terminals to create a blissful development experience where your browser
 auto-refreshes when files change on your hard drive.
 
-    ./mvnw -Pdev
+    ./mvnw
     gulp
 
 Bower is used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by

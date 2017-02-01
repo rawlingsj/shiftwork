@@ -1,7 +1,6 @@
 package com.teammachine.staffrostering.domain.filters.specs;
 
 import com.teammachine.staffrostering.domain.Employee;
-import com.teammachine.staffrostering.domain.Employee_;
 import org.springframework.data.jpa.domain.Specification;
 
 public class EmployeeSpecs {
@@ -10,8 +9,8 @@ public class EmployeeSpecs {
         return (root, query, criteriaBuilder) -> {
             String likePattern = getLikePattern(searchTerm);
             return criteriaBuilder.or(
-                criteriaBuilder.like(criteriaBuilder.lower(root.<String>get(Employee_.name)), likePattern),
-                criteriaBuilder.like(criteriaBuilder.lower(root.<String>get(Employee_.code)), likePattern)
+                //criteriaBuilder.like(criteriaBuilder.lower(root.<String>get(Employee_.name)), likePattern),
+                //criteriaBuilder.like(criteriaBuilder.lower(root.<String>get(Employee_.code)), likePattern)
             );
         };
     }
