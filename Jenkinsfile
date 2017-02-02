@@ -1,5 +1,5 @@
 #!/usr/bin/groovy
-//@Library('github.com/fabric8io/fabric8-pipeline-library@master')
+@Library('github.com/fabric8io/fabric8-pipeline-library@master')
 
 def failIfNoTests = ""
 try {
@@ -41,10 +41,10 @@ node {
       //.withServiceAccount('jenkins')
       .inside {
 	
-    //stage 'Canary Release'
-    //mavenCanaryRelease{
-    //  version = canaryVersion
-    //}
+    stage 'Canary Release'
+    mavenCanaryRelease{
+      version = canaryVersion
+    }
 
     stage 'Integration Test'
     mavenIntegrationTest{
