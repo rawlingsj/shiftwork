@@ -42,7 +42,7 @@ podTemplate(label: label, serviceAccount: 'jenkins', containers: [
                 [$class: 'SecretVolume', mountPath: '/home/jenkins/.m2/', secretName: 'jenkins-maven-settings'],
                 [$class: 'SecretVolume', mountPath: '/home/jenkins/.docker', secretName: 'jenkins-docker-cfg'],
                 [$class: 'HostPathVolume', mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock']
-        ])
+        ]])
 
 
   kubernetes.pod('buildpod')
