@@ -38,7 +38,7 @@ node {
       //.withEnvVar('DOCKER_CONFIG','/home/jenkins/.docker/')
       //.withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
       //.withSecret('jenkins-maven-settings','/root/.m2')
-      .withServiceAccount('jenkins')
+      //.withServiceAccount('jenkins')
       .inside {
 	
     stage 'Canary Release'
