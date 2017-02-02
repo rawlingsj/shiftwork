@@ -32,7 +32,7 @@ node {
 
   kubernetes.pod('buildpod')
   .withNewContainer()
-  	.withImage('jhipster/jhipster')  	
+  	.withImage('registry.gitlab.com/hughestech/staffservice:latest')  	
       .withPrivileged(true)
       //.withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
       //.withEnvVar('DOCKER_CONFIG','/home/jenkins/.docker/')
