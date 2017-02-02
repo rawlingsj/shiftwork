@@ -41,10 +41,10 @@ node {
       //.withServiceAccount('jenkins')
       .inside {
 	
-    stage 'Canary Release'
-    mavenCanaryRelease{
-      version = canaryVersion
-    }
+    //stage 'Canary Release'
+    //mavenCanaryRelease{
+    //  version = canaryVersion
+    //}
 
     stage 'Integration Test'
     mavenIntegrationTest{
