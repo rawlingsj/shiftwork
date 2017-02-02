@@ -32,7 +32,7 @@ node {
 
   kubernetes.pod('buildpod')
   .withNewContainer()
-  	.withImage('172.30.139.137:80/shiftwork/jhipster-build')  	
+  	.withImage('https://hub.docker.com/r/jhipster/jhipster/')  	
       .withPrivileged(true)
       //.withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
       //.withEnvVar('DOCKER_CONFIG','/home/jenkins/.docker/')
