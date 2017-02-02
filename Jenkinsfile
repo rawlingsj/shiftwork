@@ -36,8 +36,8 @@ node {
       .withPrivileged(true)
       //.withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
       //.withEnvVar('DOCKER_CONFIG','/home/jenkins/.docker/')
-      .withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
-      .withSecret('jenkins-maven-settings','/root/.m2')
+      //.withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
+      //.withSecret('jenkins-maven-settings','/root/.m2')
       .withServiceAccount('jenkins')
       .inside {
 	
