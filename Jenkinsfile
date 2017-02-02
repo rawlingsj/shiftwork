@@ -30,7 +30,7 @@ node {
 
   checkout scm
 
-podTemplate(label: 'label', serviceAccount: 'jenkins', containers: [
+podTemplate(label: label, serviceAccount: 'jenkins', containers: [
         	[name: 'maven', image: 'fabric8/maven-builder', command: 'cat', ttyEnabled: true, 
         	envVars: [                
                 		[key: 'DOCKER_CONFIG', value:'/home/jenkins/.docker/'],
