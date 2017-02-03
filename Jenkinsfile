@@ -30,7 +30,8 @@ node {
 
   checkout scm
 
-
+  List<EnvVar> envVars = container.getEnv();
+            envVars.add(new EnvVarBuilder().withName("DOCKER_CONFIG").withValue("/home/jenkins/.docker/").build());
 
 
   kubernetes.pod('buildpod')
@@ -38,9 +39,7 @@ node {
   	.withImage('jhipster/jhipster')  	
       .withPrivileged(true)
       //.withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
-      .withEnv(
-            	[key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/']		
-			)
+      .withEnv(envVars)
       .withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
       .withSecret('jenkins-maven-settings','/root/.m2')
       .withServiceAccount('jenkins')
