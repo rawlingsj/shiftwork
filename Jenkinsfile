@@ -34,7 +34,7 @@ node {
 
 
   kubernetes.pod('buildpod')
-  .withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
+  //.withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
   .withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
   .withSecret('jenkins-maven-settings','/root/.m2')
   .withServiceAccount('jenkins')
