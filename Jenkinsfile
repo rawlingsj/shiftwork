@@ -38,7 +38,9 @@ node {
   	.withImage('jhipster/jhipster')  	
       .withPrivileged(true)
       //.withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
-      .withEnv(['DOCKER_CONFIG','/home/jenkins/.docker/'])
+      .withEnv([
+            containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')
+			])
       .withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
       .withSecret('jenkins-maven-settings','/root/.m2')
       .withServiceAccount('jenkins')
