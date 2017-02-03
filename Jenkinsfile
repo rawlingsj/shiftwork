@@ -41,7 +41,7 @@ node {
   .withNewContainer()
   	.withImage('jhipster/jhipster')  	
       .withPrivileged(true)
-      .withEnvVar('DOCKER_CONFIG',  '/home/jenkins/.docker/'	)      
+      .withEnvar('DOCKER_CONFIG',  '/home/jenkins/.docker/'	)      
       .inside {
 	
     stage 'Canary Release'
