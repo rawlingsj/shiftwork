@@ -30,35 +30,18 @@ node {
 
   checkout scm
 
-podTemplate(label: label, serviceAccount: 'jenkins', containers: [
-        	[name: 'maven', image: 'fabric8/maven-builder', command: 'cat', ttyEnabled: true, 
-        	envVars: [                
-                		[key: 'DOCKER_CONFIG', value:'/home/jenkins/.docker/'],
-               		 ],
-	
-        	[name: 'jnlp', image: 'iocanel/jenkins-jnlp-client:latest', command:'/usr/local/bin/start.sh', args: '${computer.jnlpmac} ${computer.name}', ttyEnabled: false,
-                envVars: [
-                	[key: 'DOCKER_HOST', value: 'unix:/var/run/docker.sock']
-                		]
-                	]
-                	],
-        	volumes: [
-                [$class: 'PersistentVolumeClaim', mountPath: '/home/jenkins/.mvnrepository', claimName: 'jenkins-mvn-local-repo'],
-                [$class: 'SecretVolume', mountPath: '/home/jenkins/.m2/', secretName: 'jenkins-maven-settings'],
-                [$class: 'SecretVolume', mountPath: '/home/jenkins/.docker', secretName: 'jenkins-docker-cfg'],
-                [$class: 'HostPathVolume', mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock']
-        ]])
+
 
 
   kubernetes.pod('buildpod')
   .withNewContainer()
   	.withImage('jhipster/jhipster')  	
       .withPrivileged(true)
-      //.withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
-      //.withEnvVar('DOCKER_CONFIG','/home/jenkins/.docker/')
-      //.withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
-      //.withSecret('jenkins-maven-settings','/root/.m2')
-      //.withServiceAccount('jenkins')
+      .withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
+      .withEnvVar('DOCKER_CONFIG','/home/jenkins/.docker/')
+      .withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
+      .withSecret('jenkins-maven-settings','/root/.m2')
+      .withServiceAccount('jenkins')
       .inside {
 	
     stage 'Canary Release'
