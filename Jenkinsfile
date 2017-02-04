@@ -25,25 +25,20 @@ try {
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 //def utils = new io.fabric8.Utils()
 
-node {
-  def envProd = 'shiftwork-production'
 
-  checkout scm
+def envProd = 'shiftwork-production'
 
+// Let's define a label so that we correlate the podTemplate with the node.
+def buildLabel = "mylabel.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
 
+dockerTemplate { //This will ensure that docker socket is mounted and related env vars set.
+    mavenTemplate(label: 'maven-and-docker') { //This will ensure maven container is available and properlly configured
+    podTemplate(label: buildLabel, containers:[
+        containerTemplate(name: 'jhipster', image: 'jhipster/jhipster', privileged: 'true')
+    ]) {
+    node (buildLabel) {
 
-
-  kubernetes.pod('buildpod')
-  //.withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
-  .withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
-  .withSecret('jenkins-maven-settings','/root/.m2')
-  .withServiceAccount('jenkins')
-  .withNewContainer()
-  	.withImage('jhipster/jhipster')  	
-      .withPrivileged(true)
-      .withEnvar('DOCKER_CONFIG',  '/home/jenkins/.docker/'	)      
-      .inside {
-	
+    checkout scm
     stage 'Canary Release'
     mavenCanaryRelease{
       version = canaryVersion
@@ -61,4 +56,5 @@ node {
     kubernetesApply(file: rc, environment: envProd)
 
   }
+}
 }
