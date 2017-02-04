@@ -34,7 +34,7 @@ def buildLabel = "mylabel.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_')
 dockerTemplate { //This will ensure that docker socket is mounted and related env vars set.
     mavenTemplate(label: 'maven-and-docker') { //This will ensure maven container is available and properlly configured
     podTemplate(label: buildLabel, containers:[
-        containerTemplate(name: 'jhipster', image: 'jhipster/jhipster', privileged: 'true')
+        containerTemplate(name: 'jhipster', image: 'jhipster/jhipster', privileged: true)
     ]) {
     node (buildLabel) {
 
