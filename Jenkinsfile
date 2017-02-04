@@ -58,3 +58,4 @@ dockerTemplate { //This will ensure that docker socket is mounted and related en
   }
 }
 }
+}
