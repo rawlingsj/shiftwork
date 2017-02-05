@@ -38,12 +38,7 @@ dockerTemplate { //This will ensure that docker socket is mounted and related en
       version = canaryVersion
     }
 
-    stage 'Integration Test'
-    mavenIntegrationTest{
-      environment = 'Testing'
-      failIfNoTests = localFailIfNoTests
-      itestPattern = localItestPattern
-    }
+
 
     stage 'Rolling Upgrade Production'
     def rc = readFile 'target/classes/kubernetes.json'
