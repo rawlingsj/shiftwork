@@ -29,7 +29,7 @@ podTemplate(label: buildLabel,
  containers: [containerTemplate(alwaysPullImage: false, args: 'cat', command: '/bin/sh -c', 
         envVars: [
                     containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')], 
-        image: '172.30.150.12:80/shiftwork/jhipster-build', name: 'maven', privileged: true, resourceLimitCpu: '', resourceLimitMemory: '', resourceRequestCpu: '', resourceRequestMemory: '', ttyEnabled: true, workingDir: '/home/jenkins')],
+        image: 'jhipster/jhipster', name: 'maven', privileged: true, resourceLimitCpu: '', resourceLimitMemory: '', resourceRequestCpu: '', resourceRequestMemory: '', ttyEnabled: true, workingDir: '/home/jenkins')],
  volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'), secretVolume(mountPath: '/root/.m2', secretName: 'jenkins-maven-settings'), secretVolume(mountPath: '/home/jenkins/.docker', secretName: 'jenkins-docker-cfg')],
  serviceAccount: 'jenkins') {
     node(buildLabel) {
