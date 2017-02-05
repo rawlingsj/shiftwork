@@ -1,6 +1,5 @@
 #!/usr/bin/groovy
 @Library('github.com/fabric8io/fabric8-pipeline-library@master')
-
 def failIfNoTests = ""
 try {
   failIfNoTests = ITEST_FAIL_IF_NO_TEST
@@ -23,29 +22,46 @@ try {
 }
 
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
-//def utils = new io.fabric8.Utils()
+def utils = new io.fabric8.Utils()
+def buildLabel = "mylabel.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
 
+podTemplate(label: buildLabel, 
+ containers: [containerTemplate(alwaysPullImage: false, args: 'cat', command: '/bin/sh -c', 
+        envVars: [
+                    containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')], 
+        image: '172.30.150.12:80/shiftwork/jhipster-build', name: 'maven', privileged: true, resourceLimitCpu: '', resourceLimitMemory: '', resourceRequestCpu: '', resourceRequestMemory: '', ttyEnabled: true, workingDir: '/home/jenkins')],
+ volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'), secretVolume(mountPath: '/root/.m2', secretName: 'jenkins-maven-settings'), secretVolume(mountPath: '/home/jenkins/.docker', secretName: 'jenkins-docker-cfg')],
+ serviceAccount: 'jenkins') {
+    node(buildLabel) {
+        container(name: 'maven') {
+  def envProd = 'shiftwork-production'
 
-def envProd = 'shiftwork-production'
+  checkout scm
 
-dockerTemplate { //This will ensure that docker socket is mounted and related env vars set.
-    mavenNode {  //This will ensure maven container is available and properlly configured.
-
-    checkout scm
+  kubernetes.pod('buildpod').withImage('172.30.150.12:80/shiftwork/jhipster-build')
+      .withPrivileged(true)
+      .withHostPathMount('/var/run/docker.sock','/var/run/docker.sock')
+      .withEnvVar('DOCKER_CONFIG','/home/jenkins/.docker/')
+      .withSecret('jenkins-docker-cfg','/home/jenkins/.docker')
+      .withSecret('jenkins-maven-settings','/root/.m2')
+      .withServiceAccount('jenkins')
+      .inside {
 
     stage 'Canary Release'
-    container(name: 'maven') {
+    mavenCanaryRelease{
       version = canaryVersion
     }
 
+    stage 'Integration Test'
+    mavenIntegrationTest{
+      environment = 'Testing'
+      failIfNoTests = localFailIfNoTests
+      itestPattern = localItestPattern
+    }
 
     stage 'Rolling Upgrade Production'
-	container(name: 'maven') {
-		sh 'ls -al'
-		sh 'pwd'
-		def rc = readFile 'target/classes/kubernetes.json'
-		kubernetesApply(file: rc, environment: envProd)
-    }
+    def rc = readFile 'target/classes/kubernetes.json'
+    kubernetesApply(file: rc, environment: envProd)
 
   }
 }
