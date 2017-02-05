@@ -47,22 +47,21 @@ podTemplate(label: buildLabel,
       .withServiceAccount('jenkins')
       .inside {
 
-    stage 'Canary Release'
-    mavenCanaryRelease{
-      version = canaryVersion
-    }
+	    stage 'Canary Release'
+	    mavenCanaryRelease{
+	      version = canaryVersion
+	    }
 
-    stage 'Integration Test'
-    mavenIntegrationTest{
-      environment = 'Testing'
-      failIfNoTests = localFailIfNoTests
-      itestPattern = localItestPattern
-    }
+	    stage 'Integration Test'
+	    mavenIntegrationTest{
+	      environment = 'Testing'
+	      failIfNoTests = localFailIfNoTests
+	      itestPattern = localItestPattern
+	    }
 
     stage 'Rolling Upgrade Production'
     def rc = readFile 'target/classes/kubernetes.json'
     kubernetesApply(file: rc, environment: envProd)
 
   }
-}
 }
