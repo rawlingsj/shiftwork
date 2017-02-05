@@ -34,7 +34,7 @@ dockerTemplate { //This will ensure that docker socket is mounted and related en
     checkout scm
 
     stage 'Canary Release'
-    mavenCanaryRelease{
+    container(name: 'maven') {
       version = canaryVersion
     }
 
