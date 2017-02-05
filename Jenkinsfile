@@ -39,9 +39,10 @@ dockerTemplate { //This will ensure that docker socket is mounted and related en
     }
 
 
-
     stage 'Rolling Upgrade Production'
 	container(name: 'maven') {
+		sh 'ls -al'
+		sh 'pwd'
 		def rc = readFile 'target/classes/kubernetes.json'
 		kubernetesApply(file: rc, environment: envProd)
     }
