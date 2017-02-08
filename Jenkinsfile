@@ -30,7 +30,11 @@ podTemplate(label: buildLabel,
         envVars: [
                     containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')], 
         image: 'jhipster/jhipster', name: 'maven', privileged: true, resourceLimitCpu: '', resourceLimitMemory: '', resourceRequestCpu: '', resourceRequestMemory: '', ttyEnabled: true)],
- volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'), secretVolume(mountPath: '/root/.m2', secretName: 'jenkins-maven-settings'), secretVolume(mountPath: '/home/jenkins/.docker', secretName: 'jenkins-docker-cfg')],
+ volumes: [
+		  
+		 secretVolume(mountPath: '/root/.m2', secretName: 'jenkins-maven-settings'), 
+		 secretVolume(mountPath: '/home/jenkins/.docker', secretName: 'jenkins-docker-cfg')
+	 ],
  serviceAccount: 'jenkins') {
     node(buildLabel) {
         container(name: 'maven') {
