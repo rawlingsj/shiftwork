@@ -28,14 +28,18 @@ def buildLabel = "mylabel.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_')
 podTemplate(label: buildLabel, 
  containers: [containerTemplate(alwaysPullImage: false, args: 'cat', command: '/bin/sh -c', 
         envVars: [
-                    containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')], 
-        image: 'jhipster/jhipster', name: 'maven', privileged: true, resourceLimitCpu: '', resourceLimitMemory: '', resourceRequestCpu: '', resourceRequestMemory: '', ttyEnabled: true)],
- volumes: [
-		  
-		 secretVolume(mountPath: '/root/.m2', secretName: 'jenkins-maven-settings'), 
-		 secretVolume(mountPath: '/home/jenkins/.docker', secretName: 'jenkins-docker-cfg')
-	 ],
- serviceAccount: 'jenkins') {
+                    containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')
+				], 
+					image: 'jhipster/jhipster', 
+					name: 'maven', 
+					privileged: true, 
+					resourceLimitCpu: '', 
+					resourceLimitMemory: '', 
+					resourceRequestCpu: '', r
+					esourceRequestMemory: '', 
+					ttyEnabled: true)
+ 				],
+		serviceAccount: 'jenkins') {
     node(buildLabel) {
         container(name: 'maven') {
   def envProd = 'shiftwork-production'
