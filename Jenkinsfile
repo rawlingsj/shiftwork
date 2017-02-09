@@ -4,20 +4,41 @@ def buildLabel = "mylabel.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_')
 
 podTemplate(label: buildLabel, 
  containers: [containerTemplate(image: 'maven', name: 'maven', command: 'cat', ttyEnabled: true,
-        envVars: [containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')], 
-        workingDir: '/home/jenkins/')
+        envVars: [
+        containerEnvVar(
+        	key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')], 
+        	workingDir: '/home/jenkins/')
         ],
  volumes: [
         hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'), 
         secretVolume(mountPath: '/root/.m2', secretName: 'jenkins-maven-settings'), 
-      secretVolume(mountPath: '/home/jenkins/.docker', secretName: 'jenkins-docker-cfg')
+      	secretVolume(mountPath: '/home/jenkins/.docker', secretName: 'jenkins-docker-cfg')
     ],
  serviceAccount: 'jenkins') {
     node(buildLabel) {
         container(name: 'maven') {
-            sh 'pwd'
-            sh 'whoami'
-            sh 'echo hello world'
+            def envProd = 'shiftwork-production'
+
+		  checkout scm
+		
+		
+		
+		    stage 'Canary Release'
+		    mavenCanaryRelease{
+		      version = canaryVersion
+		    }
+		
+		    stage 'Integration Test'
+		    mavenIntegrationTest{
+		      environment = 'Testing'
+		      failIfNoTests = localFailIfNoTests
+		      itestPattern = localItestPattern
+		    }
+		
+		    stage 'Rolling Upgrade Production'
+		    def rc = readFile 'target/classes/kubernetes.json'
+		    kubernetesApply(file: rc, environment: envProd)
+		   }
         }
     }
  }
