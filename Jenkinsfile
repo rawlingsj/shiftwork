@@ -8,7 +8,9 @@ podTemplate(label: buildLabel,
         	containerEnvVar(
         		key: 'DOCKER_CONFIG', 
         		value: '/home/jenkins/.docker/')], 
-        	image: 'jhipster/jhipster', name: 'jhipster', ttyEnabled: true, workingDir: '/home/jenkins',
+        	image: 'jhipster/jhipster', 
+			name: 'jhipster', 
+			ttyEnabled: true, 
         	workingDir: '/home/jenkins/')
         ],
  volumes: [
