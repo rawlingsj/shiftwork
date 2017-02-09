@@ -5,8 +5,10 @@ def buildLabel = "mylabel.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_')
 podTemplate(label: buildLabel, 
  containers: [containerTemplate(image: 'maven', name: 'maven', command: 'cat', ttyEnabled: true,
         envVars: [
-        containerEnvVar(
-        	key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')], 
+        	containerEnvVar(
+        		key: 'DOCKER_CONFIG', 
+        		value: '/home/jenkins/.docker/')], 
+        	image: 'jhipster/jhipster', name: 'maven', privileged: true, resourceLimitCpu: '', resourceLimitMemory: '', resourceRequestCpu: '', resourceRequestMemory: '', ttyEnabled: true, workingDir: '/home/jenkins')],
         	workingDir: '/home/jenkins/')
         ],
  volumes: [
