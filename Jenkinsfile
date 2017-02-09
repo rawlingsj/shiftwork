@@ -3,7 +3,7 @@
 def buildLabel = "mylabel.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
 
 podTemplate(label: buildLabel, 
- containers: [containerTemplate(image: 'maven', name: 'maven', command: 'cat', ttyEnabled: true,
+ containers: [containerTemplate(
         envVars: [
         	containerEnvVar(
         		key: 'DOCKER_CONFIG', 
