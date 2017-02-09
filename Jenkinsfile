@@ -8,7 +8,7 @@ podTemplate(label: buildLabel,
         	containerEnvVar(
         		key: 'DOCKER_CONFIG', 
         		value: '/home/jenkins/.docker/')], 
-        	image: 'jhipster/jhipster', name: 'maven', privileged: true, resourceLimitCpu: '', resourceLimitMemory: '', resourceRequestCpu: '', resourceRequestMemory: '', ttyEnabled: true, workingDir: '/home/jenkins')],
+        	image:( 'jhipster/jhipster', name: 'maven', privileged: true, resourceLimitCpu: '', resourceLimitMemory: '', resourceRequestCpu: '', resourceRequestMemory: '', ttyEnabled: true, workingDir: '/home/jenkins'),
         	workingDir: '/home/jenkins/')
         ],
  volumes: [
