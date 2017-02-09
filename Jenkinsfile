@@ -39,6 +39,6 @@ podTemplate(label: buildLabel,
 		    def rc = readFile 'target/classes/kubernetes.json'
 		    kubernetesApply(file: rc, environment: envProd)
 		   }
-        }
+        
     }
  }
