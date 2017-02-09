@@ -16,7 +16,7 @@ podTemplate(label: buildLabel,
     node(buildLabel) {
         container(name: 'maven') {
             sh 'pwd'
-            sh 'whomi'
+            sh 'whoami'
             sh 'echo hello world'
         }
     }
