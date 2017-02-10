@@ -1,0 +1,19 @@
+spec:
+  selector:
+    matchLabels:
+      service: shiftwork
+  template:
+    metadata:
+      labels:
+        service: shiftwork
+    spec:
+      containers:
+      - image: ${docker.image}
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 180
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 10
