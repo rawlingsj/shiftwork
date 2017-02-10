@@ -1,53 +1,29 @@
 #!/usr/bin/groovy
-@Library('github.com/fabric8io/fabric8-pipeline-library@master')
-
-def failIfNoTests = ""
-try {
-  failIfNoTests = ITEST_FAIL_IF_NO_TEST
-} catch (Throwable e) {
-  failIfNoTests = "false"
-}
-
-def localItestPattern = ""
-try {
-  localItestPattern = ITEST_PATTERN
-} catch (Throwable e) {
-  localItestPattern = "*KT"
-}
-
-
+@Library('github.com/rawlingsj/fabric8-pipeline-library@issue')
 def versionPrefix = ""
 try {
   versionPrefix = VERSION_PREFIX
 } catch (Throwable e) {
   versionPrefix = "1.0"
 }
-
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 def utils = new io.fabric8.Utils()
-def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
+def envStage = utils.environmentNamespace('shiftwork-dev')
+echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
+jhipsterNode{
+  checkout scm
+    container(name: 'jhipster') {
+      // not sure if we need these but they run tests including phantomjs so it's' maybe worth it
+      stage 'Build'
+      sh 'npm install'
+      sh 'bower install --allow-root'   
 
-mavenNode{
-  def envStage = utils.environmentNamespace('shiftwork-dev')
-
-
-  echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
-  container(name: 'maven') {
-
-    stage 'Build Release'
-    mavenCanaryRelease {
-      version = canaryVersion
+      stage 'Canary Release Staging'
+      mavenCanaryRelease {
+        version = canaryVersion
+      }
     }
+    stage "Rollout ${envStage}"
+    kubernetesApply(environment: envStage, registry: '')
 
-    stage 'Integration Test'
-    mavenIntegrationTest {
-      environment = 'Testing'
-      failIfNoTests = localFailIfNoTests
-      itestPattern = localItestPattern
-    }
-
-    stage 'Rollout Staging'
-    kubernetesApply(environment: envStage)
-
-  }
 }

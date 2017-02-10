@@ -26,7 +26,8 @@
         <commons-lang.version>2.6</commons-lang.version>
         <docker.assemblyDescriptorRef>artifact</docker.assemblyDescriptorRef>
         <docker.from>docker.io/fabric8/java-jboss-openjdk8-jdk:1.0.10</docker.from>
-        <docker.image>shiftwork/${project.artifactId}:${project.version}</docker.image>
+        <!--the docker org needs to match the last part of the projects maven group id for the pipelines to tag image in plain kubernetes env -->
+        <docker.image>staffrostering/${project.artifactId}:${project.version}</docker.image>
         <docker.port.container.http>8080</docker.port.container.http>
         <docker.port.container.jolokia>8778</docker.port.container.jolokia>
         <fabric8.iconRef>icons/spring-boot</fabric8.iconRef>
@@ -336,6 +337,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-loader-tools</artifactId>
         </dependency>
+        <!-- jhipster-needle-maven-add-dependency -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
@@ -494,6 +496,22 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.5</version>
+                <configuration>
+                    <imageName>shiftwork</imageName>
+                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.war</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
                 <version>3.2.20</version>
@@ -508,7 +526,7 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>staffrostering/${project.artifactId}:${project.version}</name>
+                            <name>${docker.image}</name>
                             <build>
                                 <from>${docker.from}</from>
                                 <assembly>
@@ -518,8 +536,8 @@
                                     <HTTP_PORT>8080</HTTP_PORT>
                                 </env>
                                 <ports>
-                                    <port>8778</port>
                                     <port>8080</port>
+                                    <port>8778</port>
                                 </ports>
                                 <cmd>
                                     <shell>java -jar /maven/${project.artifactId}-${project.version}.war --spring.profiles.active=prod</shell>
@@ -527,6 +545,10 @@
                             </build>
                         </image>
                     </images>
+                    <!--<enricher>-->
+                    <!-- the default sb health enricher wont work if auth is enabled -->
+                    <!--<excludes>spring-boot-health-check</excludes>-->
+                    <!--</enricher>-->
                 </configuration>
             </plugin>
             <plugin>
