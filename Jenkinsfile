@@ -31,6 +31,7 @@ jhipsterNode{
     
     
     if (flow.isSingleNode()){
+        echo "in flow.isSingleNode()"
         echo 'Running on a single node, skipping docker push as not needed'
         def m = readMavenPom file: 'pom.xml'
         def groupId = m.groupId.split( '\\.' )
@@ -38,12 +39,14 @@ jhipsterNode{
         def artifactId = m.artifactId
 
        if (!s2iMode) {
+           echo "in if (!s2iMode)"
            sh "docker tag ${user}/${artifactId}:${config.version} ${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}/${user}/${artifactId}:${config.version}"
        }
     } else {
       if (!s2iMode) {
         retry(3){
-          sh "mvn fabric8:push -Ddocker.push.registry=${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}"
+            echo "in !flow.isSingleNode() AND if (!s2iMode)"
+            sh "mvn fabric8:push -Ddocker.push.registry=${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}"
         }
       }
     }
