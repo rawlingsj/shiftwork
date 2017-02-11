@@ -14,13 +14,7 @@ def envStage = utils.environmentNamespace('shiftwork-dev')
 echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
 jhipsterNode{
   checkout scm
-    container(name: 'jhipster', envVars: [
-        	containerEnvVar(key: 'DOCKER_CONFIG', 
-        		value: '/home/jenkins/.docker/')], 
-        	image: 'jhipster/jhipster-ci-stack', 
-			name: 'jhipster', 
-			ttyEnabled: true, 
-        	workingDir: '/home/jenkins/') ) {
+    container(name: 'jhipster', envVars: [ 	containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')] ) {
         
       def flow = new io.fabric8.Fabric8Commands()
       def s2iMode = flow.isOpenShiftS2I()
