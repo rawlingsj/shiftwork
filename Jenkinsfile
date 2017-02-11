@@ -22,9 +22,9 @@ jhipsterNode{
       sh 'bower install --allow-root'  
         
         
-        stage "Rollout ${envStage}"
+      stage "Rollout ${envStage}"
     
-    echo "s2i mode: ${s2iMode}"
+      echo "s2i mode: ${s2iMode}"
     
     if (flow.isSingleNode()){
         echo "in flow.isSingleNode()"
@@ -60,10 +60,10 @@ jhipsterNode{
         
       
 
-      /*stage 'Canary Release Staging'
+      stage 'Canary Release Staging'
       mavenCanaryRelease {
         version = canaryVersion
-      }*/
+      }
     }
     
     
