@@ -6,6 +6,7 @@ try {
 } catch (Throwable e) {
   versionPrefix = "1.0"
 }
+def flow = new io.fabric8.Fabric8Commands()
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 def utils = new io.fabric8.Utils()
 def envStage = utils.environmentNamespace('shiftwork-dev')
