@@ -38,7 +38,7 @@ jhipsterNode{
 
        if (!s2iMode) {
            echo "in if (!s2iMode)"
-           sh "docker tag ${user}/${artifactId}:version 172.30.139.137:5000/${user}/${artifactId}:${config.version}"
+           sh "docker tag hughestech/staffservice:version 172.30.139.137:5000/hughestech/staffservice:version"
        }
     } else {
       if (!s2iMode) {
