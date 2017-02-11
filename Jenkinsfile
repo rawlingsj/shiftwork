@@ -6,8 +6,7 @@ try {
 } catch (Throwable e) {
   versionPrefix = "1.0"
 }
-def flow = new io.fabric8.Fabric8Commands()
-def s2iMode = flow.isOpenShiftS2I()
+
       
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 def utils = new io.fabric8.Utils()
@@ -16,6 +15,9 @@ echo 'NOTE: running pipelines for the first time will take longer as build and b
 jhipsterNode{
   checkout scm
     container(name: 'jhipster') {
+        
+      def flow = new io.fabric8.Fabric8Commands()
+      def s2iMode = flow.isOpenShiftS2I()
       // not sure if we need these but they run tests including phantomjs so it's' maybe worth it
       stage 'Build'
       sh 'npm install'
