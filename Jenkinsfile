@@ -7,6 +7,8 @@ try {
   versionPrefix = "1.0"
 }
 def flow = new io.fabric8.Fabric8Commands()
+def s2iMode = flow.isOpenShiftS2I()
+      
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 def utils = new io.fabric8.Utils()
 def envStage = utils.environmentNamespace('shiftwork-dev')
@@ -19,8 +21,7 @@ jhipsterNode{
       sh 'npm install'
       sh 'bower install --allow-root'  
         
-      def s2iMode = flow.isOpenShiftS2I()
-      echo "s2i mode: ${s2iMode}"
+      
 
       /*stage 'Canary Release Staging'
       mavenCanaryRelease {
@@ -29,6 +30,7 @@ jhipsterNode{
     }
     stage "Rollout ${envStage}"
     
+    echo "s2i mode: ${s2iMode}"
     
     if (flow.isSingleNode()){
         echo "in flow.isSingleNode()"
