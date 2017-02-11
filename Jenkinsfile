@@ -21,14 +21,8 @@ jhipsterNode{
       sh 'npm install'
       sh 'bower install --allow-root'  
         
-      
-
-      /*stage 'Canary Release Staging'
-      mavenCanaryRelease {
-        version = canaryVersion
-      }*/
-    }
-    stage "Rollout ${envStage}"
+        
+        stage "Rollout ${envStage}"
     
     echo "s2i mode: ${s2iMode}"
     
@@ -63,6 +57,15 @@ jhipsterNode{
     } else {
       echo 'no content-repository service so not deploying the maven site report'
     }
+        
+      
+
+      /*stage 'Canary Release Staging'
+      mavenCanaryRelease {
+        version = canaryVersion
+      }*/
+    }
+    
     
     //kubernetesApply(environment: envStage, registry: '')
     
