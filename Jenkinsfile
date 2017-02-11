@@ -16,7 +16,10 @@ jhipsterNode{
       // not sure if we need these but they run tests including phantomjs so it's' maybe worth it
       stage 'Build'
       sh 'npm install'
-      sh 'bower install --allow-root'   
+      sh 'bower install --allow-root'  
+        
+      def s2iMode = flow.isOpenShiftS2I()
+      echo "s2i mode: ${s2iMode}"
 
       stage 'Canary Release Staging'
       mavenCanaryRelease {
