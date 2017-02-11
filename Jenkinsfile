@@ -22,10 +22,10 @@ jhipsterNode{
       def s2iMode = flow.isOpenShiftS2I()
       echo "s2i mode: ${s2iMode}"
 
-      stage 'Canary Release Staging'
+      /*stage 'Canary Release Staging'
       mavenCanaryRelease {
         version = canaryVersion
-      }
+      }*/
     }
     stage "Rollout ${envStage}"
     
