@@ -24,7 +24,7 @@
         <awaitility.version>1.7.0</awaitility.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-lang.version>2.6</commons-lang.version>
-        <docker.assemblyDescriptorRef>artifact</docker.assemblyDescriptorRef>
+        <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
         <docker.from>docker.io/fabric8/java-jboss-openjdk8-jdk:1.0.10</docker.from>
         <!--the docker org needs to match the last part of the projects maven group id for the pipelines to tag image in plain kubernetes env -->
         <docker.image>staffrostering/${project.artifactId}:${project.version}</docker.image>
@@ -518,8 +518,7 @@
                 <version>3.2.20</version>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>package</goal>
+                        <goals>                           
                             <goal>resource</goal>
                             <goal>build</goal>
                         </goals>
