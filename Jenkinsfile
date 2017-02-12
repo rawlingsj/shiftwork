@@ -33,7 +33,7 @@ jhipsterNode{
         echo "Who am I :"
         sh 'whoami'
         //sh ' usermod -aG docker root' //usermod: group 'docker' does not exist
-        sh 'oc get pods' //see if we can contact oc from container
+        
         
       def flow = new io.fabric8.Fabric8Commands()
       def s2iMode = flow.isOpenShiftS2I()
