@@ -57,7 +57,8 @@ jhipsterNode{
 
        if (!s2iMode) {
            echo "in if (!s2iMode)"
-           sh "docker tag hughestech/staffservice:version 172.30.139.137:5000/hughestech/staffservice:version"
+           sh "mvn fabric8:push -Ddocker.push.registry=${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}"
+           //sh "docker tag hughestech/staffservice:version 172.30.139.137:5000/hughestech/staffservice:version"
        }
     } else {
       if (!s2iMode) {
