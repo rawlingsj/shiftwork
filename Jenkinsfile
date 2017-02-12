@@ -16,11 +16,7 @@ jhipsterNode{
   checkout scm
     container(name: 'jhipster', envVars: [ 	containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')] ) {
         
-        //
-        sh 'docker info'
-        sh 'sudo usermod -aG docker jenkins'
-
-        
+               
         //Check if ennvars are actually set
         echo "DOCKER_CONFIG is :${env.DOCKER_CONFIG}"
         echo "DOCKER_HOST is :${env.DOCKER_HOST}"
