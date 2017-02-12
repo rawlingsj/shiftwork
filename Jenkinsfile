@@ -32,7 +32,6 @@ jhipsterNode{
         echo "DOCKER_HOST inside container() is :${env.DOCKER_HOST}"
         echo "Who am I :"
         sh 'whoami'
-        sh 'su -'
         sh ' usermod -aG docker root'
         
       def flow = new io.fabric8.Fabric8Commands()
