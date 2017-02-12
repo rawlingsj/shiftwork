@@ -32,6 +32,7 @@ jhipsterNode{
         echo "DOCKER_HOST inside container() is :${env.DOCKER_HOST}"
         echo "Who am I :"
         sh 'whoami'
+        sh 'netstat -putna | grep 2375'
         //sh ' usermod -aG docker root' //usermod: group 'docker' does not exist
         
         
