@@ -32,7 +32,8 @@ jhipsterNode{
         echo "DOCKER_HOST inside container() is :${env.DOCKER_HOST}"
         echo "Who am I :"
         sh 'whoami'
-        sh ' usermod -aG docker root'
+        //sh ' usermod -aG docker root' //usermod: group 'docker' does not exist
+
         
       def flow = new io.fabric8.Fabric8Commands()
       def s2iMode = flow.isOpenShiftS2I()
