@@ -16,6 +16,10 @@ jhipsterNode{
   checkout scm
     container(name: 'jhipster', envVars: [ 	containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')] ) {
         
+        
+        //Check if ennvars are actually set
+        echo "DOCKER_CONFIG is :${env.DOCKER_CONFIG}"
+        
       def flow = new io.fabric8.Fabric8Commands()
       def s2iMode = flow.isOpenShiftS2I()
       // not sure if we need these but they run tests including phantomjs so it's' maybe worth it
