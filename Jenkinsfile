@@ -19,7 +19,7 @@ echo "DOCKER_HOST is :${env.DOCKER_HOST}"
 
 echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
 
-withEnv(['DOCKER_CONFIG=/home/jenkins/.docker/', 'DOCKER_HOST=/var/run/docker.sock']) {
+withEnv(['DOCKER_CONFIG=/home/jenkins/.docker/', 'DOCKER_HOST=176.9.36.15']) {
     
     
 jhipsterNode{
