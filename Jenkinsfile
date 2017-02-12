@@ -18,6 +18,8 @@ jhipsterNode{
         
         //
         sh 'docker info'
+        sh 'sudo usermod -aG docker jenkins'
+
         
         //Check if ennvars are actually set
         echo "DOCKER_CONFIG is :${env.DOCKER_CONFIG}"
