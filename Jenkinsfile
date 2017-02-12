@@ -1,7 +1,6 @@
 #!/usr/bin/groovy
 @Library('github.com/rawlingsj/fabric8-pipeline-library@issue')
 
-echo "DOCKER_HOST is :${env.DOCKER_HOST}"
 
 def versionPrefix = ""
 try {
@@ -14,6 +13,8 @@ try {
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 def utils = new io.fabric8.Utils()
 def envStage = utils.environmentNamespace('shiftwork-dev')
+echo "DOCKER_HOST is :${env.DOCKER_HOST}"
+
 echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
 jhipsterNode{
   checkout scm
