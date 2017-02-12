@@ -1,6 +1,12 @@
 #!/usr/bin/groovy
 @Library('github.com/rawlingsj/fabric8-pipeline-library@issue')
-
+import hudson.EnvVars
+import hudson.model.Environment
+ 
+def build = Thread.currentThread().executable
+def vars = [DOCKER_HOST: 'unix:/var/run/docker.sock']
+ 
+build.environments.add(0, Environment.create(new EnvVars(vars)))
 
 def versionPrefix = ""
 try {
@@ -8,6 +14,8 @@ try {
 } catch (Throwable e) {
   versionPrefix = "1.0"
 }
+
+
 
       
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
