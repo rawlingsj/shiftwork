@@ -19,12 +19,12 @@ echo "DOCKER_HOST is :${env.DOCKER_HOST}"
 
 echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
 
-withEnv(['DOCKER_CONFIG=/home/jenkins/.docker/', 'DOCKER_HOST=tcp://176.9.36.15:2375']) {
+withEnv(['DOCKER_CONFIG=/home/jenkins/.docker/', 'DOCKER_HOST=http://176.9.36.15:2375']) {
     
     
 jhipsterNode{
   checkout scm
-    container(name: 'jhipster', envVars: [ 	containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')] ) {
+    container(name: 'jhipster' ) {
         
                
         //Check if ennvars are actually set
@@ -32,7 +32,7 @@ jhipsterNode{
         echo "DOCKER_HOST inside container() is :${env.DOCKER_HOST}"
         echo "Who am I :"
         sh 'whoami'
-        sh 'netstat -putna | grep 2375'
+        //sh 'netstat -putna | grep 2375' //netstat: command not found
         //sh ' usermod -aG docker root' //usermod: group 'docker' does not exist
         
         
