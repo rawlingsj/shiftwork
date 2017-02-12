@@ -23,6 +23,7 @@ jhipsterNode{
         
         //Check if ennvars are actually set
         echo "DOCKER_CONFIG is :${env.DOCKER_CONFIG}"
+        echo "DOCKER_HOST is :${env.DOCKER_HOST}"
         
       def flow = new io.fabric8.Fabric8Commands()
       def s2iMode = flow.isOpenShiftS2I()
