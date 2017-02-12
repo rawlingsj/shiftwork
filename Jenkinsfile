@@ -32,8 +32,8 @@ jhipsterNode{
         echo "DOCKER_HOST inside container() is :${env.DOCKER_HOST}"
         echo "Who am I :"
         sh 'whoami'
-        echo "### LIST docker.sock"
-        sh 'ls -l /var/run/docker.sock'
+        //echo "### LIST docker.sock"
+        //sh 'ls -l /var/run/docker.sock' //ls: cannot access /var/run/docker.sock: No such file or directory
         //sh 'netstat -putna | grep 2375' //netstat: command not found
         //sh ' usermod -aG docker root' //usermod: group 'docker' does not exist
         
