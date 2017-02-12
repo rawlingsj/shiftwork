@@ -1,12 +1,6 @@
 #!/usr/bin/groovy
 @Library('github.com/rawlingsj/fabric8-pipeline-library@issue')
-import hudson.EnvVars
-import hudson.model.Environment
- 
-def build = Thread.currentThread().executable
-def vars = [DOCKER_HOST: 'unix:/var/run/docker.sock']
- 
-build.environments.add(0, Environment.create(new EnvVars(vars)))
+
 
 def versionPrefix = ""
 try {
@@ -24,6 +18,10 @@ def envStage = utils.environmentNamespace('shiftwork-dev')
 echo "DOCKER_HOST is :${env.DOCKER_HOST}"
 
 echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
+
+withEnv(['DOCKER_HOST=unix:/var/run/docker.sock']) {
+    
+    
 jhipsterNode{
   checkout scm
     container(name: 'jhipster', envVars: [ 	containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')] ) {
@@ -89,5 +87,7 @@ jhipsterNode{
     //kubernetesApply(environment: envStage, registry: '')
     
     
+
+}
 
 }
