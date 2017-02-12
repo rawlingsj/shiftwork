@@ -1,5 +1,8 @@
 #!/usr/bin/groovy
 @Library('github.com/rawlingsj/fabric8-pipeline-library@issue')
+
+echo "DOCKER_HOST is :${env.DOCKER_HOST}"
+
 def versionPrefix = ""
 try {
   versionPrefix = VERSION_PREFIX
@@ -19,7 +22,7 @@ jhipsterNode{
                
         //Check if ennvars are actually set
         echo "DOCKER_CONFIG is :${env.DOCKER_CONFIG}"
-        echo "DOCKER_HOST is :${env.DOCKER_HOST}"
+        echo "DOCKER_HOST inside container() is :${env.DOCKER_HOST}"
         
       def flow = new io.fabric8.Fabric8Commands()
       def s2iMode = flow.isOpenShiftS2I()
