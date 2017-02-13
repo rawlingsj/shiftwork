@@ -1,9 +1,0 @@
-metadata:
-  labels:
-    service: shiftwork
-spec:
-  ports:
-  - name: http
-    port: 80
-    protocol: TCP
-    targetPort: 8080

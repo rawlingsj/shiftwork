@@ -25,7 +25,7 @@
         <commons-io.version>2.4</commons-io.version>
         <commons-lang.version>2.6</commons-lang.version>
         <docker.assemblyDescriptorRef>artifact</docker.assemblyDescriptorRef>
-        <docker.from>docker.io/fabric8/java-jboss-openjdk8-jdk:1.0.10</docker.from>
+        <docker.from>fabric8/s2i-java</docker.from>
         <!--the docker org needs to match the last part of the projects maven group id for the pipelines to tag image in plain kubernetes env -->
         <docker.image>staffrostering/${project.artifactId}:${project.version}</docker.image>
         <docker.port.container.http>8080</docker.port.container.http>
@@ -534,14 +534,12 @@
                                 </assembly>
                                 <env>
                                     <HTTP_PORT>8080</HTTP_PORT>
+                                    <JAVA_APP_JAR>${project.artifactId}-${project.version}.war</JAVA_APP_JAR>
                                 </env>
                                 <ports>
                                     <port>8080</port>
                                     <port>8778</port>
                                 </ports>
-                                <cmd>
-                                    <shell>java -jar /maven/${project.artifactId}-${project.version}.war --spring.profiles.active=prod</shell>
-                                </cmd>
                             </build>
                         </image>
                     </images>
