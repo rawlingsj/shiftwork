@@ -15,8 +15,8 @@ jhipsterNode{
     container(name: 'jhipster') {
       // not sure if we need these but they run tests including phantomjs so it's' maybe worth it
       stage 'Build'
-      sh 'npm install'
-      sh 'bower install --allow-root'   
+      // sh 'npm install'
+      // sh 'bower install --allow-root'   
 
       stage 'Canary Release Staging'
       mavenCanaryRelease {

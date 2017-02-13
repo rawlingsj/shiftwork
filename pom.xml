@@ -524,7 +524,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <images>
+                    <!--<images>
                         <image>
                             <name>${docker.image}</name>
                             <build>
@@ -542,11 +542,11 @@
                                 </ports>
                             </build>
                         </image>
-                    </images>
-                    <!--<enricher>-->
+                    </images>-->
+                    <enricher>
                     <!-- the default sb health enricher wont work if auth is enabled -->
-                    <!--<excludes>spring-boot-health-check</excludes>-->
-                    <!--</enricher>-->
+                        <excludes>spring-boot-health-check</excludes>
+                    </enricher>
                 </configuration>
             </plugin>
             <plugin>
